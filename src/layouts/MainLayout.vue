@@ -1,10 +1,9 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="flex justify-center q-px-lx">
+  <q-layout view="hHh lpR fFf">
     <!--site header here  -->
     <SiteHeader />
     <!-- site drawer here - đặt sau để đảm bảo drawer nằm trên cùng -->
     <SiteDrawer />
-
 
     <q-page-container>
       <router-view />

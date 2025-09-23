@@ -1,9 +1,11 @@
 <template>
-  <!-- site hero section here if home -->
-  <SiteHeroSection />
 
-  <q-page class="flex justify-center q-px-lx">
-    <SiteTrendingCarousel />
+
+  <q-page padding>
+    <q-container class="q-px-lg">
+      <SiteHeroSection />
+      <SiteTrendingCarousel />
+    </q-container>
   </q-page>
 
 </template>
