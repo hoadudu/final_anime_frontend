@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="bg-grey-1">
+  <q-layout view="hHh lpR fFf" class="flex justify-center q-px-lx">
     <!--site header here  -->
     <SiteHeader />
     <!-- site drawer here - đặt sau để đảm bảo drawer nằm trên cùng -->

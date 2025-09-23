@@ -27,5 +27,15 @@ export default {
   selectedGenres: 'Selected genres',
   clearAll: 'Clear All',
   cancel: 'Cancel',
-  apply: 'Apply'
+  apply: 'Apply',
+  
+  // Trending carousel translations
+  trending: 'Trending Now',
+  trendingDescription: 'Most popular anime right now',
+  loadingTrending: 'Loading trending anime...',
+  aired: 'Aired',
+  status: 'Status',
+  finishedAiring: 'Finished Airing',
+  currentlyAiring: 'Currently Airing',
+  notYetAired: 'Not Yet Aired'
 }

@@ -35,3 +35,34 @@ export const useHeroSectionStore = defineStore('heroSection', () => {
     fetchFeaturedMovies
   }
 })
+
+export const useTrendingCarouselStore = defineStore('trending-carousel', () => {
+  const trendingMovies = ref([])
+  const isLoading = ref(false)
+  const error = ref(null)
+  const langQuery = getLangQuery()
+
+  async function fetchTrendingMovies() {
+    isLoading.value = true
+    error.value = null
+    
+    try {
+      const response = await api.get(`${baseURL}/collections/trending-animes${langQuery}`)
+      trendingMovies.value = response.data
+    } catch (err) {
+      console.error('Error fetching trending movies:', err)
+      error.value = 'Failed to load trending movies'
+      // Fallback data for development
+      trendingMovies.value = []
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  return {
+    trendingMovies,
+    isLoading,
+    error,
+    fetchTrendingMovies
+  }
+})

@@ -27,5 +27,15 @@ export default {
   selectedGenres: 'Thể loại đã chọn',
   clearAll: 'Xóa tất cả',
   cancel: 'Hủy',
-  apply: 'Áp dụng'
+  apply: 'Áp dụng',
+  
+  // Trending carousel translations
+  trending: 'Thịnh hành',
+  trendingDescription: 'Anime phổ biến nhất hiện tại',
+  loadingTrending: 'Đang tải anime thịnh hành...',
+  aired: 'Phát sóng',
+  status: 'Trạng thái',
+  finishedAiring: 'Đã hoàn thành',
+  currentlyAiring: 'Đang phát sóng',
+  notYetAired: 'Chưa phát sóng'
 }
