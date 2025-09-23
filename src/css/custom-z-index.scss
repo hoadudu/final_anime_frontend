@@ -1,0 +1,25 @@
+/* Sửa lỗi z-index cho drawer */
+body {
+
+  .q-dialog {
+    z-index: 7999 !important;
+  }
+  .q-header{
+    z-index: 7999 !important;
+  }
+  .q-drawer-container {
+    z-index: 7999 !important;
+  }
+
+  .q-drawer {
+    z-index: 7999 !important;
+  }
+
+  .q-drawer__backdrop {
+    z-index: 7999 !important;
+  }
+
+  .q-overlay {
+    z-index: 7999 !important;
+  }
+}
