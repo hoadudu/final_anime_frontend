@@ -16,9 +16,7 @@
             <q-btn round flat dense class="nav-button nav-button-left" icon="chevron_left" @click="scrollLeft"
                 :disable="!canScrollLeft" />
 
-            <div class="trending-scroll" ref="scrollContainer" @scroll="updateScrollButtons" @mousedown="startDrag"
-                @mousemove="onDrag" @mouseup="endDrag" @mouseleave="endDrag" @touchstart="startDragTouch"
-                @touchmove="onDragTouch" @touchend="endDrag">
+            <div class="trending-scroll" ref="scrollContainer" @scroll="updateScrollButtons">
                 <q-list class="trending-items" dense>
                     <q-item v-if="!trendingStore.trendingMovies || trendingStore.trendingMovies.length === 0"
                         class="no-data-message">
@@ -68,11 +66,7 @@ const canScrollLeft = ref(false)
 const canScrollRight = ref(true)
 const fallbackImage = 'https://dummyimage.com/200x280/333333/ffffff?text=Not+Available'
 
-// Thêm biến cho tính năng drag
-const isDragging = ref(false)
-const startX = ref(0)
-const startScrollLeft = ref(0)
-const isClick = ref(true) // Để phân biệt giữa click và drag
+
 
 onMounted(async () => {
     console.log('Mounting SiteTrendingCarousel')
@@ -126,75 +120,7 @@ function getItemImage(item) {
     return item.posterUrl || item.poster || item.thumbnail || item.image || fallbackImage
 }
 
-// Thêm các hàm xử lý drag chuột
-function startDrag(e) {
-    if (!scrollContainer.value) return
-
-    isDragging.value = true
-    isClick.value = true
-    startX.value = e.pageX
-    startScrollLeft.value = scrollContainer.value.scrollLeft
-    scrollContainer.value.style.cursor = 'grabbing'
-    scrollContainer.value.style.userSelect = 'none'
-    e.preventDefault()
-}
-
-function onDrag(e) {
-    if (!isDragging.value || !scrollContainer.value) return
-
-    const x = e.pageX
-    const distance = x - startX.value
-
-    // Nếu khoảng cách kéo lớn hơn 5px, xem như là drag không phải click
-    if (Math.abs(distance) > 5) {
-        isClick.value = false
-    }
-
-    scrollContainer.value.scrollLeft = startScrollLeft.value - distance
-    e.preventDefault()
-}
-
-function endDrag() {
-    isDragging.value = false
-    if (scrollContainer.value) {
-        scrollContainer.value.style.cursor = 'grab'
-        scrollContainer.value.style.removeProperty('user-select')
-    }
-}
-
-// Thêm các hàm xử lý touch events cho mobile
-function startDragTouch(e) {
-    if (!scrollContainer.value || !e.touches[0]) return
-
-    isDragging.value = true
-    isClick.value = true
-    startX.value = e.touches[0].pageX
-    startScrollLeft.value = scrollContainer.value.scrollLeft
-}
-
-function onDragTouch(e) {
-    if (!isDragging.value || !scrollContainer.value || !e.touches[0]) return
-
-    const x = e.touches[0].pageX
-    const distance = x - startX.value
-
-    // Nếu khoảng cách kéo lớn hơn 5px, xem như là drag không phải click
-    if (Math.abs(distance) > 5) {
-        isClick.value = false
-    }
-
-    scrollContainer.value.scrollLeft = startScrollLeft.value - distance
-
-    // Ngăn chặn scroll trang khi drag carousel
-    if (Math.abs(distance) > 10) {
-        e.preventDefault()
-    }
-}
-
 function handleItemClick(item) {
-    // Chỉ điều hướng nếu đây là click chứ không phải drag
-    if (!isClick.value) return
-
     // Navigate to anime detail page
     if (item.id) {
         // Check if route exists
@@ -294,13 +220,6 @@ function handleItemClick(item) {
     overflow-y: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    cursor: grab;
-    /* Thêm cursor grab để hiển thị là có thể kéo */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    scroll-behavior: smooth;
 }
 
 .trending-scroll::-webkit-scrollbar {

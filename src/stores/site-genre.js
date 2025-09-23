@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
-import { baseURL } from 'src/config/api'
+import { API_BASE_URL } from 'src/config/api'
 import { getLangQuery } from 'src/utils/lang'
 
 export const useGenreStore = defineStore('genre', () => {
@@ -16,7 +16,7 @@ export const useGenreStore = defineStore('genre', () => {
     const langQuery = getLangQuery()
     
     try {
-      const response = await axios.get(`${baseURL}/genres${langQuery}`)
+      const response = await axios.get(`${API_BASE_URL}/genres${langQuery}`)
       genres.value = response.data
     } catch (err) {
       console.error('Error fetching genres:', err)

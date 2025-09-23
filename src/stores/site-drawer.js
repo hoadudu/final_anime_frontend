@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 import { getLangQuery } from 'src/utils/lang'
-import { baseURL } from 'src/config/api'
+import { API_BASE_URL } from 'src/config/api'
 
 
 export const useDrawerStore = defineStore('drawer', () => {
@@ -26,7 +26,7 @@ export const useDrawerStore = defineStore('drawer', () => {
     loading.value = true
     error.value = null
     try {
-      const res = await axios.get(`${baseURL}/drawer${getLangQuery()}`)
+      const res = await axios.get(`${API_BASE_URL}/drawer${getLangQuery()}`)
       links.value = res.data.links
       buttons.value = res.data.buttons
     } catch (err) {
@@ -40,7 +40,7 @@ export const useDrawerStore = defineStore('drawer', () => {
     loading.value = true
     error.value = null
     try {
-      const res = await axios.get(`${baseURL}/genres${getLangQuery()}`)
+      const res = await axios.get(`${API_BASE_URL}/genres${getLangQuery()}`)
       links.value = res.data.links
       buttons.value = res.data.buttons
     } catch (err) {
