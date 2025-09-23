@@ -1,26 +1,24 @@
 <template>
-    <div class="trending-carousel-section q-px-lg">
-        <div class="container">
+    <div class="trending-carousel-section q-py-lg">
+        <div class="container q-px-md">
             <!-- Section Header -->
-            <div class="section-header q-mb-lg">
-                <h2 class="section-title text-h4 text-weight-bold text-white q-mb-sm">
+            <div class="section-header q-mb-lg text-center">
+                <h2 class="text-h4 text-weight-bold text-white q-mb-sm gradient-title">
                     {{ t('trending') }}
                 </h2>
-                <p class="section-subtitle text-grey-4">
+                <p class="text-subtitle1 text-grey-4">
                     {{ t('trendingDescription') }}
                 </p>
             </div>
-
             <!-- Loading State -->
-            <div v-if="trendingStore.isLoading" class="loading-section flex flex-center q-py-xl">
+            <div v-if="trendingStore.isLoading" class="flex flex-center q-py-xl">
                 <div class="text-center">
                     <q-spinner-dots color="primary" size="40px" />
                     <div class="text-white q-mt-md">{{ t('loadingTrending') }}</div>
                 </div>
             </div>
-
             <!-- Error State -->
-            <div v-if="trendingStore.error" class="error-section flex flex-center q-py-xl">
+            <div v-if="trendingStore.error" class="flex flex-center q-py-xl">
                 <q-banner class="bg-negative text-white">
                     <q-icon name="error" size="md" class="q-mr-md" />
                     {{ trendingStore.error }}
@@ -29,24 +27,24 @@
                     </template>
                 </q-banner>
             </div>
-
             <!-- Trending Carousel -->
-            <div v-if="!trendingStore.isLoading && !trendingStore.error" class="trending-carousel">
+            <div v-if="!trendingStore.isLoading && !trendingStore.error">
                 <q-carousel v-model="slide" animated arrows infinite :autoplay="autoplay" transition-prev="slide-right"
-                    transition-next="slide-left" class="trending-carousel-container" height="auto" swipeable
+                    transition-next="slide-left" class="trending-carousel-container" swipeable
                     @mouseenter="pauseAutoplay" @mouseleave="resumeAutoplay">
-                    <q-carousel-slide v-for="(chunk, index) in movieChunks" :key="index" :name="index"
-                        class="trending-slide">
-                        <div class="trending-grid">
-                            <div v-for="movie in chunk" :key="movie.id" class="trending-item"
+                    <q-carousel-slide v-for="(chunk, index) in movieChunks" :key="index" :name="index" class="q-px-sm">
+                        <div class="row q-col-gutter-md">
+                            <div v-for="movie in chunk" :key="movie.id" class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
                                 @click="navigateToMovie(movie)">
                                 <q-card flat class="trending-card cursor-pointer">
-                                    <!-- Rank Badge -->
-                                    <div class="rank-badge">
-                                        <span class="rank-number">{{ String(movie.rank).padStart(2, '0') }}</span>
-                                    </div>
+
                                     <!-- Poster Image -->
                                     <div class="poster-container">
+                                        <!-- Rank Badge - di chuyển vào trong poster-container -->
+                                        <div class="rank-badge">
+                                            <span class="rank-number">{{ String(movie.rank).padStart(2, '0') }}</span>
+                                        </div>
+
                                         <q-img :src="movie.posterUrl" :alt="movie.title" class="poster-image"
                                             loading="lazy" :ratio="2 / 3" spinner-color="primary" spinner-size="40px">
                                             <template v-slot:error>
@@ -62,8 +60,9 @@
                                         </div>
                                     </div>
                                     <!-- Title -->
-                                    <q-card-section class="q-pa-sm">
-                                        <div class="movie-title text-weight-medium text-white text-center">
+                                    <q-card-section class="q-pa-sm text-center">
+                                        <div
+                                            class="text-subtitle2 text-weight-medium text-black line-clamp-2 movie-title">
                                             {{ movie.title }}
                                         </div>
                                     </q-card-section>
@@ -107,6 +106,8 @@
     </div>
 </template>
 
+
+
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -119,11 +120,12 @@ const trendingStore = useTrendingCarouselStore()
 const slide = ref(0)
 const autoplay = ref(true)
 let autoplayTimer = null
+const windowWidth = ref(window.innerWidth) // Thêm reactive window width
 const itemsPerSlide = ref({
     xs: 2, // mobile
     sm: 3, // tablet
     md: 4, // desktop medium
-    lg: 5, // desktop large
+    lg: 6, // desktop large
 })
 
 // Computed
@@ -138,7 +140,7 @@ const movieChunks = computed(() => {
 })
 
 const getChunkSize = () => {
-    const width = window.innerWidth
+    const width = windowWidth.value // Sử dụng reactive width
     if (width <= 600) return itemsPerSlide.value.xs
     if (width <= 1024) return itemsPerSlide.value.sm
     if (width <= 1440) return itemsPerSlide.value.md
@@ -146,6 +148,10 @@ const getChunkSize = () => {
 }
 
 // Methods
+const handleResize = () => {
+    windowWidth.value = window.innerWidth
+}
+
 const navigateToMovie = (movie) => {
     console.log('Navigating to movie:', movie.title)
     // router.push(`/movie/${movie.id}`)
@@ -180,6 +186,9 @@ const startAutoplay = () => {
 
 // Lifecycle
 onMounted(async () => {
+    // Thêm resize listener
+    window.addEventListener('resize', handleResize)
+
     await trendingStore.fetchTrendingMovies()
     if (movieChunks.value.length > 1) {
         startAutoplay()
@@ -187,42 +196,22 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+    // Cleanup
     if (autoplayTimer) {
         clearInterval(autoplayTimer)
     }
+    window.removeEventListener('resize', handleResize)
 })
 </script>
+
 
 <style lang="scss" scoped>
 .trending-carousel-section {
     background: transparent;
     min-height: 400px;
-    padding: 20px 0;
-}
-
-.container {
-
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 24px;
-
-    .section-title {
-        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
 }
 
 .trending-carousel-container {
-    .q-carousel__slides-container {
-        min-height: 350px;
-    }
-
     .q-carousel__arrow {
         background-color: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
@@ -245,53 +234,16 @@ onBeforeUnmount(() => {
             right: 10px;
         }
     }
-
-    .trending-slide {
-        padding: 0 10px;
-    }
-}
-
-.trending-grid {
-    display: grid;
-    gap: 16px;
-    padding: 0 10px;
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-
-    @media (max-width: 600px) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    @media (min-width: 601px) and (max-width: 1024px) {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-    }
-
-    @media (min-width: 1025px) and (max-width: 1440px) {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-    }
-
-    @media (min-width: 1441px) {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 18px;
-    }
-}
-
-.trending-item {
-    position: relative;
-    min-width: 0;
 }
 
 .trending-card {
-    position: relative;
     background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    height: 100%;
+    height: 100%; // Đảm bảo tất cả card có cùng chiều cao
+    min-height: 320px; // Tăng min-height để chứa title 2 dòng
     display: flex;
     flex-direction: column;
 
@@ -314,10 +266,11 @@ onBeforeUnmount(() => {
     }
 }
 
+
 .rank-badge {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 12px;
+    left: 12px;
     z-index: 2;
     background: linear-gradient(45deg, #ff6b6b, #ee5a24);
     color: white;
@@ -331,19 +284,41 @@ onBeforeUnmount(() => {
     font-size: 13px;
     box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
     transition: transform 0.3s ease;
+    box-sizing: border-box;
 }
+
 
 .poster-container {
     position: relative;
     overflow: hidden;
     border-radius: 8px 8px 0 0;
-    flex: 1;
+    aspect-ratio: 2/3;
+    flex: 1; // Cho phép poster container chiếm không gian còn lại
+}
 
-    .poster-image {
-        transition: transform 0.3s ease;
-        width: 100%;
-        height: 100%;
-    }
+// Thêm CSS cho line-clamp và movie title
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.movie-title {
+    height: 2.6em; // Cố định chiều cao cho 2 dòng (1.3em * 2)
+    min-height: 2.6em;
+    max-height: 2.6em;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+// Đảm bảo card-section có kích thước cố định
+.q-card-section {
+    flex-shrink: 0; // Không cho phép section này co lại
+    min-height: 60px; // Đảm bảo có đủ không gian cho 2 dòng text
 }
 
 .hover-overlay {
@@ -351,54 +326,12 @@ onBeforeUnmount(() => {
     opacity: 0;
     transition: opacity 0.3s ease;
     backdrop-filter: blur(4px);
-
-    .play-button {
-        transform: scale(0.8);
-        transition: transform 0.3s ease;
-
-        &:hover {
-            transform: scale(1);
-        }
-    }
 }
 
-.movie-title {
-    font-size: 13px;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-    overflow: hidden;
-    min-height: 34px;
-    text-align: center;
-    padding: 6px 10px;
-    flex-shrink: 0;
-}
-
-.tooltip-content {
-    .tooltip-meta {
-        font-size: 11px;
-        line-height: 1.4;
-    }
-}
-
-.loading-section,
-.error-section {
-    min-height: 300px;
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 0 12px;
-    }
-
-    .trending-carousel-section {
-        padding: 12px 0;
-    }
-
-    .section-header {
-        margin-bottom: 16px;
-    }
+.gradient-title {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 </style>

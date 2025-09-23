@@ -1,7 +1,7 @@
 <template>
 
 
-  <q-page padding>
+  <q-page class="padding flex justify-center">
     <q-container class="q-px-lg">
       <SiteHeroSection />
       <SiteTrendingCarousel />
