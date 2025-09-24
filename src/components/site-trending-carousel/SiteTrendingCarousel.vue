@@ -1,5 +1,5 @@
 <template>
-    <q-section class="trending-section">
+    <div class="trending-section">
         <h2 class="trending-title">Trending</h2>
 
         <div v-if="trendingStore.isLoading" class="loading-state">
@@ -42,7 +42,7 @@
             <q-btn round flat dense class="nav-button nav-button-right" icon="chevron_right" @click="scrollRight"
                 :disable="!canScrollRight" />
         </div>
-    </q-section>
+    </div>
 </template>
 
 <script setup>
@@ -75,9 +75,9 @@ const startScrollLeft = ref(0)
 const isClick = ref(true) // Để phân biệt giữa click và drag
 
 onMounted(async () => {
-    console.log('Mounting SiteTrendingCarousel')
+    // console.log('Mounting SiteTrendingCarousel')
     await trendingStore.fetchTrendingMovies()
-    console.log('Trending data fetched:', trendingStore.trendingMovies)
+    // console.log('Trending data fetched:', trendingStore.trendingMovies)
 
     // Use this to test with dummy data if the API doesn't return data
     // addDummyData()

@@ -1,27 +1,22 @@
 <template>
-
-
-  <q-page class="padding justify-center">
-    <q-container class="q-px-lg">
+  <q-page class="q-px-lg flex-center">
+    <div class="q-mx-auto q-px-lg" style="max-width: 1920px; width: 100%;">
       <SiteHeroSection />
       <SiteTrendingCarousel />
-    </q-container>
-    <div>
-      <p>Chiều rộng màn hình: {{ $q.screen.width }}px</p>
-      <p>Breakpoint hiện tại:
-        <span v-if="$q.screen.xs">XS</span>
-        <span v-else-if="$q.screen.sm">SM</span>
-        <span v-else-if="$q.screen.md">MD</span>
-        <span v-else-if="$q.screen.lg">LG</span>
-        <span v-else>XL</span>
-      </p>
+      <SiteAnimeFeatured />
+
+
+
     </div>
+
   </q-page>
+
 
 </template>
 
 <script setup>
 import SiteHeroSection from 'src/components/site-hero-section/SiteHeroSection.vue'
 import SiteTrendingCarousel from 'src/components/site-trending-carousel/SiteTrendingCarousel.vue'
+import SiteAnimeFeatured from 'src/components/site-anime-featured/SiteAnimeFeatured.vue'
 
 </script>

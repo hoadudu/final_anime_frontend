@@ -1,2 +1,13 @@
 // app global css in SCSS form
 @import './custom-z-index.scss';
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #121212; // Dark background color
+  color: #ffffff; // Light text color
+  margin: 0;
+  padding: 0;
+  // max-width: 1920px;
+  // justify-content: center;
+  
+}

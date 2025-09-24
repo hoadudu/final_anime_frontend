@@ -1,149 +1,198 @@
 {
-    "trending-animes": [
-        {
-            "id": 6149,
-            "title": "Vua H\u1ea3i T\u1eb7c",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 1,
-            "slug": "vua-hai-tac",
-            "description": "<p>Gol D. Roger \u0111\u01b0\u1ee3c m\u1ec7nh danh l\u00e0 \"Vua h\u1ea3i t\u1eb7c\", k\u1ebb m\u1ea1nh nh\u1ea5t v\u00e0 kh\u00e9t ti\u1ebfng nh\u1ea5t \u0111\u00e3 ch\u00e8o thuy\u1ec1n Grand Line. Vi\u1ec7c b\u1eaft gi\u1eef v\u00e0 x\u1eed t\u1eed Roger c\u1ee7a Ch\u00ednh ph\u1ee7 Th\u1ebf gi\u1edbi \u0111\u00e3 mang l\u1ea1i m\u1ed9t s\u1ef1 thay \u0111\u1ed5i tr\u00ean to\u00e0n th\u1ebf gi\u1edbi. Nh\u1eefng l\u1eddi cu\u1ed1i c\u00f9ng tr\u01b0\u1edbc khi ch\u1ebft cho th\u1ea5y s\u1ef1 t\u1ed3n t\u1ea1i c\u1ee7a kho b\u00e1u v\u0129 \u0111\u1ea1i nh\u1ea5t th\u1ebf gi\u1edbi, One Piece. Ch\u00ednh s\u1ef1 m\u1eb7c kh\u1ea3i n\u00e0y \u0111\u00e3 mang \u0111\u1ebfn Th\u1eddi \u0111\u1ea1i C\u01b0\u1edbp bi\u1ec3n v\u0129 \u0111\u1ea1i, nh\u1eefng ng\u01b0\u1eddi \u0111\u00e0n \u00f4ng m\u01a1 \u01b0\u1edbc t\u00ecm th\u1ea5y One Piece & mdash; h\u1ee9a h\u1eb9n s\u1ebd c\u00f3 v\u00f4 s\u1ed1 s\u1ef1 gi\u00e0u c\u00f3 v\u00e0 danh ti\u1ebfng & mdash; v\u00e0 ho\u00e0n to\u00e0n c\u00f3 th\u1ec3 l\u00e0 \u0111\u1ec9nh cao c\u1ee7a vinh quang v\u00e0 danh hi\u1ec7u Vua h\u1ea3i t\u1eb7c. <br \/><br \/>Enter Monkey D. Luffy, m\u1ed9t c\u1eadu b\u00e9 17 tu\u1ed5i b\u1ea5t ch\u1ea5p \u0111\u1ecbnh ngh\u0129a ti\u00eau chu\u1ea9n c\u1ee7a b\u1ea1n v\u1ec1 m\u1ed9t t\u00ean c\u01b0\u1edbp bi\u1ec3n. Thay v\u00ec t\u00ednh c\u00e1ch ph\u1ed5 bi\u1ebfn c\u1ee7a m\u1ed9t t\u00ean c\u01b0\u1edbp bi\u1ec3n \u0111\u1ed9c \u00e1c, c\u1ee9ng r\u1eafn, kh\u00f4ng r\u0103ng c\u01b0a \u0111\u1ec3 vui ch\u01a1i, l\u00fd do tr\u1edf th\u00e0nh c\u01b0\u1edbp bi\u1ec3n c\u1ee7a Luffy l\u00e0 m\u1ed9t trong nh\u1eefng th\u1eafc m\u1eafc thu\u1ea7n t\u00fay: \u00fd ngh\u0129 v\u1ec1 m\u1ed9t cu\u1ed9c phi\u00eau l\u01b0u th\u00fa v\u1ecb \u0111\u01b0a anh ta \u0111\u1ebfn v\u1edbi m\u1ecdi ng\u01b0\u1eddi v\u00e0 cu\u1ed1i c\u00f9ng, kho b\u00e1u \u0111\u01b0\u1ee3c h\u1ee9a h\u1eb9n . Theo b\u01b0\u1edbc ch\u00e2n c\u1ee7a ng\u01b0\u1eddi anh h\u00f9ng th\u1eddi th\u01a1 \u1ea5u c\u1ee7a m\u00ecnh, Luffy v\u00e0 phi h\u00e0nh \u0111o\u00e0n c\u1ee7a m\u00ecnh du h\u00e0nh qua Grand Line, tr\u1ea3i qua nh\u1eefng cu\u1ed9c phi\u00eau l\u01b0u \u0111i\u00ean r\u1ed3, kh\u00e1m ph\u00e1 nh\u1eefng b\u00ed \u1ea9n \u0111en t\u1ed1i v\u00e0 chi\u1ebfn \u0111\u1ea5u v\u1edbi nh\u1eefng k\u1ebb th\u00f9 m\u1ea1nh m\u1ebd, t\u1ea5t c\u1ea3 \u0111\u1ec3 \u0111\u1ea1t \u0111\u01b0\u1ee3c s\u1ef1 khao kh\u00e1t nh\u1ea5t trong t\u1ea5t c\u1ea3 c\u00e1c v\u1eadn may & mdash; One Piece. <br \/><br \/>[Vi\u1ebft b\u1edfi MAL Rewrite]<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Action",
-                "Adventure",
-                "Comedy",
-                "Drama",
-                "Fantasy"
-            ]
-        },
-        {
-            "id": 8038,
-            "title": "Kaoru Hana wa Rin to Saku",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 2,
-            "slug": "kaoru-hana-wa-rin-to-saku",
-            "description": "<p>M\u1eb7c d\u00f9 \u0111\u01b0\u1ee3c li\u1ec1n k\u1ec1 v\u1edbi nhau, tr\u01b0\u1eddng trung h\u1ecdc c\u00f4ng c\u1ed9ng Chidori v\u00e0 H\u1ecdc vi\u1ec7n t\u01b0 nh\u00e2n Kikyo to\u00e0n n\u1eef d\u01b0\u1eddng nh\u01b0 t\u1ed3n t\u1ea1i \u1edf hai th\u1ebf gi\u1edbi kh\u00e1c nhau. Trong khi c\u00e1i sau t\u1ef1 h\u00e0o c\u00f3 m\u1ed9t danh ti\u1ebfng v\u00f4 nhi\u1ec5m v\u00e0 \u1ee7ng h\u1ed9 c\u00e1c sinh vi\u00ean t\u1eeb nh\u1eefng n\u1ec1n t\u1ea3ng gi\u00e0u c\u00f3, th\u00ec c\u00e1i tr\u01b0\u1edbc l\u00e0 m\u1ed9t t\u1ed5 cho nh\u1eefng k\u1ebb ph\u1ea1m t\u1ed9i m\u1edd nh\u1ea1t. M\u1ecdi ng\u01b0\u1eddi \u1edf Kikyo \u0111\u1ec1u c\u00f3 m\u1ed9t s\u1ef1 c\u0103m gh\u00e9t s\u00e2u s\u1eafc \u0111\u1ed1i v\u1edbi nh\u1eefng ng\u01b0\u1eddi h\u00e0ng x\u00f3m Chidori c\u1ee7a h\u1ecd. Rintarou Tsumugi m\u01b0\u1eddi s\u00e1u tu\u1ed5i l\u00e0 m\u1ed9t sinh vi\u00ean t\u1ea1i Chidori c\u00f3 khu\u00f4n m\u1eb7t \u0111\u00e1ng s\u1ee3 khi\u1ebfn m\u1ecdi ng\u01b0\u1eddi tr\u00e1nh anh ta. Rintarou kh\u00f4ng ch\u00fa \u00fd \u0111\u1ebfn \u0111i\u1ec1u n\u00e0y, v\u00ec anh ta b\u1eb1ng l\u00f2ng v\u1edbi nh\u00f3m b\u1ea1n c\u1ee7a m\u00ecnh. Tuy nhi\u00ean, c\u00f3 \u0111i\u1ec1u g\u00ec \u0111\u00f3 anh ch\u01b0a n\u00f3i v\u1edbi h\u1ecd: \u0110\u00f4i khi, anh gi\u00fap \u0111\u1ee1 t\u1ea1i c\u1eeda h\u00e0ng b\u00e1nh c\u1ee7a gia \u0111\u00ecnh m\u00ecnh. M\u1ed9t ng\u00e0y n\u00e0o \u0111\u00f3 t\u1ea1i n\u01a1i l\u00e0m vi\u1ec7c, Rintarou th\u1ea5y m\u1ed9t kh\u00e1ch h\u00e0ng \u1edf b\u00e0n, nh\u01b0ng c\u00f4 \u1ea5y ch\u1ea1y \u0111i tr\u01b0\u1edbc khi anh ta c\u00f3 th\u1ec3 n\u00f3i chuy\u1ec7n v\u1edbi c\u00f4 \u1ea5y. Ng\u00e0y h\u00f4m sau, anh nh\u1eadn \u0111\u01b0\u1ee3c l\u1eddi xin l\u1ed7i t\u1eeb c\u00f4 g\u00e1i, Kaoruko Waguri, ng\u01b0\u1eddi gi\u1ea3i th\u00edch r\u1eb1ng c\u00f4 kh\u00f4ng b\u1ecf ch\u1ea1y v\u00ec ngo\u1ea1i h\u00ecnh c\u1ee7a anh v\u00e0 c\u00f4 tin r\u1eb1ng Rintarou l\u00e0 m\u1ed9t ng\u01b0\u1eddi t\u1ed1t b\u1ee5ng. M\u1eb7c d\u00f9 anh ta kh\u00f4ng quen v\u1edbi t\u00ednh c\u00e1ch t\u01b0\u01a1i s\u00e1ng c\u1ee7a Kaoruko, Rintarou mong mu\u1ed1n h\u00ecnh th\u00e0nh m\u1ed9t t\u00ecnh b\u1ea1n v\u1edbi c\u00f4 \u1ea5y. Ch\u1ec9 c\u00f3 m\u1ed9t tr\u1edf ng\u1ea1i theo c\u00e1ch c\u1ee7a anh \u1ea5y: Kaoruko l\u00e0 m\u1ed9t sinh vi\u00ean Kikyo! [\u0110\u01b0\u1ee3c vi\u1ebft b\u1edfi Mal vi\u1ebft l\u1ea1i]<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Drama",
-                "Romance"
-            ]
-        },
-        {
-            "id": 7249,
-            "title": "Mushoku Tensei II: Isekai Ittara Honki Dasu",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 3,
-            "slug": "mushoku-tensei-ii-isekai-ittara-honki-dasu",
-            "description": "<p>Season 1 v\u00e0 season 2<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Adventure",
-                "Drama",
-                "Fantasy"
-            ]
-        },
-        {
-            "id": 8027,
-            "title": "Dandadan 2nd Season",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 4,
-            "slug": "dandadan-2nd-season",
-            "description": "<p>M\u00f9a th\u1ee9 hai c\u1ee7a Dandadan.<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Action",
-                "Comedy",
-                "Supernatural"
-            ]
-        },
-        {
-            "id": 8042,
-            "title": "Gachiakuta",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 5,
-            "slug": "gachiakuta",
-            "description": "<p>S\u1ed1ng trong khu \u1ed5 chu\u1ed9t c\u1ee7a m\u1ed9t th\u1ecb tr\u1ea5n gi\u00e0u c\u00f3, Rudo v\u00e0 ng\u01b0\u1eddi cha nu\u00f4i c\u1ee7a anh ta \u0111\u00e3 c\u1ed1 g\u1eafng c\u00f9ng t\u1ed3n t\u1ea1i v\u1edbi nh\u1eefng c\u01b0 d\u00e2n c\u00f2n l\u1ea1i c\u1ee7a th\u1ecb tr\u1ea5n, nh\u01b0ng Rudo coi th\u01b0\u1eddng s\u1ef1 l\u00e3ng ph\u00ed c\u1ee7a t\u1ea7ng l\u1edbp th\u01b0\u1ee3ng l\u01b0u. B\u1ecf qua nh\u1eefng c\u1ea3nh b\u00e1o t\u1eeb nh\u1eefng ng\u01b0\u1eddi xung quanh, Rudo th\u01b0\u1eddng xuy\u00ean l\u1ee5c l\u1ecdi r\u00e1c c\u1ee7a th\u1ecb tr\u1ea5n \u0111\u1ec3 t\u00ecm ki\u1ebfm b\u1ea5t c\u1ee9 th\u1ee9 g\u00ec h\u1eefu \u00edch ho\u1eb7c c\u00f3 gi\u00e1 tr\u1ecb \u0111\u1ec3 c\u1ee9u kh\u1ecfi \"Abyss\", m\u1ed9t l\u1ed7 h\u1ed5ng kh\u1ed5ng l\u1ed3, n\u01a1i b\u1ea5t c\u1ee9 th\u1ee9 g\u00ec \u0111\u01b0\u1ee3c coi l\u00e0 r\u00e1c r\u01b0\u1edfi, k\u1ec3 c\u1ea3 m\u1ecdi ng\u01b0\u1eddi. Cha ru\u1ed9t c\u1ee7a Rudo l\u00e0 m\u1ed9t ng\u01b0\u1eddi nh\u01b0 v\u1eady, \u0111\u00e3 b\u1ecb n\u00e9m v\u00e0o v\u1ef1c th\u1eb3m sau khi anh ta b\u1ecb bu\u1ed9c t\u1ed9i gi\u1ebft ng\u01b0\u1eddi. M\u1ed9t ng\u00e0y n\u1ecd, sau khi ch\u1ea1y v\u00e0o m\u1ed9t nh\u00e2n v\u1eadt b\u00ed \u1ea9n tr\u00ean \u0111\u01b0\u1eddng v\u1ec1 nh\u00e0, Rudo tr\u1edf l\u1ea1i \u0111\u1ec3 t\u00ecm c\u01a1 th\u1ec3 s\u1eafp ch\u1ebft c\u1ee7a Regto tr\u00ean s\u00e0n nh\u00e0. Anh ta ngay l\u1eadp t\u1ee9c \u0111\u01b0\u1ee3c t\u00ecm th\u1ea5y t\u1ea1i hi\u1ec7n tr\u01b0\u1eddng b\u1edfi ch\u00ednh quy\u1ec1n v\u00e0 b\u1ecb bu\u1ed9c t\u1ed9i gi\u1ebft ng\u01b0\u1eddi. Kh\u00f4ng ai tin r\u1eb1ng nh\u1eefng tuy\u00ean b\u1ed1 v\u00f4 t\u1ed9i c\u1ee7a anh ta, v\u00e0 anh ta b\u1ecb n\u00e9m v\u00e0o v\u1ef1c th\u1eb3m. Tuy nhi\u00ean, thay v\u00ec ch\u1ebft, anh ta th\u1ea5y m\u00ecnh \u1edf m\u1ed9t n\u01a1i k\u1ef3 l\u1ea1, c\u00f3 m\u00f9i h\u00f4i \u0111\u01b0\u1ee3c bao quanh b\u1edfi nh\u1eefng con qu\u00e1i v\u1eadt \u0111\u01b0\u1ee3c l\u00e0m t\u1eeb r\u00e1c. Khi Rudo b\u1ecb t\u1ea5n c\u00f4ng b\u1edfi nh\u1eefng con qu\u00e1i v\u1eadt n\u00f3i, anh ta \u0111\u01b0\u1ee3c c\u1ee9u b\u1edfi m\u1ed9t ng\u01b0\u1eddi \u0111\u00e0n \u00f4ng t\u00ean l\u00e0 Enjin, ng\u01b0\u1eddi ti\u1ebft l\u1ed9 m\u00ecnh l\u00e0 m\u1ed9t \"ng\u01b0\u1eddi d\u1ecdn d\u1eb9p\", ng\u01b0\u1eddi s\u1eed d\u1ee5ng v\u0169 kh\u00ed \u0111\u1eb7c bi\u1ec7t g\u1ecdi l\u00e0 d\u1ee5ng c\u1ee5 quan tr\u1ecdng \u0111\u1ec3 ch\u1ed1ng l\u1ea1i nh\u1eefng sinh v\u1eadt n\u00e0y. \u0110\u1ec3 tr\u1ea3 th\u00f9 ng\u01b0\u1eddi \u0111\u00e3 gi\u1ebft Regto, Rudo mi\u1ec5n c\u01b0\u1ee1ng tr\u1edf th\u00e0nh m\u1ed9t ng\u01b0\u1eddi s\u1ea1ch s\u1ebd \u0111\u1ec3 chi\u1ebfn \u0111\u1ea5u \u0111\u1ec3 tr\u1edf l\u1ea1i v\u00e0 ra kh\u1ecfi v\u1ef1c th\u1eb3m. [\u0110\u01b0\u1ee3c vi\u1ebft b\u1edfi Mal vi\u1ebft l\u1ea1i]<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Action",
-                "Fantasy"
-            ]
-        },
-        {
-            "id": 8033,
-            "title": "Sono Bisque Doll wa Koi wo Suru Season 2",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 6,
-            "slug": "sono-bisque-doll-wa-koi-wo-suru-season-2",
-            "description": "<p>M\u00f9a th\u1ee9 hai c\u1ee7a sono bisque b\u00fap b\u00ea wa koi wo suru.<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Romance"
-            ]
-        },
-        {
-            "id": 7821,
-            "title": "Dr. Stone: T\u01b0\u01a1ng Lai Khoa H\u1ecdc",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 7,
-            "slug": "dr-stone-tuong-lai-khoa-hoc",
-            "description": "<p>V\u00e0i ngh\u00ecn n\u0103m sau hi\u1ec7n t\u01b0\u1ee3ng b\u00ed \u1ea9n khi\u1ebfn to\u00e0n b\u1ed9 nh\u00e2n lo\u1ea1i h\u00f3a \u0111\u00e1, c\u1eadu b\u00e9 th\u00f4ng minh v\u01b0\u1ee3t tr\u1ed9i v\u00e0 \u0111am m\u00ea khoa h\u1ecdc, Senku Ishigami, t\u1ec9nh d\u1eady. \u0110\u1ed1i m\u1eb7t v\u1edbi m\u1ed9t th\u1ebf gi\u1edbi h\u00f3a \u0111\u00e1 v\u00e0 s\u1ef1 s\u1ee5p \u0111\u1ed5 ho\u00e0n to\u00e0n c\u1ee7a n\u1ec1n v\u0103n minh, Senku quy\u1ebft t\u00e2m s\u1eed d\u1ee5ng khoa h\u1ecdc \u0111\u1ec3 t\u00e1i thi\u1ebft l\u1ea1i th\u1ebf gi\u1edbi.<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Adventure",
-                "Comedy",
-                "Sci-Fi"
-            ]
-        },
-        {
-            "id": 8032,
-            "title": "Mizu Zokusei no Mahoutsukai",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 8,
-            "slug": "mizu-zokusei-no-mahoutsukai",
-            "description": "<p>Ryou r\u1ea5t vui m\u1eebng \u0111\u01b0\u1ee3c t\u00e1i sinh v\u00e0o th\u1ebf gi\u1edbi gi\u1ea3 t\u01b0\u1edfng c\u1ee7a Phi, n\u01a1i anh ngh\u0129 r\u1eb1ng anh s\u1ebd s\u1ed1ng m\u1ed9t cu\u1ed9c s\u1ed1ng y\u00ean t\u0129nh \u0111\u1ec3 h\u1ecdc c\u00e1ch s\u1eed d\u1ee5ng ma thu\u1eadt n\u01b0\u1edbc m\u1edbi c\u1ee7a m\u00ecnh. \u0110i v\u1edbi d\u00f2ng ch\u1ea3y \u1edf \u0111\u00e2y, tuy nhi\u00ean, c\u00f3 ngh\u0129a l\u00e0 m\u1ed9t c\u00e1i g\u00ec \u0111\u00f3 r\u1ea5t kh\u00e1c nhau. Ryou ngay l\u1eadp t\u1ee9c \u0111\u1ecd s\u1ee9c v\u1edbi nh\u1eefng v\u00f9ng \u0111\u1ea5t hoang d\u00e3 m\u00e0 anh ta cu\u1ed9n l\u1ea1i v\u00e0 h\u00e0ng lo\u1ea1t nh\u1eefng con qu\u00e1i v\u1eadt ch\u1ebft ng\u01b0\u1eddi g\u1ecdi l\u00e0 nh\u00e0 ti\u1ec3u l\u1ee5c \u0111\u1ecba xa x\u00f4i. B\u1ea1n s\u1ebd ngh\u0129 r\u1eb1ng anh \u1ea5y s\u1ebd qu\u00ean m\u1ea5t n\u00f3 d\u1ec5 d\u00e0ng khi anh \u1ea5y b\u1ecb m\u1eafc k\u1eb9t trong cu\u1ed9c s\u1ed1ng c\u1ee7a m\u00ecnh, nh\u01b0ng may m\u1eafn cho Ryou, anh \u1ea5y t\u1ef1 nhi\u00ean l\u1ea1c quan, th\u00f4ng minh v\u00e0 may m\u1eafn v\u1edbi \u0111\u1eb7c \u0111i\u1ec3m \"tu\u1ed5i tr\u1ebb v\u0129nh c\u1eedu\" \u1ea9n gi\u1ea5u. Hai m\u01b0\u01a1i n\u0103m tr\u00f4i qua trong ch\u1edbp m\u1eaft, v\u00e0 m\u1ed7i cu\u1ed9c g\u1eb7p g\u1ee1 tr\u00ean \u0111\u01b0\u1eddng \u0111i \u0111\u1ea9y anh ta m\u1ed9t b\u01b0\u1edbc g\u1ea7n h\u01a1n v\u1edbi \u0111\u1ec9nh cao c\u1ee7a ph\u00e9p thu\u1eadt con ng\u01b0\u1eddi. Anh ta \u00edt nh\u1eadn ra \u0111\u00f3 ch\u1ec9 l\u00e0 ch\u01b0\u01a1ng m\u1edf \u0111\u1ea7u trong c\u00e2u chuy\u1ec7n c\u1ee7a anh ta. M\u1ed9t cu\u1ed9c h\u1ecdp \u0111\u1ecbnh m\u1ec7nh s\u1edbm \u0111\u1ea9y Ryou l\u00ean h\u00e0ng \u0111\u1ea7u c\u1ee7a l\u1ecbch s\u1eed, m\u00e3i m\u00e3i thay \u0111\u1ed5i qu\u00e1 tr\u00ecnh c\u1ee7a cu\u1ed9c \u0111\u1eddi m\u00ecnh ... do \u0111\u00f3 b\u1eaft \u0111\u1ea7u cu\u1ed9c phi\u00eau l\u01b0u c\u1ee7a ph\u00e1p s\u01b0 n\u01b0\u1edbc m\u1ea1nh nh\u1ea5t m\u00e0 th\u1ebf gi\u1edbi t\u1eebng th\u1ea5y, ng\u01b0\u1eddi c\u0169ng th\u00edch l\u00e0m m\u1ecdi th\u1ee9 theo t\u1ed1c \u0111\u1ed9 c\u1ee7a m\u00ecnh! (Ngu\u1ed3n: C\u00e2u l\u1ea1c b\u1ed9 J-Novel)<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Adventure",
-                "Fantasy"
-            ]
-        },
-        {
-            "id": 8045,
-            "title": "Hikaru ga Shinda Natsu",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 9,
-            "slug": "hikaru-ga-shinda-natsu",
-            "description": "<p>Nh\u1eefng ng\u01b0\u1eddi b\u1ea1n th\u00e2n nh\u1ea5t Yoshiki v\u00e0 Hikaru \u0111\u00e3 b\u1ecb m\u1eafc k\u1eb9t nh\u01b0 keo trong ph\u1ea7n l\u1edbn cu\u1ed9c \u0111\u1eddi c\u1ee7a h\u1ecd. S\u1ed1ng trong m\u1ed9t ng\u00f4i l\u00e0ng nh\u1ecf v\u00e0 l\u00e0 nh\u1eefng \u0111\u1ee9a tr\u1ebb duy nh\u1ea5t \u1edf \u0111\u1ed9 tu\u1ed5i c\u1ee7a h\u1ecd, hai c\u1eadu b\u00e9 t\u00ecm th\u1ea5y s\u1ef1 an \u1ee7i trong c\u00f4ng ty c\u1ee7a nhau. T\u00ecnh b\u1ea1n c\u1ee7a h\u1ecd c\u00f3 v\u1ebb \u0111\u1eb9p nh\u01b0 tranh v\u1ebd, nh\u01b0ng Yoshiki \u0111\u00e3 nh\u1eadn th\u1ea5y s\u1ef1 thay \u0111\u1ed5i trong th\u00e1i \u0111\u1ed9 c\u1ee7a Hikaru k\u1ec3 t\u1eeb m\u1ed9t m\u00f9a h\u00e8 \u0111\u1ecbnh m\u1ec7nh. \"Hikaru\" n\u1eb1m b\u00ean c\u1ea1nh anh ta b\u00e2y gi\u1edd kh\u00f4ng gi\u1ed1ng b\u1ea1n c\u1ee7a anh ta. M\u1eb7c d\u00f9 ngo\u1ea1i h\u00ecnh v\u00e0 k\u00fd \u1ee9c v\u1eabn gi\u1ed1ng h\u1ec7t nhau, Yoshiki bi\u1ebft \u0111i\u1ec1u g\u00ec \u0111\u00f3 l\u00e0 kh\u00f4ng \u1ed5n v\u00e0 ng\u01b0\u1eddi Hikaru m\u00e0 anh ta t\u1eebng bi\u1ebft \u0111\u00e3 bi\u1ebfn m\u1ea5t. Khi anh ta \u0111\u01b0a ra \u0111i\u1ec1u n\u00e0y, Hikaru bi\u1ebfn m\u1ed9t ph\u1ea7n th\u00e0nh m\u1ed9t th\u1ebf gi\u1edbi kh\u00e1c, \u0111e d\u1ecda s\u1ebd gi\u1ebft Yoshiki n\u1ebfu anh ta kh\u00f4ng th\u1ec3 ch\u1ea5p nh\u1eadn n\u00f3 trong khi c\u0169ng tuy\u00ean b\u1ed1 t\u00ecnh y\u00eau c\u1ee7a n\u00f3 d\u00e0nh cho anh ta. B\u1ecb \u0111au bu\u1ed3n v\u00e0 kh\u00f4ng th\u1ec3 bu\u00f4ng b\u1ecf ng\u01b0\u1eddi b\u1ea1n th\u00e2n nh\u1ea5t c\u1ee7a m\u00ecnh, Yoshiki \u0111\u1ea5u tranh \u0111\u1ec3 ti\u1ebfp t\u1ee5c cu\u1ed9c s\u1ed1ng c\u1ee7a m\u00ecnh khi anh ta th\u1ea5y m\u00ecnh ti\u1ebfn g\u1ea7n h\u01a1n \u0111\u1ebfn Hikaru m\u1edbi. \u0110\u1ed3ng th\u1eddi, nh\u1eefng s\u1ef1 ki\u1ec7n k\u1ef3 \u200b\u200bl\u1ea1 b\u1eaft \u0111\u1ea7u l\u00e0m h\u1ecfng ng\u00f4i l\u00e0ng c\u1ee7a h\u1ecd, mang l\u1ea1i s\u1ef1 h\u1ed7n lo\u1ea1n \u0111\u00e1ng lo ng\u1ea1i. [\u0110\u01b0\u1ee3c vi\u1ebft b\u1edfi Mal vi\u1ebft l\u1ea1i]<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Horror",
-                "Mystery",
-                "Supernatural"
-            ]
-        },
-        {
-            "id": 8043,
-            "title": "Grand Blue Season 2",
-            "posterUrl": "https:\/\/cdn.noitatnemucod.net\/thumbnail\/300x400\/100\/default.jpg",
-            "rank": 10,
-            "slug": "grand-blue-season-2",
-            "description": "<p>M\u00f9a th\u1ee9 hai c\u1ee7a Grand Blue.<\/p>",
-            "aired": "",
-            "status": "finished_airing",
-            "genres": [
-                "Comedy"
-            ]
-        }
-    ]
+    "top-airing": {
+        "data": [
+            {
+                "id": 100,
+                "title": "One Piece",
+                "image": "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+                "episodes": "1144",
+                "dub": "1133",
+                "type": "TV",
+                "slug": "one-piece-100"
+            },
+            {
+                "id": 19785,
+                "title": "Gachiakuta",
+                "image": "https://cdn.myanimelist.net/images/anime/1988/138306.jpg",
+                "sub": "11",
+                "dub": "11",
+                "type": "TV",
+                "slug": "gachiakuta-19785"
+            },
+            {
+                "id": 19792,
+                "title": "Kaijuu 8-gou 2nd Season",
+                "image": "https://cdn.myanimelist.net/images/anime/1511/138450.jpg",
+                "sub": "10",
+                "dub": "10",
+                "type": "TV",
+                "slug": "kaiju-no-8-season-2-19792"
+            },
+            {
+                "id": 19789,
+                "title": "Kaoru Hana wa Rin to Saku",
+                "image": "https://cdn.myanimelist.net/images/anime/1027/136684.jpg",
+                "sub": "12",
+                "dub": "4",
+                "type": "TV",
+                "slug": "kaoru-hana-wa-rin-to-saku-19789"
+            },
+            {
+                "id": 19770,
+                "title": "Mizu Zokusei no Mahoutsukai",
+                "image": "https://cdn.myanimelist.net/images/anime/1359/138184.jpg",
+                "sub": "11",
+                "dub": "9",
+                "type": "TV",
+                "slug": "mizu-zokusei-no-mahoutsukai-19770"
+            }
+        ]
+    },
+    "most-popular": {
+        "data": [
+            {
+                "id": 100,
+                "title": "One Piece",
+                "image": "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+                "sub": "1144",
+                "dub": "1133",
+                "type": "TV",
+                "slug": "one-piece-100"
+            },
+            {
+                "id": 355,
+                "title": "Naruto: Shippuuden",
+                "image": "https://cdn.myanimelist.net/images/anime/5/17407.jpg",
+                "sub": "500",
+                "dub": "500",
+                "type": "TV",
+                "slug": "naruto-shippuden-355"
+            },
+            {
+                "id": 806,
+                "title": "Bleach",
+                "image": "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+                "sub": "366",
+                "dub": "366",
+                "type": "TV",
+                "slug": "bleach-806"
+            },
+            {
+                "id": 1234,
+                "title": "Black Clover",
+                "image": "https://cdn.myanimelist.net/images/anime/2/88336.jpg",
+                "sub": "170",
+                "dub": "170",
+                "type": "TV",
+                "slug": "black-clover-1234"
+            },
+            {
+                "id": 49387,
+                "title": "Demon Slayer: Kimetsu no Yaiba",
+                "image": "https://cdn.myanimelist.net/images/anime/1286/99889.jpg",
+                "sub": "26",
+                "dub": "26",
+                "type": "TV",
+                "slug": "demon-slayer-kimetsu-no-yaiba-49387"
+            }
+        ]
+    },
+    "most-favorite": {
+        "data": [
+            {
+                "id": 100,
+                "title": "One Piece",
+                "image": "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+                "sub": "1144",
+                "dub": "1133",
+                "type": "TV",
+                "slug": "one-piece-100"
+            },
+            {
+                "id": 1235,
+                "title": "Chainsaw Man",
+                "image": "https://cdn.myanimelist.net/images/anime/1806/126216.jpg",
+                "sub": "12",
+                "dub": "12",
+                "type": "TV",
+                "slug": "chainsaw-man-1235"
+            },
+            {
+                "id": 1236,
+                "title": "Jujutsu Kaisen (TV)",
+                "image": "https://cdn.myanimelist.net/images/anime/1171/109222.jpg",
+                "sub": "24",
+                "dub": "24",
+                "type": "TV",
+                "slug": "jujutsu-kaisen-tv-1236"
+            },
+            {
+                "id": 1237,
+                "title": "Black Clover",
+                "image": "https://cdn.myanimelist.net/images/anime/2/88336.jpg",
+                "sub": "170",
+                "dub": "170",
+                "type": "TV",
+                "slug": "black-clover-1237"
+            },
+            {
+                "id": 1238,
+                "title": "Kimetsu no Yaiba: Katanakaji no Sato-hen",
+                "image": "https://cdn.myanimelist.net/images/anime/1908/137793.jpg",
+                "sub": "11",
+                "dub": "11",
+                "type": "TV",
+                "slug": "kimetsu-no-yaiba-katanakaji-no-sato-hen-1238"
+            }
+        ]
+    },
+    "latest-completed": {
+        "data": [
+            {
+                "id": 1239,
+                "title": "Detatoko Princess",
+                "image": "https://cdn.myanimelist.net/images/anime/11/3518.jpg",
+                "sub": "3",
+                "dub": "3",
+                "type": "OVA",
+                "slug": "detatoko-princess-1239"
+            },
+            {
+                "id": 1240,
+                "title": "Shikabane Hime: Aka",
+                "image": "https://cdn.myanimelist.net/images/anime/9/16574.jpg",
+                "sub": "13",
+                "dub": "13",
+                "type": "TV",
+                "slug": "shikabane-hime-aka-1240"
+            },
+            {
+                "id": 1241,
+                "title": "Lovely★Complex",
+                "image": "https://cdn.myanimelist.net/images/anime/1/2413.jpg",
+                "sub": "24",
+                "dub": "24",
+                "type": "TV",
+                "slug": "lovely-complex-1241"
+            },
+            {
+                "id": 1242,
+                "title": "Kuroko no Basket Movie 4: Last Game",
+                "image": "https://cdn.myanimelist.net/images/anime/12/86182.jpg",
+                "sub": "1",
+                "dub": "1",
+                "type": "Movie",
+                "slug": "kuroko-no-basket-movie-4-last-game-1242"
+            },
+            {
+                "id": 1243,
+                "title": "Magi: Sinbad no Bouken (TV)",
+                "image": "https://cdn.myanimelist.net/images/anime/2/77150.jpg",
+                "sub": "13",
+                "dub": "13",
+                "type": "TV",
+                "slug": "magi-sinbad-no-bouken-tv-1243"
+            }
+        ]
+    }
 }

@@ -129,7 +129,7 @@ const setupAutoplay = () => {
             const nextIndex = (slide.value + 1) % heroSectionStore.featuredMovies.length
             slide.value = nextIndex
         }
-    }, 600000000)
+    }, 6000)
     // 6 seconds interval 6000
 }
 

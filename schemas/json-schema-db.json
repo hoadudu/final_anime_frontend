@@ -1,0 +1,222 @@
+{
+  "properties": {
+    "top-airing": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "required": [
+              "id",
+              "title",
+              "image",
+              "sub",
+              "dub",
+              "type",
+              "slug"
+            ],
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "image": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "slug": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "most-popular": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "required": [
+              "id",
+              "title",
+              "image",
+              "sub",
+              "dub",
+              "type",
+              "slug"
+            ],
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "image": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "slug": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "most-favorite": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "required": [
+              "id",
+              "title",
+              "image",
+              "sub",
+              "dub",
+              "type",
+              "slug"
+            ],
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "image": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "slug": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    },
+    "latest-completed": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "required": [
+              "id",
+              "title",
+              "image",
+              "sub",
+              "dub",
+              "type",
+              "slug"
+            ],
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "image": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dub": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "slug": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "data"
+      ]
+    }
+  },
+  "required": [
+    "top-airing",
+    "most-popular",
+    "most-favorite",
+    "latest-completed"
+  ]
+}

@@ -1,5 +1,5 @@
 <template>
-  <q-layout style="max-width: 1920px; margin: auto;">
+  <q-layout view="hHh lpR fFf">
     <!--site header here  -->
     <SiteHeader />
     <!-- site drawer here - đặt sau để đảm bảo drawer nằm trên cùng -->

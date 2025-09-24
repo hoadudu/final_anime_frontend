@@ -48,7 +48,7 @@ export const useTrendingCarouselStore = defineStore('trending-carousel', () => {
     
     try {
       const response = await api.get(`${API_BASE_URL}/collections/trending-animes${langQuery}`)
-      console.log('API Response:', response.data)
+      // console.log('API Response:', response.data)
       
       // Ensure the response data is an array
       if (Array.isArray(response.data)) {
