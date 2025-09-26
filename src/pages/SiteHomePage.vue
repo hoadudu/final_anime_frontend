@@ -11,9 +11,9 @@
           <SiteLatestEpisode />
         </div>
 
-        <!-- Sidebar -->
+        <!-- Sidebar right-->
         <div class="col-12 col-md-3">
-          <q-card class="q-pa-md">Sidebar</q-card>
+          <TopTen />
         </div>
       </div>
 
@@ -32,5 +32,6 @@ import SiteHeroSection from 'src/components/home-page/site-hero-section/SiteHero
 import SiteTrendingCarousel from 'src/components/home-page/site-trending-carousel/SiteTrendingCarousel.vue'
 import SiteAnimeFeatured from 'src/components/home-page/site-anime-featured/SiteAnimeFeatured.vue'
 import SiteLatestEpisode from 'src/components/home-page/site-latest-episode/SiteLatestEpisodePosts.vue'
+import TopTen from 'src/components/side-bar/TopTen.vue'
 
 </script>

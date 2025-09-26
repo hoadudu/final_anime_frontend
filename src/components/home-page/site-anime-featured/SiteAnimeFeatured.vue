@@ -6,7 +6,7 @@
                 <div class="col-12 col-sm-6 col-md-3">
                     <q-card flat bordered class="anime-featured-card">
                         <q-card-section class="featured-header">
-                            <h5 class="q-my-none">Top Airing</h5>
+                            <h5 class="q-my-none">{{ t('featured.topAiring') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
                             <q-item v-for="(anime, index) in animeStore.topAiring" :key="`airing-${index}`"
@@ -35,7 +35,8 @@
                         </q-list>
                         <div class="view-more-container">
                             <q-btn flat no-caps color="primary" class="full-width view-more-btn"
-                                icon-right="chevron_right" label="View more" @click="navigateToSection('top-airing')" />
+                                icon-right="chevron_right" :label="t('common.viewMore')"
+                                @click="navigateToSection('top-airing')" />
                         </div>
                     </q-card>
                 </div>
@@ -44,7 +45,7 @@
                 <div class="col-12 col-sm-6 col-md-3">
                     <q-card flat bordered class="anime-featured-card">
                         <q-card-section class="featured-header">
-                            <h5 class="q-my-none">Most Popular</h5>
+                            <h5 class="q-my-none">{{ t('featured.mostPopular') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
                             <q-item v-for="(anime, index) in animeStore.mostPopular" :key="`popular-${index}`"
@@ -73,7 +74,7 @@
                         </q-list>
                         <div class="view-more-container">
                             <q-btn flat no-caps color="primary" class="full-width view-more-btn"
-                                icon-right="chevron_right" label="View more"
+                                icon-right="chevron_right" :label="t('common.viewMore')"
                                 @click="navigateToSection('most-popular')" />
                         </div>
                     </q-card>
@@ -83,7 +84,7 @@
                 <div class="col-12 col-sm-6 col-md-3">
                     <q-card flat bordered class="anime-featured-card">
                         <q-card-section class="featured-header">
-                            <h5 class="q-my-none">Most Liked</h5>
+                            <h5 class="q-my-none">{{ t('featured.mostLiked') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
                             <q-item v-for="(anime, index) in animeStore.mostLiked" :key="`liked-${index}`"
@@ -112,7 +113,7 @@
                         </q-list>
                         <div class="view-more-container">
                             <q-btn flat no-caps color="primary" class="full-width view-more-btn"
-                                icon-right="chevron_right" label="View more"
+                                icon-right="chevron_right" :label="t('common.viewMore')"
                                 @click="navigateToSection('most-favorite')" />
                         </div>
                     </q-card>
@@ -122,7 +123,7 @@
                 <div class="col-12 col-sm-6 col-md-3">
                     <q-card flat bordered class="anime-featured-card">
                         <q-card-section class="featured-header">
-                            <h5 class="q-my-none">Latest Completed</h5>
+                            <h5 class="q-my-none">{{ t('featured.latestCompleted') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
                             <q-item v-for="(anime, index) in animeStore.latestCompleted" :key="`completed-${index}`"
@@ -152,7 +153,7 @@
                         </q-list>
                         <div class="view-more-container">
                             <q-btn flat no-caps color="primary" class="full-width view-more-btn"
-                                icon-right="chevron_right" label="View more"
+                                icon-right="chevron_right" :label="t('common.viewMore')"
                                 @click="navigateToSection('latest-completed')" />
                         </div>
                     </q-card>
@@ -165,9 +166,11 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAnimeFeaturedStore } from 'src/stores/site-anime-featured'
 import MovieTooltip from 'src/components/MovieTooltip.vue'
 
+const { t } = useI18n()
 const router = useRouter()
 const animeStore = useAnimeFeaturedStore()
 

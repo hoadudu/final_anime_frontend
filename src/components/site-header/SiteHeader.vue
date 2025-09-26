@@ -3,7 +3,7 @@
 
         <q-toolbar class="YL__toolbar-blur">
 
-            <q-btn flat dense round @click="toggleLeftDrawer" aria-label="Menu"
+            <q-btn flat dense round @click="toggleLeftDrawer" :aria-label="t('header.menuButton')"
                 :icon="drawerStore.leftDrawerOpen ? 'close' : 'menu'" />
 
             <q-btn flat no-caps no-wrap class="q-ml-xs" v-if="$q.screen.gt.xs">
@@ -16,7 +16,8 @@
             <q-space />
 
             <div class="YL__toolbar-input-container row no-wrap">
-                <q-input dense outlined square v-model="search" placeholder="Search" class="bg-white col" />
+                <q-input dense outlined square v-model="search" :placeholder="t('header.searchPlaceholder')"
+                    class="bg-white col" />
                 <q-btn class="YL__toolbar-input-btn" color="grey-3" text-color="grey-8" icon="search" unelevated />
             </div>
 
@@ -24,25 +25,25 @@
 
             <div class="q-gutter-sm row items-center no-wrap">
                 <q-btn round dense flat color="grey-8" icon="video_call" v-if="$q.screen.gt.sm">
-                    <q-tooltip>Create a video or post</q-tooltip>
+                    <q-tooltip>{{ t('header.createVideo') }}</q-tooltip>
                 </q-btn>
                 <q-btn round dense flat color="grey-8" icon="apps" v-if="$q.screen.gt.sm">
-                    <q-tooltip>Apps</q-tooltip>
+                    <q-tooltip>{{ t('header.apps') }}</q-tooltip>
                 </q-btn>
                 <q-btn round dense flat color="grey-8" icon="message" v-if="$q.screen.gt.sm">
-                    <q-tooltip>Messages</q-tooltip>
+                    <q-tooltip>{{ t('header.messages') }}</q-tooltip>
                 </q-btn>
                 <q-btn round dense flat color="grey-8" icon="notifications">
                     <q-badge color="red" text-color="white" floating>
                         2
                     </q-badge>
-                    <q-tooltip>Notifications</q-tooltip>
+                    <q-tooltip>{{ t('header.notifications') }}</q-tooltip>
                 </q-btn>
                 <q-btn round flat>
                     <q-avatar size="26px">
                         <img src="https://cdn.quasar.dev/img/boy-avatar.png">
                     </q-avatar>
-                    <q-tooltip>Account</q-tooltip>
+                    <q-tooltip>{{ t('header.account') }}</q-tooltip>
                 </q-btn>
             </div>
         </q-toolbar>
@@ -51,13 +52,17 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { fabYoutube } from '@quasar/extras/fontawesome-v6'
 import { useDrawerStore } from 'src/stores/site-drawer'
+
+const { t } = useI18n()
 const drawerStore = useDrawerStore()
+const search = ref('')
+
 function toggleLeftDrawer() {
     drawerStore.toggleLeftDrawer()
 }
-const search = ref('')
 </script>
 
 <style lang="sass">

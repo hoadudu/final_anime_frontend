@@ -3,33 +3,33 @@
         <q-card class="modal-card">
             <!-- Header -->
             <q-card-section class="modal-header row items-center q-pb-none">
-                <div class="text-h5 text-weight-bold">{{ t('selectGenres') }}</div>
+                <div class="text-h5 text-weight-bold">{{ t('genres.selectGenres') }}</div>
                 <q-space />
                 <q-btn flat round dense icon="close" @click="closeModal" />
             </q-card-section>
 
             <!-- Search bar -->
             <q-card-section class="q-pt-none">
-                <q-input v-model="searchQuery" outlined :placeholder="t('searchGenres')" prepend-inner-icon="search"
-                    clearable class="q-mb-md" />
+                <q-input v-model="searchQuery" outlined :placeholder="t('genres.searchGenres')"
+                    prepend-inner-icon="search" clearable class="q-mb-md" />
             </q-card-section>
 
             <!-- Genre tabs -->
             <q-card-section class="q-pt-none">
                 <q-tabs v-model="activeTab" dense class="text-primary" active-color="primary" indicator-color="primary"
                     align="left">
-                    <q-tab name="all" :label="t('all')" />
-                    <q-tab name="genres" :label="t('genres')" />
-                    <q-tab name="explicit" :label="t('explicit')" />
-                    <q-tab name="themes" :label="t('themes')" />
-                    <q-tab name="demographics" :label="t('demographics')" />
+                    <q-tab name="all" :label="t('common.all')" />
+                    <q-tab name="genres" :label="t('genres.genres')" />
+                    <q-tab name="explicit" :label="t('genres.explicit')" />
+                    <q-tab name="themes" :label="t('genres.themes')" />
+                    <q-tab name="demographics" :label="t('genres.demographics')" />
                 </q-tabs>
             </q-card-section>
 
             <!-- Loading state -->
             <div v-if="genreStore.isLoading" class="flex flex-center q-pa-xl">
                 <q-spinner-dots color="primary" size="40px" />
-                <div class="q-mt-md">{{ t('loadingGenres') }}</div>
+                <div class="q-mt-md">{{ t('genres.loadingGenres') }}</div>
             </div>
 
             <!-- Error state -->
@@ -38,7 +38,7 @@
                     <q-icon name="error" size="md" class="q-mr-md" />
                     {{ genreStore.error }}
                     <template v-slot:action>
-                        <q-btn flat :label="t('retry')" @click="genreStore.fetchGenres" />
+                        <q-btn flat :label="t('common.retry')" @click="genreStore.fetchGenres" />
                     </template>
                 </q-banner>
             </div>
@@ -53,7 +53,7 @@
                         <q-card-section class="q-pa-md text-center">
                             <div class="genre-name text-weight-medium">{{ genre.name }}</div>
                             <div class="genre-count text-caption text-grey-6">
-                                {{ genre.posts_count }} {{ t('anime') }}
+                                {{ genre.posts_count }} {{ t('genres.anime') }}
                             </div>
                             <q-icon v-if="selectedGenres.includes(genre.id)" name="check_circle" color="primary"
                                 size="sm" class="genre-check-icon" />
@@ -64,7 +64,8 @@
 
             <!-- Selected genres summary -->
             <q-card-section v-if="selectedGenres.length > 0" class="q-pt-none">
-                <div class="text-subtitle2 q-mb-sm">{{ t('selectedGenres') }} ({{ selectedGenres.length }}):</div>
+                <div class="text-subtitle2 q-mb-sm">{{ t('genres.selectedGenres') }} ({{ selectedGenres.length }}):
+                </div>
                 <div class="row q-gutter-xs">
                     <q-chip v-for="genreId in selectedGenres" :key="genreId" removable color="primary"
                         text-color="white" @remove="removeGenre(genreId)">
@@ -75,9 +76,10 @@
 
             <!-- Footer actions -->
             <q-card-actions align="right" class="q-pa-md">
-                <q-btn flat :label="t('clearAll')" @click="clearAllGenres" :disable="selectedGenres.length === 0" />
-                <q-btn flat :label="t('cancel')" @click="closeModal" />
-                <q-btn color="primary" :label="t('apply')" @click="applyGenres"
+                <q-btn flat :label="t('common.clearAll')" @click="clearAllGenres"
+                    :disable="selectedGenres.length === 0" />
+                <q-btn flat :label="t('common.cancel')" @click="closeModal" />
+                <q-btn color="primary" :label="t('common.apply')" @click="applyGenres"
                     :disable="selectedGenres.length === 0" />
             </q-card-actions>
         </q-card>

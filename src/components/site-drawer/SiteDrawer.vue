@@ -8,7 +8,7 @@
                         <q-icon color="grey" name="face" />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label>{{ $t('genre') }}</q-item-label>
+                        <q-item-label>{{ t('drawer.genre') }}</q-item-label>
                     </q-item-section>
                 </q-item>
 
@@ -26,7 +26,7 @@
                 <q-separator class="q-mt-md q-mb-xs" />
 
                 <q-item-label header class="text-weight-bold text-uppercase">
-                    More from Youtube
+                    {{ t('drawer.moreFromYoutube') }}
                 </q-item-label>
 
                 <q-item v-for="link in links3" :key="link.text" v-ripple clickable>
@@ -40,7 +40,7 @@
 
                 <q-separator class="q-my-md" />
 
-                <q-item-label header>{{ t('language') }}</q-item-label>
+                <q-item-label header>{{ t('drawer.language') }}</q-item-label>
                 <q-item>
                     <q-item-section>
                         <q-btn-toggle v-model="drawerStore.language" spread no-caps toggle-color="primary" color="white"

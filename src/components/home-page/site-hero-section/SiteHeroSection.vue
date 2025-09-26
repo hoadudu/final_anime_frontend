@@ -12,7 +12,7 @@
                         <div class="row items-center q-mb-md">
                             <q-badge v-if="movie.spotlight && parseInt(movie.spotlight) <= 3" color="red"
                                 text-color="white" class="q-mr-sm text-weight-bold" icon="trending_up">
-                                TRENDING
+                                {{ t('hero.trendingBadge') }}
                             </q-badge>
                             <q-badge v-if="movie.quality" color="orange" text-color="white"
                                 class="q-mr-sm text-weight-bold">
@@ -20,7 +20,7 @@
                             </q-badge>
                             <q-badge v-if="movie.mediaType === 'movie'" color="purple" text-color="white"
                                 class="q-mr-sm text-weight-bold">
-                                MOVIE
+                                {{ t('hero.movieBadge') }}
                             </q-badge>
                             <q-badge v-if="movie.ageRating" color="grey-7" text-color="white" class="q-mr-sm">
                                 {{ movie.ageRating }}
@@ -31,7 +31,7 @@
                         <div class="hero-title text-h2 text-white text-weight-bold q-mb-md">
                             {{ movie.title }}
                             <span v-if="movie.season" class="text-subtitle1 text-grey-4 q-ml-sm">
-                                Season {{ movie.season }}
+                                {{ t('hero.seasonLabel') }} {{ movie.season }}
                             </span>
                         </div>
 
@@ -60,14 +60,14 @@
 
                         <!-- Characters -->
                         <div v-if="movie.character" class="characters text-grey-4 text-caption q-mb-md">
-                            <strong>Cast:</strong> {{ movie.character }}
+                            <strong>{{ t('hero.castLabel') }}</strong> {{ movie.character }}
                         </div>
                         <!-- Action buttons -->
                         <div class="hero-actions q-gutter-md">
-                            <q-btn color="red" :label="t('watchNow')" push icon="play_arrow" size="lg"
+                            <q-btn color="red" :label="t('hero.watchNow')" push icon="play_arrow" size="lg"
                                 class="text-weight-bold" @click="watchMovie(movie)" />
                             <q-btn flat round color="white" icon="info" size="lg" @click="showInfo(movie)">
-                                <q-tooltip>{{ t('moreInfo') }}</q-tooltip>
+                                <q-tooltip>{{ t('hero.moreInfo') }}</q-tooltip>
                             </q-btn>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
         <div v-if="heroSectionStore.isLoading" class="loading-overlay absolute-full flex flex-center bg-black">
             <div class="text-center">
                 <q-spinner-dots color="red" size="40px" />
-                <div class="text-white q-mt-md">Loading featured anime...</div>
+                <div class="text-white q-mt-md">{{ t('hero.loadingFeaturedAnime') }}</div>
             </div>
         </div>
 
@@ -103,7 +103,7 @@
                 <q-icon name="error" size="md" class="q-mr-md" />
                 {{ heroSectionStore.error }}
                 <template v-slot:action>
-                    <q-btn flat label="Retry" @click="heroSectionStore.fetchFeaturedMovies" />
+                    <q-btn flat :label="t('hero.retry')" @click="heroSectionStore.fetchFeaturedMovies" />
                 </template>
             </q-banner>
         </div>

@@ -18,15 +18,15 @@
 
             <div class="tooltip-meta">
                 <div v-if="movie.aired" class="q-mb-xs">
-                    <strong>{{ t('releaseDate') }}:</strong> {{ movie.aired }}
+                    <strong>{{ t('tooltip.releaseDate') }}:</strong> {{ movie.aired }}
                 </div>
 
                 <div v-if="movie.rank" class="q-mb-xs">
-                    <strong>{{ t('rating') }}:</strong> {{ movie.rank }}
+                    <strong>{{ t('tooltip.rating') }}:</strong> {{ movie.rank }}
                 </div>
 
                 <div v-if="movie.genres && movie.genres.length" class="q-mb-xs">
-                    <strong>{{ t('genres') }}:</strong>
+                    <strong>{{ t('tooltip.genres') }}:</strong>
                     <div class="row q-gutter-xs q-mt-xs">
                         <q-chip v-for="genre in movie.genres.slice(0, 3)" :key="genre" dense color="primary"
                             text-color="white" size="sm">

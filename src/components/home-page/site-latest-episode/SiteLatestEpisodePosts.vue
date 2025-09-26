@@ -112,7 +112,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useLatestEpisodePostsStore } from 'src/stores/site-latest-episodes'
+import { useLatestEpisodePostsStore } from 'src/stores/site-latest-episode-posts'
 import MovieTooltip from 'src/components/MovieTooltip.vue'
 
 // Stores
@@ -184,11 +184,12 @@ const transformAnimeForTooltip = (animePost) => {
     return {
         id: animePost.id,
         title: animePost.title || animePost.name,
+        titles: animePost.titles || [],
         altTitle: animePost.altTitle || animePost.alternativeTitle,
         type: animePost.type || 'TV',
         duration: animePost.duration || '24m',
         poster: animePost.poster || animePost.image || animePost.thumbnail,
-        description: `${animePost.type || 'TV'} • ${animePost.duration || '24m'}`,
+        description: `${animePost.synopsis || 'No synopsis available.'} • ${animePost.review || 'No review available.'}`,
         rating: animePost.rating || animePost.score || '8.5',
         year: animePost.year || animePost.releaseDate || '2024',
         genres: animePost.genres || ['Action', 'Adventure'],

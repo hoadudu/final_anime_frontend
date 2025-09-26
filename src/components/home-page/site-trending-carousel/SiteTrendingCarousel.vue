@@ -1,15 +1,15 @@
 <template>
     <div class="trending-section">
-        <h2 class="trending-title">Trending</h2>
+        <h2 class="trending-title">{{ t('trending.trendingTitle') }}</h2>
 
         <div v-if="trendingStore.isLoading" class="loading-state">
             <q-spinner-dots color="primary" size="40px" />
-            <div class="loading-text">Loading trending anime...</div>
+            <div class="loading-text">{{ t('trending.loadingTrendingAnime') }}</div>
         </div>
 
         <div v-else-if="trendingStore.error" class="error-state">
             <div class="error-message">{{ trendingStore.error }}</div>
-            <q-btn color="primary" flat @click="refreshTrending">Retry</q-btn>
+            <q-btn color="primary" flat @click="refreshTrending">{{ t('trending.retry') }}</q-btn>
         </div>
 
         <div v-else class="trending-container">
@@ -22,7 +22,7 @@
                 <q-list class="trending-items" dense>
                     <q-item v-if="!trendingStore.trendingMovies || trendingStore.trendingMovies.length === 0"
                         class="no-data-message">
-                        No trending anime available
+                        {{ t('trending.noTrendingAnime') }}
                     </q-item>
                     <q-item v-for="(item, index) in trendingStore.trendingMovies" :key="item.id || index" clickable
                         class="trending-item q-pa-none" @click="handleItemClick(item)">
@@ -51,6 +51,9 @@ import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTrendingCarouselStore } from 'src/stores/site-collections-store'
 import MovieTooltip from 'src/components/MovieTooltip.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 import {
     QSpinnerDots,
     QBtn,
