@@ -20,7 +20,7 @@ export const useAnimeFeaturedStore = defineStore('animeFeatured', () => {
     error.value = null
     
     try {
-      const response = await api.get(API_BASE_URL + '/featured-lists/top-airing' + langQuery)
+      const response = await api.get(API_BASE_URL + '/home-page/top-airing' + langQuery)
       topAiring.value = response.data?.data || []
     } catch (err) {
       console.error('Failed to fetch top airing anime:', err)
@@ -35,7 +35,7 @@ export const useAnimeFeaturedStore = defineStore('animeFeatured', () => {
     error.value = null
     
     try {
-      const response = await api.get(API_BASE_URL + '/featured-lists/most-popular-animes' + langQuery)
+      const response = await api.get(API_BASE_URL + '/home-page/most-popular-animes' + langQuery)
       mostPopular.value = response.data?.data || []
     } catch (err) {
       console.error('Failed to fetch most popular anime:', err)
@@ -50,7 +50,7 @@ export const useAnimeFeaturedStore = defineStore('animeFeatured', () => {
     error.value = null
     
     try {
-      const response = await api.get(API_BASE_URL + '/featured-lists/most-liked-animes' + langQuery)
+      const response = await api.get(API_BASE_URL + '/home-page/most-liked-animes' + langQuery)
       mostLiked.value = response.data?.data || []
     } catch (err) {
       console.error('Failed to fetch most liked anime:', err)
@@ -65,7 +65,7 @@ export const useAnimeFeaturedStore = defineStore('animeFeatured', () => {
     error.value = null
     
     try {
-      const response = await api.get(API_BASE_URL + '/featured-lists/latest-completed' + langQuery)
+      const response = await api.get(API_BASE_URL + '/home-page/latest-completed' + langQuery)
       latestCompleted.value = response.data?.data || []
     } catch (err) {
       console.error('Failed to fetch latest completed anime:', err)

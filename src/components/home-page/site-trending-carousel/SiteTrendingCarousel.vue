@@ -33,6 +33,7 @@
                                     <div class="item-number">{{ String(index + 1).padStart(2, '0') }}</div>
                                     <div class="item-title">{{ item.title }}</div>
                                 </div>
+                                <MovieTooltip :movie="transformItemForTooltip(item)" />
                             </q-img>
                         </q-card>
                     </q-item>
@@ -49,6 +50,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTrendingCarouselStore } from 'src/stores/site-collections-store'
+import MovieTooltip from 'src/components/MovieTooltip.vue'
 import {
     QSpinnerDots,
     QBtn,
@@ -124,6 +126,17 @@ function handleImageError(event) {
 function getItemImage(item) {
     // Try different possible image properties
     return item.posterUrl || item.poster || item.thumbnail || item.image || fallbackImage
+}
+
+function transformItemForTooltip(item) {
+    return {
+        title: item.title,
+        titles: item.titles || [],  // Thêm hỗ trợ cho trường titles
+        description: item.description || item.summary || item.overview || '',
+        aired: item.year ? `${item.year}` : (item.release_date || item.aired || ''),
+        rank: item.rating ? `${item.rating}/10` : '',
+        genres: item.genres || []
+    }
 }
 
 // Thêm các hàm xử lý drag chuột

@@ -16,7 +16,7 @@ export const useHeroSectionStore = defineStore('heroSection', () => {
     error.value = null
     
     try {
-      const response = await api.get(`${API_BASE_URL}/collections/featured-animes${langQuery}`)
+      const response = await api.get(`${API_BASE_URL}/home-page/featured-animes${langQuery}`)
       featuredMovies.value = response.data
     } catch (err) {
       console.error('Error fetching featured movies:', err)
@@ -47,7 +47,7 @@ export const useTrendingCarouselStore = defineStore('trending-carousel', () => {
     error.value = null
     
     try {
-      const response = await api.get(`${API_BASE_URL}/collections/trending-animes${langQuery}`)
+      const response = await api.get(`${API_BASE_URL}/home-page/trending-animes${langQuery}`)
       // console.log('API Response:', response.data)
       
       // Ensure the response data is an array

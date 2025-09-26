@@ -30,6 +30,7 @@
                                         </div>
                                     </q-item-label>
                                 </q-item-section>
+                                <MovieTooltip :movie="transformItemForTooltip(anime)" />
                             </q-item>
                         </q-list>
                         <div class="view-more-container">
@@ -67,6 +68,7 @@
                                         </div>
                                     </q-item-label>
                                 </q-item-section>
+                                <MovieTooltip :movie="transformItemForTooltip(anime)" />
                             </q-item>
                         </q-list>
                         <div class="view-more-container">
@@ -105,6 +107,7 @@
                                         </div>
                                     </q-item-label>
                                 </q-item-section>
+                                <MovieTooltip :movie="transformItemForTooltip(anime)" />
                             </q-item>
                         </q-list>
                         <div class="view-more-container">
@@ -143,7 +146,9 @@
                                         </div>
                                     </q-item-label>
                                 </q-item-section>
+                                <MovieTooltip :movie="transformItemForTooltip(anime)" />
                             </q-item>
+
                         </q-list>
                         <div class="view-more-container">
                             <q-btn flat no-caps color="primary" class="full-width view-more-btn"
@@ -161,6 +166,7 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAnimeFeaturedStore } from 'src/stores/site-anime-featured'
+import MovieTooltip from 'src/components/MovieTooltip.vue'
 
 const router = useRouter()
 const animeStore = useAnimeFeaturedStore()
@@ -168,6 +174,17 @@ const animeStore = useAnimeFeaturedStore()
 function navigateToAnime(anime) {
     if (anime.slug) {
         router.push(`/anime/${anime.slug}`)
+    }
+}
+
+function transformItemForTooltip(item) {
+    return {
+        title: item.title,
+        titles: item.titles || [],  // Thêm hỗ trợ cho trường titles
+        description: item.description || item.summary || item.overview || '',
+        aired: item.year ? `${item.year}` : (item.release_date || item.aired || ''),
+        rank: item.rating ? `${item.rating}/10` : '',
+        genres: item.genres || []
     }
 }
 

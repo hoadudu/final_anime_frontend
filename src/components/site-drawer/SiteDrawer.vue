@@ -128,4 +128,12 @@ const buttons2 = computed(() => drawerStore.buttons.buttons2)
 
     &:hover
       color: #000
+@media (max-width: 767px)
+  .drawer-high-priority
+    z-index: 1000 !important
+    margin-top: 50px !important // Đẩy drawer xuống dưới header
+    
+@media (max-width: 480px)
+  .drawer-high-priority
+    margin-top: 56px !important // Điều chỉnh cho màn hình nhỏ hơn
 </style>

@@ -4,6 +4,19 @@
       <SiteHeroSection />
       <SiteTrendingCarousel />
       <SiteAnimeFeatured />
+      <!-- Main Content + Sidebar -->
+      <div class="row q-col-gutter-md q-mt-lg">
+        <!-- Main Content -->
+        <div class="col-12 col-md-9">
+          <SiteLatestEpisode />
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-12 col-md-3">
+          <q-card class="q-pa-md">Sidebar</q-card>
+        </div>
+      </div>
+
 
 
 
@@ -15,8 +28,9 @@
 </template>
 
 <script setup>
-import SiteHeroSection from 'src/components/site-hero-section/SiteHeroSection.vue'
-import SiteTrendingCarousel from 'src/components/site-trending-carousel/SiteTrendingCarousel.vue'
-import SiteAnimeFeatured from 'src/components/site-anime-featured/SiteAnimeFeatured.vue'
+import SiteHeroSection from 'src/components/home-page/site-hero-section/SiteHeroSection.vue'
+import SiteTrendingCarousel from 'src/components/home-page/site-trending-carousel/SiteTrendingCarousel.vue'
+import SiteAnimeFeatured from 'src/components/home-page/site-anime-featured/SiteAnimeFeatured.vue'
+import SiteLatestEpisode from 'src/components/home-page/site-latest-episode/SiteLatestEpisodePosts.vue'
 
 </script>
