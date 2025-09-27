@@ -9,8 +9,8 @@
                             <h5 class="q-my-none">{{ t('featured.topAiring') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
-                            <q-item v-for="(anime, index) in animeStore.topAiring" :key="`airing-${index}`"
-                                class="featured-item" clickable @click="navigateToAnime(anime)">
+                            <q-item v-for="(anime, index) in topAiring" :key="`airing-${index}`" class="featured-item"
+                                clickable @click="navigateToAnime(anime)">
                                 <q-item-section avatar>
                                     <q-img :src="anime.image" :ratio="2 / 3" class="anime-poster" />
                                 </q-item-section>
@@ -48,7 +48,7 @@
                             <h5 class="q-my-none">{{ t('featured.mostPopular') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
-                            <q-item v-for="(anime, index) in animeStore.mostPopular" :key="`popular-${index}`"
+                            <q-item v-for="(anime, index) in mostPopular" :key="`popular-${index}`"
                                 class="featured-item" clickable @click="navigateToAnime(anime)">
                                 <q-item-section avatar>
                                     <q-img :src="anime.image" :ratio="2 / 3" class="anime-poster" />
@@ -87,8 +87,8 @@
                             <h5 class="q-my-none">{{ t('featured.mostLiked') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
-                            <q-item v-for="(anime, index) in animeStore.mostLiked" :key="`liked-${index}`"
-                                class="featured-item" clickable @click="navigateToAnime(anime)">
+                            <q-item v-for="(anime, index) in mostLiked" :key="`liked-${index}`" class="featured-item"
+                                clickable @click="navigateToAnime(anime)">
                                 <q-item-section avatar>
                                     <q-img :src="anime.image" :ratio="2 / 3" class="anime-poster" />
                                 </q-item-section>
@@ -126,7 +126,7 @@
                             <h5 class="q-my-none">{{ t('featured.latestCompleted') }}</h5>
                         </q-card-section>
                         <q-list class="featured-items" padding>
-                            <q-item v-for="(anime, index) in animeStore.latestCompleted" :key="`completed-${index}`"
+                            <q-item v-for="(anime, index) in latestCompleted" :key="`completed-${index}`"
                                 class="featured-item" clickable @click="navigateToAnime(anime)">
                                 <q-item-section avatar>
                                     <q-img :src="anime.image" :ratio="2 / 3" class="anime-poster" />
@@ -164,15 +164,37 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useAnimeFeaturedStore } from 'src/stores/site-anime-featured'
+import {
+    useHomePageAnimeFeaturedTopAiringData,
+    useHomePageAnimeFeaturedMostPopularData,
+    useHomePageAnimeFeaturedMostLikedData,
+    useHomePageAnimeFeaturedLatestCompletedData
+} from 'src/composables/home-page/useHomePageData'
+
 import MovieTooltip from 'src/components/MovieTooltip.vue'
 
 const { t } = useI18n()
 const router = useRouter()
-const animeStore = useAnimeFeaturedStore()
+const { data: topAiringResponse } = useHomePageAnimeFeaturedTopAiringData()
+const { data: mostPopularResponse } = useHomePageAnimeFeaturedMostPopularData()
+const { data: mostLikedResponse } = useHomePageAnimeFeaturedMostLikedData()
+const { data: latestCompletedResponse } = useHomePageAnimeFeaturedLatestCompletedData()
+
+// Extract the actual data arrays from the API response
+const topAiring = computed(() => topAiringResponse.value?.data || [])
+const mostPopular = computed(() => mostPopularResponse.value?.data || [])
+const mostLiked = computed(() => mostLikedResponse.value?.data || [])
+const latestCompleted = computed(() => latestCompletedResponse.value?.data || [])
+
+// watchEffect(() => {
+//     console.log('topAiring:', topAiring.value, 'Array?', Array.isArray(topAiring.value))
+//     console.log('mostPopular:', mostPopular.value, 'Array?', Array.isArray(mostPopular.value))
+//     console.log('mostLiked:', mostLiked.value, 'Array?', Array.isArray(mostLiked.value))
+//     console.log('latestCompleted:', latestCompleted.value, 'Array?', Array.isArray(latestCompleted.value))
+// })
 
 function navigateToAnime(anime) {
     if (anime.slug) {
@@ -195,9 +217,7 @@ function navigateToSection(section) {
     router.push(`/anime/${section}`)
 }
 
-onMounted(() => {
-    animeStore.fetchAllFeaturedData()
-})
+
 </script>
 
 <style scoped>

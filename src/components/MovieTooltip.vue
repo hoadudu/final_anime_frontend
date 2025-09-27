@@ -21,8 +21,12 @@
                     <strong>{{ t('tooltip.releaseDate') }}:</strong> {{ movie.aired }}
                 </div>
 
-                <div v-if="movie.rank" class="q-mb-xs">
+                <!-- <div v-if="movie.rank" class="q-mb-xs">
                     <strong>{{ t('tooltip.rating') }}:</strong> {{ movie.rank }}
+                </div> -->
+
+                <div v-if="movie.views" class="q-mb-xs">
+                    <strong>{{ t('tooltip.views') }}:</strong> {{ movie.views }}
                 </div>
 
                 <div v-if="movie.genres && movie.genres.length" class="q-mb-xs">

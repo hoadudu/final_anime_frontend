@@ -31,7 +31,7 @@
 import SiteHeroSection from 'src/components/home-page/site-hero-section/SiteHeroSection.vue'
 import SiteTrendingCarousel from 'src/components/home-page/site-trending-carousel/SiteTrendingCarousel.vue'
 import SiteAnimeFeatured from 'src/components/home-page/site-anime-featured/SiteAnimeFeatured.vue'
-import SiteLatestEpisode from 'src/components/home-page/site-latest-episode/SiteLatestEpisodePosts.vue'
+import SiteLatestEpisode from 'src/components/home-page/site-latest-episode-posts/SiteLatestEpisodePosts.vue'
 import TopTen from 'src/components/side-bar/TopTen.vue'
 
 </script>

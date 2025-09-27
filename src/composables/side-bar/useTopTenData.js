@@ -13,9 +13,7 @@ export function useTopTenData() {
             const response = await api.get(`${API_BASE_URL}/sidebar/top-anime${langQuery}`)
             return response.data
         },
-        staleTime: 1000 * 60 * 60, // 1 giờ - data được coi là fresh
-        cacheTime: 1000 * 60 * 60 * 24, // 24 giờ - cache time
-        // Tự động persist vào localStorage (với plugin)
-        experimental_persistQueryClient: true
+        staleTime: 1000 * 60 * 60, // 1 giờ
+        cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
     })
 }

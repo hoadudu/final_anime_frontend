@@ -2,13 +2,13 @@
     <div class="trending-section">
         <h2 class="trending-title">{{ t('trending.trendingTitle') }}</h2>
 
-        <div v-if="trendingStore.isLoading" class="loading-state">
+        <div v-if="isLoading" class="loading-state">
             <q-spinner-dots color="primary" size="40px" />
             <div class="loading-text">{{ t('trending.loadingTrendingAnime') }}</div>
         </div>
 
-        <div v-else-if="trendingStore.error" class="error-state">
-            <div class="error-message">{{ trendingStore.error }}</div>
+        <div v-else-if="error" class="error-state">
+            <div class="error-message">{{ error }}</div>
             <q-btn color="primary" flat @click="refreshTrending">{{ t('trending.retry') }}</q-btn>
         </div>
 
@@ -20,11 +20,10 @@
                 @mousemove="onDrag" @mouseup="endDrag" @mouseleave="endDrag" @touchstart="startDragTouch"
                 @touchmove="onDragTouch" @touchend="endDrag">
                 <q-list class="trending-items" dense>
-                    <q-item v-if="!trendingStore.trendingMovies || trendingStore.trendingMovies.length === 0"
-                        class="no-data-message">
+                    <q-item v-if="!trendingMovies || trendingMovies.length === 0" class="no-data-message">
                         {{ t('trending.noTrendingAnime') }}
                     </q-item>
-                    <q-item v-for="(item, index) in trendingStore.trendingMovies" :key="item.id || index" clickable
+                    <q-item v-for="(item, index) in trendingMovies" :key="item.id || index" clickable
                         class="trending-item q-pa-none" @click="handleItemClick(item)">
                         <q-card flat bordered class="item-image full-width">
                             <q-img :src="getItemImage(item)" :alt="item.title" referrerpolicy="no-referrer"
@@ -49,7 +48,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { useTrendingCarouselStore } from 'src/stores/site-collections-store'
+import { useHomePageTrendingCarouselData } from 'src/composables/home-page/useHomePageData'
 import MovieTooltip from 'src/components/MovieTooltip.vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -64,9 +63,7 @@ import {
 } from 'quasar'
 
 const router = useRouter()
-const trendingStore = useTrendingCarouselStore()
-// Fix: Don't destructure reactive refs from the store
-// They need to be accessed as trendingStore.trendingMovies to maintain reactivity
+const { data: trendingMovies, isLoading, error, refetch: fetchTrendingMovies } = useHomePageTrendingCarouselData()
 
 const scrollContainer = ref(null)
 const canScrollLeft = ref(false)
@@ -80,13 +77,6 @@ const startScrollLeft = ref(0)
 const isClick = ref(true) // Để phân biệt giữa click và drag
 
 onMounted(async () => {
-    // console.log('Mounting SiteTrendingCarousel')
-    await trendingStore.fetchTrendingMovies()
-    // console.log('Trending data fetched:', trendingStore.trendingMovies)
-
-    // Use this to test with dummy data if the API doesn't return data
-    // addDummyData()
-
     nextTick(() => {
         updateScrollButtons()
         setupScrollListener()
@@ -119,7 +109,7 @@ function updateScrollButtons() {
 }
 
 function refreshTrending() {
-    trendingStore.fetchTrendingMovies()
+    fetchTrendingMovies()
 }
 
 function handleImageError(event) {

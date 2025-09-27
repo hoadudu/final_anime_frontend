@@ -106,6 +106,7 @@ export default {
         rating: 'Đánh giá',
         genres: 'Thể loại',
         cast: 'Diễn viên',
+        views: 'Lượt xem',
     },
 
     // Hero section

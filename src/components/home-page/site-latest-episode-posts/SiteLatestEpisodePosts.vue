@@ -19,7 +19,7 @@
         <!-- Error State -->
         <div v-else-if="error" class="error-container text-center q-py-xl">
             <q-icon name="error" color="negative" size="48px" />
-            <div class="error-message q-mt-md text-h6">{{ error }}</div>
+            <div class="error-message q-mt-md text-h6">{{ t('latestEpisodes.fetchError') }}</div>
             <q-btn color="primary" flat @click="refreshLatestEpisodes" class="q-mt-md" icon="refresh">
                 {{ t('common.tryAgain') }}
             </q-btn>
@@ -109,27 +109,24 @@
 // ...existing code...
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useLatestEpisodePostsStore } from 'src/stores/site-latest-episode-posts'
+import { useHomePageLastestEpisodePostsData } from 'src/composables/home-page/useHomePageData'
 import MovieTooltip from 'src/components/MovieTooltip.vue'
-
-// Stores
-const latestEpisodePostsStore = useLatestEpisodePostsStore()
-const { fetchLatestEpisodePosts, refreshLatestEpisodePosts } = latestEpisodePostsStore
 
 // Composables
 const router = useRouter()
 const { t } = useI18n()
 
+// Vue Query data
+const { data: latestEpisodePostsResponse, isLoading, error, refetch } = useHomePageLastestEpisodePostsData()
+
 // Reactive data
-const isLoading = ref(false)
 const isRefreshing = ref(false)
-const error = ref(null)
 
 // Computed
-const animeList = computed(() => latestEpisodePostsStore.latestEpisodePosts || [])
+const animeList = computed(() => latestEpisodePostsResponse.value?.data || [])
 
 // Methods
 const navigateToRecentlyUpdated = () => {
@@ -149,31 +146,18 @@ const navigateToAnime = (animePost) => {
 const refreshLatestAnimePosts = async () => {
     try {
         isRefreshing.value = true
-        error.value = null
 
-        // Force refresh từ API
-        await refreshLatestEpisodePosts()
+        // Refetch data from API
+        await refetch()
     } catch (err) {
         console.error('Failed to refresh anime posts:', err)
-        error.value = t('latestEpisodes.fetchError')
     } finally {
         isRefreshing.value = false
     }
 }
 
-const loadLatestAnimePosts = async () => {
-    try {
-        isLoading.value = true
-        error.value = null
-
-        // Sử dụng cache nếu có
-        await fetchLatestEpisodePosts()
-    } catch (err) {
-        console.error('Failed to load anime posts:', err)
-        error.value = t('latestEpisodes.fetchError')
-    } finally {
-        isLoading.value = false
-    }
+const refreshLatestEpisodes = () => {
+    refreshLatestAnimePosts()
 }
 
 const handleImageError = (event) => {
@@ -189,7 +173,7 @@ const transformAnimeForTooltip = (animePost) => {
         type: animePost.type || 'TV',
         duration: animePost.duration || '24m',
         poster: animePost.poster || animePost.image || animePost.thumbnail,
-        description: `${animePost.synopsis || 'No synopsis available.'} • ${animePost.review || 'No review available.'}`,
+        description: `${animePost.description}`,
         rating: animePost.rating || animePost.score || '8.5',
         year: animePost.year || animePost.releaseDate || '2024',
         genres: animePost.genres || ['Action', 'Adventure'],
@@ -199,29 +183,10 @@ const transformAnimeForTooltip = (animePost) => {
     }
 }
 
-// Watchers
-watch(() => latestEpisodePostsStore.isLoading, (newValue) => {
-    isLoading.value = newValue
-})
-
-watch(() => latestEpisodePostsStore.error, (newValue) => {
-    if (newValue) {
-        error.value = typeof newValue === 'string' ? newValue : t('latestEpisodes.fetchError')
-    }
-})
-
 // Lifecycle
-onMounted(async () => {
-    // Cache sẽ tự động kiểm tra, không cần kiểm tra needsRefresh
-    await loadLatestAnimePosts()
+onMounted(() => {
+    // Vue Query sẽ tự động fetch data khi component mount
 })
-
-// Debug cache info (chỉ trong development)
-if (process.env.NODE_ENV === 'development') {
-    watch(() => latestEpisodePostsStore.getCacheInfo(), (cacheInfo) => {
-        console.log('Latest Episodes Cache Info:', cacheInfo)
-    }, { deep: true })
-}
 </script>
 
 

@@ -2,8 +2,8 @@ import { defineBoot } from '#q-app/wrappers'
 import { createI18n } from 'vue-i18n'
 import messages from 'src/i18n'
 
-// Lấy ngôn ngữ từ localStorage hoặc dùng en-US làm mặc định
-const savedLanguage = localStorage.getItem('app-language') || 'en-US'
+// Lấy ngôn ngữ từ localStorage hoặc dùng vi-VN làm mặc định
+const savedLanguage = localStorage.getItem('app-language') || 'vi-VN'
 
 // Tạo i18n instance
 const i18n = createI18n({

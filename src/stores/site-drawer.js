@@ -7,21 +7,21 @@ import { API_BASE_URL } from 'src/config/api'
 
 export const useDrawerStore = defineStore('drawer', () => {
   // state
-  
+
   const links = ref([])
   const buttons = ref([])
   const loading = ref(false)
   const error = ref(null)
   const leftDrawerOpen = ref(false)
-  const language = ref(localStorage.getItem('app-language') || 'en-US')
-  
+  const language = ref(localStorage.getItem('app-language') || 'vi-VN')
+
   const languageOptions = ref([
     { label: 'English', value: 'en-US' },
     { label: 'Tiếng Việt', value: 'vi-VN' }
   ])
 
   // actions
-  
+
   async function fetchDrawerData() {
     loading.value = true
     error.value = null
@@ -52,7 +52,7 @@ export const useDrawerStore = defineStore('drawer', () => {
 
   function setLanguage(newLanguage) {
     language.value = newLanguage
-    localStorage.setItem('app-language', newLanguage)    
+    localStorage.setItem('app-language', newLanguage)
   }
 
   function toggleLeftDrawer() {

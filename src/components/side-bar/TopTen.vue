@@ -81,6 +81,11 @@
                                         class="meta-badge q-ml-xs" size="xs">
                                         {{ anime.totalEpisodes }}
                                     </q-badge>
+                                    <q-badge v-if="anime.views" color="grey" text-color="white"
+                                        class="meta-badge q-ml-xs" size="xs">
+                                        <q-icon name="visibility" size="10px" class="q-mr-xs" />
+                                        {{ anime.views }}
+                                    </q-badge>
                                 </div>
                                 <div class="anime-type q-mt-xs">{{ anime.type }}</div>
                             </q-item-label>
@@ -96,28 +101,24 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-
 import MovieTooltip from 'src/components/MovieTooltip.vue'
-import { useSiteSidebarTopTenStore } from 'src/stores/site-sidebar-top-ten-store'
+import { useTopTenData } from 'src/composables/side-bar/useTopTenData'
 
 // Composables
 const router = useRouter()
 const { t } = useI18n()
-const topTenStore = useSiteSidebarTopTenStore()
+const { data: topTenData, isLoading, error } = useTopTenData()
 
 // Reactive data
-const activeTab = ref('month')
+const activeTab = ref('day')
 
 // Computed properties
 const currentData = computed(() => {
-    return topTenStore.topTenData[activeTab.value] || []
+    return topTenData.value?.[activeTab.value] || []
 })
-
-const isLoading = computed(() => topTenStore.isLoading)
-const error = computed(() => topTenStore.error)
 
 // Tab options
 const tabOptions = computed(() => [
@@ -129,14 +130,8 @@ const tabOptions = computed(() => [
 ])
 
 // Methods
-const fetchTopTenData = () => {
-    topTenStore.fetchTopTen()
-}
-
-
 const onTabChange = (newTab) => {
     activeTab.value = newTab
-    // Could add analytics or other side effects here
 }
 
 const getRankClass = (rank) => {
@@ -160,18 +155,14 @@ const handleImageError = (event) => {
 const transformAnimeForTooltip = (anime) => {
     return {
         title: anime.title,
-        titles: [], // Could be extended with alternative titles
+        titles: [],
         description: anime.description || '',
         aired: anime.year || '',
+        views: anime.views || '',
         rank: anime.rank ? `#${anime.rank}` : '',
         genres: anime.genres || []
     }
 }
-
-// Lifecycle
-onMounted(() => {
-    topTenStore.fetchTopTen()
-})
 </script>
 
 <style lang="scss" scoped>

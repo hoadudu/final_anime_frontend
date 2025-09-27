@@ -106,6 +106,7 @@ export default {
     rating: 'Rating',
     genres: 'Genres',
     cast: 'Cast',
+    views: 'Views',
   },
 
   // Hero section

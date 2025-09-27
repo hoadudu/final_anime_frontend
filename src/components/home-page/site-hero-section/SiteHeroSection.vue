@@ -3,7 +3,7 @@
         <q-carousel v-model="slide" animated :navigation="false" infinite arrows transition-prev="slide-right"
             transition-next="slide-left" height="650px" class="bg-black" @mouseenter="pauseAutoplay"
             @mouseleave="resumeAutoplay">
-            <q-carousel-slide v-for="(movie, index) in heroSectionStore.featuredMovies" :key="index" :name="index"
+            <q-carousel-slide v-for="(movie, index) in featuredMovies" :key="index" :name="index"
                 :img-src="movie.backdropImage" class="column no-wrap flex-center">
                 <div class="hero-content absolute-bottom text-left q-pa-xl">
                     <div class="hero-overlay"></div>
@@ -78,7 +78,7 @@
             <template v-slot:control>
                 <q-carousel-control position="bottom-right" :offset="[18, 18]">
                     <div class="carousel-indicators row q-gutter-xs">
-                        <q-btn v-for="(movie, index) in heroSectionStore.featuredMovies" :key="index" flat dense
+                        <q-btn v-for="(movie, index) in featuredMovies" :key="index" flat dense
                             :class="slide === index ? 'active-indicator' : 'inactive-indicator'" @click="slide = index">
                             <div class="indicator-content">
                                 <div class="indicator-progress" :style="getProgressStyle(index)"></div>
@@ -90,7 +90,7 @@
         </q-carousel>
 
         <!-- Loading state -->
-        <div v-if="heroSectionStore.isLoading" class="loading-overlay absolute-full flex flex-center bg-black">
+        <div v-if="isLoading" class="loading-overlay absolute-full flex flex-center bg-black">
             <div class="text-center">
                 <q-spinner-dots color="red" size="40px" />
                 <div class="text-white q-mt-md">{{ t('hero.loadingFeaturedAnime') }}</div>
@@ -98,12 +98,12 @@
         </div>
 
         <!-- Error state -->
-        <div v-if="heroSectionStore.error" class="error-overlay absolute-full flex flex-center bg-black">
+        <div v-if="error" class="error-overlay absolute-full flex flex-center bg-black">
             <q-banner class="bg-negative text-white q-ma-lg">
                 <q-icon name="error" size="md" class="q-mr-md" />
-                {{ heroSectionStore.error }}
+                {{ error }}
                 <template v-slot:action>
-                    <q-btn flat :label="t('hero.retry')" @click="heroSectionStore.fetchFeaturedMovies" />
+                    <q-btn flat :label="t('hero.retry')" @click="fetchFeaturedMovies" />
                 </template>
             </q-banner>
         </div>
@@ -112,11 +112,11 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { useHeroSectionStore } from 'src/stores/site-collections-store'
+import { useHomePageHeroSectionData } from 'src/composables/home-page/useHomePageData'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const heroSectionStore = useHeroSectionStore()
+const { data: featuredMovies, isLoading, error, refetch: fetchFeaturedMovies } = useHomePageHeroSectionData()
 const slide = ref(0)
 const autoplay = ref(true)
 let timer = null
@@ -125,8 +125,8 @@ const setupAutoplay = () => {
     if (timer) clearInterval(timer)
 
     timer = setInterval(() => {
-        if (autoplay.value && heroSectionStore.featuredMovies.length > 0) {
-            const nextIndex = (slide.value + 1) % heroSectionStore.featuredMovies.length
+        if (autoplay.value && (featuredMovies.value?.length || 0) > 0) {
+            const nextIndex = (slide.value + 1) % (featuredMovies.value?.length || 0)
             slide.value = nextIndex
         }
     }, 6000)
@@ -171,9 +171,9 @@ const showInfo = (movie) => {
 }
 
 onMounted(async () => {
-    await heroSectionStore.fetchFeaturedMovies()
+    await fetchFeaturedMovies()
 
-    if (heroSectionStore.featuredMovies.length > 0) {
+    if (featuredMovies.value.length > 0) {
         slide.value = 0
         setupAutoplay()
     }
