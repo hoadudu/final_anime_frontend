@@ -16,14 +16,8 @@
           <TopTen />
         </div>
       </div>
-
-
-
-
     </div>
-
   </q-page>
-
 
 </template>
 

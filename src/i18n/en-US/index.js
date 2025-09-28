@@ -38,6 +38,10 @@ export default {
     noData: 'No data available',
     noResults: 'No results found',
     untitled: 'Untitled',
+    episodes: 'Episodes',
+    shares: 'Shares',
+    showMore: 'Show More',
+    showLess: 'Show Less',
 
     // Status messages
     success: 'Action was successful',
@@ -237,5 +241,34 @@ export default {
     removedFromFavorites: 'Removed from your favorites',
     refreshSuccess: 'Data refreshed successfully',
     refreshError: 'Failed to refresh data',
+  },
+
+  // Anime Info Page
+  animeInfo: {
+    errorLoading: 'Failed to load anime information',
+    watch2gether: 'Watch2gether',
+    watchNow: 'Watch now',
+    addToList: 'Add to List',
+    currentlyWatching: 'Currently Watching',
+    watching: 'Watching',
+    onHold: 'On-Hold',
+    planToWatch: 'Plan to Watch',
+    dropped: 'Dropped',
+    completed: 'Completed',
+    shareAnime: 'Share Anime',
+    shareToFriends: 'to your friends',
+    overview: 'Overview',
+    animeDetails: 'Anime Details',
+    japanese: 'Japanese',
+    synonyms: 'Synonyms',
+    aired: 'Aired',
+    premiered: 'Premiered',
+    duration: 'Duration',
+    status: 'Status',
+    malScore: 'MAL Score',
+    genres: 'Genres',
+    studios: 'Studios',
+    producers: 'Producers',
+    promoText: '{site} is the best site to watch {title} SUB online, or you can even watch {title} DUB in HD quality. You can also find {studio} anime on {site} website.'
   }
 }

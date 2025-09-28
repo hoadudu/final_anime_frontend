@@ -1,0 +1,593 @@
+// Anime Info Page Styling
+.anime-info-container {
+  width: 100%;
+//   min-height: 100vh;
+
+  // Breadcrumb Styling
+  .breadcrumb-container {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+
+    .breadcrumb-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+
+      .breadcrumb-nav {
+        .breadcrumb-item {
+          color: rgba(255, 255, 255, 0.7);
+          transition: all 0.3s ease;
+
+          &:hover {
+            color: #667eea;
+            transform: translateY(-1px);
+          }
+
+          .q-icon {
+            margin-right: 0.5rem;
+          }
+        }
+
+        .breadcrumb-current {
+          color: white;
+          font-weight: 500;
+          
+          .q-breadcrumbs-el__content {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        .q-breadcrumbs__separator {
+          color: rgba(255, 255, 255, 0.4);
+        }
+      }
+    }
+  }
+
+  // Hero Section Styling
+  .hero-section {
+    position: relative;
+    // min-height: 70vh;
+    // display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); // Fallback background
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(8px) brightness(0.3);
+      transform: scale(1.1);
+      
+      // Fallback when no background image
+      &:empty {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(18, 18, 18, 0.9) 0%,
+        rgba(18, 18, 18, 0.7) 50%,
+        rgba(18, 18, 18, 0.9) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      // max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+  }
+
+  // Poster Card Styling
+  .poster-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .poster-wrapper {
+      position: relative;
+      width: 100%;
+      
+      // Maintain 2:3 aspect ratio (width:height)
+      aspect-ratio: 2/3;
+      
+      // Fallback for browsers that don't support aspect-ratio
+      &::before {
+        content: '';
+        display: block;
+        padding-top: 150%; // 3/2 * 100% = 150% for 2:3 ratio
+      }
+
+      .poster-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+
+        // Ensure Quasar q-img displays properly with correct aspect ratio
+        .q-img__image {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+
+        .q-img__container {
+          width: 100%;
+          height: 100%;
+        }
+        
+        .q-img__content {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .rating-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        z-index: 3;
+        
+        &.rating-excellent {
+          background: rgba(76, 175, 80, 0.9);
+          color: white;
+        }
+        
+        &.rating-good {
+          background: rgba(255, 193, 7, 0.9);
+          color: black;
+        }
+        
+        &.rating-average {
+          background: rgba(255, 152, 0, 0.9);
+          color: white;
+        }
+        
+        &.rating-poor {
+          background: rgba(244, 67, 54, 0.9);
+          color: white;
+        }
+        
+        &.rating-default {
+          background: rgba(158, 158, 158, 0.9);
+          color: white;
+        }
+      }
+    }
+  }
+
+  // Main Info Card Styling
+  .main-info-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+
+    .title-section {
+      .anime-title {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+      }
+
+      .japanese-title {
+        font-style: italic;
+      }
+
+      .synonyms {
+        opacity: 0.8;
+      }
+
+      .badges-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        .status-chip {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .stats-row {
+      .stat-card {
+        text-align: center;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateY(-2px);
+        }
+
+        .stat-value {
+          color: #667eea;
+          margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+    }
+
+    .action-buttons {
+      .watch-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-weight: bold;
+        padding: 0.75rem 2rem;
+      }
+    }
+  }
+
+  // Loading and Error States
+  .loading-container,
+  .error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 2rem;
+
+    .loading-card,
+    .error-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      min-width: 300px;
+    }
+  }
+
+  // Tabs Styling
+  .content-tabs {
+    .tabs-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      .tabs-header {
+        background: rgba(255, 255, 255, 0.03);
+        color: white;
+
+        .q-tab {
+          font-weight: 500;
+          
+          &--active {
+            color: #667eea;
+          }
+        }
+      }
+
+      .q-tab-panels {
+        background: transparent;
+        color: white;
+      }
+    }
+
+    // Tab Content Cards
+    .synopsis-card,
+    .info-details-card,
+    .genres-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+
+      .synopsis-text {
+        line-height: 1.6;
+        font-size: 1rem;
+
+        .show-more-btn {
+          margin-left: 0.5rem;
+        }
+      }
+
+      .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .info-label {
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.8);
+          flex-shrink: 0;
+          margin-right: 1rem;
+        }
+
+        .info-value {
+          text-align: right;
+          font-weight: 400;
+        }
+      }
+
+      .genres-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        .genre-chip {
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Page Container for SiteAnimePage
+.anime-page {
+//   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  min-height: 100vh;
+
+  .page-container {
+    // max-width: 1400px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .additional-content {
+    padding: 0 2rem;
+
+    .recommendations-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .sidebar-content {
+      .sidebar-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .anime-info-container {
+    .breadcrumb-container {
+      .breadcrumb-wrapper {
+        padding: 0 1rem;
+
+        .breadcrumb-nav {
+          .breadcrumb-current {
+            .q-breadcrumbs-el__content {
+              max-width: 200px;
+            }
+          }
+        }
+      }
+    }
+
+    .hero-section {
+      min-height: auto;
+      padding: 1rem 0;
+
+      .hero-content {
+        padding: 1rem;
+      }
+    }
+
+    // Ensure poster maintains 2:3 ratio on tablets
+    .poster-card {
+      .poster-wrapper {
+        // Force aspect ratio on smaller screens
+        aspect-ratio: 2/3;
+        
+        .poster-image {
+          // Ensure image fills the container properly
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .main-info-card {
+      .title-section {
+        .anime-title {
+          font-size: 1.8rem;
+        }
+      }
+
+      .action-buttons {
+        .row {
+          flex-direction: column;
+          
+          .q-btn {
+            margin-bottom: 0.5rem;
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .content-tabs {
+      .tabs-header {
+        .q-tab {
+          min-width: auto;
+          padding: 0.5rem;
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+
+  .anime-page {
+    .additional-content {
+      padding: 0 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .anime-info-container {
+    .breadcrumb-container {
+      .breadcrumb-wrapper {
+        .breadcrumb-nav {
+          .breadcrumb-item {
+            font-size: 0.85rem;
+
+            .q-icon {
+              font-size: 1rem;
+            }
+          }
+
+          .breadcrumb-current {
+            font-size: 0.85rem;
+            
+            .q-breadcrumbs-el__content {
+              max-width: 150px;
+            }
+          }
+        }
+      }
+    }
+
+    // Maintain poster ratio on small mobile screens
+    .poster-card {
+      .poster-wrapper {
+        // Ensure 2:3 ratio is maintained even on very small screens
+        aspect-ratio: 2/3;
+        width: 100%;
+        
+        &::before {
+          // Fallback for older browsers
+          padding-top: 150%; // 3/2 * 100% for 2:3 ratio
+        }
+        
+        .poster-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .hero-section {
+      .stats-row {
+        .row {
+          .col-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+          }
+        }
+      }
+    }
+
+    .content-tabs {
+      .tabs-header {
+        .q-tab {
+          .q-tab__label {
+            display: none;
+          }
+          
+          min-width: 50px;
+        }
+      }
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Animation classes
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.6s ease-out;
+}

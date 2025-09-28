@@ -1,43 +1,126 @@
 {
   "properties": {
-    "top-airing": {
+    "data": {
       "type": "object",
       "properties": {
-        "data": {
+        "id": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "titles": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "required": [
+              "language",
+              "title"
+            ],
+            "properties": {
+              "language": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "poster": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cover": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aired": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string",
+              "minLength": 1
+            },
+            "to": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        },
+        "premiered": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rating": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quality": {
+          "type": "string",
+          "minLength": 1
+        },
+        "episodes": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "number"
+            },
+            "sub": {
+              "type": "number"
+            },
+            "dub": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "total",
+            "sub",
+            "dub"
+          ]
+        },
+        "malScore": {
+          "type": "number"
+        },
+        "genres": {
           "type": "array",
           "uniqueItems": true,
           "minItems": 1,
           "items": {
             "required": [
               "id",
-              "title",
-              "image",
-              "sub",
-              "dub",
-              "type",
+              "name",
               "slug"
             ],
             "properties": {
               "id": {
                 "type": "number"
               },
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "image": {
-                "type": "string",
-                "minLength": 1
-              },
-              "sub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "dub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "type": {
+              "name": {
                 "type": "string",
                 "minLength": 1
               },
@@ -47,50 +130,22 @@
               }
             }
           }
-        }
-      },
-      "required": [
-        "data"
-      ]
-    },
-    "most-popular": {
-      "type": "object",
-      "properties": {
-        "data": {
+        },
+        "studios": {
           "type": "array",
           "uniqueItems": true,
           "minItems": 1,
           "items": {
             "required": [
               "id",
-              "title",
-              "image",
-              "sub",
-              "dub",
-              "type",
+              "name",
               "slug"
             ],
             "properties": {
               "id": {
                 "type": "number"
               },
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "image": {
-                "type": "string",
-                "minLength": 1
-              },
-              "sub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "dub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "type": {
+              "name": {
                 "type": "string",
                 "minLength": 1
               },
@@ -100,50 +155,22 @@
               }
             }
           }
-        }
-      },
-      "required": [
-        "data"
-      ]
-    },
-    "most-favorite": {
-      "type": "object",
-      "properties": {
-        "data": {
+        },
+        "producers": {
           "type": "array",
           "uniqueItems": true,
           "minItems": 1,
           "items": {
             "required": [
               "id",
-              "title",
-              "image",
-              "sub",
-              "dub",
-              "type",
+              "name",
               "slug"
             ],
             "properties": {
               "id": {
                 "type": "number"
               },
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "image": {
-                "type": "string",
-                "minLength": 1
-              },
-              "sub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "dub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "type": {
+              "name": {
                 "type": "string",
                 "minLength": 1
               },
@@ -153,70 +180,40 @@
               }
             }
           }
+        },
+        "watchUrl": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shareCount": {
+          "type": "number"
         }
       },
       "required": [
-        "data"
-      ]
-    },
-    "latest-completed": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "array",
-          "uniqueItems": true,
-          "minItems": 1,
-          "items": {
-            "required": [
-              "id",
-              "title",
-              "image",
-              "sub",
-              "dub",
-              "type",
-              "slug"
-            ],
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "image": {
-                "type": "string",
-                "minLength": 1
-              },
-              "sub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "dub": {
-                "type": "string",
-                "minLength": 1
-              },
-              "type": {
-                "type": "string",
-                "minLength": 1
-              },
-              "slug": {
-                "type": "string",
-                "minLength": 1
-              }
-            }
-          }
-        }
-      },
-      "required": [
-        "data"
+        "id",
+        "title",
+        "titles",
+        "poster",
+        "cover",
+        "description",
+        "type",
+        "status",
+        "aired",
+        "premiered",
+        "duration",
+        "rating",
+        "quality",
+        "episodes",
+        "malScore",
+        "genres",
+        "studios",
+        "producers",
+        "watchUrl",
+        "shareCount"
       ]
     }
   },
   "required": [
-    "top-airing",
-    "most-popular",
-    "most-favorite",
-    "latest-completed"
+    "data"
   ]
 }

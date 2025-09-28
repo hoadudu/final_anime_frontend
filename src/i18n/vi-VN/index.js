@@ -38,6 +38,10 @@ export default {
         noData: 'Không có dữ liệu',
         noResults: 'Không tìm thấy kết quả',
         untitled: 'Không có tiêu đề',
+        episodes: 'Tập phim',
+        shares: 'Chia sẻ',
+        showMore: 'Xem thêm',
+        showLess: 'Ẩn bớt',
 
         // Status messages
         success: 'Thực hiện thành công',
@@ -237,5 +241,39 @@ export default {
         removedFromFavorites: 'Đã xóa khỏi yêu thích',
         refreshSuccess: 'Làm mới dữ liệu thành công',
         refreshError: 'Không thể làm mới dữ liệu',
+    },
+
+
+
+
+
+    // Anime Info Page
+    animeInfo: {
+        errorLoading: 'Không thể tải thông tin anime',
+        watch2gether: 'Xem cùng nhau',
+        watchNow: 'Xem ngay',
+        addToList: 'Thêm vào danh sách',
+        currentlyWatching: 'Đang xem',
+        watching: 'Đang xem',
+        onHold: 'Tạm ngưng',
+        planToWatch: 'Dự định xem',
+        dropped: 'Bỏ dở',
+        completed: 'Hoàn thành',
+        shareAnime: 'Chia sẻ Anime',
+        shareToFriends: 'cho bạn bè của bạn',
+        overview: 'Tổng quan',
+        animeDetails: 'Chi tiết Anime',
+        japanese: 'Tiếng Nhật',
+        synonyms: 'Tên khác',
+        aired: 'Ngày phát sóng',
+        premiered: 'Khởi chiếu',
+        duration: 'Thời lượng',
+        status: 'Tình trạng',
+        malScore: 'Điểm MAL',
+        genres: 'Thể loại',
+        studios: 'Hãng phim',
+        producers: 'Nhà sản xuất',
+        promoText: '{site} là trang web tốt nhất để xem {title} bản SUB online, hoặc bạn cũng có thể xem {title} bản DUB với chất lượng HD. Bạn cũng có thể tìm thấy anime của {studio} trên trang web {site}.'
     }
+
 }

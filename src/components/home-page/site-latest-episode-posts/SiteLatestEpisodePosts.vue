@@ -106,7 +106,7 @@
     </section>
 </template>
 
-// ...existing code...
+
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
@@ -168,6 +168,7 @@ const transformAnimeForTooltip = (animePost) => {
     return {
         id: animePost.id,
         title: animePost.title || animePost.name,
+        link: animePost.link,
         titles: animePost.titles || [],
         altTitle: animePost.altTitle || animePost.alternativeTitle,
         type: animePost.type || 'TV',

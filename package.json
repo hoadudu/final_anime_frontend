@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "@tanstack/query-persist-client-core": "^5.90.2",
+    "@tanstack/query-sync-storage-persister": "^5.90.2",
     "@tanstack/vue-query": "^5.90.2",
     "axios": "^1.2.1",
     "colorthief": "^2.6.0",
