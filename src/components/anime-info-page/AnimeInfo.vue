@@ -20,334 +20,434 @@
             </div>
 
             <div class="hero-content">
-                <div class="row q-col-gutter-lg">
-                    <!-- Anime Poster Card -->
-                    <div class="col-12 col-sm-4 col-md-3">
-                        <q-card class="poster-card shadow-8">
-                            <div class="poster-wrapper">
-                                <q-img :src="imageUrl" :alt="animeInfo.title" class="poster-image"
-                                    spinner-color="primary" loading="lazy" @error="onImageError" fit="cover"
-                                    no-ratio-style>
+                <!-- Mobile optimized layout -->
+                <div class="mobile-layout">
+                    <div class="mobile-header">
+                        <!-- Compact poster + basic info in one row -->
+                        <div class="mobile-poster-section">
+                            <q-card class="mobile-poster-card">
+                                <q-img :src="imageUrl" :alt="animeInfo.title" class="mobile-poster-image"
+                                    spinner-color="primary" loading="lazy" @error="onImageError" fit="cover">
                                     <template v-slot:error>
                                         <div class="absolute-full flex flex-center bg-grey-3 text-grey-7">
-                                            <div class="text-center">
-                                                <q-icon name="image" size="50px" />
-                                                <div>No Image Available</div>
-                                            </div>
+                                            <q-icon name="image" size="30px" />
                                         </div>
                                     </template>
                                 </q-img>
-                                <div class="rating-badge" :class="getRatingColorClass(animeInfo.score)">
-                                    <q-icon name="star" class="q-mr-xs" />
+                                <div class="mobile-rating-badge" :class="getRatingColorClass(animeInfo.score)">
+                                    <q-icon name="star" size="14px" class="q-mr-xs" />
                                     {{ animeInfo.score || 'N/A' }}
                                 </div>
+                            </q-card>
+                        </div>
+
+                        <!-- Essential info beside poster -->
+                        <div class="mobile-info-section">
+                            <h1 class="mobile-title">{{ animeInfo.title }}</h1>
+                            <div class="mobile-meta">
+                                <div class="mobile-badges q-mb-sm">
+                                    <q-chip :color="getStatusColor(animeInfo.status)" text-color="white" size="sm">
+                                        {{ animeInfo.status }}
+                                    </q-chip>
+                                    <q-chip color="blue-grey-6" text-color="white" size="sm" v-if="animeInfo.type">
+                                        {{ animeInfo.type }}
+                                    </q-chip>
+                                    <q-chip color="purple-6" text-color="white" size="sm" v-if="animeInfo.episodes">
+                                        {{ animeInfo.episodes }} EP
+                                    </q-chip>
+                                </div>
+
+                                <!-- Quick stats in 2x2 grid -->
+                                <div class="mobile-quick-stats">
+                                    <div class="mobile-stat">
+                                        <div class="stat-value">{{ animeInfo.score || 'N/A' }}</div>
+                                        <div class="stat-label">Score</div>
+                                    </div>
+                                    <div class="mobile-stat">
+                                        <div class="stat-value">{{ animeInfo.episodes || 'N/A' }}</div>
+                                        <div class="stat-label">Episodes</div>
+                                    </div>
+                                    <div class="mobile-stat">
+                                        <div class="stat-value">{{ animeInfo.rank ? `#${animeInfo.rank}` : 'N/A' }}
+                                        </div>
+                                        <div class="stat-label">Ranked</div>
+                                    </div>
+                                    <div class="mobile-stat">
+                                        <div class="stat-value">{{ animeInfo.members ? formatNumber(animeInfo.members) :
+                                            'N/A' }}</div>
+                                        <div class="stat-label">Members</div>
+                                    </div>
+                                </div>
                             </div>
-                        </q-card>
+                        </div>
                     </div>
 
-                    <!-- Main Info Card -->
-                    <div class="col-12 col-sm-8 col-md-9">
-                        <q-card class="main-info-card shadow-4" flat>
-                            <q-card-section>
-                                <!-- Title Section -->
-                                <div class="title-section q-mb-md">
-                                    <h1 class="anime-title text-h3 text-bold q-mb-xs">
-                                        {{ animeInfo.title }}
-                                    </h1>
-                                    <div class="title-variants q-mb-sm" v-if="japaneseTitle || synonyms">
-                                        <div v-if="japaneseTitle" class="japanese-title text-subtitle1 text-grey-6">
-                                            {{ japaneseTitle }}
+                    <!-- Mobile action buttons -->
+                    <div class="mobile-actions">
+                        <q-btn color="primary" icon="play_arrow" label="Watch" @click="navigateToWatch"
+                            class="mobile-watch-btn" />
+                        <q-btn color="secondary" icon="playlist_add" outline class="mobile-list-btn">
+                            <q-menu>
+                                <q-list>
+                                    <q-item v-for="listType in watchListTypes" :key="listType.value" clickable
+                                        @click="addToWatchList(listType.value)">
+                                        <q-item-section avatar>
+                                            <q-icon :name="listType.icon" size="sm" />
+                                        </q-item-section>
+                                        <q-item-section>{{ t(listType.label) }}</q-item-section>
+                                    </q-item>
+                                </q-list>
+                            </q-menu>
+                        </q-btn>
+                        <q-btn color="accent" icon="share" outline class="mobile-share-btn">
+                            <q-menu>
+                                <q-list>
+                                    <q-item v-for="platform in sharePlatforms" :key="platform.name" clickable
+                                        @click="shareOn(platform.name.toLowerCase())">
+                                        <q-item-section avatar>
+                                            <q-icon :name="platform.icon" :color="platform.color" size="sm" />
+                                        </q-item-section>
+                                        <q-item-section>{{ platform.name }}</q-item-section>
+                                    </q-item>
+                                </q-list>
+                            </q-menu>
+                        </q-btn>
+                    </div>
+                </div>
+
+                <!-- Desktop/Tablet layout (existing) -->
+                <div class="desktop-layout">
+                    <div class="row q-col-gutter-lg">
+                        <!-- Anime Poster Card -->
+                        <div class="col-12 col-sm-4 col-md-3">
+                            <q-card class="poster-card shadow-8">
+                                <div class="poster-wrapper">
+                                    <q-img :src="imageUrl" :alt="animeInfo.title" class="poster-image"
+                                        spinner-color="primary" loading="lazy" @error="onImageError" fit="cover">
+                                        <template v-slot:error>
+                                            <div class="absolute-full flex flex-center bg-grey-3 text-grey-7">
+                                                <div class="text-center">
+                                                    <q-icon name="image" size="50px" />
+                                                    <div>No Image Available</div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </q-img>
+                                    <div class="rating-badge" :class="getRatingColorClass(animeInfo.score)">
+                                        <q-icon name="star" class="q-mr-xs" />
+                                        {{ animeInfo.score || 'N/A' }}
+                                    </div>
+                                </div>
+                            </q-card>
+                        </div>
+
+                        <!-- Main Info Card -->
+                        <div class="col-12 col-sm-8 col-md-9">
+                            <q-card class="main-info-card shadow-4" flat>
+                                <q-card-section>
+                                    <!-- Title Section -->
+                                    <div class="title-section q-mb-md">
+                                        <h1 class="anime-title text-h3 text-bold q-mb-xs">
+                                            {{ animeInfo.title }}
+                                        </h1>
+                                        <div class="title-variants q-mb-sm" v-if="japaneseTitle || synonyms">
+                                            <div v-if="japaneseTitle" class="japanese-title text-subtitle1 text-grey-6">
+                                                {{ japaneseTitle }}
+                                            </div>
+                                            <div v-if="synonyms" class="synonyms text-caption text-grey-5">
+                                                {{ synonyms }}
+                                            </div>
                                         </div>
-                                        <div v-if="synonyms" class="synonyms text-caption text-grey-5">
-                                            {{ synonyms }}
+
+                                        <!-- Status and Type Badges -->
+                                        <div class="badges-row q-mb-md">
+                                            <q-chip :color="getStatusColor(animeInfo.status)" text-color="white"
+                                                icon="radio_button_checked" class="status-chip">
+                                                {{ animeInfo.status }}
+                                            </q-chip>
+                                            <q-chip color="blue-grey-6" text-color="white" icon="tv"
+                                                v-if="animeInfo.type">
+                                                {{ animeInfo.type }}
+                                            </q-chip>
+                                            <q-chip color="purple-6" text-color="white" icon="schedule"
+                                                v-if="animeInfo.episodes">
+                                                {{ animeInfo.episodes }} Episodes
+                                            </q-chip>
                                         </div>
                                     </div>
 
-                                    <!-- Status and Type Badges -->
-                                    <div class="badges-row q-mb-md">
-                                        <q-chip :color="getStatusColor(animeInfo.status)" text-color="white"
-                                            icon="radio_button_checked" class="status-chip">
-                                            {{ animeInfo.status }}
-                                        </q-chip>
-                                        <q-chip color="blue-grey-6" text-color="white" icon="tv" v-if="animeInfo.type">
-                                            {{ animeInfo.type }}
-                                        </q-chip>
-                                        <q-chip color="purple-6" text-color="white" icon="schedule"
-                                            v-if="animeInfo.episodes">
-                                            {{ animeInfo.episodes }} Episodes
-                                        </q-chip>
+                                    <!-- Quick Stats Row -->
+                                    <div class="stats-row q-mb-lg">
+                                        <div class="row q-col-gutter-md">
+                                            <div class="col-6 col-sm-3">
+                                                <div class="stat-card">
+                                                    <div class="stat-value text-h6 text-bold">
+                                                        {{ animeInfo.score || 'N/A' }}
+                                                    </div>
+                                                    <div class="stat-label text-caption">MAL Score</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <div class="stat-card">
+                                                    <div class="stat-value text-h6 text-bold">
+                                                        {{ animeInfo.rank ? `#${animeInfo.rank}` : 'N/A' }}
+                                                    </div>
+                                                    <div class="stat-label text-caption">Ranked</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <div class="stat-card">
+                                                    <div class="stat-value text-h6 text-bold">
+                                                        {{ animeInfo.popularity ? `#${animeInfo.popularity}` : 'N/A' }}
+                                                    </div>
+                                                    <div class="stat-label text-caption">Popularity</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <div class="stat-card">
+                                                    <div class="stat-value text-h6 text-bold">
+                                                        {{ animeInfo.members ? formatNumber(animeInfo.members) : 'N/A'
+                                                        }}
+                                                    </div>
+                                                    <div class="stat-label text-caption">Members</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Quick Stats Row -->
-                                <div class="stats-row q-mb-lg">
-                                    <div class="row q-col-gutter-md">
-                                        <div class="col-6 col-sm-3">
-                                            <div class="stat-card">
-                                                <div class="stat-value text-h6 text-bold">
-                                                    {{ animeInfo.score || 'N/A' }}
-                                                </div>
-                                                <div class="stat-label text-caption">MAL Score</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-3">
-                                            <div class="stat-card">
-                                                <div class="stat-value text-h6 text-bold">
-                                                    {{ animeInfo.rank ? `#${animeInfo.rank}` : 'N/A' }}
-                                                </div>
-                                                <div class="stat-label text-caption">Ranked</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-3">
-                                            <div class="stat-card">
-                                                <div class="stat-value text-h6 text-bold">
-                                                    {{ animeInfo.popularity ? `#${animeInfo.popularity}` : 'N/A' }}
-                                                </div>
-                                                <div class="stat-label text-caption">Popularity</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-3">
-                                            <div class="stat-card">
-                                                <div class="stat-value text-h6 text-bold">
-                                                    {{ animeInfo.members ? formatNumber(animeInfo.members) : 'N/A' }}
-                                                </div>
-                                                <div class="stat-label text-caption">Members</div>
-                                            </div>
+                                    <!-- Action Buttons -->
+                                    <div class="action-buttons q-mb-lg">
+                                        <div class="row q-gutter-sm">
+                                            <q-btn color="primary" icon="play_arrow" label="Watch Now" size="md"
+                                                @click="navigateToWatch" class="watch-btn" />
+                                            <q-btn color="secondary" icon="playlist_add" label="Add to List" outline
+                                                size="md">
+                                                <q-menu>
+                                                    <q-list>
+                                                        <q-item v-for="listType in watchListTypes" :key="listType.value"
+                                                            clickable @click="addToWatchList(listType.value)">
+                                                            <q-item-section avatar>
+                                                                <q-icon :name="listType.icon" />
+                                                            </q-item-section>
+                                                            <q-item-section>{{ t(listType.label) }}</q-item-section>
+                                                        </q-item>
+                                                    </q-list>
+                                                </q-menu>
+                                            </q-btn>
+                                            <q-btn color="accent" icon="share" label="Share" outline size="md">
+                                                <q-menu>
+                                                    <q-list>
+                                                        <q-item v-for="platform in sharePlatforms" :key="platform.name"
+                                                            clickable @click="shareOn(platform.name.toLowerCase())">
+                                                            <q-item-section avatar>
+                                                                <q-icon :name="platform.icon" :color="platform.color" />
+                                                            </q-item-section>
+                                                            <q-item-section>{{ platform.name }}</q-item-section>
+                                                        </q-item>
+                                                    </q-list>
+                                                </q-menu>
+                                            </q-btn>
                                         </div>
                                     </div>
-                                </div>
-
-                                <!-- Action Buttons -->
-                                <div class="action-buttons q-mb-lg">
-                                    <div class="row q-gutter-sm">
-                                        <q-btn color="primary" icon="play_arrow" label="Watch Now" size="md"
-                                            @click="navigateToWatch" class="watch-btn" />
-                                        <q-btn color="secondary" icon="playlist_add" label="Add to List" outline
-                                            size="md">
-                                            <q-menu>
-                                                <q-list>
-                                                    <q-item v-for="listType in watchListTypes" :key="listType.value"
-                                                        clickable @click="addToWatchList(listType.value)">
-                                                        <q-item-section avatar>
-                                                            <q-icon :name="listType.icon" />
-                                                        </q-item-section>
-                                                        <q-item-section>{{ t(listType.label) }}</q-item-section>
-                                                    </q-item>
-                                                </q-list>
-                                            </q-menu>
-                                        </q-btn>
-                                        <q-btn color="accent" icon="share" label="Share" outline size="md">
-                                            <q-menu>
-                                                <q-list>
-                                                    <q-item v-for="platform in sharePlatforms" :key="platform.name"
-                                                        clickable @click="shareOn(platform.name.toLowerCase())">
-                                                        <q-item-section avatar>
-                                                            <q-icon :name="platform.icon" :color="platform.color" />
-                                                        </q-item-section>
-                                                        <q-item-section>{{ platform.name }}</q-item-section>
-                                                    </q-item>
-                                                </q-list>
-                                            </q-menu>
-                                        </q-btn>
-                                    </div>
-                                </div>
-                            </q-card-section>
-                        </q-card>
+                                </q-card-section>
+                            </q-card>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Loading State -->
-        <div v-else-if="isLoading" class="loading-container">
-            <q-card class="loading-card">
-                <q-card-section class="text-center q-pa-xl">
-                    <q-spinner-dots size="50px" color="primary" />
-                    <div class="q-mt-md text-h6">Loading anime information...</div>
-                </q-card-section>
-            </q-card>
-        </div>
+            <!-- Loading State -->
+            <div v-if="isLoading" class="loading-container">
+                <q-card class="loading-card">
+                    <q-card-section class="text-center q-pa-xl">
+                        <q-spinner-dots size="50px" color="primary" />
+                        <div class="q-mt-md text-h6">Loading anime information...</div>
+                    </q-card-section>
+                </q-card>
+            </div>
 
-        <!-- Error State -->
-        <div v-else-if="error" class="error-container">
-            <q-card class="error-card">
-                <q-card-section class="text-center q-pa-xl">
-                    <q-icon name="error" size="50px" color="negative" />
-                    <div class="q-mt-md text-h6">Error loading anime information</div>
-                    <q-btn color="primary" label="Retry" @click="refetch" class="q-mt-md" />
-                </q-card-section>
-            </q-card>
-        </div>
+            <!-- Error State -->
+            <div v-else-if="error" class="error-container">
+                <q-card class="error-card">
+                    <q-card-section class="text-center q-pa-xl">
+                        <q-icon name="error" size="50px" color="negative" />
+                        <div class="q-mt-md text-h6">Error loading anime information</div>
+                        <q-btn color="primary" label="Retry" @click="refetch" class="q-mt-md" />
+                    </q-card-section>
+                </q-card>
+            </div>
 
-        <!-- Tabbed Content Section -->
-        <div class="content-tabs q-mt-xl" v-if="animeInfo">
-            <q-card class="tabs-card shadow-2">
-                <q-tabs v-model="activeTab" class="tabs-header" align="left" indicator-color="primary"
-                    active-color="primary" narrow-indicator>
-                    <q-tab name="overview" icon="info" label="Overview" />
-                    <q-tab name="episodes" icon="playlist_play" label="Episodes" />
-                    <q-tab name="characters" icon="people" label="Characters" />
-                    <q-tab name="reviews" icon="rate_review" label="Reviews" />
-                    <q-tab name="related" icon="device_hub" label="Related" />
-                </q-tabs>
+            <!-- Tabbed Content Section -->
+            <div class="content-tabs q-mt-xl" v-if="animeInfo">
+                <q-card class="tabs-card shadow-2">
+                    <q-tabs v-model="activeTab" class="tabs-header" align="left" indicator-color="primary"
+                        active-color="primary" narrow-indicator>
+                        <q-tab name="overview" icon="info" label="Overview" />
+                        <q-tab name="episodes" icon="playlist_play" label="Episodes" />
+                        <q-tab name="characters" icon="people" label="Characters" />
+                        <q-tab name="reviews" icon="rate_review" label="Reviews" />
+                        <q-tab name="related" icon="device_hub" label="Related" />
+                    </q-tabs>
 
-                <q-separator />
+                    <q-separator />
 
-                <q-tab-panels v-model="activeTab" animated>
-                    <!-- Overview Tab -->
-                    <q-tab-panel name="overview" class="q-pa-lg">
-                        <div class="overview-content">
-                            <div class="row q-col-gutter-lg">
-                                <!-- Synopsis Card -->
-                                <div class="col-12 col-md-8">
-                                    <q-card flat bordered class="synopsis-card">
-                                        <q-card-section>
-                                            <div class="text-h6 q-mb-md">
-                                                <q-icon name="description" class="q-mr-sm" />
-                                                Synopsis
-                                            </div>
-                                            <div class="synopsis-text">
-                                                <div v-if="isDescriptionLong && !showFullDescription">
-                                                    {{ cleanDescription.substring(0, 200) }}...
-                                                    <q-btn flat color="primary" label="Show more"
-                                                        @click="toggleDescription" class="show-more-btn" />
+                    <q-tab-panels v-model="activeTab" animated>
+                        <!-- Overview Tab -->
+                        <q-tab-panel name="overview" class="q-pa-lg">
+                            <div class="overview-content">
+                                <div class="row q-col-gutter-lg">
+                                    <!-- Synopsis Card -->
+                                    <div class="col-12 col-md-8">
+                                        <q-card flat bordered class="synopsis-card">
+                                            <q-card-section>
+                                                <div class="text-h6 q-mb-md">
+                                                    <q-icon name="description" class="q-mr-sm" />
+                                                    Synopsis
                                                 </div>
-                                                <div v-else>
-                                                    {{ cleanDescription }}
-                                                    <q-btn v-if="isDescriptionLong && showFullDescription" flat
-                                                        color="primary" label="Show less" @click="toggleDescription"
-                                                        class="show-more-btn" />
+                                                <div class="synopsis-text">
+                                                    <div v-if="isDescriptionLong && !showFullDescription">
+                                                        {{ cleanDescription.substring(0, 200) }}...
+                                                        <q-btn flat color="primary" label="Show more"
+                                                            @click="toggleDescription" class="show-more-btn" />
+                                                    </div>
+                                                    <div v-else>
+                                                        {{ cleanDescription }}
+                                                        <q-btn v-if="isDescriptionLong && showFullDescription" flat
+                                                            color="primary" label="Show less" @click="toggleDescription"
+                                                            class="show-more-btn" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </q-card-section>
-                                    </q-card>
-                                </div>
+                                            </q-card-section>
+                                        </q-card>
+                                    </div>
 
-                                <!-- Information Card -->
-                                <div class="col-12 col-md-4">
-                                    <q-card flat bordered class="info-details-card">
-                                        <q-card-section>
-                                            <div class="text-h6 q-mb-md">
-                                                <q-icon name="info_outline" class="q-mr-sm" />
-                                                Information
-                                            </div>
+                                    <!-- Information Card -->
+                                    <div class="col-12 col-md-4">
+                                        <q-card flat bordered class="info-details-card">
+                                            <q-card-section>
+                                                <div class="text-h6 q-mb-md">
+                                                    <q-icon name="info_outline" class="q-mr-sm" />
+                                                    Information
+                                                </div>
 
-                                            <div class="info-item" v-if="animeInfo.type">
-                                                <div class="info-label">Type:</div>
-                                                <div class="info-value">{{ animeInfo.type }}</div>
-                                            </div>
+                                                <div class="info-item" v-if="animeInfo.type">
+                                                    <div class="info-label">Type:</div>
+                                                    <div class="info-value">{{ animeInfo.type }}</div>
+                                                </div>
 
-                                            <div class="info-item" v-if="animeInfo.episodes">
-                                                <div class="info-label">Episodes:</div>
-                                                <div class="info-value">{{ animeInfo.episodes }}</div>
-                                            </div>
+                                                <div class="info-item" v-if="animeInfo.episodes">
+                                                    <div class="info-label">Episodes:</div>
+                                                    <div class="info-value">{{ animeInfo.episodes }}</div>
+                                                </div>
 
-                                            <div class="info-item" v-if="animeInfo.status">
-                                                <div class="info-label">Status:</div>
-                                                <div class="info-value">
-                                                    <q-chip :color="getStatusColor(animeInfo.status)" text-color="white"
-                                                        size="sm">
-                                                        {{ animeInfo.status }}
+                                                <div class="info-item" v-if="animeInfo.status">
+                                                    <div class="info-label">Status:</div>
+                                                    <div class="info-value">
+                                                        <q-chip :color="getStatusColor(animeInfo.status)"
+                                                            text-color="white" size="sm">
+                                                            {{ animeInfo.status }}
+                                                        </q-chip>
+                                                    </div>
+                                                </div>
+
+                                                <div class="info-item" v-if="airedString">
+                                                    <div class="info-label">Aired:</div>
+                                                    <div class="info-value">{{ airedString }}</div>
+                                                </div>
+
+                                                <div class="info-item" v-if="animeInfo.duration">
+                                                    <div class="info-label">Duration:</div>
+                                                    <div class="info-value">{{ animeInfo.duration }}</div>
+                                                </div>
+
+                                                <div class="info-item" v-if="animeInfo.rating">
+                                                    <div class="info-label">Rating:</div>
+                                                    <div class="info-value">{{ animeInfo.rating }}</div>
+                                                </div>
+
+                                                <div class="info-item" v-if="animeInfo.source">
+                                                    <div class="info-label">Source:</div>
+                                                    <div class="info-value">{{ animeInfo.source }}</div>
+                                                </div>
+                                            </q-card-section>
+                                        </q-card>
+
+                                        <!-- Genres Card -->
+                                        <q-card flat bordered class="genres-card q-mt-md"
+                                            v-if="animeInfo.genres?.length">
+                                            <q-card-section>
+                                                <div class="text-h6 q-mb-md">
+                                                    <q-icon name="category" class="q-mr-sm" />
+                                                    Genres
+                                                </div>
+                                                <div class="genres-list">
+                                                    <q-chip v-for="genre in animeInfo.genres" :key="genre.mal_id"
+                                                        color="primary" text-color="white" clickable
+                                                        @click="navigateToGenre(genre.name)" class="genre-chip">
+                                                        {{ genre.name }}
                                                     </q-chip>
                                                 </div>
-                                            </div>
-
-                                            <div class="info-item" v-if="airedString">
-                                                <div class="info-label">Aired:</div>
-                                                <div class="info-value">{{ airedString }}</div>
-                                            </div>
-
-                                            <div class="info-item" v-if="animeInfo.duration">
-                                                <div class="info-label">Duration:</div>
-                                                <div class="info-value">{{ animeInfo.duration }}</div>
-                                            </div>
-
-                                            <div class="info-item" v-if="animeInfo.rating">
-                                                <div class="info-label">Rating:</div>
-                                                <div class="info-value">{{ animeInfo.rating }}</div>
-                                            </div>
-
-                                            <div class="info-item" v-if="animeInfo.source">
-                                                <div class="info-label">Source:</div>
-                                                <div class="info-value">{{ animeInfo.source }}</div>
-                                            </div>
-                                        </q-card-section>
-                                    </q-card>
-
-                                    <!-- Genres Card -->
-                                    <q-card flat bordered class="genres-card q-mt-md" v-if="animeInfo.genres?.length">
-                                        <q-card-section>
-                                            <div class="text-h6 q-mb-md">
-                                                <q-icon name="category" class="q-mr-sm" />
-                                                Genres
-                                            </div>
-                                            <div class="genres-list">
-                                                <q-chip v-for="genre in animeInfo.genres" :key="genre.mal_id"
-                                                    color="primary" text-color="white" clickable
-                                                    @click="navigateToGenre(genre.name)" class="genre-chip">
-                                                    {{ genre.name }}
-                                                </q-chip>
-                                            </div>
-                                        </q-card-section>
-                                    </q-card>
+                                            </q-card-section>
+                                        </q-card>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </q-tab-panel>
+                        </q-tab-panel>
 
-                    <!-- Episodes Tab -->
-                    <q-tab-panel name="episodes" class="q-pa-lg">
-                        <div class="episodes-content">
-                            <div class="text-h6 q-mb-md">Episodes</div>
-                            <q-card flat bordered>
-                                <q-card-section class="text-center q-pa-xl">
-                                    <q-icon name="construction" size="50px" color="grey" />
-                                    <div class="q-mt-md">Episodes list coming soon...</div>
-                                </q-card-section>
-                            </q-card>
-                        </div>
-                    </q-tab-panel>
+                        <!-- Episodes Tab -->
+                        <q-tab-panel name="episodes" class="q-pa-lg">
+                            <div class="episodes-content">
+                                <div class="text-h6 q-mb-md">Episodes</div>
+                                <q-card flat bordered>
+                                    <q-card-section class="text-center q-pa-xl">
+                                        <q-icon name="construction" size="50px" color="grey" />
+                                        <div class="q-mt-md">Episodes list coming soon...</div>
+                                    </q-card-section>
+                                </q-card>
+                            </div>
+                        </q-tab-panel>
 
-                    <!-- Characters Tab -->
-                    <q-tab-panel name="characters" class="q-pa-lg">
-                        <div class="characters-content">
-                            <div class="text-h6 q-mb-md">Characters</div>
-                            <q-card flat bordered>
-                                <q-card-section class="text-center q-pa-xl">
-                                    <q-icon name="construction" size="50px" color="grey" />
-                                    <div class="q-mt-md">Characters list coming soon...</div>
-                                </q-card-section>
-                            </q-card>
-                        </div>
-                    </q-tab-panel>
+                        <!-- Characters Tab -->
+                        <q-tab-panel name="characters" class="q-pa-lg">
+                            <div class="characters-content">
+                                <div class="text-h6 q-mb-md">Characters</div>
+                                <q-card flat bordered>
+                                    <q-card-section class="text-center q-pa-xl">
+                                        <q-icon name="construction" size="50px" color="grey" />
+                                        <div class="q-mt-md">Characters list coming soon...</div>
+                                    </q-card-section>
+                                </q-card>
+                            </div>
+                        </q-tab-panel>
 
-                    <!-- Reviews Tab -->
-                    <q-tab-panel name="reviews" class="q-pa-lg">
-                        <div class="reviews-content">
-                            <div class="text-h6 q-mb-md">Reviews</div>
-                            <q-card flat bordered>
-                                <q-card-section class="text-center q-pa-xl">
-                                    <q-icon name="construction" size="50px" color="grey" />
-                                    <div class="q-mt-md">Reviews coming soon...</div>
-                                </q-card-section>
-                            </q-card>
-                        </div>
-                    </q-tab-panel>
+                        <!-- Reviews Tab -->
+                        <q-tab-panel name="reviews" class="q-pa-lg">
+                            <div class="reviews-content">
+                                <div class="text-h6 q-mb-md">Reviews</div>
+                                <q-card flat bordered>
+                                    <q-card-section class="text-center q-pa-xl">
+                                        <q-icon name="construction" size="50px" color="grey" />
+                                        <div class="q-mt-md">Reviews coming soon...</div>
+                                    </q-card-section>
+                                </q-card>
+                            </div>
+                        </q-tab-panel>
 
-                    <!-- Related Tab -->
-                    <q-tab-panel name="related" class="q-pa-lg">
-                        <div class="related-content">
-                            <div class="text-h6 q-mb-md">Related Anime</div>
-                            <q-card flat bordered>
-                                <q-card-section class="text-center q-pa-xl">
-                                    <q-icon name="construction" size="50px" color="grey" />
-                                    <div class="q-mt-md">Related anime coming soon...</div>
-                                </q-card-section>
-                            </q-card>
-                        </div>
-                    </q-tab-panel>
-                </q-tab-panels>
-            </q-card>
+                        <!-- Related Tab -->
+                        <q-tab-panel name="related" class="q-pa-lg">
+                            <div class="related-content">
+                                <div class="text-h6 q-mb-md">Related Anime</div>
+                                <q-card flat bordered>
+                                    <q-card-section class="text-center q-pa-xl">
+                                        <q-icon name="construction" size="50px" color="grey" />
+                                        <div class="q-mt-md">Related anime coming soon...</div>
+                                    </q-card-section>
+                                </q-card>
+                            </div>
+                        </q-tab-panel>
+                    </q-tab-panels>
+                </q-card>
+            </div>
         </div>
     </div>
 </template>
