@@ -1,0 +1,111 @@
+<template>
+    <div class="anime-info-container">
+        <!-- Breadcrumb Navigation -->
+        <BreadcrumbNavigation v-if="animeInfo" :anime-data="animeInfo" :mobile="isMobile" />
+
+        <!-- Hero Section -->
+        <AnimeHeroSection v-if="animeInfo" :anime-data="animeInfo" :mobile="isMobile" />
+
+        <!-- Action Buttons -->
+        <AnimeActionButtons v-if="animeInfo" :mobile="isMobile" @watch="navigateToWatch" @add-to-list="addToWatchList"
+            @share="shareOn" />
+
+        <!-- Loading State -->
+        <div v-if="isLoading" class="loading-container">
+            <q-card class="loading-card">
+                <q-card-section class="text-center q-pa-xl">
+                    <q-spinner-dots size="50px" color="primary" />
+                    <div class="q-mt-md text-h6">Loading anime information...</div>
+                </q-card-section>
+            </q-card>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="error-container">
+            <q-card class="error-card">
+                <q-card-section class="text-center q-pa-xl">
+                    <q-icon name="error" size="50px" color="negative" />
+                    <div class="q-mt-md text-h6">Error loading anime information</div>
+                    <q-btn color="primary" label="Retry" @click="refetch" class="q-mt-md" />
+                </q-card-section>
+            </q-card>
+        </div>
+
+        <!-- Tabbed Content Section -->
+        <AnimeTabbedContent v-if="animeInfo" :anime-data="animeInfo" :mobile="isMobile" @watch="navigateToWatch"
+            @add-to-list="addToWatchList" @share="shareOn" />
+    </div>
+</template>
+
+<script setup>
+
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAnimeInfoPageData } from 'src/composables/anime-info-page/useAnimeInfoPageData'
+import { unref } from 'vue'
+
+// Import new components
+import BreadcrumbNavigation from './components/BreadcrumbNavigation.vue'
+import AnimeHeroSection from './components/AnimeHeroSection.vue'
+import AnimeActionButtons from './components/AnimeActionButtons.vue'
+import AnimeTabbedContent from './components/AnimeTabbedContent.vue'
+
+const route = useRoute()
+const router = useRouter()
+
+// Extract anime ID from route params
+const extractIdFromSlug = (slugWithId) => {
+    const match = slugWithId.match(/(\d+)$/)
+    return match ? match[1] : null
+}
+
+const animeId = computed(() => {
+    return extractIdFromSlug(route.params.slugWithId)
+})
+
+// Vue Query data fetching
+const { data: animeInfoData, isLoading, error, refetch } = useAnimeInfoPageData(animeId)
+
+// Computed properties
+const animeInfo = computed(() => {
+    const data = unref(animeInfoData)
+    console.log('Component animeInfo data:', data) // Debug log
+    if (data) {
+        console.log('Image URL:', data.poster || data.image || data.image_url) // Debug image
+    }
+    return data
+})
+
+// Mobile detection
+const isMobile = computed(() => {
+    return window.innerWidth < 768
+})
+
+// Navigation methods
+const navigateToWatch = () => {
+    router.push(`/watch/${route.params.slugWithId}/ep-1`)
+}
+
+// Action methods
+const addToWatchList = (listType) => {
+    console.log('Adding to list:', listType)
+    // Implement watch list logic
+}
+
+const shareOn = (platform) => {
+    const url = window.location.href
+    const title = animeInfo.value?.title
+
+    const shareUrls = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+        twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+        reddit: `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+        telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+        whatsapp: `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`
+    }
+
+    if (shareUrls[platform]) {
+        window.open(shareUrls[platform], '_blank')
+    }
+}
+</script>
