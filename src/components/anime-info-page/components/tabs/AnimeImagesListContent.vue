@@ -113,193 +113,195 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'ImagesGallery',
-    props: {
-        images: {
-            type: Object,
-            default: () => ({})
+<script setup>
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+
+// Props
+const props = defineProps({
+    images: {
+        type: Object,
+        default: () => ({})
+    }
+})
+
+// Emits
+const emit = defineEmits(['tab-changed', 'image-viewed', 'image-downloaded', 'favorite-changed', 'image-shared'])
+
+// Reactive state
+const activeTab = ref('all')
+const showLightbox = ref(false)
+const currentImageIndex = ref(0)
+const favoriteImages = ref([]) // Store in localStorage or Vuex in real app
+const lightboxImageHeight = ref(window.innerHeight - 200)
+
+// Computed properties
+const hasImages = computed(() => {
+    return Object.keys(props.images).some(key =>
+        props.images[key] && props.images[key].length > 0
+    )
+})
+
+const allImages = computed(() => {
+    const images = []
+    Object.keys(props.images).forEach(type => {
+        if (props.images[type] && Array.isArray(props.images[type])) {
+            images.push(...props.images[type])
         }
-    },
-    data() {
-        return {
-            activeTab: 'all',
-            showLightbox: false,
-            currentImageIndex: 0,
-            favoriteImages: [], // Store in localStorage or Vuex in real app
-            lightboxImageHeight: window.innerHeight - 200
+    })
+    return images
+})
+
+const currentImages = computed(() => {
+    if (activeTab.value === 'all') {
+        return allImages.value
+    }
+    return props.images[activeTab.value] || []
+})
+
+const tabOptions = computed(() => {
+    const options = [{ label: 'All', value: 'all' }]
+
+    Object.keys(props.images).forEach(type => {
+        if (props.images[type] && props.images[type].length > 0) {
+            options.push({
+                label: `${formatImageType(type)} (${props.images[type].length})`,
+                value: type
+            })
         }
-    },
-    computed: {
-        hasImages() {
-            return Object.keys(this.images).some(key =>
-                this.images[key] && this.images[key].length > 0
-            );
-        },
+    })
 
-        allImages() {
-            const images = [];
-            Object.keys(this.images).forEach(type => {
-                if (this.images[type] && Array.isArray(this.images[type])) {
-                    images.push(...this.images[type]);
-                }
-            });
-            return images;
-        },
+    return options
+})
 
-        currentImages() {
-            if (this.activeTab === 'all') {
-                return this.allImages;
-            }
-            return this.images[this.activeTab] || [];
-        },
+// Methods
+const switchTab = (tab) => {
+    activeTab.value = tab
+    emit('tab-changed', tab)
+}
 
-        tabOptions() {
-            const options = [{ label: 'All', value: 'all' }];
+const getTabInfo = () => {
+    const count = currentImages.value.length
+    const type = activeTab.value === 'all' ? 'images' : `${activeTab.value} images`
+    return `${count} ${type} available`
+}
 
-            Object.keys(this.images).forEach(type => {
-                if (this.images[type] && this.images[type].length > 0) {
-                    options.push({
-                        label: `${this.formatImageType(type)} (${this.images[type].length})`,
-                        value: type
-                    });
-                }
-            });
+const getImageClass = (type) => {
+    return {
+        'poster-image': type === 'poster',
+        'cover-image': type === 'cover',
+        'screenshot-image': type === 'screenshot'
+    }
+}
 
-            return options;
-        }
-    },
-    mounted() {
-        window.addEventListener('resize', this.updateLightboxHeight);
-        document.addEventListener('keydown', this.handleKeyPress);
-    },
+const formatImageType = (type) => {
+    const types = {
+        'poster': 'Poster',
+        'cover': 'Cover',
+        'screenshot': 'Screenshot',
+        'banner': 'Banner',
+        'background': 'Background'
+    }
+    return types[type] || type.charAt(0).toUpperCase() + type.slice(1)
+}
 
-    beforeUnmount() {
-        window.removeEventListener('resize', this.updateLightboxHeight);
-        document.removeEventListener('keydown', this.handleKeyPress);
-    },
+const openLightbox = (index) => {
+    currentImageIndex.value = index
+    showLightbox.value = true
+    emit('image-viewed', currentImages.value[index])
+}
 
-    methods: {
-        switchTab(tab) {
-            this.activeTab = tab;
-            this.$emit('tab-changed', tab);
-        },
+const nextImage = () => {
+    if (currentImageIndex.value < currentImages.value.length - 1) {
+        currentImageIndex.value++
+    }
+}
 
-        getTabInfo() {
-            const count = this.currentImages.length;
-            const type = this.activeTab === 'all' ? 'images' : `${this.activeTab} images`;
-            return `${count} ${type} available`;
-        },
+const previousImage = () => {
+    if (currentImageIndex.value > 0) {
+        currentImageIndex.value--
+    }
+}
 
-        getImageClass(type) {
-            return {
-                'poster-image': type === 'poster',
-                'cover-image': type === 'cover',
-                'screenshot-image': type === 'screenshot'
-            };
-        },
+const downloadImage = (image) => {
+    const link = document.createElement('a')
+    link.href = image.url
+    link.download = `anime-${image.type}-${image.id}.jpg`
+    link.target = '_blank'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    emit('image-downloaded', image)
+}
 
-        formatImageType(type) {
-            const types = {
-                'poster': 'Poster',
-                'cover': 'Cover',
-                'screenshot': 'Screenshot',
-                'banner': 'Banner',
-                'background': 'Background'
-            };
-            return types[type] || type.charAt(0).toUpperCase() + type.slice(1);
-        },
+const toggleFavorite = (image) => {
+    const index = favoriteImages.value.findIndex(id => id === image.id)
+    if (index > -1) {
+        favoriteImages.value.splice(index, 1)
+    } else {
+        favoriteImages.value.push(image.id)
+    }
+    emit('favorite-changed', image, isFavorite(image.id))
+}
 
-        openLightbox(index) {
-            this.currentImageIndex = index;
-            this.showLightbox = true;
-            this.$emit('image-viewed', this.currentImages[index]);
-        },
+const isFavorite = (imageId) => {
+    return favoriteImages.value.includes(imageId)
+}
 
-        nextImage() {
-            if (this.currentImageIndex < this.currentImages.length - 1) {
-                this.currentImageIndex++;
-            }
-        },
+const shareImage = (image) => {
+    if (navigator.share) {
+        navigator.share({
+            title: `${formatImageType(image.type)} Image`,
+            url: image.url
+        })
+    } else {
+        navigator.clipboard.writeText(image.url)
+        window.Quasar.notify({
+            message: 'Image URL copied to clipboard!',
+            type: 'positive',
+            position: 'bottom'
+        })
+    }
+    emit('image-shared', image)
+}
 
-        previousImage() {
-            if (this.currentImageIndex > 0) {
-                this.currentImageIndex--;
-            }
-        },
+const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen()
+    } else {
+        document.exitFullscreen()
+    }
+}
 
-        downloadImage(image) {
-            const link = document.createElement('a');
-            link.href = image.url;
-            link.download = `anime-${image.type}-${image.id}.jpg`;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            this.$emit('image-downloaded', image);
-        },
-
-        toggleFavorite(image) {
-            const index = this.favoriteImages.findIndex(id => id === image.id);
-            if (index > -1) {
-                this.favoriteImages.splice(index, 1);
-            } else {
-                this.favoriteImages.push(image.id);
-            }
-            this.$emit('favorite-changed', image, this.isFavorite(image.id));
-        },
-
-        isFavorite(imageId) {
-            return this.favoriteImages.includes(imageId);
-        },
-
-        shareImage(image) {
-            if (navigator.share) {
-                navigator.share({
-                    title: `${this.formatImageType(image.type)} Image`,
-                    url: image.url
-                });
-            } else {
-                navigator.clipboard.writeText(image.url);
-                this.$q.notify({
-                    message: 'Image URL copied to clipboard!',
-                    type: 'positive',
-                    position: 'bottom'
-                });
-            }
-            this.$emit('image-shared', image);
-        },
-
-        toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        },
-
-        handleKeyPress(event) {
-            if (this.showLightbox) {
-                switch (event.key) {
-                    case 'ArrowLeft':
-                        this.previousImage();
-                        break;
-                    case 'ArrowRight':
-                        this.nextImage();
-                        break;
-                    case 'Escape':
-                        this.showLightbox = false;
-                        break;
-                }
-            }
-        },
-
-        updateLightboxHeight() {
-            this.lightboxImageHeight = window.innerHeight - 200;
+const handleKeyPress = (event) => {
+    if (showLightbox.value) {
+        switch (event.key) {
+            case 'ArrowLeft':
+                previousImage()
+                break
+            case 'ArrowRight':
+                nextImage()
+                break
+            case 'Escape':
+                showLightbox.value = false
+                break
         }
     }
 }
+
+const updateLightboxHeight = () => {
+    lightboxImageHeight.value = window.innerHeight - 200
+}
+
+// Lifecycle hooks
+onMounted(() => {
+    window.addEventListener('resize', updateLightboxHeight)
+    document.addEventListener('keydown', handleKeyPress)
+})
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', updateLightboxHeight)
+    document.removeEventListener('keydown', handleKeyPress)
+})
 </script>
 
 <style lang="scss" scoped>

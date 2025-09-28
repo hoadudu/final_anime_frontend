@@ -94,135 +94,138 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'VideosList',
-    props: {
-        videos: {
-            type: Array,
-            default: () => []
-        }
-    },
-    data() {
-        return {
-            showVideoModal: false,
-            currentVideo: null,
-            loadingVideo: null,
-            watchLaterList: [] // Store in localStorage or Vuex in real app
-        }
-    },
-    methods: {
-        playVideo(video) {
-            this.currentVideo = video;
-            this.showVideoModal = true;
-            this.$emit('play-video', video);
-        },
+<script setup>
+import { ref, computed } from 'vue'
 
-        getYoutubeThumbnail(url) {
-            const videoId = this.extractYouTubeID(url);
-            return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` :
-                'https://via.placeholder.com/320x180/f5f5f5/999?text=Video';
-        },
-
-        extractYouTubeID(url) {
-            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[7].length === 11) ? match[7] : false;
-        },
-
-        getEmbedUrl(url) {
-            const videoId = this.extractYouTubeID(url);
-            return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : url;
-        },
-
-        getVideoSource(url) {
-            if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                return 'YouTube';
-            } else if (url.includes('vimeo.com')) {
-                return 'Vimeo';
-            } else if (url.includes('dailymotion.com')) {
-                return 'Dailymotion';
-            }
-            return 'External';
-        },
-
-        getVideoType(title) {
-            const lowerTitle = title.toLowerCase();
-            if (lowerTitle.includes('pv') || lowerTitle.includes('promotional')) {
-                return 'PV';
-            } else if (lowerTitle.includes('trailer')) {
-                return 'Trailer';
-            } else if (lowerTitle.includes('teaser')) {
-                return 'Teaser';
-            } else if (lowerTitle.includes('cm')) {
-                return 'CM';
-            }
-            return null;
-        },
-
-        getVideoTypeColor(title) {
-            const type = this.getVideoType(title);
-            const colors = {
-                'PV': 'red',
-                'Trailer': 'purple',
-                'Teaser': 'orange',
-                'CM': 'green'
-            };
-            return colors[type] || 'grey-6';
-        },
-
-        openExternal(url) {
-            window.open(url, '_blank');
-            this.$emit('external-open', url);
-        },
-
-        toggleWatchLater(video) {
-            const index = this.watchLaterList.findIndex(id => id === video.id);
-            if (index > -1) {
-                this.watchLaterList.splice(index, 1);
-            } else {
-                this.watchLaterList.push(video.id);
-            }
-            this.$emit('watch-later-changed', video, this.isWatchLater(video.id));
-        },
-
-        isWatchLater(videoId) {
-            return this.watchLaterList.includes(videoId);
-        },
-
-        shareVideo(video) {
-            if (navigator.share) {
-                navigator.share({
-                    title: video.title,
-                    url: video.url
-                });
-            } else {
-                // Fallback: copy to clipboard
-                navigator.clipboard.writeText(video.url);
-                this.$q.notify({
-                    message: 'Video URL copied to clipboard!',
-                    type: 'positive',
-                    position: 'bottom'
-                });
-            }
-            this.$emit('video-shared', video);
-        },
-
-        formatDuration(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-        },
-
-        formatViews(views) {
-            if (views >= 1000000) {
-                return `${(views / 1000000).toFixed(1)}M views`;
-            } else if (views >= 1000) {
-                return `${(views / 1000).toFixed(1)}K views`;
-            }
-            return `${views} views`;
-        }
+// Props
+const props = defineProps({
+    videos: {
+        type: Array,
+        default: () => []
     }
+})
+
+
+const videos = computed(() => props.videos || [])
+// Emits
+const emit = defineEmits(['play-video', 'external-open', 'watch-later-changed', 'video-shared'])
+
+// Reactive state
+const showVideoModal = ref(false)
+const currentVideo = ref(null)
+const loadingVideo = ref(null)
+const watchLaterList = ref([]) // Store in localStorage or Vuex in real app
+
+// Methods
+const playVideo = (video) => {
+    currentVideo.value = video
+    showVideoModal.value = true
+    emit('play-video', video)
+}
+
+const getYoutubeThumbnail = (url) => {
+    const videoId = extractYouTubeID(url)
+    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` :
+        'https://via.placeholder.com/320x180/f5f5f5/999?text=Video'
+}
+
+const extractYouTubeID = (url) => {
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+    const match = url.match(regExp)
+    return (match && match[7].length === 11) ? match[7] : false
+}
+
+const getEmbedUrl = (url) => {
+    const videoId = extractYouTubeID(url)
+    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : url
+}
+
+const getVideoSource = (url) => {
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        return 'YouTube'
+    } else if (url.includes('vimeo.com')) {
+        return 'Vimeo'
+    } else if (url.includes('dailymotion.com')) {
+        return 'Dailymotion'
+    }
+    return 'External'
+}
+
+const getVideoType = (title) => {
+    const lowerTitle = title.toLowerCase()
+    if (lowerTitle.includes('pv') || lowerTitle.includes('promotional')) {
+        return 'PV'
+    } else if (lowerTitle.includes('trailer')) {
+        return 'Trailer'
+    } else if (lowerTitle.includes('teaser')) {
+        return 'Teaser'
+    } else if (lowerTitle.includes('cm')) {
+        return 'CM'
+    }
+    return null
+}
+
+const getVideoTypeColor = (title) => {
+    const type = getVideoType(title)
+    const colors = {
+        'PV': 'red',
+        'Trailer': 'purple',
+        'Teaser': 'orange',
+        'CM': 'green'
+    }
+    return colors[type] || 'grey-6'
+}
+
+const openExternal = (url) => {
+    window.open(url, '_blank')
+    emit('external-open', url)
+}
+
+const toggleWatchLater = (video) => {
+    const index = watchLaterList.value.findIndex(id => id === video.id)
+    if (index > -1) {
+        watchLaterList.value.splice(index, 1)
+    } else {
+        watchLaterList.value.push(video.id)
+    }
+    emit('watch-later-changed', video, isWatchLater(video.id))
+}
+
+const isWatchLater = (videoId) => {
+    return watchLaterList.value.includes(videoId)
+}
+
+const shareVideo = (video) => {
+    if (navigator.share) {
+        navigator.share({
+            title: video.title,
+            url: video.url
+        })
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(video.url)
+        window.Quasar.notify({
+            message: 'Video URL copied to clipboard!',
+            type: 'positive',
+            position: 'bottom'
+        })
+    }
+    emit('video-shared', video)
+}
+
+const formatDuration = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
+}
+
+const formatViews = (views) => {
+    if (views >= 1000000) {
+        return `${(views / 1000000).toFixed(1)}M views`
+    } else if (views >= 1000) {
+        return `${(views / 1000).toFixed(1)}K views`
+    }
+    return `${views} views`
 }
 </script>
 

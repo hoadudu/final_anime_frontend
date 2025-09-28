@@ -46,6 +46,14 @@
                                         {{ animeInfo.episodes }} EP
                                     </q-chip>
                                 </div>
+                                <div class="mobile-badges q-mb-sm">
+                                    <q-chip v-for="(genre, index) in animeInfo.genres" :key="genre.id"
+                                        :color="getColorForGenre(index)" text-color="white" clickable
+                                        @click="navigateToGenre(genre.link)" class="genre-chip">
+                                        {{ genre.name }}
+                                    </q-chip>
+
+                                </div>
 
                                 <!-- Quick stats in 2x2 grid -->
                                 <div class="mobile-quick-stats">
@@ -174,7 +182,17 @@
                                                 </q-chip>
                                             </div>
                                         </div>
+                                        <!-- Genres and Type Badges -->
+                                        <div class="badges-row q-mb-md">
+                                            <q-chip v-for="(genre, index) in animeInfo.genres" :key="genre.id"
+                                                :color="getColorForGenre(index)" text-color="white" clickable
+                                                @click="navigateToGenre(genre.link)" class="genre-chip">
+                                                {{ genre.name }}
+                                            </q-chip>
+
+                                        </div>
                                     </div>
+
 
                                     <!-- Quick Stats Row -->
                                     <div class="stats-row q-mb-lg">
@@ -300,8 +318,17 @@ const router = useRouter()
 const { t } = useI18n()
 
 
+const colors = computed(() => [
+    'blue-4', 'blue-5',
+    'blue-6', 'blue-7', 'blue-8', 'blue-9', 'blue-10', 'orange-6', 'orange-7', 'orange-8', 'orange-9', 'orange-10',
+    'red-6', 'red-7', 'red-8', 'red-9', 'red-10', 'yellow-6', 'yellow-7', 'yellow-8', 'yellow-9', 'yellow-10',
+])
 
 
+
+const getColorForGenre = (index) => {
+    return colors.value[index % colors.value.length]
+}
 
 // Extract anime ID from route params
 const extractIdFromSlug = (slugWithId) => {
@@ -423,6 +450,9 @@ const navigateToWatch = () => {
     router.push(`/watch/${route.params.slugWithId}/ep-1`)
 }
 
+const navigateToGenre = (genreLink) => {
+    router.push(genreLink)
+}
 
 
 // Action methods

@@ -69,85 +69,91 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'CharactersList',
-    props: {
-        characters: {
-            type: Array,
-            default: () => []
-        }
-    },
-    data() {
-        return {
-            roleFilter: 'all',
-            favoriteCharacters: [], // Store in localStorage or Vuex in real app
-            roleOptions: [
-                { label: 'All', value: 'all' },
-                { label: 'Main', value: 'main' },
-                { label: 'Supporting', value: 'supporting' }
-            ]
-        }
-    },
-    computed: {
-        filteredCharacters() {
-            if (this.roleFilter === 'all') {
-                return this.characters;
-            }
-            return this.characters.filter(char => char.role === this.roleFilter);
-        }
-    },
-    methods: {
-        viewCharacter(character) {
-            this.$emit('view-character', character);
-            console.log('Viewing character:', character);
-        },
+<script setup>
+import { ref, nextTick } from 'vue'
 
-        toggleFavorite(character) {
-            const index = this.favoriteCharacters.findIndex(id => id === character.id);
-            if (index > -1) {
-                this.favoriteCharacters.splice(index, 1);
-            } else {
-                this.favoriteCharacters.push(character.id);
-            }
-            this.$emit('favorite-changed', character, this.isFavorite(character.id));
-        },
-
-        isFavorite(characterId) {
-            return this.favoriteCharacters.includes(characterId);
-        },
-
-        getRoleColor(role) {
-            const colors = {
-                'main': 'primary',
-                'supporting': 'secondary',
-                'minor': 'grey-6'
-            };
-            return colors[role] || 'grey-6';
-        },
-
-        getRoleIcon(role) {
-            const icons = {
-                'main': 'star',
-                'supporting': 'stars',
-                'minor': 'person'
-            };
-            return icons[role] || 'person';
-        },
-
-        formatRole(role) {
-            return role.charAt(0).toUpperCase() + role.slice(1) + ' Character';
-        },
-
-        filterCharacters() {
-            // Filter logic is handled by computed property
-            this.$nextTick(() => {
-                this.$emit('filter-changed', this.roleFilter);
-            });
-        }
+// Props
+const { characters } = defineProps({
+    characters: {
+        type: Array,
+        default: () => []
     }
+})
+
+// Emits
+const emit = defineEmits([
+    'view-character',
+    'favorite-changed',
+    'filter-changed'
+])
+
+// State
+const roleFilter = ref('all')
+const favoriteCharacters = ref([])
+const roleOptions = [
+    { label: 'All', value: 'all' },
+    { label: 'Main', value: 'main' },
+    { label: 'Supporting', value: 'supporting' }
+]
+
+// Computed
+// const filteredCharacters = computed(() => {
+//     if (roleFilter.value === 'all') {
+//         return props.characters
+//     }
+//     return props.characters.filter(char => char.role === roleFilter.value)
+// })
+
+// Methods
+function viewCharacter(character) {
+    emit('view-character', character)
+    console.log('Viewing character:', character)
+}
+
+function toggleFavorite(character) {
+    const index = favoriteCharacters.value.findIndex(id => id === character.id)
+    if (index > -1) {
+        favoriteCharacters.value.splice(index, 1)
+    } else {
+        favoriteCharacters.value.push(character.id)
+    }
+    emit('favorite-changed', character, isFavorite(character.id))
+}
+
+function isFavorite(characterId) {
+    return favoriteCharacters.value.includes(characterId)
+}
+
+function getRoleColor(role) {
+    const colors = {
+        'main': 'primary',
+        'supporting': 'secondary',
+        'minor': 'grey-6'
+    }
+    return colors[role] || 'grey-6'
+}
+
+function getRoleIcon(role) {
+    const icons = {
+        'main': 'star',
+        'supporting': 'stars',
+        'minor': 'person'
+    }
+    return icons[role] || 'person'
+}
+
+function formatRole(role) {
+    return role.charAt(0).toUpperCase() + role.slice(1) + ' Character'
+}
+
+function filterCharacters() {
+    nextTick(() => {
+        emit('filter-changed', roleFilter.value)
+    })
 }
 </script>
+
+
 
 <style lang="scss" scoped>
 .characters-content {

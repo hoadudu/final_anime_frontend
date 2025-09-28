@@ -59,32 +59,52 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'EpisodesList',
-    props: {
-        episodeList: {
-            type: Array,
-            default: () => []
-        }
-    },
-    methods: {
-        playEpisode(episode) {
-            // Emit event or navigate to episode player
-            this.$emit('play-episode', episode);
-            console.log('Playing episode:', episode);
-        },
+<script setup>
+import { computed } from 'vue'
+// import { useRouter } from 'vue-router'
 
-        formatDate(dateString) {
-            if (!dateString || dateString === 'Unknown') {
-                return 'Unknown';
-            }
-            // Format date based on your needs
-            return new Date(dateString).toLocaleDateString();
-        }
+// Props
+const props = defineProps({
+    episodeList: {
+        type: Array,
+        default: () => []
+    }
+})
+
+// Emits
+const emit = defineEmits(['episode-play'])
+
+// const router = useRouter()
+
+// Computed properties
+const episodeList = computed(() => props.episodeList || [])
+
+// Methods
+const playEpisode = (episode) => {
+    emit('episode-play', episode)
+    // Có thể chuyển hướng tới trang xem episode
+    // router.push(`/watch/${episode.id}`)
+}
+
+const formatDate = (dateString) => {
+    if (!dateString) return 'Unknown'
+
+    try {
+        const date = new Date(dateString)
+        if (isNaN(date.getTime())) return 'Unknown'
+
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        }).format(date)
+    } catch (error) {
+        console.log(error);
+        return 'Unknown'
     }
 }
 </script>
+
 
 <style lang="scss" scoped>
 .episodes-content {
