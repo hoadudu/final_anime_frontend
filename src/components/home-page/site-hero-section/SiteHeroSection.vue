@@ -66,9 +66,9 @@
                         <div class="hero-actions q-gutter-md">
                             <q-btn color="red" :label="t('hero.watchNow')" push icon="play_arrow" size="lg"
                                 class="text-weight-bold" @click="watchMovie(movie)" />
-                            <q-btn flat round color="white" icon="info" size="lg" @click="showInfo(movie)">
+                            <!-- <q-btn flat round color="white" icon="info" size="lg" @click="showInfo(movie)">
                                 <q-tooltip>{{ t('hero.moreInfo') }}</q-tooltip>
-                            </q-btn>
+                            </q-btn> -->
                         </div>
                     </div>
                 </div>
@@ -114,13 +114,14 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useHomePageHeroSectionData } from 'src/composables/home-page/useHomePageData'
 import { useI18n } from 'vue-i18n'
-
+import { useRouter } from 'vue-router'
+// import { linkPost } from 'src/utils/helper.js'
 const { t } = useI18n()
 const { data: featuredMovies, isLoading, error, refetch: fetchFeaturedMovies } = useHomePageHeroSectionData()
 const slide = ref(0)
 const autoplay = ref(true)
 let timer = null
-
+const router = useRouter()
 const setupAutoplay = () => {
     if (timer) clearInterval(timer)
 
@@ -132,6 +133,7 @@ const setupAutoplay = () => {
     }, 6000)
     // 6 seconds interval 6000
 }
+
 
 const pauseAutoplay = () => {
     autoplay.value = false
@@ -157,18 +159,19 @@ const getCleanDescription = (description) => {
 
 // Action handlers
 const watchMovie = (movie) => {
-    console.log('Watching:', movie.title)
-    if (movie.playLink) {
+    console.log('Watching:', movie.slug)
+    if (movie.link) {
         // Navigate to movie page
-        window.location.href = movie.playLink
+        // window.location.href = movie.link
+        router.push(movie.link)
     }
 }
 
-const showInfo = (movie) => {
-    console.log('Show info for:', movie.title)
-    // Implement show info functionality
-    // Show detailed movie information modal
-}
+// const showInfo = (movie) => {
+//     console.log('Show info for:', movie.title)
+//     // Implement show info functionality
+//     // Show detailed movie information modal
+// }
 
 onMounted(async () => {
     await fetchFeaturedMovies()

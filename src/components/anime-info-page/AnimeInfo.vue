@@ -82,8 +82,8 @@
 
                     <!-- Mobile action buttons -->
                     <div class="mobile-actions">
-                        <q-btn color="primary" icon="play_arrow" label="Watch" @click="navigateToWatch"
-                            class="mobile-watch-btn" />
+                        <q-btn color="primary" icon="play_arrow" :label="t('animeInfo.watchNow')"
+                            @click="navigateToWatch" class="mobile-watch-btn" />
                         <q-btn color="secondary" icon="playlist_add" outline class="mobile-list-btn">
                             <q-menu>
                                 <q-list>
@@ -153,7 +153,7 @@
                                                 {{ japaneseTitle }}
                                             </div>
                                             <div v-if="synonyms" class="synonyms text-caption text-grey-5">
-                                                {{ synonyms }}
+                                                {{ t('animeInfo.synonyms') + ': ' + synonyms }}
                                             </div>
                                         </div>
 
@@ -236,10 +236,10 @@
                                     <!-- Action Buttons -->
                                     <div class="action-buttons q-mb-lg">
                                         <div class="row q-gutter-sm">
-                                            <q-btn color="primary" icon="play_arrow" label="Watch Now" size="md"
-                                                @click="navigateToWatch" class="watch-btn" />
-                                            <q-btn color="secondary" icon="playlist_add" label="Add to List" outline
-                                                size="md">
+                                            <q-btn color="primary" icon="play_arrow" :label="t('animeInfo.watchNow')"
+                                                size="md" @click="navigateToWatch" class="watch-btn" />
+                                            <q-btn color="secondary" icon="playlist_add"
+                                                :label="t('animeInfo.addToList')" outline size="md">
                                                 <q-menu>
                                                     <q-list>
                                                         <q-item v-for="listType in watchListTypes" :key="listType.value"
@@ -252,7 +252,8 @@
                                                     </q-list>
                                                 </q-menu>
                                             </q-btn>
-                                            <q-btn color="accent" icon="share" label="Share" outline size="md">
+                                            <q-btn color="accent" icon="share" :label="t('animeInfo.shareAnime')"
+                                                outline size="md">
                                                 <q-menu>
                                                     <q-list>
                                                         <q-item v-for="platform in sharePlatforms" :key="platform.name"
@@ -279,7 +280,7 @@
                 <q-card class="loading-card">
                     <q-card-section class="text-center q-pa-xl">
                         <q-spinner-dots size="50px" color="primary" />
-                        <div class="q-mt-md text-h6">Loading anime information...</div>
+                        <div class="q-mt-md text-h6">{{ t('common.loading') }}</div>
                     </q-card-section>
                 </q-card>
             </div>
@@ -289,14 +290,18 @@
                 <q-card class="error-card">
                     <q-card-section class="text-center q-pa-xl">
                         <q-icon name="error" size="50px" color="negative" />
-                        <div class="q-mt-md text-h6">Error loading anime information</div>
-                        <q-btn color="primary" label="Retry" @click="refetch" class="q-mt-md" />
+                        <div class="q-mt-md text-h6">{{ t('animeInfo.errorLoading') }}</div>
+                        <q-btn color="primary" :label="t('common.retry')" @click="refetch" class="q-mt-md" />
                     </q-card-section>
                 </q-card>
             </div>
 
             <!-- Tabbed Content Section -->
             <AnimeTabbedContent :animeData="animeInfo || {}" />
+
+            <!-- Anime Groups Section -->
+            <AnimeGroups v-if="animeInfo && animeInfo.animeGroups" :animeGroups="animeInfo.animeGroups"
+                :currentAnimeId="animeInfo.id" />
 
         </div>
     </div>
@@ -311,7 +316,15 @@ import { useAnimeInfoPageData } from 'src/composables/anime-info-page/useAnimeIn
 import { unref } from 'vue'
 import BreadcrumbNavigation from './components/BreadcrumbNavigation.vue'
 import AnimeTabbedContent from './components/AnimeTabbedContent.vue'
+import AnimeGroups from './components/AnimeGroups.vue'
 
+// Define props
+const props = defineProps({
+    slugWithId: {
+        type: String,
+        required: false // Make it optional to handle both prop-based and route-based scenarios
+    }
+});
 
 const route = useRoute()
 const router = useRouter()
@@ -326,6 +339,7 @@ const colors = computed(() => [
 
 
 
+
 const getColorForGenre = (index) => {
     return colors.value[index % colors.value.length]
 }
@@ -336,9 +350,13 @@ const extractIdFromSlug = (slugWithId) => {
     return match ? match[1] : null
 }
 
+// Use props.slugWithId if provided, otherwise fall back to route.params.slugWithId
 const animeId = computed(() => {
-    return extractIdFromSlug(route.params.slugWithId)
+    const slugWithId = props.slugWithId || route.params.slugWithId
+    return extractIdFromSlug(slugWithId)
 })
+
+
 
 // Vue Query data fetching
 const { data: animeInfoData, isLoading, error, refetch } = useAnimeInfoPageData(animeId)
@@ -346,12 +364,14 @@ const { data: animeInfoData, isLoading, error, refetch } = useAnimeInfoPageData(
 // Computed properties
 const animeInfo = computed(() => {
     const data = unref(animeInfoData)
-    console.log('Component animeInfo data:', data) // Debug log
-    if (data) {
-        console.log('Image URL:', data.poster || data.image || data.image_url) // Debug image
-    }
+    // console.log('Component animeInfo data:', data) // Debug log
+    // if (data) {
+    //     console.log('Image URL:', data.poster || data.image || data.image_url) // Debug image
+    // }
     return data
 })
+
+
 
 // Image URL computed property for fallback handling
 const imageUrl = computed(() => {
@@ -366,7 +386,7 @@ const imageUrl = computed(() => {
     ]
 
     const validUrl = possibleUrls.find(url => url && url.trim() !== '')
-    console.log('Final image URL:', validUrl)
+    // console.log('Final image URL:', validUrl)
     return validUrl
 })
 

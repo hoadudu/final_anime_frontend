@@ -167,6 +167,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { linkPost } from 'src/utils/helper.js'
 import {
     useHomePageAnimeFeaturedTopAiringData,
     useHomePageAnimeFeaturedMostPopularData,
@@ -198,7 +199,7 @@ const latestCompleted = computed(() => latestCompletedResponse.value?.data || []
 
 function navigateToAnime(anime) {
     if (anime.slug) {
-        router.push(`/anime/${anime.slug}`)
+        router.push(linkPost(anime.slug, anime.id))
     }
 }
 

@@ -269,6 +269,22 @@ export default {
     genres: 'Genres',
     studios: 'Studios',
     producers: 'Producers',
-    promoText: '{site} is the best site to watch {title} SUB online, or you can even watch {title} DUB in HD quality. You can also find {studio} anime on {site} website.'
+    promoText: '{site} is the best site to watch {title} SUB online, or you can even watch {title} DUB in HD quality. You can also find {studio} anime on {site} website.',
+    noImageAvailable: 'No Image Available',
+    relatedSeries: 'Related Series',
+    relatedSeriesDescription: 'Anime series that belong to the same franchise or story universe',
+    viewDetails: 'View Details',
+    watchOrder: 'Watch Order'
+  },
+
+  // Anime Page specific
+  animePage: {
+    recommendations: 'Recommendations',
+    recommendationsComingSoon: 'Recommendations coming soon...',
+    topAnime: 'Top Anime',
+    recentReviews: 'Recent Reviews',
+    latestNews: 'Latest News',
+    comingSoon: 'Coming soon...',
+    imagesGallery: 'Images Gallery'
   }
 }

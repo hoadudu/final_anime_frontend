@@ -12,9 +12,9 @@ export function useAnimeInfoPageData(animeId) {
         queryKey: ['anime-info', animeId, langQuery],
         queryFn: async () => {
             const id = unref(animeId) // Unwrap ref/computed
-            console.log('Fetching anime info for ID:', id) // Debug log
+            // console.log('Fetching anime info for ID:', id) // Debug log
             const response = await api.get(`${API_BASE_URL}/anime/info/${id}${langQuery}`)
-            console.log('API Response:', response.data) // Debug response
+            // console.log('API Response:', response.data) // Debug response
             // Return the data object from response
             return response.data.data || response.data
         },

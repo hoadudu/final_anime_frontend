@@ -273,7 +273,23 @@ export default {
         genres: 'Thể loại',
         studios: 'Hãng phim',
         producers: 'Nhà sản xuất',
-        promoText: '{site} là trang web tốt nhất để xem {title} bản SUB online, hoặc bạn cũng có thể xem {title} bản DUB với chất lượng HD. Bạn cũng có thể tìm thấy anime của {studio} trên trang web {site}.'
+        promoText: '{site} là trang web tốt nhất để xem {title} bản SUB online, hoặc bạn cũng có thể xem {title} bản DUB với chất lượng HD. Bạn cũng có thể tìm thấy anime của {studio} trên trang web {site}.',
+        noImageAvailable: 'Không có hình ảnh',
+        relatedSeries: 'Series Liên Quan',
+        relatedSeriesDescription: 'Các series anime thuộc cùng franchise hoặc vũ trụ câu chuyện',
+        viewDetails: 'Xem Chi Tiết',
+        watchOrder: 'Thứ Tự Xem'
+    },
+
+    // Anime Page specific
+    animePage: {
+        recommendations: 'Đề xuất',
+        recommendationsComingSoon: 'Đề xuất sắp ra mắt...',
+        topAnime: 'Anime Hàng Đầu',
+        recentReviews: 'Đánh Giá Gần Đây',
+        latestNews: 'Tin Tức Mới Nhất',
+        comingSoon: 'Sắp ra mắt...',
+        imagesGallery: 'Thư Viện Hình Ảnh'
     }
 
 }

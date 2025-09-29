@@ -2,7 +2,8 @@
     <div class="breadcrumb-container" v-if="animeInfo">
         <div class="breadcrumb-wrapper">
             <q-breadcrumbs class="breadcrumb-nav" active-color="primary">
-                <q-breadcrumbs-el icon="home" label="Home" :to="{ name: 'site-home' }" class="breadcrumb-item" />
+                <q-breadcrumbs-el icon="home" :label="t('common.home')" :to="{ name: 'site-home' }"
+                    class="breadcrumb-item" />
                 <q-breadcrumbs-el :icon="getBreadcrumbIcon(animeInfo.type)" :label="getBreadcrumbType(animeInfo.type)"
                     :to="getBreadcrumbTypeLink(animeInfo.type)" class="breadcrumb-item" />
                 <q-breadcrumbs-el :label="animeInfo.title" class="breadcrumb-current" />
@@ -12,6 +13,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 defineProps({
     animeInfo: {
         type: Object,

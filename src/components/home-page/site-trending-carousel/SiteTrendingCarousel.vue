@@ -202,19 +202,9 @@ function handleItemClick(item) {
     if (!isClick.value) return
 
     // Navigate to anime detail page
-    if (item.id) {
+    if (item.link) {
         // Check if route exists
-        try {
-            router.push({ name: 'anime-detail', params: { id: item.id } })
-        } catch (e) {
-            console.error('Route navigation error:', e)
-            // Try with slug as fallback
-            if (item.slug) {
-                router.push({ path: `/anime/${item.slug}` })
-            }
-        }
-    } else if (item.slug) {
-        router.push({ path: `/anime/${item.slug}` })
+        router.push({ path: item.link })
     }
 }
 </script>

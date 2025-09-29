@@ -102,6 +102,75 @@
             }
         ],
         "watchUrl": "/watch/naruto-677",
-        "shareCount": 3700
+        "shareCount": 3700,
+        "animeGroups": [
+            {
+                "id": 1321,
+                "name": "Fullmetal Alchemist: Brotherhood",
+                "description": "",
+                "posts": [
+                    {
+                        "id": 1001,
+                        "type": "TV",
+                        "title": "Fullmetal Alchemist: Brotherhood",
+                        "poster": "https://cdn.myanimelist.net/images/anime/13/13738.jpg",
+                        "year": "2009",
+                        "position": 1,
+                        "note": "LÃ m láº¡i",
+                        "link": "thong-tin/fullmetal-alchemist-brotherhood-1-1001"
+                    },
+                    {
+                        "id": 4565,
+                        "type": "TV",
+                        "title": "Fullmetal Alchemist",
+                        "poster": "https://i.imgur.com/8oqmP09.jpg",
+                        "year": "",
+                        "position": 2,
+                        "note": "CÅ©",
+                        "link": "thong-tin/fullmetal-alchemist-4565"
+                    },
+                    {
+                        "id": 3196,
+                        "type": "TV",
+                        "title": "Fullmetal Alchemist Movie: Conqueror of Shamballa",
+                        "poster": "https://4.bp.blogspot.com/-nlSFY_LMXu4/VH5ewtjyEPI/AAAAAAAAAKc/NOEiKmFAc1s/s1600/Fullmetal-alchemist-the-movie-conqueror-of-shamballa-movie-poster-2005.jpg",
+                        "year": "",
+                        "position": 3,
+                        "note": "movie1",
+                        "link": "thong-tin/fullmetal-alchemist-movie-conqueror-of-shamballa-3196"
+                    },
+                    {
+                        "id": 1022,
+                        "type": "TV",
+                        "title": "Fullmetal Alchemist - Milos No Seinaru Hoshi (movie) [BD]",
+                        "poster": "https://i.imgur.com/QQpEDbo.jpg",
+                        "year": "",
+                        "position": 4,
+                        "note": "movie2",
+                        "link": "thong-tin/fullmetal-alchemist-milos-no-seinaru-hoshi-movie-bd-1022"
+                    },
+                    {
+                        "id": 5261,
+                        "type": "TV",
+                        "title": "Giả Kim Thuật Sư Live Action",
+                        "poster": "https://i.imgur.com/6mOOovc.jpg",
+                        "year": "",
+                        "position": 5,
+                        "note": "live1",
+                        "link": "thong-tin/gia-kim-thuat-su-live-action-5261"
+                    },
+                    {
+                        "id": 7016,
+                        "type": "TV",
+                        "title": "Fullmetal Alchemist: The Revenge of Scar",
+                        "poster": "http://i.imgur.com/KIV50Us.jpg",
+                        "year": "",
+                        "position": 6,
+                        "note": "live2",
+                        "link": "thong-tin/fullmetal-alchemist-the-revenge-of-scar-7016"
+                    }
+                ]
+            }
+        ]
     }
 }
