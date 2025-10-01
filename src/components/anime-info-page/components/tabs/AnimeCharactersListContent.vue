@@ -107,7 +107,6 @@ const roleOptions = [
 // Methods
 function viewCharacter(character) {
     emit('view-character', character)
-    console.log('Viewing character:', character)
 }
 
 function toggleFavorite(character) {

@@ -58,7 +58,15 @@
 
                                         <div class="info-item" v-if="animeInfo.episodes">
                                             <div class="info-label">{{ t('anime.episodes') }}:</div>
-                                            <div class="info-value">{{ animeInfo.episodes }}</div>
+                                            <div class="info-value">
+                                                <template v-if="typeof animeInfo.episodes === 'number'">
+                                                    {{ animeInfo.episodes }}
+                                                </template>
+                                                <template v-else>
+                                                    <span v-if="animeInfo.episodes.total">{{ animeInfo.episodes.total }}</span>
+                                                    <span v-else>{{ animeInfo.episodes.sub || animeInfo.episodes.dub || 'N/A' }}</span>
+                                                </template>
+                                            </div>
                                         </div>
 
                                         <div class="info-item" v-if="animeInfo.status">
@@ -94,14 +102,14 @@
                                 </q-card>
 
                                 <!-- Genres Card -->
-                                <q-card flat bordered class="genres-card q-mt-md" v-if="animeInfo.genres?.length">
+                                <q-card flat bordered class="genres-card q-mt-md" v-if="Array.isArray(animeInfo.genres) && animeInfo.genres.length">
                                     <q-card-section>
                                         <div class="text-h6 q-mb-md">
                                             <q-icon name="category" class="q-mr-sm" />
                                             {{ t('genres.genre') }}
                                         </div>
                                         <div class="genres-list">
-                                            <q-chip v-for="genre in animeInfo.genres" :key="genre.mal_id"
+                                            <q-chip v-for="(genre, index) in animeInfo.genres" :key="genre.mal_id || genre.id || index"
                                                 color="primary" text-color="white" clickable
                                                 @click="navigateToGenre(genre.name)" class="genre-chip">
                                                 {{ genre.name }}
@@ -116,22 +124,22 @@
 
                 <!-- Episodes Tab -->
                 <q-tab-panel name="episodes" class="q-pa-lg">
-                    <AnimeEpisodesListContent :episodeList="animeInfo.episodeList" />
+                    <AnimeEpisodesListContent :episodeList="animeInfo.episodeList || []" />
                 </q-tab-panel>
 
                 <!-- Characters Tab -->
                 <q-tab-panel name="characters" class="q-pa-lg">
-                    <AnimeCharactersListContent :characters="animeInfo.characters" />
+                    <AnimeCharactersListContent :characters="animeInfo.characters || []" />
                 </q-tab-panel>
 
                 <!-- Videos Tab -->
                 <q-tab-panel name="videos" class="q-pa-lg">
-                    <AnimeVideosListContent :videos="animeInfo.videos" />
+                    <AnimeVideosListContent :videos="animeInfo.videos || []" />
                 </q-tab-panel>
 
                 <!-- Images Gallery Tab -->
                 <q-tab-panel name="images-gallery" class="q-pa-lg">
-                    <AnimeImagesListContent :images="animeInfo.images" />
+                    <AnimeImagesListContent :images="animeInfo.images || []" />
 
                 </q-tab-panel>
             </q-tab-panels>

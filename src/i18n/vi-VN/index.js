@@ -283,6 +283,10 @@ export default {
 
     // Anime Page specific
     animePage: {
+        title: 'Thông Tin Anime',
+        defaultDescription: 'Xem anime online với chất lượng cao',
+        loadingAnimeInfo: 'Đang tải thông tin anime...',
+        loadingRecommendations: 'Đang tải đề xuất...',
         recommendations: 'Đề xuất',
         recommendationsComingSoon: 'Đề xuất sắp ra mắt...',
         topAnime: 'Anime Hàng Đầu',

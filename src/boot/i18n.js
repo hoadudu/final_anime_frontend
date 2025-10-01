@@ -3,7 +3,7 @@ import { createI18n } from 'vue-i18n'
 import messages from 'src/i18n'
 
 // Lấy ngôn ngữ từ localStorage hoặc dùng vi-VN làm mặc định
-const savedLanguage = localStorage.getItem('app-language') || 'vi-VN'
+const savedLanguage = (process.env.CLIENT ? localStorage.getItem('app-language') : null) || 'vi-VN'
 
 // Tạo i18n instance
 const i18n = createI18n({

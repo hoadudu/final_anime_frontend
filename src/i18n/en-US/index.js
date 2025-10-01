@@ -279,6 +279,10 @@ export default {
 
   // Anime Page specific
   animePage: {
+    title: 'Anime Info',
+    defaultDescription: 'Watch anime online with high quality streaming',
+    loadingAnimeInfo: 'Loading anime information...',
+    loadingRecommendations: 'Loading recommendations...',
     recommendations: 'Recommendations',
     recommendationsComingSoon: 'Recommendations coming soon...',
     topAnime: 'Top Anime',

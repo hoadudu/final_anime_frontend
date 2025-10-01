@@ -1,176 +1,909 @@
 {
     "data": {
-        "id": 677,
-        "title": "Naruto",
+        "id": 1002,
+        "title": "Cross Game",
+        "slug": "cross-game",
         "titles": [
             {
-                "language": "Japanese",
-                "title": "ナルト"
+                "language": "en",
+                "title": "Cross Game"
             },
             {
-                "language": "English",
-                "title": "Naruto"
+                "language": "ja",
+                "title": "クロスゲーム"
             },
             {
-                "language": "Synonyms",
-                "title": "NARUTO"
+                "language": "en",
+                "title": "Cross Game"
             }
         ],
-        "poster": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/5db400c33f7494bc8ae96f9e634958d0.jpg",
-        "cover": "https://cdn.noitatnemucod.net/thumbnail/300x400/100/5db400c33f7494bc8ae96f9e634958d0.jpg",
-        "description": "Moments prior to Naruto Uzumaki's birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc. In order to put an end to the Kyuubi's rampage, the leader of the village, the Fourth Hokage, sacrificed his life and sealed the monstrous beast inside the newborn Naruto.\n\nNow, Naruto is a hyperactive and knuckle-headed ninja still living in Konohagakure. Shunned because of the Kyuubi inside him, Naruto struggles to find his place in the village, while his burning desire to become the Hokage of Konohagakure leads him not only to some great new friends, but also some deadly foes.\n\n[Written by MAL Rewrite]",
+        "poster": "https://cdn.myanimelist.net/images/anime/5/21337.jpg",
+        "cover": "https://via.placeholder.com/1920x1080?text=No+Cover",
+        "description": "Kou Kitamura and Aoba Tsukishima are often at odds—even though their families happen to be close friends and business partners. Although the only child of a sports shop owner, Kou has never been interested in playing baseball. Despite this, he possesses an impressive batting ability honed by frequent visits to the local baseball batting center run by the Tsukishima family. On the other hand, Aoba loves to play baseball and is a star player with exceptional pitching form.\n\nHowever, these two seemingly complete opposites share something very important to them—Wakaba Tsukishima, Aoba's older sister and Kou's destined sweetheart. Admired by the quarrelsome duo, Wakaba often finds herself the catalyst to their never-ending rivalry. But whether or not they realize that they have more in common than either would care to admit, only time will tell. The game of baseball may just be what the pair needs to ultimately overcome their own personal struggles.\n\n[Written by MAL Rewrite]",
         "type": "TV",
-        "status": "Finished Airing",
+        "status": "Completed",
         "aired": {
-            "from": "Oct 3, 2002",
-            "to": "Feb 8, 2007"
+            "from": "2009-04-05",
+            "to": "2010-03-28"
         },
-        "premiered": "Fall 2002",
-        "duration": "23m",
-        "rating": "PG-13",
+        "year": "2009",
+        "views": 110,
+        "premiered": "Spring 2009",
+        "duration": "23 min per ep",
+        "rating": "PG-13 - Teens 13 or older",
         "quality": "HD",
         "episodes": {
-            "total": 220,
-            "sub": 220,
-            "dub": 220
+            "total": 50,
+            "sub": 0,
+            "dub": 0
         },
-        "malScore": 7.89,
+        "episodeList": [
+            {
+                "id": 26076,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26077,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26078,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26079,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26080,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26081,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26082,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26083,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26084,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26085,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26086,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26087,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26088,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26089,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26090,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26091,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26092,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26093,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26094,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26095,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26096,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26097,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26098,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26099,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26100,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26101,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26102,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26103,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26104,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26105,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26106,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26107,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26108,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26109,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26110,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26111,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26112,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26113,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26114,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26115,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26116,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26117,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26118,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26119,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26120,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26121,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26122,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26123,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26124,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            },
+            {
+                "id": 26125,
+                "title": "Episode ",
+                "episodeNumber": null,
+                "airDate": "Unknown",
+                "subCount": 4,
+                "dubCount": 0
+            }
+        ],
+        "animeGroups": [],
+        "characters": [
+            {
+                "id": 798,
+                "role": "main",
+                "name": "Kitamura, Kou",
+                "image_url": "https://cdn.myanimelist.net/images/characters/6/49897.jpg?s=9e99334e1c0d5ff7e079ae860eb2702d",
+                "slug": "kitamura-kou"
+            },
+            {
+                "id": 799,
+                "role": "main",
+                "name": "Tsukishima, Aoba",
+                "image_url": "https://cdn.myanimelist.net/images/characters/16/153433.jpg?s=e7d624eebba6dfcdfd0083984ee7cd1e",
+                "slug": "tsukishima-aoba"
+            },
+            {
+                "id": 800,
+                "role": "supporting",
+                "name": "Akaishi, Osamu",
+                "image_url": "https://cdn.myanimelist.net/images/characters/11/81004.jpg?s=abab95de23257aca6c98ebc86c014937",
+                "slug": "akaishi-osamu"
+            },
+            {
+                "id": 801,
+                "role": "supporting",
+                "name": "Asami, Kikuji",
+                "image_url": "https://cdn.myanimelist.net/images/characters/5/65349.jpg?s=1fa5ed5cd1a897b6244bc6ac326c7e9b",
+                "slug": "asami-kikuji"
+            },
+            {
+                "id": 802,
+                "role": "supporting",
+                "name": "Asami, Mizuki",
+                "image_url": "https://cdn.myanimelist.net/images/characters/5/53674.jpg?s=28863994806469798ee03769f5d8998a",
+                "slug": "asami-mizuki"
+            },
+            {
+                "id": 803,
+                "role": "supporting",
+                "name": "Asami, Tokie",
+                "image_url": "https://cdn.myanimelist.net/images/characters/8/65350.jpg?s=569b430329e9e5f5f00c6712fb82bc56",
+                "slug": "asami-tokie"
+            },
+            {
+                "id": 804,
+                "role": "supporting",
+                "name": "Asami, Isamu",
+                "image_url": "https://cdn.myanimelist.net/images/characters/5/65352.jpg?s=5168423182896aa73180a17d6f1ca0bc",
+                "slug": "asami-isamu"
+            },
+            {
+                "id": 805,
+                "role": "supporting",
+                "name": "Azuma, Junpei",
+                "image_url": "https://cdn.myanimelist.net/images/characters/12/56011.jpg?s=142b6ce452c886476ed8709ea313216e",
+                "slug": "azuma-junpei"
+            },
+            {
+                "id": 806,
+                "role": "supporting",
+                "name": "Azuma, Yuuhei",
+                "image_url": "https://cdn.myanimelist.net/images/characters/13/80997.jpg?s=5ed0ad463618c0c2892ba24994827a08",
+                "slug": "azuma-yuuhei"
+            },
+            {
+                "id": 807,
+                "role": "supporting",
+                "name": "Daimon, Shuugo",
+                "image_url": "https://cdn.myanimelist.net/images/characters/11/51791.jpg?s=5628053c692d92acca82720797244d82",
+                "slug": "daimon-shuugo"
+            },
+            {
+                "id": 808,
+                "role": "supporting",
+                "name": "Ehara",
+                "image_url": "https://cdn.myanimelist.net/images/characters/15/55393.jpg?s=3709f62fcf3588b85af7a632150fbdc0",
+                "slug": "ehara"
+            },
+            {
+                "id": 809,
+                "role": "supporting",
+                "name": "Fukuda, Hiromi",
+                "image_url": "https://cdn.myanimelist.net/images/characters/14/298020.jpg?s=b96e30300d8237a6c9474434b85eb1d0",
+                "slug": "fukuda-hiromi"
+            },
+            {
+                "id": 810,
+                "role": "supporting",
+                "name": "Hama",
+                "image_url": "https://cdn.myanimelist.net/images/characters/16/55394.jpg?s=5c66a765a7959f19eb67b1713409f35f",
+                "slug": "hama"
+            },
+            {
+                "id": 811,
+                "role": "supporting",
+                "name": "Ishiguro, Minoru",
+                "image_url": "https://cdn.myanimelist.net/images/characters/14/53860.jpg?s=75ca9e7285fd1738dcd5f34c13cbd619",
+                "slug": "ishiguro-minoru"
+            },
+            {
+                "id": 812,
+                "role": "supporting",
+                "name": "Itoyama, Tooru",
+                "image_url": "https://cdn.myanimelist.net/images/characters/12/55398.jpg?s=f244f098ebd21520049dd11b93ced0f5",
+                "slug": "itoyama-tooru"
+            },
+            {
+                "id": 813,
+                "role": "supporting",
+                "name": "Iwai, Tetsu",
+                "image_url": "https://cdn.myanimelist.net/images/characters/8/53330.jpg?s=ebe10db0d1e0d9881a4a1f34a528d1bc",
+                "slug": "iwai-tetsu"
+            }
+        ],
+        "videos": [
+            {
+                "id": 16,
+                "title": "PV",
+                "url": "https://www.youtube.com/watch?v=AvbFFP5qAok",
+                "thumbnail": "Không xác định"
+            }
+        ],
+        "recommendations": [
+            {
+                "id": 2483,
+                "title": "Liar Game - The Final Stage [live Action]",
+                "slug": "liar-game-the-final-stage-live-action",
+                "description": "Bộ phim được làm dựa trên manga cùng tên của tác giả Kaitani Shinobu,và là phần tiếp theo và cuối cùng của drama (gồm 2 season) đã được phát sóng trước đó trên Fuji TV.Nao Kanzaki là một cô gái vô cùng ngây thơ và nhẹ dạ cả tin.Vô tình cô vướng vào một trò chơi mang tên Liar Game,mà ở đó,những người thắng cuộc sẽ được mang về nhà những số tiền khổng lồ còn kẻ thua thì cũng phải gánh những món nợ cũng lớn không kém.Nhờ sự giúp đỡ Shinichi Akiyama,một thiên tài lừa đảo,Nao đã vượt qua vòng bán kết và quyết định dừng cuộc chơi.Tuy nhiên,ban tổ chức cuộc thi lại thông báo có một thí sinh rời khỏi cuộc chơi và Nao tiếp tục bước vào vòng chung kết cùng Akiyama.Tại đây họ phải đối đầu với 11 người chơi khác,đầy mưu mô và tham vọng.Và cuối cùng ai sẽ là người chiến thắng và giành được số tiền thưởng 5 tỷ yên !?",
+                "link": "/thong-tin/liar-game-the-final-stage-live-action-2483",
+                "poster": "https://i.imgur.com/8nCKV5r.jpg",
+                "type": "Special",
+                "year": ""
+            },
+            {
+                "id": 2869,
+                "title": "Choujigen Game Neptune: The Animation OVA",
+                "slug": "choujigen-game-neptune-the-animation-ova",
+                "description": " Choujigen Game Neptune The Animation OVA",
+                "link": "/thong-tin/choujigen-game-neptune-the-animation-ova-2869",
+                "poster": "https://i.imgur.com/6vTA0mu.jpg",
+                "type": "Special",
+                "year": ""
+            },
+            {
+                "id": 1936,
+                "title": "Macross: Flash Back 2012",
+                "slug": "macross-flash-back-2012",
+                "description": "Tên: Macross: Flash Back 2012Định dạng: Music VideoNăm sản xuất: 1987Giới thiệuMacross: Flash Back 2012 được phát hành 5 năm sau khi phiên bản truyền hình kết thúc và xem như phần cuối cùng trong câu chuyện đầu tiên của Macross với các nhân vật Minmay, Hikaru và Misa. Đây là một music video dài tập hợp các bài hát trong TV series và movie với footage phần lớn rút ra từ movie. Đặc biệt, cuối video này là epilogue của Macross với hình ảnh SDF-2 khởi hành với hạm trưởng là Misa cùng Hikaru và Minmay, mở ra một thời kỳ mới về chinh phục vũ trụ của con người.Các bài hát được sử dụngTenshi no Enogu (Màu vẽ thiên thần)Ai wa Nagareru (Tình yêu cứ trôi đi)Shao Pai Long (Tiểu Bạch Long)0-G LoveSunset BeachCinderellaSilver Moon, Red MoonAi.Oboete Imasu ka (Anh có nhớ tình yêu?)Runner",
+                "link": "/thong-tin/macross-flash-back-2012-1936",
+                "poster": "https://1.bp.blogspot.com/-Oqjm5TGzUOc/U-LNdMowt_I/AAAAAAAAAwM/KQ7-H2Zsf_o/s1600/Macross+Flash+Back+2012.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 8016,
+                "title": "Pyramid Game",
+                "slug": "pyramid-game",
+                "description": "Mỗi chiều thứ năm, mỗi tháng một lần, các sinh viên tại Love High đã bỏ phiếu bầu trong một cuộc thăm dò phổ biến. Kết quả? Một hệ thống xếp hạng tàn bạo xác định toàn bộ hệ thống phân cấp xã hội của trường. Sau khi bắt đầu ở phía dưới, sinh viên chuyển nhượng mới Suji có thể lên đường đến đỉnh của kim tự tháp không? Hay cô ấy sẽ lật đổ trò chơi hoàn toàn? (Nguồn: Webtoon Entertainment)",
+                "link": "/thong-tin/pyramid-game-8016",
+                "poster": "https://cdn.myanimelist.net/images/anime/1883/150557l.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 5049,
+                "title": "Macross II: Lovers Again",
+                "slug": "macross-ii-lovers-again",
+                "description": "Năm 2089, 89 năm kể từ chiến tranh vũ trụ thứ nhất, đã thay đổi cuộc sống của hai chủng tộc con người và Zentradi. Cả hai chủng tộc hiện đang chung sống hòa bình trên Trái Đất thì bỗng nhiên một chủng tộc mới xuất hiện trên hệ Mặt Trời tên là Marduk. Giữa chiến trường của Lực lương không gian Liên Hợp Quốc với hạm đội Marduk, phóng viên tập sự Hibiki đã phát hiện ra Ishtar, một Emulator làm tăng khả năng chiến đấu của Marduk bằng cách hát. Hibiki đưa Ishtar về Trái Đất nhằm dạy cho cô về những giá trị cuộc sống và văn hóa. Cùng với phi công Valkyrie chủ lực Silvie Gena, Hibiki và Ishtar phải tìm ra cách để cứu Trái đất khỏi sự hủy diệt hoàn toàn dưới bàn tay của kẻ đứng đầu Marduk là Ingues.",
+                "link": "/thong-tin/macross-ii-lovers-again-5049",
+                "poster": "https://i.imgur.com/mj9sU33.png",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 6055,
+                "title": "Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta..",
+                "slug": "otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta",
+                "description": "Katarina Claes, tám tuổi, là con gái duy nhất của một công tước, sống cuộc sống bình yên và không có sự cố cho đến khi cô đập đầu vào một tảng đá ... và sau đó nhớ rằng cô thực sự không phải là con gái của công tước. Cô từng là một otaku chết trên đường đến trường sau khi dành tối hôm trước để chơi Fortune Lover, trò chơi otome yêu thích của cô. Sau khi nhận thấy môi trường xung quanh hiện tại của mình có vẻ quen thuộc đến kỳ lạ, cô bị sốc khi phát hiện ra rằng mình đã được tái sinh vào thế giới của Fortune Lover với tư cách là nhân vật phản diện. Nhân vật phản diện trong trò chơi thường xuyên chết hoặc bị lưu đày, vì vậy Katarina quyết định sử dụng kiến ​​thức của mình về trò chơi và các tuyến đường của nó để tránh mọi tình huống xấu. Nhưng nó thậm chí có thể cho nhân vật phản diện đạt được một kết thúc tốt đẹp? [Viết bởi MAL Rewrite]",
+                "link": "/thong-tin/otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta-6055",
+                "poster": "http://i.imgur.com/U0tysKt.jpg",
+                "type": "Special",
+                "year": ""
+            },
+            {
+                "id": 4345,
+                "title": "New Game!",
+                "slug": "new-game",
+                "description": "Aoba Suzukaze – nhân vật chính, sau khi tốt nghiệp cấp 3, cô xin vào một công ti làm game. Điều ngạc nhiên là người đã từng làm ra một game mà Aoba yêu thích nhất từ thuở cấp 2 lại là cấp trên của mình trong công ti, và thế là câu chuyện về một cô gái siêng năng làm việc với những khao khát của mình được bắt đầu.",
+                "link": "/thong-tin/new-game-4345",
+                "poster": "https://i.imgur.com/5gsiezb.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 8062,
+                "title": "Game Center Shoujo to Ibunka Kouryuu",
+                "slug": "game-center-shoujo-to-ibunka-kouryuu",
+                "description": "Renji Kusakabe, một nhân viên arcade, một ngày nọ, nhận thấy một cô gái nước ngoài nhỏ đang vật lộn để giành được một món đồ chơi nhồi bông có tên là \"Manly Koala\" từ một trò chơi cần cẩu. Ba giờ sau, sau khi kết thúc ca làm việc của mình, Renji thấy cô gái vẫn ở trong trò chơi, nhưng đồ chơi vẫn không bị lay chuyển. Cảm thấy tiếc cho cô, anh quyết định giúp đỡ. Anh ta chèn một đồng xu 100 yen và, với một lần thử khéo léo, chiến thắng đồ chơi, sau đó anh ta đưa tay cho cô gái. Giật mình trước cử chỉ bất ngờ này, cô gái nhìn Renji với sự nghi ngờ. Bối rối, Renji vội vàng nói với cô rằng đó là một món quà ngày lễ tình nhân. Anh ta ít biết, ở quê nhà nước Anh, Ngày lễ tình nhân theo truyền thống khi đàn ông tặng quà cho phụ nữ cùng với một lời thú nhận tình yêu. (Nguồn: Tin tức MAL)",
+                "link": "/thong-tin/game-center-shoujo-to-ibunka-kouryuu-8062",
+                "poster": "https://cdn.myanimelist.net/images/anime/1943/149719l.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 6663,
+                "title": "Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta... OVA",
+                "slug": "otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta-ova",
+                "description": "OVA sẽ kể những câu chuyện thời thơ ấu của các nhân vật chính, phỏng theo tập đầu tiên của light novel gốc của Satoru Yamaguchi. Đi kèm với tập phiên bản giới hạn thứ bảy của manga. (Nguồn: MAL News)",
+                "link": "/thong-tin/otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta-ova-6663",
+                "poster": "http://i.imgur.com/hJvXsT7.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 4320,
+                "title": "Macross Plus Movie Edition",
+                "slug": "macross-plus-movie-edition",
+                "description": "Movie tổng hợp lại nội dung của 4 tập OVA, có đổi khác một chút trong thứ tự tình tiết",
+                "link": "/thong-tin/macross-plus-movie-edition-4320",
+                "poster": "https://i.imgur.com/4yQiq5q.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 4983,
+                "title": "Tomodachi Game - Trò chơi Tình bạn [Live Action]",
+                "slug": "tomodachi-game-tro-choi-tinh-ban-live-action",
+                "description": "\r\nTựa Anh: Friends Games\r\nRomaji: Tomodachi Gemu\r\nTựa Nhật: トモダチゲーム\r\nTựa Việt: Trò chơi Tình bạn\r\nĐạo diễn:\r\nBiên kịch: Mikoto Yamaguchi (manga), Yuki Sato(manga)\r\nĐài: TVK\r\nSố tập: 4\r\nThời gian chiếu:Từ 06/04 đến 27/04/2017\r\nLịch chiếu:Thứ Năm, từ 23:00 đến 23:30\r\nNgôn Ngữ: tiếng Nhật\r\nQuốc Gia: Nhật Bản\r\n\r\nTản mạn\r\nKhi Katakiri Yuichi (Ryo Yoshizawa) còn nhỏ, mẹ cậu đã dạy rằng bạn bè quan trọng hơn tiền bạc. Tới giờ, đã là một học sinh trung học, Yuichi luôn ưu tiên bạn bè hơn chuyện tiền nong. Một ngày, Yuichi và những người bạn của cậu bị kéo vào một “Trò chơi Tình bạn” với một món tiền lớn mang nặng trên vai…\r\nGhi chú\r\n\r\nDựa trên bộ truyện tranh cùng tên “Tomodachi Game” được sáng tác bởi Yamaguchi Mikoto và minh họa bởi Sato Yuki (xuất bản lần đầu tháng Một, 2014 trên tạp chí nguyệt san Nhật Bản Bessatsu Shonen)\r\nTựa đề liên quan:\r\n\r\nFriends Games | Tomodachi Gemu (TVK / 2017)\r\nFriends Games | Tomodachi Gemu (2017)\r\n\r\n\r\n\r\nDiễn viên\r\n\r\n\r\n\r\n \r\n \r\n \r\n \r\n \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nRyo Yoshizawa\r\nRio Uchida\r\nYuki Yamada\r\nShimon Okura\r\nNagi Nemoto\r\n\r\n\r\nYuichi Katakiri\r\nShiho Sawaragi\r\nTenji Mikasa\r\nMakoto Shibe\r\nYutori Kokorogi\r\n\r\n\r\n\r\n\r\n\r\n\r\n \r\n \r\n \r\n \r\n \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nSilk Road\r\nSeishuu Uragami\r\nAmatsuki\r\nYuuka Ueno\r\nYuki Kubota\r\n\r\n\r\nHyakutaro Onigawara\r\nKei Shinomiya\r\nManabu-kun\r\nMaria Minase\r\nRen Tojo\r\n\r\n\r\n\r\nCác diễn viên khác:\r\n\r\nTakuma Zaiki\r\nDaisuke Uematsu\r\nHirohiko Machiyama\r\n\r\n+ Các trang online có bếch hàng cũng nhớ ghi credit cho mình, không yêu cầu gì hơn + FPT Play, Zing TV thì next luôn giùm, xin cám ơn\r\n⊗ Vietsub by Fly-Fansub Subteam:\r\nTranslator: Ruan Yuu\r\nTypesetter: Fly\r\nEditor: Fly\r\nEncoder: Fly\r\nUploader: Fly\r\nBộ phim được dịch từ phụ đề tiếng Anh của Thần Tượng Vĩnh Cửu",
+                "link": "/thong-tin/tomodachi-game-tro-choi-tinh-ban-live-action-4983",
+                "poster": "https://i.imgur.com/dyZ2O0p.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 4914,
+                "title": "Gamers!",
+                "slug": "gamers",
+                "description": "Đây là một câu chuyện xoay quanh một số sinh viên nhất định và một sở thích. Amano Keita là nhân vật chính cô đơn của chúng tôi, người có niềm đam mê chơi game và là bạn với Uehara Tasuku, người bí mật là một gamer đồng nghiệp và là người tin rằng cuộc sống của anh ấy là hoàn hảo. Chúng tôi cũng có Karen Tendou, chủ tịch câu lạc bộ trò chơi video và Chiaki Hoshinomori, người liên tục cãi nhau với Keita. Đây là một câu chuyện chứa đựng một chuỗi những cảnh hài hước không ngừng nghỉ và những hiểu lầm. Bộ phim hài lãng mạn hỗn loạn của chúng tôi đã bắt đầu!",
+                "link": "/thong-tin/gamers-4914",
+                "poster": "https://i.imgur.com/gbJSXsQ.png",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 1992,
+                "title": "Macross Plus",
+                "slug": "macross-plus",
+                "description": "Đối với fan của Series Macross thì không còn gì lạ và sẽ biết chuyện gì xảy ra từ năm A.D. 2009 của series cho đến mốc thời điểm của Macross Plus.Năm A.D. 2040, Tại hành tinh thuộc địa Eden, U.N.Spacy đang tiến hành chương trình thử nghiệm thế hệ valkyrie mớiĐể chống lại các cuộc tấn công của các chủng tộc Alien khác trong vũ trụ. Ismua Dyson là phi công thử nghiệm mới của dự án.Anh phát hiện ra người bạn cũ của mình, Guld, công là phi công thử nghiệm của dự án cạnh tranh với dự án của mình.Sự xuất hiện của Myung, bạn gái cũ làm xích mích giữa 2 người bạn cũ càng thêm căng thẳng.Do Macross Plus được sản xuất năm 1995 nên khung hình tỷ lệ 4:3 nên chỉ có phim dạng 640x480",
+                "link": "/thong-tin/macross-plus-1992",
+                "poster": "https://i.imgur.com/UXDwbMQ.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 5996,
+                "title": "Yatogame-chan Kansatsu Nikki 2nd Season",
+                "slug": "yatogame-chan-kansatsu-nikki-2nd-season",
+                "description": "Mùa thứ hai của  Yatogame-chan Kansatsu Nikki .",
+                "link": "/thong-tin/yatogame-chan-kansatsu-nikki-2nd-season-5996",
+                "poster": "http://i.imgur.com/68K0703.jpg",
+                "type": "Unknown",
+                "year": ""
+            },
+            {
+                "id": 6724,
+                "title": "Tomodachi Game",
+                "slug": "tomodachi-game",
+                "description": "Yuuichi Katagiri đã phải gánh vác những khó khăn tài chính cả một đời nhưng rồi cũng tìm thấy lối sống tích cực nhờ vào những người bạn thân thiết của mình. Để giữ lời hứa, Yuuichi tiết kiệm đủ tiền để cùng họ tham gia chuyến đi dã ngoại. Nhưng khi số tiền quỹ mất tích một cách bí ẩn, sự nghi ngờ rơi vào hai người bạn của Yuuichi: Shiho Sawaragi và Makoto Shibe – những người chịu trách nhiệm thu và giữ tiền. Dẫu vô tội, song, Shiho và Makoto phải chịu trách nhiệm về việc đánh mất số tiền khi không còn ai khác ra mặt.\r\nVài ngày sau, Yuuichi và những người bạn nhận được những lá thư bí ẩn lừa mỗi người họ cùng gặp nhau. Khi đến nơi, họ bị phục kích và đánh bất tỉnh. Họ tỉnh dậy trong một căn phòng bí ẩn trước sự chứng kiến của \"Manabu-kun\" – nhân vật trong một chương trình dành cho trẻ em vốn đã bị ngưng phát sóng do nội dung độc hại và gây tranh cãi. Cậu ta thông báo cho cả nhóm rằng một trong số họ đã gián tiếp tập hợp cả nhóm lại với nhau để giải quyết một khoản nợ lớn. Họ phải chơi \"trò chơi tình bạn\": một loạt các trò chơi kiểm tra sức mạnh cũng như niềm tin mà họ dành cho nhau. Tuy nhiên, dần dần niềm tin ấy bị lung lay, bởi ngày càng có quá nhiều bí mật và phản bội bại lộ. Yuuichi lúc này phải tìm ra “người bạn” mà cậu có thể tin tưởng và sau đó vạch trần danh tính của kẻ phản bội.\r\n\r\n[Aoi - Yurei]\r\n \r\nCác bạn hãy truy cập vào fanpage của tụi mình: https://www.facebook.com/YureiFansub/ để thưởng thức các tập mới và nhiều bộ phim khác.\r\n",
+                "link": "/thong-tin/tomodachi-game-6724",
+                "poster": "http://i.imgur.com/TyENifE.jpg",
+                "type": "Special",
+                "year": ""
+            },
+            {
+                "id": 6795,
+                "title": "Ore wo Suki nano wa Omae dake ka yo: Oretachi no Game Set",
+                "slug": "ore-wo-suki-nano-wa-omae-dake-ka-yo-oretachi-no-game-set",
+                "description": "Tập phim hoạt hình gốc sẽ đóng vai trò là chương cuối cùng của loạt phim truyền hình, tập trung vào sự cạnh tranh giữa \"nhân vật nền\" Amatsuyu Kisaragi (Jouro) và Yasuo Hazuki (Hose), \"nhân vật chính\". (Nguồn: Tin tức MAL)",
+                "link": "/thong-tin/ore-wo-suki-nano-wa-omae-dake-ka-yo-oretachi-no-game-set-6795",
+                "poster": "http://i.imgur.com/DlO2bxC.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 3244,
+                "title": "Cross Ange: Rondo of Angel and Dragon",
+                "slug": "cross-ange-rondo-of-angel-and-dragon",
+                "description": "Cross Ange: Tenshi to Ryuu no Rondo\r\n\r\nNguồn : http://nyaa-fansub.net/cross-ange-tenshi-to-ryuu-no-rondo/cross-ange-ep-20/",
+                "link": "/thong-tin/cross-ange-rondo-of-angel-and-dragon-3244",
+                "poster": "https://i.imgur.com/BcYGeoY.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 2481,
+                "title": "Liar Game Season 1 [live Action]",
+                "slug": "liar-game-season-1-live-action",
+                "description": "Bộ phim dựa theo tác phẩm manga cùng tên, Toda Erika diễn vai một nữ sinh trung thực, Kanzaki Nao, một ngày nọ nhận được 100 triệu yên, cùng với tấm thiệp cho biết cô được chọn vào trò chơi \"Trò chơi Dối trá\". Chủ đề chính của trò chơi là lừa gạt người chơi khác để lấy 100 triệu yên. Sau cùng người thắng sẽ được số tiền đó còn người thua thì mang nợ....",
+                "link": "/thong-tin/liar-game-season-1-live-action-2481",
+                "poster": "https://i.imgur.com/Xq9uue6.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 7464,
+                "title": "Kami wa Game ni Ueteiru.",
+                "slug": "kami-wa-game-ni-ueteiru",
+                "description": "Những vị thần tối cao có quá nhiều thời gian rảnh rỗi đã tạo ra những trò chơi trí tuệ đỉnh cao \"Trò chơi của các vị thần\". Cựu Nữ thần Leche thức dậy sau một giấc ngủ dài và tuyên bố với thế giới: \"Hãy đưa ra người giỏi nhất trong các trò chơi ở thời đại này!\" Fay được đại diện nhân loại đề cử là \"tân binh xuất sắc nhất những năm gần đây\". \"Trò chơi của các vị thần\" sắp bắt đầu giữa hai người có thể hơi khó khăn, vì trong suốt lịch sử loài người vẫn chưa có kẻ chiến thắng, bởi vì các vị thần rất thất thường, rất vô lý và đôi khi hoàn toàn không thể hiểu nổi. Tuy nhiên, với tính chất của trò chơi, sẽ thật lãng phí nếu không có thời gian vui vẻ và chơi bằng cả trái tim! Những trận chiến cân não cuối cùng của một chàng trai game thủ thiên tài, một cựu Nữ thần và những người bạn bắt đầu! (Nguồn: Tin tức MAL)",
+                "link": "/thong-tin/kami-wa-game-ni-ueteiru-7464",
+                "poster": "https://cdn.myanimelist.net/images/anime/1578/141782l.jpg",
+                "type": "Special",
+                "year": ""
+            },
+            {
+                "id": 5006,
+                "title": "New Game!!",
+                "slug": "new-game-1",
+                "description": "Mùa thứ hai của  Trò chơi Mới .",
+                "link": "/thong-tin/new-game-1-5006",
+                "poster": "https://i.imgur.com/D4uYjvo.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 6749,
+                "title": "Yatogame-chan Kansatsu Nikki 4th Season",
+                "slug": "yatogame-chan-kansatsu-nikki-4th-season",
+                "description": "Fourth season of Yatogame-chan Kansatsu Nikki.",
+                "link": "/thong-tin/yatogame-chan-kansatsu-nikki-4th-season-6749",
+                "poster": "http://i.imgur.com/NJsSrTg.jpg",
+                "type": "Special",
+                "year": ""
+            },
+            {
+                "id": 4579,
+                "title": "Joker Game: Kuroneko Yoru no Bouken",
+                "slug": "joker-game-kuroneko-yoru-no-bouken",
+                "description": "Đặc biệt kèm với đĩa Blu-ray  Joker game . Câu chuyện về chú mèo hoang được các zai nuôi chung.",
+                "link": "/thong-tin/joker-game-kuroneko-yoru-no-bouken-4579",
+                "poster": "https://i.imgur.com/viUPL1H.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 5105,
+                "title": "Ousama Game The Animation",
+                "slug": "ousama-game-the-animation",
+                "description": "Nobuaki Kanazawa, người đã chuyển sang một trường trung học xa xôi, sợ hãi thân mật với bạn học mới vì những sự kiện đã xảy ra từ trường học trước đây. Điều này khiến anh ta phải ngậm miệng lại. Tuy nhiên, anh ấy bắt đầu mở ra trong buổi tiếp tân lớp của lễ hội thể thao. Anh ấy và tất cả bạn cùng lớp đã nhận được một email từ \"Ousama\". Lúc đầu, bạn cùng lớp của cậu ấy đã không lấy những gì họ đã nói thật nghiêm túc, nghĩ đó chỉ là một trò đùa thôi, nhưng Nobuaki, người duy nhất hiểu rõ ý nghĩa thực sự của nó, chống lại trò chơi \"chết\" sắp bắt đầu & hellip; br br < >\r\n\r\nCác quy tắc của Trò chơi Ousama như sau: \r\n1. Tất cả thành viên lớp phải tham gia. \r\n2. Lệnh được gửi bởi Ousama qua email phải được tuân theo trong vòng 24 giờ. \r\n3. Một hình phạt sẽ được trao cho những người không tuân theo lệnh. \r\n4. Thoát khỏi Ousama Game nửa chừng bị cấm. \r\n\r\n(Nguồn: MAL News) ",
+                "link": "/thong-tin/ousama-game-the-animation-5105",
+                "poster": "https://i.imgur.com/JYanoM2.jpg",
+                "type": "TV",
+                "year": ""
+            },
+            {
+                "id": 1393,
+                "title": "Bus Gamer",
+                "slug": "bus-gamer",
+                "description": "Khi 3 kẻ hoàn toàn xa lạ với nhau, Mishiba Toki, Nakajou Nobuto và Saitou Kazu được một tổ chức chọn để tham gia vào Bus Game, dưới hình thức là một dạng võ đài đánh nhau ngầm giữa 2 hay nhiều cá nhân ẩn chứa nhiều điều bí ẩn, họ đã quyết định chọn tên cho team của mình là “AAA” (tức là 3 chữ  anonymous – nghĩa là kẻ không có tên).Team của họ gồm 3 kẻ khác nhau hoàn toàn từ môi trường sống cho đến tính cách của mỗi người, ban đầu Toki và Nakajou không đồng ý lập thành team với 2 người còn lại, nhưng do 1 số lý do (nói luôn ở đây là do mì ramen), họ đã quyết định lập team với nhau, điều kiện để team được lập ra là các thành viên không xen vào chuyện riêng của các cá nhân khác, và cho đến khi kiếm được đủ số tiền cho mỗi cá nhân, tuyệt đối không được để thua.Điểm chung duy nhất của cả 3 là có cùng hoàn cảnh phải kiếm cho bản thân 1 số tiền rất lớn (trong anime nêu là 1 tỷ). Vì vậy, để có thể kiếm được tiền nhanh chóng, họ buộc phải đặt cược mạng sống của mình vào trò chơi…",
+                "link": "/thong-tin/bus-gamer-1393",
+                "poster": "https://i.imgur.com/yDECaxQ.jpg",
+                "type": "Unknown",
+                "year": ""
+            }
+        ],
+        "images": {
+            "poster": [
+                {
+                    "id": 14956,
+                    "url": "https://cdn.myanimelist.net/images/anime/5/21337.jpg",
+                    "type": "poster"
+                },
+                {
+                    "id": 14957,
+                    "url": "https://cdn.myanimelist.net/images/anime/6/22103.jpg",
+                    "type": "poster"
+                }
+            ]
+        },
+        "malScore": 0,
         "genres": [
             {
-                "id": 1,
-                "name": "Action",
-                "slug": "action"
-            },
-            {
-                "id": 2,
-                "name": "Adventure",
-                "slug": "adventure"
-            },
-            {
-                "id": 3,
-                "name": "Comedy",
-                "slug": "comedy"
-            },
-            {
-                "id": 4,
-                "name": "Martial Arts",
-                "slug": "martial-arts"
-            },
-            {
-                "id": 5,
-                "name": "Shounen",
-                "slug": "shounen"
-            },
-            {
                 "id": 6,
-                "name": "Super Power",
-                "slug": "super-power"
+                "name": "Comedy",
+                "link": "/the-loai/comedy"
+            },
+            {
+                "id": 7,
+                "name": "Drama",
+                "link": "/the-loai/drama"
+            },
+            {
+                "id": 13,
+                "name": "Romance",
+                "link": "/the-loai/romance"
+            },
+            {
+                "id": 16,
+                "name": "Sports",
+                "link": "/the-loai/sports"
+            },
+            {
+                "id": 26,
+                "name": "Combat Sports",
+                "link": "/the-loai/combat-sports"
+            },
+            {
+                "id": 30,
+                "name": "Educational",
+                "link": "/the-loai/educational"
+            },
+            {
+                "id": 60,
+                "name": "School",
+                "link": "/the-loai/school"
+            },
+            {
+                "id": 66,
+                "name": "Team Sports",
+                "link": "/the-loai/team-sports"
+            },
+            {
+                "id": 78,
+                "name": "Shounen",
+                "link": "/the-loai/shounen"
             }
         ],
         "studios": [
             {
-                "id": 1,
-                "name": "Studio Pierrot",
-                "slug": "studio-pierrot"
+                "id": 0,
+                "titles": "Unknown",
+                "slug": "unknown"
             }
         ],
         "producers": [
             {
-                "id": 1,
-                "name": "TV Tokyo",
+                "id": 14,
+                "titles": {
+                    "en": "TV Tokyo"
+                },
                 "slug": "tv-tokyo"
             },
             {
-                "id": 2,
-                "name": "Aniplex",
-                "slug": "aniplex"
+                "id": 55,
+                "titles": {
+                    "en": "Shogakukan-Shueisha Productions"
+                },
+                "slug": "shogakukan-shueisha-productions"
             },
             {
-                "id": 3,
-                "name": "Shueisha",
-                "slug": "shueisha"
+                "id": 185,
+                "titles": {
+                    "en": "Half H.P Studio"
+                },
+                "slug": "half-hp-studio"
             },
             {
-                "id": 4,
-                "name": "Studio Pierrot",
-                "slug": "studio-pierrot"
-            },
-            {
-                "id": 5,
-                "name": "Viz Media",
-                "slug": "viz-media"
+                "id": 104,
+                "titles": {
+                    "en": "SynergySP"
+                },
+                "slug": "synergysp"
             }
         ],
-        "watchUrl": "/watch/naruto-677",
-        "shareCount": 3700,
-        "animeGroups": [
-            {
-                "id": 1321,
-                "name": "Fullmetal Alchemist: Brotherhood",
-                "description": "",
-                "posts": [
-                    {
-                        "id": 1001,
-                        "type": "TV",
-                        "title": "Fullmetal Alchemist: Brotherhood",
-                        "poster": "https://cdn.myanimelist.net/images/anime/13/13738.jpg",
-                        "year": "2009",
-                        "position": 1,
-                        "note": "LÃ m láº¡i",
-                        "link": "thong-tin/fullmetal-alchemist-brotherhood-1-1001"
-                    },
-                    {
-                        "id": 4565,
-                        "type": "TV",
-                        "title": "Fullmetal Alchemist",
-                        "poster": "https://i.imgur.com/8oqmP09.jpg",
-                        "year": "",
-                        "position": 2,
-                        "note": "CÅ©",
-                        "link": "thong-tin/fullmetal-alchemist-4565"
-                    },
-                    {
-                        "id": 3196,
-                        "type": "TV",
-                        "title": "Fullmetal Alchemist Movie: Conqueror of Shamballa",
-                        "poster": "https://4.bp.blogspot.com/-nlSFY_LMXu4/VH5ewtjyEPI/AAAAAAAAAKc/NOEiKmFAc1s/s1600/Fullmetal-alchemist-the-movie-conqueror-of-shamballa-movie-poster-2005.jpg",
-                        "year": "",
-                        "position": 3,
-                        "note": "movie1",
-                        "link": "thong-tin/fullmetal-alchemist-movie-conqueror-of-shamballa-3196"
-                    },
-                    {
-                        "id": 1022,
-                        "type": "TV",
-                        "title": "Fullmetal Alchemist - Milos No Seinaru Hoshi (movie) [BD]",
-                        "poster": "https://i.imgur.com/QQpEDbo.jpg",
-                        "year": "",
-                        "position": 4,
-                        "note": "movie2",
-                        "link": "thong-tin/fullmetal-alchemist-milos-no-seinaru-hoshi-movie-bd-1022"
-                    },
-                    {
-                        "id": 5261,
-                        "type": "TV",
-                        "title": "Giả Kim Thuật Sư Live Action",
-                        "poster": "https://i.imgur.com/6mOOovc.jpg",
-                        "year": "",
-                        "position": 5,
-                        "note": "live1",
-                        "link": "thong-tin/gia-kim-thuat-su-live-action-5261"
-                    },
-                    {
-                        "id": 7016,
-                        "type": "TV",
-                        "title": "Fullmetal Alchemist: The Revenge of Scar",
-                        "poster": "http://i.imgur.com/KIV50Us.jpg",
-                        "year": "",
-                        "position": 6,
-                        "note": "live2",
-                        "link": "thong-tin/fullmetal-alchemist-the-revenge-of-scar-7016"
-                    }
-                ]
-            }
-        ]
+        "watchUrl": "http://localhost:8000/anime/cross-game-1002",
+        "shareCount": 0
     }
 }

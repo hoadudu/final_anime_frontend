@@ -100,6 +100,7 @@ const formatDate = (dateString) => {
         }).format(date)
     } catch (error) {
         console.log(error);
+
         return 'Unknown'
     }
 }

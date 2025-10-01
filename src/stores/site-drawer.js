@@ -13,7 +13,7 @@ export const useDrawerStore = defineStore('drawer', () => {
   const loading = ref(false)
   const error = ref(null)
   const leftDrawerOpen = ref(false)
-  const language = ref(localStorage.getItem('app-language') || 'vi-VN')
+  const language = ref((process.env.CLIENT ? localStorage.getItem('app-language') : null) || 'vi-VN')
 
   const languageOptions = ref([
     { label: 'English', value: 'en-US' },
@@ -52,7 +52,9 @@ export const useDrawerStore = defineStore('drawer', () => {
 
   function setLanguage(newLanguage) {
     language.value = newLanguage
-    localStorage.setItem('app-language', newLanguage)
+    if (process.env.CLIENT) {
+      localStorage.setItem('app-language', newLanguage)
+    }
   }
 
   function toggleLeftDrawer() {

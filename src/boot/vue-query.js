@@ -15,20 +15,22 @@ export default defineBoot(({ app }) => {
         },
     })
 
-    const persister = createSyncStoragePersister({
-        storage: window.localStorage,
-    })
+    if (process.env.CLIENT) {
+        const persister = createSyncStoragePersister({
+            storage: window.localStorage,
+        })
 
-    persistQueryClient({
-        queryClient,
-        persister,
-        maxAge: 1000 * 60 * 60 * 24, // 24 giờ
-        dehydrateOptions: {
-            shouldDehydrateQuery: (query) => {
-                return query.meta?.persist !== false
+        persistQueryClient({
+            queryClient,
+            persister,
+            maxAge: 1000 * 60 * 60 * 24, // 24 giờ
+            dehydrateOptions: {
+                shouldDehydrateQuery: (query) => {
+                    return query.meta?.persist !== false
+                },
             },
-        },
-    })
+        })
+    }
 
     app.use(VueQueryPlugin, { queryClient })
 })
