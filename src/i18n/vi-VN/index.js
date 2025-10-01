@@ -294,6 +294,33 @@ export default {
         latestNews: 'Tin Tức Mới Nhất',
         comingSoon: 'Sắp ra mắt...',
         imagesGallery: 'Thư Viện Hình Ảnh'
+    },
+
+    // Watch Page
+    watch: {
+        title: 'Xem',
+        episodes: 'Tập phim',
+        searchEpisode: 'Tìm kiếm tập phim',
+        prev: 'Trước',
+        next: 'Tiếp',
+        prevEpisode: 'Tập trước',
+        nextEpisode: 'Tập tiếp theo',
+        quality: 'Chất lượng',
+        noStream: 'Không có nguồn phát',
+        expand: 'Mở rộng',
+        collapse: 'Thu gọn',
+        cinemaMode: 'Chế độ rạp chiếu phim',
+        exitCinema: 'Thoát chế độ rạp',
+        autoPlay: 'Tự động phát',
+        autoNext: 'Tự động tập tiếp theo',
+        autoSkipIntro: 'Tự động bỏ qua intro',
+        addToWatchlist: 'Thêm vào danh sách xem',
+        removeFromWatchlist: 'Xóa khỏi danh sách xem',
+        addedToWatchlist: 'Đã thêm vào danh sách xem',
+        removedFromWatchlist: 'Đã xóa khỏi danh sách xem',
+        comments: 'Bình luận',
+        noComments: 'Chưa có bình luận nào',
+        recommended: 'Đề xuất cho bạn'
     }
 
 }

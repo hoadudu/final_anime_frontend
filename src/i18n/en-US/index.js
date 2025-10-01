@@ -290,5 +290,32 @@ export default {
     latestNews: 'Latest News',
     comingSoon: 'Coming soon...',
     imagesGallery: 'Images Gallery'
+  },
+
+  // Watch Page
+  watch: {
+    title: 'Watch',
+    episodes: 'Episodes',
+    searchEpisode: 'Search episode',
+    prev: 'Previous',
+    next: 'Next',
+    prevEpisode: 'Previous Episode',
+    nextEpisode: 'Next Episode',
+    quality: 'Quality',
+    noStream: 'No stream available',
+    expand: 'Expand',
+    collapse: 'Collapse',
+    cinemaMode: 'Cinema Mode',
+    exitCinema: 'Exit Cinema Mode',
+    autoPlay: 'Auto Play',
+    autoNext: 'Auto Next Episode',
+    autoSkipIntro: 'Auto Skip Intro',
+    addToWatchlist: 'Add to Watchlist',
+    removeFromWatchlist: 'Remove from Watchlist',
+    addedToWatchlist: 'Added to watchlist',
+    removedFromWatchlist: 'Removed from watchlist',
+    comments: 'Comments',
+    noComments: 'No comments yet',
+    recommended: 'Recommended for You'
   }
 }

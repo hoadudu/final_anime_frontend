@@ -4,6 +4,18 @@ const routes = [
     redirect: '/home',
   },
   {
+    path: '/watch/:slug',
+    name: 'watch-base',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: 'ep-:number-:id',
+        name: 'site-watch',
+        component: () => import('src/pages/SiteWatchPage.vue')
+      }
+    ]
+  },
+  {
     path: '/home',
     name: 'home',
     component: () => import('layouts/MainLayout.vue'),
