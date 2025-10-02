@@ -1,12 +1,14 @@
 <template>
   <div class="anime-info-container">
-
     <!-- Breadcrumb Navigation -->
     <BreadcrumbNavigation v-if="safeAnimeInfo" :animeInfo="safeAnimeInfo" />
 
     <!-- Hero Section with Background -->
     <div class="hero-section" v-if="safeAnimeInfo">
-      <div class="hero-background" :style="{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }">
+      <div
+        class="hero-background"
+        :style="{ backgroundImage: imageUrl ? `url(${imageUrl})` : 'none' }"
+      >
         <div class="hero-overlay"></div>
       </div>
 
@@ -17,8 +19,15 @@
             <!-- Compact poster + basic info in one row -->
             <div class="mobile-poster-section">
               <q-card class="mobile-poster-card">
-                <q-img :src="imageUrl" :alt="animeInfo.title" class="mobile-poster-image" spinner-color="primary"
-                  loading="lazy" @error="onImageError" fit="cover">
+                <q-img
+                  :src="imageUrl"
+                  :alt="animeInfo.title"
+                  class="mobile-poster-image"
+                  spinner-color="primary"
+                  loading="lazy"
+                  @error="onImageError"
+                  fit="cover"
+                >
                   <template v-slot:error>
                     <div class="absolute-full flex flex-center bg-grey-3 text-grey-7">
                       <q-icon name="image" size="30px" />
@@ -47,10 +56,19 @@
                     {{ animeInfo.episodes }} EP
                   </q-chip>
                 </div>
-                <div class="mobile-badges q-mb-sm" v-if="Array.isArray(animeInfo.genres) && animeInfo.genres.length">
-                  <q-chip v-for="(genre, index) in animeInfo.genres" :key="genre.id || genre.mal_id || index"
-                    :color="getColorForGenre(index)" text-color="white" clickable
-                    @click="navigateToGenre(genre.link || `/genre/${genre.name}`)" class="genre-chip">
+                <div
+                  class="mobile-badges q-mb-sm"
+                  v-if="Array.isArray(animeInfo.genres) && animeInfo.genres.length"
+                >
+                  <q-chip
+                    v-for="(genre, index) in animeInfo.genres"
+                    :key="genre.id || genre.mal_id || index"
+                    :color="getColorForGenre(index)"
+                    text-color="white"
+                    clickable
+                    @click="navigateToGenre(genre.link || `/genre/${genre.name}`)"
+                    class="genre-chip"
+                  >
                     {{ genre.name }}
                   </q-chip>
                 </div>
@@ -84,13 +102,22 @@
 
           <!-- Mobile action buttons -->
           <div class="mobile-actions">
-            <q-btn color="primary" icon="play_arrow" :label="t('animeInfo.watchNow')" @click="navigateToWatch"
-              class="mobile-watch-btn" />
+            <q-btn
+              color="primary"
+              icon="play_arrow"
+              :label="t('animeInfo.watchNow')"
+              @click="navigateToWatch"
+              class="mobile-watch-btn"
+            />
             <q-btn color="secondary" icon="playlist_add" outline class="mobile-list-btn">
               <q-menu>
                 <q-list>
-                  <q-item v-for="listType in watchListTypes" :key="listType.value" clickable
-                    @click="addToWatchList(listType.value)">
+                  <q-item
+                    v-for="listType in watchListTypes"
+                    :key="listType.value"
+                    clickable
+                    @click="addToWatchList(listType.value)"
+                  >
                     <q-item-section avatar>
                       <q-icon :name="listType.icon" size="sm" />
                     </q-item-section>
@@ -102,8 +129,12 @@
             <q-btn color="accent" icon="share" outline class="mobile-share-btn">
               <q-menu>
                 <q-list>
-                  <q-item v-for="platform in sharePlatforms" :key="platform.name" clickable
-                    @click="shareOn(platform.name.toLowerCase())">
+                  <q-item
+                    v-for="platform in sharePlatforms"
+                    :key="platform.name"
+                    clickable
+                    @click="shareOn(platform.name.toLowerCase())"
+                  >
                     <q-item-section avatar>
                       <q-icon :name="platform.icon" :color="platform.color" size="sm" />
                     </q-item-section>
@@ -122,8 +153,15 @@
             <div class="col-12 col-sm-4 col-md-3">
               <q-card class="poster-card shadow-8">
                 <div class="poster-wrapper">
-                  <q-img :src="imageUrl" :alt="animeInfo.title" class="poster-image" spinner-color="primary"
-                    loading="lazy" @error="onImageError" fit="cover">
+                  <q-img
+                    :src="imageUrl"
+                    :alt="animeInfo.title"
+                    class="poster-image"
+                    spinner-color="primary"
+                    loading="lazy"
+                    @error="onImageError"
+                    fit="cover"
+                  >
                     <template v-slot:error>
                       <div class="absolute-full flex flex-center bg-grey-3 text-grey-7">
                         <div class="text-center">
@@ -161,37 +199,71 @@
 
                     <!-- Status and Type Badges -->
                     <div class="badges-row q-mb-md">
-                      <q-chip :color="getStatusColor(animeInfo.status)" text-color="white" icon="radio_button_checked"
-                        class="status-chip">
+                      <q-chip
+                        :color="getStatusColor(animeInfo.status)"
+                        text-color="white"
+                        icon="radio_button_checked"
+                        class="status-chip"
+                      >
                         {{ animeInfo.status }}
                       </q-chip>
-                      <q-chip color="blue-grey-6" text-color="white" icon="tv" v-if="animeInfo.type">
+                      <q-chip
+                        color="blue-grey-6"
+                        text-color="white"
+                        icon="tv"
+                        v-if="animeInfo.type"
+                      >
                         {{ animeInfo.type }}
                       </q-chip>
                       <div class="episode-chips" v-if="animeInfo.episodes">
-                        <q-chip color="purple-6" text-color="white" icon="schedule"
-                          v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.total">
+                        <q-chip
+                          color="purple-6"
+                          text-color="white"
+                          icon="schedule"
+                          v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.total"
+                        >
                           {{ animeInfo.episodes.total }} Episodes
                         </q-chip>
-                        <q-chip color="blue-6" text-color="white" icon="subtitles"
-                          v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.sub">
+                        <q-chip
+                          color="blue-6"
+                          text-color="white"
+                          icon="subtitles"
+                          v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.sub"
+                        >
                           {{ animeInfo.episodes.sub }} Sub
                         </q-chip>
-                        <q-chip color="orange-6" text-color="white" icon="volume_up"
-                          v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.dub">
+                        <q-chip
+                          color="orange-6"
+                          text-color="white"
+                          icon="volume_up"
+                          v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.dub"
+                        >
                           {{ animeInfo.episodes.dub }} Dub
                         </q-chip>
-                        <q-chip color="purple-6" text-color="white" icon="schedule"
-                          v-if="typeof animeInfo.episodes === 'number'">
+                        <q-chip
+                          color="purple-6"
+                          text-color="white"
+                          icon="schedule"
+                          v-if="typeof animeInfo.episodes === 'number'"
+                        >
                           {{ animeInfo.episodes }} Episodes
                         </q-chip>
                       </div>
                     </div>
                     <!-- Genres and Type Badges -->
-                    <div class="badges-row q-mb-md" v-if="Array.isArray(animeInfo.genres) && animeInfo.genres.length">
-                      <q-chip v-for="(genre, index) in animeInfo.genres" :key="genre.id || genre.mal_id || index"
-                        :color="getColorForGenre(index)" text-color="white" clickable
-                        @click="navigateToGenre(genre.link || `/genre/${genre.name}`)" class="genre-chip">
+                    <div
+                      class="badges-row q-mb-md"
+                      v-if="Array.isArray(animeInfo.genres) && animeInfo.genres.length"
+                    >
+                      <q-chip
+                        v-for="(genre, index) in animeInfo.genres"
+                        :key="genre.id || genre.mal_id || index"
+                        :color="getColorForGenre(index)"
+                        text-color="white"
+                        clickable
+                        @click="navigateToGenre(genre.link || `/genre/${genre.name}`)"
+                        class="genre-chip"
+                      >
                         {{ genre.name }}
                       </q-chip>
                     </div>
@@ -238,13 +310,29 @@
                   <!-- Action Buttons -->
                   <div class="action-buttons q-mb-lg">
                     <div class="row q-gutter-sm">
-                      <q-btn color="primary" icon="play_arrow" :label="t('animeInfo.watchNow')" size="md"
-                        @click="navigateToWatch" class="watch-btn" />
-                      <q-btn color="secondary" icon="playlist_add" :label="t('animeInfo.addToList')" outline size="md">
+                      <q-btn
+                        color="primary"
+                        icon="play_arrow"
+                        :label="t('animeInfo.watchNow')"
+                        size="md"
+                        @click="navigateToWatch"
+                        class="watch-btn"
+                      />
+                      <q-btn
+                        color="secondary"
+                        icon="playlist_add"
+                        :label="t('animeInfo.addToList')"
+                        outline
+                        size="md"
+                      >
                         <q-menu>
                           <q-list>
-                            <q-item v-for="listType in watchListTypes" :key="listType.value" clickable
-                              @click="addToWatchList(listType.value)">
+                            <q-item
+                              v-for="listType in watchListTypes"
+                              :key="listType.value"
+                              clickable
+                              @click="addToWatchList(listType.value)"
+                            >
                               <q-item-section avatar>
                                 <q-icon :name="listType.icon" />
                               </q-item-section>
@@ -253,11 +341,21 @@
                           </q-list>
                         </q-menu>
                       </q-btn>
-                      <q-btn color="accent" icon="share" :label="t('animeInfo.shareAnime')" outline size="md">
+                      <q-btn
+                        color="accent"
+                        icon="share"
+                        :label="t('animeInfo.shareAnime')"
+                        outline
+                        size="md"
+                      >
                         <q-menu>
                           <q-list>
-                            <q-item v-for="platform in sharePlatforms" :key="platform.name" clickable
-                              @click="shareOn(platform.name.toLowerCase())">
+                            <q-item
+                              v-for="platform in sharePlatforms"
+                              :key="platform.name"
+                              clickable
+                              @click="shareOn(platform.name.toLowerCase())"
+                            >
                               <q-item-section avatar>
                                 <q-icon :name="platform.icon" :color="platform.color" />
                               </q-item-section>
@@ -281,16 +379,20 @@
       <AnimeTabbedContent v-if="animeInfo" :animeData="animeInfo" />
 
       <!-- Anime Groups Section -->
-      <AnimeGroups v-if="animeInfo && animeInfo.animeGroups" :animeGroups="animeInfo.animeGroups"
-        :currentAnimeId="animeInfo.id" />
+      <AnimeGroups
+        v-if="animeInfo && animeInfo.animeGroups"
+        :animeGroups="animeInfo.animeGroups"
+        :currentAnimeId="animeInfo.id"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed, ref, watch, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { linkWatch } from 'src/utils/helper'
 // import removed as we now receive the data as a prop
 import BreadcrumbNavigation from './components/BreadcrumbNavigation.vue'
 import AnimeTabbedContent from './components/AnimeTabbedContent.vue'
@@ -319,7 +421,7 @@ const safeAnimeInfo = computed(() => {
 // Emits
 const emit = defineEmits(['animeInfoLoaded'])
 
-const route = useRoute()
+// const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
 
@@ -351,6 +453,14 @@ const colors = computed(() => [
 const getColorForGenre = (index) => {
   return colors.value[index % colors.value.length]
 }
+
+const progressKey = computed(() => {
+  const info = safeAnimeInfo.value
+  if (!info) return null
+  if (info.id) return `anime-${info.id}`
+  if (info.slug) return `slug-${info.slug}`
+  return null
+})
 
 // Functions below are commented out as they're no longer needed with the top-down state approach
 // Extract anime ID from route params - kept for reference
@@ -472,7 +582,38 @@ const formatNumber = (num) => {
 
 // Navigation methods
 const navigateToWatch = () => {
-  router.push(`/watch/${route.params.slugWithId}/ep-1`)
+  if (!safeAnimeInfo.value) return
+
+  let targetUrl = null
+
+  if (process.env.CLIENT) {
+    try {
+      const stored = localStorage.getItem('watch-progress-v1')
+      if (stored) {
+        const progress = JSON.parse(stored)
+        const entry = progress?.[progressKey.value]
+        if (entry?.currentEpisodeId && safeAnimeInfo.value?.slug) {
+          const number = entry.currentEpisodeNumber || entry.currentEpisodeSort
+          targetUrl = linkWatch(
+            safeAnimeInfo.value.slug,
+            safeAnimeInfo.value.id,
+            number,
+            entry.currentEpisodeId,
+          )
+        }
+      }
+    } catch (err) {
+      console.error('Failed to read watch progress', err)
+    }
+  }
+
+  if (!targetUrl) {
+    targetUrl = safeAnimeInfo.value.watchUrl
+  }
+
+  if (targetUrl) {
+    router.push(targetUrl)
+  }
 }
 
 const navigateToGenre = (genreLink) => {
@@ -482,8 +623,7 @@ const navigateToGenre = (genreLink) => {
 // Action methods
 const addToWatchList = (listType) => {
   // Implement watch list logic
-  console.log(`Adding to watch list: ${listType}`);
-
+  console.log(`Adding to watch list: ${listType}`)
 }
 
 const shareOn = (platform) => {
@@ -506,6 +646,6 @@ const shareOn = (platform) => {
 // Image error handling
 const onImageError = (event) => {
   // Handle image loading errors silently
-  console.log('Failed to load image:', event.target.src);
+  console.log('Failed to load image:', event.target.src)
 }
 </script>

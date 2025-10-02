@@ -8,9 +8,10 @@
             <q-btn
               dense
               outline
-              color="primary"
+              color="secondary"
               icon="skip_previous"
               :disable="!hasPrev"
+              class="neon-btn"
               @click="$emit('go-prev')"
             >
               <q-tooltip>{{ $t('watch.prevEpisode') || 'Previous Episode' }}</q-tooltip>
@@ -18,9 +19,10 @@
             <q-btn
               dense
               outline
-              color="primary"
+              color="secondary"
               icon="skip_next"
               :disable="!hasNext"
+              class="neon-btn"
               @click="$emit('go-next')"
             >
               <q-tooltip>{{ $t('watch.nextEpisode') || 'Next Episode' }}</q-tooltip>
@@ -35,8 +37,8 @@
               dense
               flat
               :icon="isExpanded ? 'fullscreen_exit' : 'fullscreen'"
+              class="icon-pulse gt-md"
               @click="$emit('toggle-expand')"
-              class="gt-md"
             >
               <q-tooltip>{{
                 isExpanded ? $t('watch.collapse') || 'Collapse' : $t('watch.expand') || 'Expand'
@@ -46,6 +48,7 @@
               dense
               flat
               :icon="isCinemaMode ? 'light_mode' : 'theaters'"
+              class="icon-pulse"
               @click="$emit('toggle-cinema')"
             >
               <q-tooltip>{{
@@ -62,6 +65,7 @@
               flat
               :icon="autoPlay ? 'play_circle' : 'play_circle_outline'"
               :color="autoPlay ? 'primary' : 'grey'"
+              class="icon-pulse"
               @click="$emit('toggle-auto-play')"
             >
               <q-tooltip>{{ $t('watch.autoPlay') || 'Auto Play' }}</q-tooltip>
@@ -71,6 +75,7 @@
               flat
               :icon="autoNext ? 'playlist_play' : 'playlist_play'"
               :color="autoNext ? 'primary' : 'grey'"
+              class="icon-pulse"
               @click="$emit('toggle-auto-next')"
             >
               <q-tooltip>{{ $t('watch.autoNext') || 'Auto Next Episode' }}</q-tooltip>
@@ -80,6 +85,7 @@
               flat
               :icon="autoSkipIntro ? 'fast_forward' : 'fast_forward'"
               :color="autoSkipIntro ? 'primary' : 'grey'"
+              class="icon-pulse"
               @click="$emit('toggle-auto-skip-intro')"
             >
               <q-tooltip>{{ $t('watch.autoSkipIntro') || 'Auto Skip Intro' }}</q-tooltip>
@@ -95,6 +101,7 @@
               :outline="!isInWatchlist"
               :color="isInWatchlist ? 'positive' : 'grey-7'"
               :icon="isInWatchlist ? 'bookmark' : 'bookmark_border'"
+              class="neon-btn"
               @click="$emit('toggle-watchlist')"
             >
               <q-tooltip>{{
@@ -111,10 +118,6 @@
 </template>
 
 <script setup>
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
-
 defineProps({
   hasPrev: { type: Boolean, default: false },
   hasNext: { type: Boolean, default: false },
@@ -140,12 +143,44 @@ defineEmits([
 
 <style scoped>
 .player-controls {
-  background: var(--q-dark, #f5f5f5);
+  background: linear-gradient(135deg, rgba(33, 38, 68, 0.95), rgba(21, 23, 42, 0.95));
+  border: 1px solid rgba(141, 151, 255, 0.25);
+  color: #dfe3ff;
+  box-shadow: 0 12px 30px rgba(15, 17, 35, 0.35);
+}
+
+.neon-btn {
+  border-color: rgba(142, 151, 235, 0.6);
+  color: #cfd6ff;
+}
+
+.neon-btn:hover {
+  box-shadow: 0 0 12px rgba(136, 171, 255, 0.6);
+}
+
+.icon-pulse {
+  color: #b3baff;
+}
+
+.icon-pulse:hover {
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
   .player-controls .row {
     gap: 8px;
   }
+}
+
+.player-controls :deep(.q-btn--flat) {
+  color: #c5cbff;
+}
+
+.player-controls :deep(.q-btn--flat:hover) {
+  color: #ffffff;
+}
+
+.player-controls :deep(.q-btn--outline.q-btn--standard) {
+  background: rgba(89, 101, 255, 0.12);
 }
 </style>

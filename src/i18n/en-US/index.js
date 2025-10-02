@@ -302,6 +302,7 @@ export default {
     prevEpisode: 'Previous Episode',
     nextEpisode: 'Next Episode',
     quality: 'Quality',
+    servers: 'Servers',
     noStream: 'No stream available',
     expand: 'Expand',
     collapse: 'Collapse',
@@ -316,6 +317,13 @@ export default {
     removedFromWatchlist: 'Removed from watchlist',
     comments: 'Comments',
     noComments: 'No comments yet',
-    recommended: 'Recommended for You'
+    recommended: 'Recommended for You',
+    watching: 'Watching',
+    lastWatched: 'Last watched',
+    pageDescription: 'Stream anime episodes online with multiple servers and subtitles.',
+    defaultEpisodeDescription: 'Watch {episodeTitle} of {animeTitle} in high quality with multiple servers.',
+    nowWatching: 'You are watching',
+    episode: 'Episode',
+    tryOtherServers: 'If current server does not work, please try other servers beside.'
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered>
+  <q-card flat bordered class="episode-card">
     <q-card-section class="row items-center">
       <div class="text-h6">{{ $t('watch.episodes') || 'Episodes' }}</div>
 
@@ -30,12 +30,24 @@
       <div class="row q-col-gutter-sm">
         <div v-for="ep in filteredEpisodes" :key="ep.id" class="col-6 col-sm-4 col-md-3 col-lg-2">
           <q-btn
-            :color="ep.id === activeEpisodeId ? 'primary' : 'grey-8'"
+            :color="buttonColor(ep)"
             :flat="ep.id !== activeEpisodeId"
-            class="full-width q-mb-sm"
+            :class="buttonClasses(ep)"
+            unelevated
             @click="goTo(ep)"
           >
-            {{ ep.title || 'Ep ' + (ep.number || '') }}
+            <span>{{ ep.title || 'Ep ' + (ep.number || '') }}</span>
+            <q-badge v-if="ep.id === activeEpisodeId" color="secondary" align="top">
+              {{ $t('watch.watching') || 'Watching' }}
+            </q-badge>
+            <q-badge
+              v-else-if="ep.id === lastWatchedId"
+              color="grey-7"
+              text-color="white"
+              align="top"
+            >
+              {{ $t('watch.lastWatched') || 'Last watched' }}
+            </q-badge>
           </q-btn>
         </div>
       </div>
@@ -46,12 +58,14 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+// import { linkWatch } from 'src/utils/helper'
 
 const props = defineProps({
   // Can be either a flat array of episodes OR an object: { groups: [{ name, range_start, range_end, episodes: [...] }] }
   episodes: { type: [Array, Object], required: true },
   activeEpisodeId: { type: [String, Number], default: null },
   slug: { type: String, required: true },
+  lastWatchedId: { type: [String, Number], default: null },
 })
 
 const router = useRouter()
@@ -91,8 +105,69 @@ const filteredEpisodes = computed(() => {
 })
 
 function goTo(ep) {
-  const number = ep.number || ep.sort_number || ''
-  const id = ep.id
-  router.push({ name: 'site-watch', params: { slug: props.slug, number, id } })
+  router.push(ep.link)
+}
+
+function buttonColor(ep) {
+  if (ep.id === props.activeEpisodeId) return 'accent'
+  if (ep.id === props.lastWatchedId) return 'deep-purple-6'
+  return 'grey-7'
+}
+
+function buttonClasses(ep) {
+  return [
+    'full-width',
+    'q-mb-sm',
+    'justify-between',
+    'episode-btn',
+    {
+      'episode-btn--last': ep.id === props.lastWatchedId && ep.id !== props.activeEpisodeId,
+    },
+  ]
 }
 </script>
+
+<style scoped>
+.episode-card {
+  background: linear-gradient(135deg, #1b1f3a 0%, #282a4b 60%, #1a1d33 100%);
+  border: 1px solid rgba(142, 151, 235, 0.2);
+  color: #f2f4ff;
+}
+
+.episode-card .text-h6 {
+  color: #f8f9ff;
+  letter-spacing: 0.5px;
+}
+
+.episode-card .q-input :deep(.q-field__native),
+.episode-card .q-input :deep(.q-field__control) {
+  color: #e0e6ff;
+}
+
+.episode-btn {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.15s ease;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfd5ff;
+}
+
+.episode-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.episode-btn--last {
+  color: #607d8b;
+  background-color: rgba(96, 125, 139, 0.12);
+}
+
+.episode-btn--last:hover {
+  background-color: rgba(96, 125, 139, 0.2);
+}
+
+.episode-btn.q-btn--flat {
+  color: #9da6ff;
+}
+</style>

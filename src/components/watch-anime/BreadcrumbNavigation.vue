@@ -50,7 +50,7 @@ const animeLink = computed(() => {
   font-size: 14px;
 }
 .breadcrumb-item {
-  color: var(--q-dark, #666);
+  color: var(--q-white, #e4e3eef7);
 }
 .breadcrumb-current {
   font-weight: 600;

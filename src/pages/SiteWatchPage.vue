@@ -31,46 +31,46 @@
 
         <!-- 3-column responsive layout -->
         <div class="row q-col-gutter-md q-mt-sm watch-content">
-          <!-- Left: Episode List (col-3 on desktop, col-4 on tablet, full on mobile) -->
+          <!-- Left: Episode List (col-2 on desktop, col-4 on tablet, full on mobile) -->
           <div
-            class="col-12 col-md-4 col-lg-3 episode-list-column episode-list-wrapper"
+            class="col-12 col-md-4 col-lg-2 episode-list-column episode-list-wrapper"
             :class="{ 'cinema-dimmable': isCinemaMode }"
           >
             <EpisodeList
               :episodes="episodes"
               :active-episode-id="episode?.id || null"
               :slug="slug"
+              :last-watched-id="lastWatchedEpisodeId"
             />
           </div>
 
           <!-- Center: Player + Controls + Navigation (col-6 or col-9 when expanded) -->
           <div
-            :class="isExpanded ? 'col-12 col-md-8 col-lg-9' : 'col-12 col-md-8 col-lg-6'"
+            :class="isExpanded ? 'col-12 col-md-8 col-lg-9' : 'col-12 col-md-8 col-lg-7'"
             class="player-column"
           >
             <div :class="{ 'cinema-player-highlight': isCinemaMode }">
-              <WatchPlayer v-if="episode" :episode="episode" />
+              <WatchPlayer
+                v-if="episode"
+                :episode="episode"
+                :has-prev="!!episode?.prev_episode"
+                :has-next="!!episode?.next_episode"
+                :is-expanded="isExpanded"
+                :is-cinema-mode="isCinemaMode"
+                :auto-play="autoPlay"
+                :auto-next="autoNext"
+                :auto-skip-intro="autoSkipIntro"
+                :is-in-watchlist="isInWatchlist"
+                @go-prev="goToPrev"
+                @go-next="goToNext"
+                @toggle-expand="isExpanded = !isExpanded"
+                @toggle-cinema="isCinemaMode = !isCinemaMode"
+                @toggle-auto-play="autoPlay = !autoPlay"
+                @toggle-auto-next="autoNext = !autoNext"
+                @toggle-auto-skip-intro="autoSkipIntro = !autoSkipIntro"
+                @toggle-watchlist="toggleWatchlist"
+              />
             </div>
-
-            <PlayerControls
-              v-if="episode"
-              :has-prev="!!episode?.prev_episode"
-              :has-next="!!episode?.next_episode"
-              :is-expanded="isExpanded"
-              :is-cinema-mode="isCinemaMode"
-              :auto-play="autoPlay"
-              :auto-next="autoNext"
-              :auto-skip-intro="autoSkipIntro"
-              :is-in-watchlist="isInWatchlist"
-              @go-prev="goToPrev"
-              @go-next="goToNext"
-              @toggle-expand="isExpanded = !isExpanded"
-              @toggle-cinema="isCinemaMode = !isCinemaMode"
-              @toggle-auto-play="autoPlay = !autoPlay"
-              @toggle-auto-next="autoNext = !autoNext"
-              @toggle-auto-skip-intro="autoSkipIntro = !autoSkipIntro"
-              @toggle-watchlist="toggleWatchlist"
-            />
 
             <div class="q-mt-md">
               <EpisodeNavigation
@@ -103,6 +103,7 @@
                 </div>
               </q-card-section>
             </q-card>
+            <TopRight />
           </div>
         </div>
 
@@ -133,7 +134,7 @@
                 </div>
                 <div class="text-center q-pa-md text-grey">
                   <q-icon name="auto_awesome" size="40px" />
-                  <div class="q-mt-sm">{{ $t('common.comingSoon') || 'Coming soon...' }}</div>
+                  <div class="q-mt-sm">{{ $t('animePage.comingSoon') || 'Coming soon...' }}</div>
                 </div>
               </q-card-section>
             </q-card>
@@ -150,11 +151,12 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMeta, Notify } from 'quasar'
 import TopTen from 'src/components/side-bar/TopTen.vue'
+import TopRight from 'src/components/watch-anime/TopRight.vue'
 import {
   useWatchPageDataSingleEpisode,
   useWatchPageDataListEpisodes,
@@ -163,7 +165,7 @@ import {
 // Lazy local components (will create shortly in components/watch-anime)
 import BreadcrumbNavigation from 'src/components/watch-anime/BreadcrumbNavigation.vue'
 import WatchPlayer from 'src/components/watch-anime/WatchPlayer.vue'
-import PlayerControls from 'src/components/watch-anime/PlayerControls.vue'
+// import PlayerControls from 'src/components/watch-anime/PlayerControls.vue'
 import EpisodeList from 'src/components/watch-anime/EpisodeList.vue'
 import EpisodeNavigation from 'src/components/watch-anime/EpisodeNavigation.vue'
 
@@ -214,6 +216,68 @@ const autoPlay = ref(false)
 const autoNext = ref(false)
 const autoSkipIntro = ref(false)
 const isInWatchlist = ref(false)
+const lastWatchedEpisodeId = ref(null)
+const watchProgress = ref({})
+const progressLoaded = ref(false)
+
+const WATCH_PROGRESS_KEY = 'watch-progress-v1'
+
+const progressKey = computed(() => {
+  const animeId = episode.value?.anime?.id
+  if (animeId) return `anime-${animeId}`
+  if (slug.value) return `slug-${slug.value}`
+  return null
+})
+
+onMounted(() => {
+  if (!process.env.CLIENT) return
+  try {
+    const stored = localStorage.getItem(WATCH_PROGRESS_KEY)
+    if (stored) {
+      watchProgress.value = JSON.parse(stored)
+    }
+  } catch (err) {
+    console.error('Failed to parse watch progress', err)
+  } finally {
+    progressLoaded.value = true
+  }
+})
+
+watch(
+  () => ({
+    key: progressKey.value,
+    episodeId: episode.value?.id,
+    loaded: progressLoaded.value,
+  }),
+  ({ key, episodeId, loaded }) => {
+    if (!loaded || !key || !episodeId || !process.env.CLIENT) return
+
+    const progress = { ...watchProgress.value }
+    const entry = { ...(progress[key] || {}) }
+
+    if (entry.currentEpisodeId !== episodeId) {
+      if (entry.currentEpisodeId) {
+        entry.lastEpisodeId = entry.currentEpisodeId
+        entry.lastEpisodeNumber = entry.currentEpisodeNumber
+      }
+      entry.currentEpisodeId = episodeId
+      entry.currentEpisodeNumber =
+        episode.value?.number || episode.value?.sort_number || entry.currentEpisodeNumber || null
+    }
+
+    lastWatchedEpisodeId.value = entry.lastEpisodeId || null
+    entry.updatedAt = Date.now()
+    progress[key] = entry
+    watchProgress.value = progress
+
+    try {
+      localStorage.setItem(WATCH_PROGRESS_KEY, JSON.stringify(progress))
+    } catch (err) {
+      console.error('Failed to save watch progress', err)
+    }
+  },
+  { immediate: true },
+)
 
 // Navigation functions
 function goToPrev() {
@@ -251,18 +315,149 @@ const pageTitle = computed(() => {
   return `${animeTitle} - ${e.title || 'Episode ' + (e.number || episodeNumber.value)}`
 })
 
+const pageDescription = computed(() => {
+  if (!episode.value) {
+    return t(
+      'watch.pageDescription',
+      'Stream anime episodes online with multiple servers and subtitles.',
+    )
+  }
+  const e = episode.value
+  const animeTitle = e?.anime?.title || ''
+  const episodeTitle = e?.title || `${t('watch.episode', 'Episode')} ${e?.number || ''}`
+  const baseDescription =
+    e?.description ||
+    t(
+      'watch.defaultEpisodeDescription',
+      'Watch {episodeTitle} of {animeTitle} in high quality with multiple servers.',
+      {
+        episodeTitle,
+        animeTitle,
+      },
+    )
+  return baseDescription
+})
+
+const pageKeywords = computed(() => {
+  if (!episode.value) return 'anime, watch anime, stream anime'
+  const e = episode.value
+  const animeTitle = e?.anime?.title || 'anime'
+  const episodeTokens = [t('watch.episode', 'episode'), String(e?.number || '')].filter(Boolean)
+  return ['anime streaming', animeTitle, episodeTokens.join(' '), 'sub', 'dub', 'watch online']
+    .filter(Boolean)
+    .join(', ')
+})
+
+const ogImage = computed(() => {
+  return episode.value?.thumbnail || episode.value?.anime?.thumbnail || '/favicon.ico'
+})
+
+const structuredData = computed(() => {
+  if (!episode.value) return null
+
+  const e = episode.value
+  const anime = e?.anime || {}
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TVEpisode',
+    name: e.title || `${t('watch.episode', 'Episode')} ${e.number || ''}`,
+    episodeNumber: e.number || e.sort_number,
+    description:
+      e.description ||
+      t(
+        'watch.defaultEpisodeDescription',
+        'Watch {episodeTitle} of {animeTitle} in high quality with multiple servers.',
+        {
+          episodeTitle: e.title || `${t('watch.episode', 'Episode')} ${e.number || ''}`,
+          animeTitle: anime.title || '',
+        },
+      ),
+    image: ogImage.value,
+    partOfSeries: {
+      '@type': 'TVSeries',
+      name: anime.title || '',
+      url: anime.link
+        ? anime.link.startsWith('http')
+          ? anime.link
+          : `${process.env.CLIENT ? window.location.origin : ''}${anime.link}`
+        : undefined,
+    },
+    uploadDate: e.released_at || undefined,
+    url: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath,
+  }
+})
+
 const metaData = computed(() => ({
   title: pageTitle.value,
+  meta: {
+    description: {
+      name: 'description',
+      content: pageDescription.value,
+    },
+    keywords: {
+      name: 'keywords',
+      content: pageKeywords.value,
+    },
+    ogTitle: {
+      property: 'og:title',
+      content: pageTitle.value,
+    },
+    ogDescription: {
+      property: 'og:description',
+      content: pageDescription.value,
+    },
+    ogImage: {
+      property: 'og:image',
+      content: ogImage.value,
+    },
+    ogType: {
+      property: 'og:type',
+      content: 'video.episode',
+    },
+    twitterCard: {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    twitterTitle: {
+      name: 'twitter:title',
+      content: pageTitle.value,
+    },
+    twitterDescription: {
+      name: 'twitter:description',
+      content: pageDescription.value,
+    },
+    twitterImage: {
+      name: 'twitter:image',
+      content: ogImage.value,
+    },
+  },
+  link: {
+    canonical: {
+      rel: 'canonical',
+      href: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath,
+    },
+  },
+  script: structuredData.value
+    ? {
+        ldJson: {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify(structuredData.value),
+        },
+      }
+    : undefined,
 }))
 
 // Use useMeta directly with computed value
-useMeta(metaData)
+useMeta(() => metaData.value)
 </script>
 
 <style scoped>
 .watch-page {
   min-height: 60vh;
   transition: background-color 0.3s ease;
+  background: radial-gradient(circle at top, #1b1f3a 0%, #0f1223 60%, #060713 100%);
+  color: #e4e8ff;
 }
 
 /* Cinema Mode */
@@ -274,6 +469,12 @@ useMeta(metaData)
 .watch-page.cinema-mode .page-container {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.page-container {
+  background: rgba(12, 14, 28, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(3, 5, 15, 0.8);
 }
 
 .cinema-overlay {
@@ -394,6 +595,8 @@ useMeta(metaData)
 /* Anime info card styling */
 .anime-info-card {
   transition: transform 0.2s;
+  background: linear-gradient(145deg, rgba(36, 41, 68, 0.9), rgba(23, 25, 44, 0.95));
+  border: 1px solid rgba(125, 133, 190, 0.3);
 }
 
 .anime-info-card:hover {
@@ -405,6 +608,10 @@ useMeta(metaData)
   max-height: 800px;
   overflow-y: auto;
   overflow-x: hidden;
+  background: linear-gradient(160deg, rgba(28, 32, 58, 0.9), rgba(20, 23, 45, 0.95));
+  border: 1px solid rgba(120, 130, 200, 0.25);
+  border-radius: 12px;
+  margin-top: 15px;
 }
 
 /* Custom scrollbar for episode list */

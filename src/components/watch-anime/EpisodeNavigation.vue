@@ -2,12 +2,12 @@
   <div class="row q-col-gutter-sm">
     <div class="col-6">
       <q-btn outline color="primary" class="full-width" :disable="!prev" @click="go(prev)">
-        {{ $t('watch.prev') || 'Previous' }}
+        {{ $t('watch.prevEpisode') || 'Previous Episode' }}
       </q-btn>
     </div>
     <div class="col-6">
       <q-btn color="primary" class="full-width" :disable="!next" @click="go(next)">
-        {{ $t('watch.next') || 'Next' }}
+        {{ $t('watch.nextEpisode') || 'Next Episode' }}
       </q-btn>
     </div>
   </div>
