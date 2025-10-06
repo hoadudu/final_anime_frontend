@@ -104,6 +104,7 @@
                 :show-genres="true"
                 :max-genres="3"
                 :overlay-text="t('search.viewDetails')"
+                :poster-ratio="'3/4'"
                 @click="navigateToAnime"
               />
             </div>
@@ -111,11 +112,23 @@
             <!-- ========== PAGINATION ========== -->
             <div v-if="searchData.total_pages > 1" class="pagination-container q-mt-xl q-mb-lg">
               <div class="pagination-wrapper">
+                <!-- First Button -->
+                <q-btn
+                  outline
+                  color="primary"
+                  icon="first_page"
+                  :label="t('common.first')"
+                  :disable="currentPage <= 1 || isLoading"
+                  @click="changePage(1)"
+                  class="pagination-btn"
+                  unelevated
+                />
+
                 <!-- Previous Button -->
                 <q-btn
                   outline
                   color="primary"
-                  icon="chevron_left"
+                  icon="keyboard_arrow_left"
                   :label="t('common.previous')"
                   :disable="currentPage <= 1 || isLoading"
                   @click="changePage(currentPage - 1)"
@@ -136,10 +149,22 @@
                 <q-btn
                   outline
                   color="primary"
-                  icon-right="chevron_right"
+                  icon-right="keyboard_arrow_right"
                   :label="t('common.next')"
                   :disable="!searchData.has_more || isLoading"
                   @click="changePage(currentPage + 1)"
+                  class="pagination-btn"
+                  unelevated
+                />
+
+                <!-- Last Button -->
+                <q-btn
+                  outline
+                  color="primary"
+                  icon-right="last_page"
+                  :label="t('common.last')"
+                  :disable="!searchData.has_more || isLoading"
+                  @click="changePage(searchData.total_pages)"
                   class="pagination-btn"
                   unelevated
                 />
@@ -148,11 +173,13 @@
               <!-- Total Results -->
               <div class="total-results text-center q-mt-md text-grey-6">
                 {{
-                  t('search.showing', {
-                    from: (currentPage - 1) * resultsPerPage + 1,
-                    to: Math.min(currentPage * resultsPerPage, searchData.count),
-                    total: searchData.count,
-                  })
+                  searchData && searchData.count > 0
+                    ? t('search.showing', {
+                        from: Math.max(1, (currentPage - 1) * (resultsPerPage || 20) + 1),
+                        to: Math.min(currentPage * (resultsPerPage || 20), searchData.count),
+                        total: searchData.count,
+                      })
+                    : ''
                 }}
               </div>
             </div>
@@ -248,7 +275,7 @@ const navigateToAnime = (anime) => {
  * Thay đổi trang
  */
 const changePage = (newPage) => {
-  if (newPage < 1) return
+  if (newPage < 1 || newPage > searchData.value.total_pages) return
 
   currentPage.value = newPage
 
@@ -492,7 +519,7 @@ const scrollToTop = () => {
 @media (max-width: 1023px) {
   // Mobile & Tablet: Sidebar xuống dưới
   .row {
-    flex-direction: column-reverse; // Đảo thứ tự: results trước, sidebar sau
+    flex-direction: column; // Thứ tự: results trước, sidebar sau
 
     .col-lg-9,
     .col-lg-3 {

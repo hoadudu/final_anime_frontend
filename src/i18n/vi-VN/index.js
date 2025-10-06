@@ -102,6 +102,26 @@ export default {
     selectedGenres: 'Thể loại đã chọn',
     loadingGenres: 'Đang tải thể loại...',
     anime: 'anime',
+
+    // Genre page specific
+    selectGenre: 'Chọn thể loại',
+    selectGenreDescription: 'Chọn một thể loại để xem danh sách anime thuộc thể loại đó',
+    totalFound: 'Tổng cộng {total} anime được tìm thấy',
+    errorOccurred: 'Có lỗi xảy ra',
+    errorMessage: 'Không thể tải danh sách anime. Vui lòng thử lại.',
+    noResults: 'Không tìm thấy kết quả',
+    tryDifferentGenre: 'Hãy thử chọn thể loại khác',
+    viewDetails: 'Xem Chi Tiết',
+    showing: 'Hiển thị {from}–{to} trong {total} kết quả',
+
+    // Sorting options
+    sortBy: 'Sắp xếp theo',
+    sortLatest: 'Mới nhất',
+    sortOldest: 'Cũ nhất',
+    sortTitle: 'Tên A-Z',
+    sortRating: 'Đánh giá cao nhất',
+    sortViews: 'Lượt xem nhiều nhất',
+    sortToggle: 'Bật/tắt sắp xếp',
   },
 
   // Movie/Anime tooltip

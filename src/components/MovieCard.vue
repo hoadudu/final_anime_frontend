@@ -140,7 +140,7 @@
             text-color="primary"
             class="genre-chip"
           >
-            {{ genre }}
+            {{ genre.name || genre }}
           </q-chip>
         </div>
 
@@ -269,6 +269,11 @@ const getSubtitle = computed(() => {
  * Transform anime data for MovieTooltip
  */
 const transformedAnimeData = computed(() => {
+  // Process genres to extract names from objects or keep as strings for backward compatibility
+  const processedGenres = (props.anime.genres || []).map((genre) =>
+    typeof genre === 'object' && genre.name ? genre.name : genre,
+  )
+
   return {
     id: props.anime.id,
     title: getTitle.value,
@@ -281,7 +286,7 @@ const transformedAnimeData = computed(() => {
     description: props.anime.description || '',
     rating: props.anime.rating || props.anime.score || '8.5',
     year: props.anime.year || props.anime.releaseDate || new Date().getFullYear(),
-    genres: props.anime.genres || [],
+    genres: processedGenres,
     status: props.anime.status || 'Unknown',
     episodeNumber: props.anime.episodeNumber || props.anime.episode,
     latestEpisode: props.anime.latestEpisode || props.anime.currentEpisode,

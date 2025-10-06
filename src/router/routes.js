@@ -28,6 +28,12 @@ const routes = [
     children: [{ path: '', name: 'site-anime', component: () => import('src/pages/SiteAnimePage.vue') }],
   },
   {
+    path: '/the-loai/:slug',
+    name: 'genres',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', name: 'site-genres', component: () => import('src/pages/SiteGenresPage.vue') }],
+  },
+  {
     path: '/search',
     name: 'search',
     component: () => import('layouts/MainLayout.vue'),

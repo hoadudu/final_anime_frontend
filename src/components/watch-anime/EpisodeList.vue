@@ -556,9 +556,9 @@ function getEpisodeClass(ep) {
 
 /* Last watched - tập đã xem trước đó (cam) */
 .episode-last-watched {
-  background: #f59e0b;
+  background: #7abba5bd;
   color: #ffffff;
-  border: 1px solid #d97706;
+  border: 1px solid #328c6e;
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
 }
 
