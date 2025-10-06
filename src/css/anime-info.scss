@@ -1,7 +1,7 @@
 // Anime Info Page Styling
 .anime-info-container {
   width: 100%;
-//   min-height: 100vh;
+  //   min-height: 100vh;
 
   // Breadcrumb Styling
   .breadcrumb-container {
@@ -18,7 +18,7 @@
 
       .breadcrumb-nav {
         .breadcrumb-item {
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(255, 255, 255, 0.85);
           transition: all 0.3s ease;
 
           &:hover {
@@ -34,7 +34,7 @@
         .breadcrumb-current {
           color: white;
           font-weight: 500;
-          
+
           .q-breadcrumbs-el__content {
             max-width: 300px;
             overflow: hidden;
@@ -44,7 +44,7 @@
         }
 
         .q-breadcrumbs__separator {
-          color: rgba(255, 255, 255, 0.4);
+          color: rgba(255, 255, 255, 0.6);
         }
       }
     }
@@ -71,7 +71,7 @@
       background-repeat: no-repeat;
       filter: blur(8px) brightness(0.3);
       transform: scale(1.1);
-      
+
       // Fallback when no background image
       &:empty {
         background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -146,11 +146,26 @@
                 align-items: center;
                 z-index: 3;
 
-                &.rating-excellent { background: rgba(76, 175, 80, 0.9); color: white; }
-                &.rating-good { background: rgba(255, 193, 7, 0.9); color: black; }
-                &.rating-average { background: rgba(255, 152, 0, 0.9); color: white; }
-                &.rating-poor { background: rgba(244, 67, 54, 0.9); color: white; }
-                &.rating-default { background: rgba(158, 158, 158, 0.9); color: white; }
+                &.rating-excellent {
+                  background: rgba(76, 175, 80, 0.9);
+                  color: white;
+                }
+                &.rating-good {
+                  background: rgba(255, 193, 7, 0.9);
+                  color: black;
+                }
+                &.rating-average {
+                  background: rgba(255, 152, 0, 0.9);
+                  color: white;
+                }
+                &.rating-poor {
+                  background: rgba(244, 67, 54, 0.9);
+                  color: white;
+                }
+                &.rating-default {
+                  background: rgba(158, 158, 158, 0.9);
+                  color: white;
+                }
               }
             }
           }
@@ -212,7 +227,7 @@
 
                   .stat-label {
                     font-size: 0.65rem;
-                    color: rgba(255, 255, 255, 0.7);
+                    color: rgba(255, 255, 255, 0.75);
                     margin-top: 0.125rem;
                   }
                 }
@@ -225,7 +240,7 @@
           display: flex;
           gap: 0.5rem;
           padding: 1rem 0;
-          
+
           .mobile-watch-btn {
             flex: 2; // Watch button takes more space
             height: 44px;
@@ -264,10 +279,10 @@
     .poster-wrapper {
       position: relative;
       width: 100%;
-      
+
       // Maintain 2:3 aspect ratio (width:height)
       aspect-ratio: 2/3;
-      
+
       // Fallback for browsers that don't support aspect-ratio
       &::before {
         content: '';
@@ -295,7 +310,7 @@
           width: 100%;
           height: 100%;
         }
-        
+
         .q-img__content {
           width: 100%;
           height: 100%;
@@ -314,27 +329,27 @@
         align-items: center;
         backdrop-filter: blur(10px);
         z-index: 3;
-        
+
         &.rating-excellent {
           background: rgba(76, 175, 80, 0.9);
           color: white;
         }
-        
+
         &.rating-good {
           background: rgba(255, 193, 7, 0.9);
           color: black;
         }
-        
+
         &.rating-average {
           background: rgba(255, 152, 0, 0.9);
           color: white;
         }
-        
+
         &.rating-poor {
           background: rgba(244, 67, 54, 0.9);
           color: white;
         }
-        
+
         &.rating-default {
           background: rgba(158, 158, 158, 0.9);
           color: white;
@@ -444,7 +459,7 @@
 
         .q-tab {
           font-weight: 500;
-          
+
           &--active {
             color: #667eea;
           }
@@ -487,7 +502,7 @@
 
         .info-label {
           font-weight: 500;
-          color: rgba(255, 255, 255, 0.8);
+          color: rgba(255, 255, 255, 0.9);
           flex-shrink: 0;
           margin-right: 1rem;
         }
@@ -535,7 +550,7 @@
 
 // Page Container for SiteAnimePage
 .anime-page {
-//   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  //   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
   min-height: 100vh;
 
   .page-container {
@@ -612,7 +627,7 @@
       .poster-wrapper {
         // Force aspect ratio on smaller screens
         aspect-ratio: 2/3;
-        
+
         .poster-image {
           // Ensure image fills the container properly
           position: absolute;
@@ -634,7 +649,7 @@
       .action-buttons {
         .row {
           flex-direction: column;
-          
+
           .q-btn {
             margin-bottom: 0.5rem;
             width: 100%;
@@ -676,7 +691,7 @@
 
           .breadcrumb-current {
             font-size: 0.85rem;
-            
+
             .q-breadcrumbs-el__content {
               max-width: 150px;
             }
@@ -693,7 +708,7 @@
 
             .mobile-poster-section {
               width: 100px;
-              
+
               .mobile-poster-card .mobile-poster-image {
                 width: 100px;
                 height: 150px;
@@ -756,7 +771,7 @@
           .q-tab__label {
             display: none;
           }
-          
+
           min-width: 50px;
         }
       }

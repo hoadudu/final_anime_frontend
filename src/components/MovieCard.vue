@@ -655,7 +655,7 @@ const getTypeColor = (type) => {
     font-size: 0.7rem;
     line-height: 1.2;
     margin: 0 0 6px 0;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -672,7 +672,7 @@ const getTypeColor = (type) => {
   .movie-meta {
     display: flex;
     align-items: center;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.7rem;
     margin-top: auto;
 

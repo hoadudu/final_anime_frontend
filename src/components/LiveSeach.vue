@@ -172,7 +172,7 @@ const handleAnimeClick = (anime) => {
   align-items: center;
   justify-content: center;
   min-height: 300px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 // ========== RESULTS GRID ==========
@@ -286,7 +286,7 @@ const handleAnimeClick = (anime) => {
   align-items: center;
   gap: 6px;
   font-size: 0.6rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
 
   @media (max-width: 599px) {
     font-size: 0.55rem;
