@@ -80,9 +80,9 @@
       <div class="group-info">
         <q-icon name="folder" size="20px" color="primary" class="q-mr-sm" />
         <span class="group-name">{{ selectedGroup.name }}</span>
-        <span v-if="selectedGroup.range_start && selectedGroup.range_end" class="group-range">
+        <!-- <span v-if="selectedGroup.range_start && selectedGroup.range_end" class="group-range">
           ({{ selectedGroup.range_start }} - {{ selectedGroup.range_end }})
-        </span>
+        </span> -->
       </div>
     </q-card-section>
 
@@ -244,121 +244,167 @@ function getEpisodeClass(ep) {
 
 <style scoped>
 .episode-card {
-  background: linear-gradient(135deg, #1a1a1a 0%, #242424 60%, #1a1a1a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #e8e8e8;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  color: #f1f5f9;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(139, 92, 246, 0.1);
 }
 
 .episode-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 16px;
+  padding: 20px 24px;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   flex: 1;
 }
 
 .header-btn {
-  color: #b0b0b0;
-  transition: transform 0.2s ease;
+  color: #94a3b8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  padding: 8px;
 }
 
 .header-btn:hover {
-  color: #e0e0e0;
-  transform: scale(1.1);
-}
-
-.header-title {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #e8e8e8;
-  white-space: nowrap;
+  color: #e2e8f0;
+  background: rgba(139, 92, 246, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
 }
 
 .group-select {
-  min-width: 120px;
-  max-width: 180px;
+  min-width: 140px;
+  max-width: 200px;
 }
 
 .search-input {
-  max-width: 180px;
+  max-width: 240px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-input:focus-within {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
 }
 
 .episode-card .q-input :deep(.q-field__native),
 .episode-card .q-input :deep(.q-field__control),
 .episode-card .q-select :deep(.q-field__native),
 .episode-card .q-select :deep(.q-field__control) {
-  color: #e0e0e0;
-  font-size: 0.85rem;
+  color: #e2e8f0;
+  font-size: 0.875rem;
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.episode-card .q-input :deep(.q-field__control):focus-within,
+.episode-card .q-select :deep(.q-field__control):focus-within {
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
 }
 
 /* Team Tabs */
 .team-tabs-section {
-  padding: 8px 16px 0 16px;
+  padding: 16px 24px 0 24px;
 }
 
 .team-tabs {
   background: transparent;
 }
 
+.team-tabs :deep(.q-tabs__content) {
+  border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+  margin-bottom: 16px;
+}
+
+.team-tabs :deep(.q-tabs__track) {
+  background: transparent;
+}
+
 .team-tab {
-  min-width: 80px;
-  font-size: 0.85rem;
+  min-width: 90px;
+  font-size: 0.875rem;
   font-weight: 500;
   text-transform: none;
-  color: #b0b0b0;
-  transition: all 0.2s ease;
+  color: #94a3b8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding: 12px 16px;
+  margin-bottom: -2px;
 }
 
 .team-tab:hover {
-  color: #e0e0e0;
-  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  background: rgba(139, 92, 246, 0.08);
 }
 
 .team-tab.q-tab--active {
-  color: #a855f7;
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
 }
 
-.team-tab.q-tab--active .q-tab__label {
-  font-weight: 600;
+.team-tab.q-tab--active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8b5cf6 0%, #6366f1 100%);
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
 }
 
 /* Tab Content */
 .tab-content {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   position: relative;
 }
 
 .tab-name {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tab-count {
-  background: rgba(168, 85, 247, 0.2);
-  color: #a855f7;
-  font-size: 0.7rem;
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 10px;
-  min-width: 18px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  min-width: 20px;
   text-align: center;
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  transition: all 0.2s ease;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.1);
 }
 
 .team-tab:hover .tab-count {
-  background: rgba(168, 85, 247, 0.3);
-  border-color: rgba(168, 85, 247, 0.5);
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(139, 92, 246, 0.2);
 }
 
 .team-tab.q-tab--active .tab-count {
@@ -367,9 +413,17 @@ function getEpisodeClass(ep) {
 
 /* Group Info Section */
 .group-info-section {
-  padding: 12px 16px;
-  background: rgba(168, 85, 247, 0.05);
-  border-left: 3px solid #a855f7;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.05) 100%);
+  border-left: 4px solid #8b5cf6;
+  border-radius: 0 12px 12px 0;
+  margin: 0 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group-info-section:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(99, 102, 241, 0.08) 100%);
+  transform: translateX(2px);
 }
 
 .group-info {
@@ -377,22 +431,35 @@ function getEpisodeClass(ep) {
   align-items: center;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #e8e8e8;
+  color: #f1f5f9;
 }
 
 .group-name {
-  color: #a855f7;
+  color: #8b5cf6;
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .group-range {
-  color: #b0b0b0;
+  color: #94a3b8;
   font-weight: 400;
-  margin-left: 8px;
+  margin-left: 12px;
+  font-size: 0.875rem;
 }
 
 .episode-grid-section {
-  padding: 16px;
+  padding: 24px;
+}
+
+.episode-grid-section::before {
+  content: 'Episodes';
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #8b5cf6;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .no-episodes {
@@ -400,14 +467,20 @@ function getEpisodeClass(ep) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 60px 32px;
   text-align: center;
+}
+
+.no-episodes .q-icon {
+  color: #64748b;
+  opacity: 0.6;
+  margin-bottom: 16px;
 }
 
 .episode-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+  gap: 12px;
 }
 
 .episode-item {
@@ -415,163 +488,262 @@ function getEpisodeClass(ep) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 600;
   font-size: 0.95rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.episode-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(139, 92, 246, 0.08);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+}
+
+.episode-item:hover::before {
+  opacity: 1;
 }
 
 .episode-number {
   user-select: none;
+  position: relative;
+  z-index: 1;
 }
 
 /* Default - chưa xem */
 .episode-default {
-  background: rgba(60, 60, 60, 0.8);
-  color: #b0b0b0;
+  background: #374151;
+  color: #d1d5db;
+  border: 1px solid rgba(139, 92, 246, 0.15);
 }
 
 .episode-default:hover {
-  background: rgba(70, 70, 70, 0.9);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: #4b5563;
+  color: #f3f4f6;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.3);
+  border-radius: 10px;
 }
 
 /* Active - đang xem */
+
 .episode-active {
-  background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+  background: #10b981;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+  border: 1px solid #059669;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
 }
 
-.episode-active:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.5);
+.episode-active:hover:hover {
+  background: #059669;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.3);
+  border-radius: 10px;
 }
 
 /* Last watched - tập đã xem trước đó (cam) */
 .episode-last-watched {
-  background: linear-gradient(135deg, #d4a574 0%, #b8864f 100%);
+  background: #f59e0b;
   color: #ffffff;
+  border: 1px solid #d97706;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
 }
 
 .episode-last-watched:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+  background: #d97706;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 28px rgba(245, 158, 11, 0.35);
+  border-radius: 10px;
 }
 
-/* Watched - tất cả tập đã xem (tím nhạt) */
+/* Watched - tất cả tập đã xem (xanh lá nhạt) */
 .episode-watched {
-  /* background: linear-gradient(135deg, #d8b4fe 0%, #c084fc 100%); */
-  background: linear-gradient(135deg, #c8d3c0 0%, #a8b0a0 100%);
+  background: #5a5a6a;
   color: #ffffff;
+  border: 2px solid #7f7595;
+  box-shadow:
+    0 6px 20px rgba(99, 102, 241, 0.3),
+    0 0 0 1px rgba(139, 92, 246, 0.4);
 }
 
 .episode-watched:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(216, 180, 254, 0.4);
+  background: #5855eb;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 8px 28px rgba(99, 102, 241, 0.4),
+    0 0 0 1px rgba(139, 92, 246, 0.5);
+  border-radius: 10px;
 }
+
+/* .episode-watched {
+  background: #10b981;
+  color: #ffffff;
+  border: 1px solid #059669;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+}
+
+.episode-watched:hover {
+  background: #059669;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.3);
+  border-radius: 10px;
+} */
 
 /* Special - ngoại truyện */
 .episode-special {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: #ec4899;
   color: #ffffff;
+  border: 1px solid #be185d;
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.2);
 }
 
 .episode-special:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  background: #be185d;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 28px rgba(236, 72, 153, 0.3);
+  border-radius: 10px;
 }
 
 /* Responsive */
-@media (max-width: 1023px) {
+@media (max-width: 1200px) {
   .episode-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
   }
+}
 
-  .header-left {
-    flex-wrap: wrap;
+@media (max-width: 1023px) {
+  .episode-header {
+    padding: 16px 20px;
+    gap: 12px;
   }
 
   .search-input {
-    max-width: 150px;
+    max-width: 200px;
+  }
+
+  .group-select {
+    min-width: 120px;
+    max-width: 160px;
   }
 
   .team-tabs-section {
-    padding: 6px 12px 0 12px;
+    padding: 12px 20px 0 20px;
   }
 
-  .team-tab {
-    min-width: 70px;
-    font-size: 0.8rem;
+  .group-info-section {
+    padding: 14px 20px;
+    margin: 0 20px;
   }
 
-  .tab-count {
-    font-size: 0.65rem;
-    padding: 1px 4px;
-    min-width: 16px;
+  .episode-grid-section {
+    padding: 20px;
   }
 }
 
 @media (max-width: 767px) {
-  .episode-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
   .episode-header {
+    padding: 16px;
     flex-direction: column;
     align-items: stretch;
+    gap: 16px;
+  }
+
+  .header-left {
+    gap: 12px;
   }
 
   .search-input {
     max-width: 100%;
   }
 
+  .group-select {
+    min-width: 140px;
+    max-width: 180px;
+  }
+
   .team-tabs-section {
-    padding: 4px 8px 0 8px;
+    padding: 12px 16px 0 16px;
   }
 
   .team-tab {
-    min-width: 60px;
-    font-size: 0.75rem;
-    padding: 8px 12px;
-  }
-
-  .tab-count {
-    font-size: 0.6rem;
-    padding: 1px 3px;
-    min-width: 14px;
+    min-width: 80px;
+    font-size: 0.8rem;
+    padding: 10px 12px;
   }
 
   .group-info-section {
-    padding: 10px 12px;
+    padding: 12px 16px;
+    margin: 0 16px;
+  }
+
+  .episode-grid-section {
+    padding: 16px;
+  }
+
+  .episode-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
   }
 }
 
 @media (max-width: 479px) {
-  .episode-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .episode-header {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .header-left {
+    gap: 8px;
   }
 
   .team-tabs-section {
-    padding: 2px 4px 0 4px;
+    padding: 8px 12px 0 12px;
   }
 
   .team-tab {
-    min-width: 50px;
-    font-size: 0.7rem;
-    padding: 6px 8px;
+    min-width: 70px;
+    font-size: 0.75rem;
+    padding: 8px 10px;
   }
 
-  .tab-count {
-    font-size: 0.55rem;
-    padding: 0px 2px;
-    min-width: 12px;
+  .group-info-section {
+    padding: 10px 12px;
+    margin: 0 12px;
+  }
+
+  .episode-grid-section {
+    padding: 12px;
+  }
+
+  .episode-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .episode-item {
+    font-size: 0.875rem;
   }
 
   .group-info {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
+  }
+
+  .group-name {
+    font-size: 0.95rem;
   }
 }
 </style>
