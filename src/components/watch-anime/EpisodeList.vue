@@ -1,7 +1,36 @@
 <template>
   <q-card flat bordered class="episode-card">
+    <!-- Team Tabs -->
+    <q-card-section v-if="hasMultipleTeams" class="team-tabs-section">
+      <q-tabs
+        v-model="selectedTeamIndex"
+        dense
+        class="team-tabs"
+        active-color="primary"
+        indicator-color="primary"
+      >
+        <q-tab
+          v-for="(team, index) in teams"
+          :key="`team-${team.team_id}-${index}`"
+          :name="index"
+          class="team-tab"
+        >
+          <div class="tab-content">
+            <span class="tab-name">{{ team.team_name || `Team ${team.team_id}` }}</span>
+            <span
+              v-if="teamEpisodeCounts[index] > 0 && index !== selectedTeamIndex"
+              class="tab-count"
+            >
+              {{ teamEpisodeCounts[index] }}
+            </span>
+          </div>
+        </q-tab>
+      </q-tabs>
+    </q-card-section>
+
+    <q-separator v-if="hasMultipleTeams" />
+
     <q-card-section class="episode-header">
-      <!-- <div class="header-title">{{ $t('watch.episodes') }}:</div> -->
       <div class="header-left">
         <q-btn
           flat
@@ -45,6 +74,20 @@
       </q-input>
     </q-card-section>
     <q-separator />
+
+    <!-- Group Info Section -->
+    <q-card-section v-if="selectedGroup.name" class="group-info-section">
+      <div class="group-info">
+        <q-icon name="folder" size="20px" color="primary" class="q-mr-sm" />
+        <span class="group-name">{{ selectedGroup.name }}</span>
+        <span v-if="selectedGroup.range_start && selectedGroup.range_end" class="group-range">
+          ({{ selectedGroup.range_start }} - {{ selectedGroup.range_end }})
+        </span>
+      </div>
+    </q-card-section>
+
+    <q-separator v-if="selectedGroup.name" />
+
     <q-card-section class="episode-grid-section">
       <div v-if="filteredEpisodes.length > 0" class="episode-grid">
         <div
@@ -54,12 +97,14 @@
           :class="getEpisodeClass(ep)"
           @click="goTo(ep)"
         >
-          <span class="episode-number">{{ ep.number || ep.sort_number || '?' }}</span>
+          <span class="episode-number">{{ ep.number || ep.sort_number || ep.title || '?' }}</span>
         </div>
       </div>
       <div v-else class="no-episodes">
         <q-icon name="movie" size="40px" color="grey-6" />
-        <div class="text-grey-6 q-mt-sm">{{ $t('watch.noEpisodes') }}</div>
+        <div class="text-grey-6 q-mt-sm">
+          {{ selectedGroup.name ? `No episodes in ${selectedGroup.name}` : $t('watch.noEpisodes') }}
+        </div>
       </div>
     </q-card-section>
   </q-card>
@@ -71,8 +116,8 @@ import { useRouter } from 'vue-router'
 // import { linkWatch } from 'src/utils/helper'
 
 const props = defineProps({
-  // Can be either a flat array of episodes OR an object: { groups: [{ name, range_start, range_end, episodes: [...] }] }
-  episodes: { type: [Array, Object], required: true },
+  // New structure: { teams: [{ team_id, groups: [{ name, range_start, range_end, episodes: [...] }] }] }
+  episodes: { type: Object, required: true },
   activeEpisodeId: { type: [String, Number], default: null },
   slug: { type: String, required: true },
   lastWatchedId: { type: [String, Number], default: null },
@@ -84,49 +129,75 @@ const router = useRouter()
 const search = ref('')
 const groupSelectRef = ref(null) // Reference to q-select component
 
-// Normalize to groups
-const groups = computed(() => {
-  // If API returned groups structure
-  if (
-    props.episodes &&
-    typeof props.episodes === 'object' &&
-    Array.isArray(props.episodes.groups)
-  ) {
-    return props.episodes.groups
+// Process teams data
+const teams = computed(() => {
+  if (props.episodes && Array.isArray(props.episodes.teams)) {
+    return props.episodes.teams
   }
-  // Fallback: single group from flat list
-  const list = Array.isArray(props.episodes) ? props.episodes : []
-  return [{ name: 'All', range_start: null, range_end: null, episodes: list }]
+  return []
 })
 
+const selectedTeamIndex = ref(0)
+const selectedTeam = computed(
+  () => teams.value[selectedTeamIndex.value] || { team_id: null, groups: [] },
+)
+
+const groups = computed(() => selectedTeam.value.groups || [])
+
+const hasMultipleTeams = computed(() => teams.value.length > 1)
 const hasMultipleGroups = computed(() => groups.value.length > 1)
+
+// Calculate total episodes for each team
+const teamEpisodeCounts = computed(() => {
+  return teams.value.map((team) => {
+    const groups = team.groups || []
+    return groups.reduce((total, group) => {
+      return total + (Array.isArray(group.episodes) ? group.episodes.length : 0)
+    }, 0)
+  })
+})
+
 const groupOptions = computed(() =>
   groups.value.map((g, idx) => ({ label: g.name || `Group ${idx + 1}`, value: idx })),
 )
+
 const selectedGroupIndex = ref(0)
+const selectedGroup = computed(() => groups.value[selectedGroupIndex.value] || { episodes: [] })
 
 watch(
   () => ({
-    groups: groups.value,
+    teams: teams.value,
     activeId: props.activeEpisodeId,
   }),
-  ({ groups, activeId }) => {
-    if (!Array.isArray(groups) || !activeId) return
+  ({ teams, activeId }) => {
+    if (!Array.isArray(teams) || !activeId) return
 
-    const groupIndex = groups.findIndex(
-      (group) => Array.isArray(group?.episodes) && group.episodes.some((ep) => ep.id === activeId),
-    )
+    // Find which team contains the active episode
+    for (let teamIndex = 0; teamIndex < teams.length; teamIndex++) {
+      const team = teams[teamIndex]
+      if (Array.isArray(team?.groups)) {
+        const groupIndex = team.groups.findIndex(
+          (group) =>
+            Array.isArray(group?.episodes) && group.episodes.some((ep) => ep.id === activeId),
+        )
 
-    if (groupIndex !== -1 && groupIndex !== selectedGroupIndex.value) {
-      selectedGroupIndex.value = groupIndex
+        if (groupIndex !== -1) {
+          if (teamIndex !== selectedTeamIndex.value) {
+            selectedTeamIndex.value = teamIndex
+          }
+          if (groupIndex !== selectedGroupIndex.value) {
+            selectedGroupIndex.value = groupIndex
+          }
+          return
+        }
+      }
     }
   },
   { immediate: true },
 )
 
 const filteredEpisodes = computed(() => {
-  const group = groups.value[selectedGroupIndex.value] || groups.value[0]
-  const list = Array.isArray(group?.episodes) ? group.episodes : []
+  const list = Array.isArray(selectedGroup.value?.episodes) ? selectedGroup.value.episodes : []
   const q = search.value.trim().toLowerCase()
 
   // console.log('Search:', q)
@@ -225,6 +296,99 @@ function getEpisodeClass(ep) {
 .episode-card .q-select :deep(.q-field__control) {
   color: #e0e0e0;
   font-size: 0.85rem;
+}
+
+/* Team Tabs */
+.team-tabs-section {
+  padding: 8px 16px 0 16px;
+}
+
+.team-tabs {
+  background: transparent;
+}
+
+.team-tab {
+  min-width: 80px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: none;
+  color: #b0b0b0;
+  transition: all 0.2s ease;
+}
+
+.team-tab:hover {
+  color: #e0e0e0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.team-tab.q-tab--active {
+  color: #a855f7;
+}
+
+.team-tab.q-tab--active .q-tab__label {
+  font-weight: 600;
+}
+
+/* Tab Content */
+.tab-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.tab-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tab-count {
+  background: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  transition: all 0.2s ease;
+}
+
+.team-tab:hover .tab-count {
+  background: rgba(168, 85, 247, 0.3);
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+.team-tab.q-tab--active .tab-count {
+  display: none;
+}
+
+/* Group Info Section */
+.group-info-section {
+  padding: 12px 16px;
+  background: rgba(168, 85, 247, 0.05);
+  border-left: 3px solid #a855f7;
+}
+
+.group-info {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #e8e8e8;
+}
+
+.group-name {
+  color: #a855f7;
+  font-weight: 600;
+}
+
+.group-range {
+  color: #b0b0b0;
+  font-weight: 400;
+  margin-left: 8px;
 }
 
 .episode-grid-section {
@@ -333,6 +497,21 @@ function getEpisodeClass(ep) {
   .search-input {
     max-width: 150px;
   }
+
+  .team-tabs-section {
+    padding: 6px 12px 0 12px;
+  }
+
+  .team-tab {
+    min-width: 70px;
+    font-size: 0.8rem;
+  }
+
+  .tab-count {
+    font-size: 0.65rem;
+    padding: 1px 4px;
+    min-width: 16px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -348,11 +527,51 @@ function getEpisodeClass(ep) {
   .search-input {
     max-width: 100%;
   }
+
+  .team-tabs-section {
+    padding: 4px 8px 0 8px;
+  }
+
+  .team-tab {
+    min-width: 60px;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+  }
+
+  .tab-count {
+    font-size: 0.6rem;
+    padding: 1px 3px;
+    min-width: 14px;
+  }
+
+  .group-info-section {
+    padding: 10px 12px;
+  }
 }
 
 @media (max-width: 479px) {
   .episode-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .team-tabs-section {
+    padding: 2px 4px 0 4px;
+  }
+
+  .team-tab {
+    min-width: 50px;
+    font-size: 0.7rem;
+    padding: 6px 8px;
+  }
+
+  .tab-count {
+    font-size: 0.55rem;
+    padding: 0px 2px;
+    min-width: 12px;
+  }
+
+  .group-info {
+    font-size: 0.8rem;
   }
 }
 </style>
