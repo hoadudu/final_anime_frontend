@@ -26,9 +26,10 @@
           :placeholder="t('header.searchPlaceholder')"
           class="bg-white col"
           @keyup.enter="handleSearch"
+          @focus="showLiveSearch = true"
         >
           <template v-slot:append v-if="search">
-            <q-icon name="close" @click="search = ''" class="cursor-pointer" />
+            <q-icon name="close" @click="clearSearch" class="cursor-pointer" />
           </template>
         </q-input>
         <q-btn
@@ -66,22 +67,66 @@
         </q-btn>
       </div>
     </q-toolbar>
+
+    <!-- Live Search Results -->
+    <LiveSearch
+      :is-open="showLiveSearch && search.length > 0"
+      :results="liveSearchResults"
+      :is-loading="isSearching"
+      @close="closeLiveSearch"
+      @anime-click="handleAnimeClick"
+    />
   </q-header>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { fabYoutube } from '@quasar/extras/fontawesome-v6'
 import { useDrawerStore } from 'src/stores/site-drawer'
+import { useLiveSearchData } from 'src/composables/live-seach/useLiveSearchData'
+import LiveSearch from 'src/components/LiveSeach.vue'
 
 const { t } = useI18n()
 const router = useRouter()
 const drawerStore = useDrawerStore()
 const search = ref('')
+const showLiveSearch = ref(false)
+
+// Fetch live search data - composable sẽ tự xử lý debouncing
+const { data: liveSearchData, isLoading: isSearching } = useLiveSearchData(search)
+
+// Extract results from API response
+const liveSearchResults = computed(() => {
+  if (!liveSearchData.value) return []
+  return liveSearchData.value.results || liveSearchData.value.data || liveSearchData.value || []
+})
 
 function toggleLeftDrawer() {
   drawerStore.toggleLeftDrawer()
+}
+
+/**
+ * Clear search input and close live search
+ */
+function clearSearch() {
+  search.value = ''
+  showLiveSearch.value = false
+}
+
+/**
+ * Close live search overlay
+ */
+function closeLiveSearch() {
+  showLiveSearch.value = false
+}
+
+/**
+ * Handle anime card click in live search
+ */
+function handleAnimeClick(anime) {
+  // Optional: you can track analytics here
+  console.log('Anime clicked:', anime.title)
 }
 
 /**
@@ -94,6 +139,9 @@ function handleSearch() {
   if (!keyword) {
     return
   }
+
+  // Close live search
+  showLiveSearch.value = false
 
   // Navigate đến trang tìm kiếm với keyword
   router
@@ -113,6 +161,14 @@ function handleSearch() {
       // Không cần làm gì
     })
 }
+
+// Watch for route changes to close live search
+watch(
+  () => router.currentRoute.value,
+  () => {
+    showLiveSearch.value = false
+  },
+)
 </script>
 
 <style lang="sass">
