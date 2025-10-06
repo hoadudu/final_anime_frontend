@@ -27,6 +27,12 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', name: 'site-anime', component: () => import('src/pages/SiteAnimePage.vue') }],
   },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', name: 'site-search', component: () => import('src/pages/SiteSearchPage.vue') }],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

@@ -29,6 +29,9 @@ export function useWatchPageDataListEpisodes(postId) {
     queryKey: ['watch-page-list-episodes', postId, langQuery],
     queryFn: async () => {
       const id = unref(postId)
+      if (!id) {
+        return { groups: [] }
+      }
       const response = await api.get(`${API_BASE_URL}/anime/${id}/episodes${langQuery}`)
       return response.data
     },

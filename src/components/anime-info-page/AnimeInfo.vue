@@ -392,7 +392,7 @@
 import { computed, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { linkWatch } from 'src/utils/helper'
+import { linkWatch, resolveWatchProgressEntry } from 'src/utils/helper'
 // import removed as we now receive the data as a prop
 import BreadcrumbNavigation from './components/BreadcrumbNavigation.vue'
 import AnimeTabbedContent from './components/AnimeTabbedContent.vue'
@@ -454,13 +454,13 @@ const getColorForGenre = (index) => {
   return colors.value[index % colors.value.length]
 }
 
-const progressKey = computed(() => {
-  const info = safeAnimeInfo.value
-  if (!info) return null
-  if (info.id) return `anime-${info.id}`
-  if (info.slug) return `slug-${info.slug}`
-  return null
-})
+// const progressKey = computed(() => {
+//   const info = safeAnimeInfo.value
+//   if (!info) return null
+//   if (info.id) return `anime-${info.id}`
+//   if (info.slug) return `slug-${info.slug}`
+//   return null
+// })
 
 // Functions below are commented out as they're no longer needed with the top-down state approach
 // Extract anime ID from route params - kept for reference
@@ -591,15 +591,11 @@ const navigateToWatch = () => {
       const stored = localStorage.getItem('watch-progress-v1')
       if (stored) {
         const progress = JSON.parse(stored)
-        const entry = progress?.[progressKey.value]
+        const entry = resolveWatchProgressEntry(progress, safeAnimeInfo.value)
         if (entry?.currentEpisodeId && safeAnimeInfo.value?.slug) {
           const number = entry.currentEpisodeNumber || entry.currentEpisodeSort
-          targetUrl = linkWatch(
-            safeAnimeInfo.value.slug,
-            safeAnimeInfo.value.id,
-            number,
-            entry.currentEpisodeId,
-          )
+          const postId = safeAnimeInfo.value.id
+          targetUrl = linkWatch(safeAnimeInfo.value.slug, number, entry.currentEpisodeId, postId)
         }
       }
     } catch (err) {

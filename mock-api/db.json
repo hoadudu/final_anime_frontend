@@ -1,909 +1,589 @@
 {
-    "data": {
-        "id": 1002,
-        "title": "Cross Game",
-        "slug": "cross-game",
-        "titles": [
-            {
-                "language": "en",
-                "title": "Cross Game"
-            },
-            {
-                "language": "ja",
-                "title": "クロスゲーム"
-            },
-            {
-                "language": "en",
-                "title": "Cross Game"
-            }
-        ],
-        "poster": "https://cdn.myanimelist.net/images/anime/5/21337.jpg",
-        "cover": "https://via.placeholder.com/1920x1080?text=No+Cover",
-        "description": "Kou Kitamura and Aoba Tsukishima are often at odds—even though their families happen to be close friends and business partners. Although the only child of a sports shop owner, Kou has never been interested in playing baseball. Despite this, he possesses an impressive batting ability honed by frequent visits to the local baseball batting center run by the Tsukishima family. On the other hand, Aoba loves to play baseball and is a star player with exceptional pitching form.\n\nHowever, these two seemingly complete opposites share something very important to them—Wakaba Tsukishima, Aoba's older sister and Kou's destined sweetheart. Admired by the quarrelsome duo, Wakaba often finds herself the catalyst to their never-ending rivalry. But whether or not they realize that they have more in common than either would care to admit, only time will tell. The game of baseball may just be what the pair needs to ultimately overcome their own personal struggles.\n\n[Written by MAL Rewrite]",
-        "type": "TV",
-        "status": "Completed",
-        "aired": {
-            "from": "2009-04-05",
-            "to": "2010-03-28"
-        },
-        "year": "2009",
-        "views": 110,
-        "premiered": "Spring 2009",
-        "duration": "23 min per ep",
-        "rating": "PG-13 - Teens 13 or older",
-        "quality": "HD",
-        "episodes": {
-            "total": 50,
-            "sub": 0,
-            "dub": 0
-        },
-        "episodeList": [
-            {
-                "id": 26076,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26077,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26078,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26079,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26080,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26081,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26082,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26083,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26084,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26085,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26086,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26087,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26088,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26089,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26090,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26091,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26092,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26093,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26094,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26095,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26096,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26097,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26098,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26099,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26100,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26101,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26102,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26103,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26104,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26105,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26106,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26107,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26108,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26109,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26110,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26111,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26112,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26113,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26114,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26115,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26116,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26117,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26118,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26119,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26120,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26121,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26122,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26123,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26124,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            },
-            {
-                "id": 26125,
-                "title": "Episode ",
-                "episodeNumber": null,
-                "airDate": "Unknown",
-                "subCount": 4,
-                "dubCount": 0
-            }
-        ],
-        "animeGroups": [],
-        "characters": [
-            {
-                "id": 798,
-                "role": "main",
-                "name": "Kitamura, Kou",
-                "image_url": "https://cdn.myanimelist.net/images/characters/6/49897.jpg?s=9e99334e1c0d5ff7e079ae860eb2702d",
-                "slug": "kitamura-kou"
-            },
-            {
-                "id": 799,
-                "role": "main",
-                "name": "Tsukishima, Aoba",
-                "image_url": "https://cdn.myanimelist.net/images/characters/16/153433.jpg?s=e7d624eebba6dfcdfd0083984ee7cd1e",
-                "slug": "tsukishima-aoba"
-            },
-            {
-                "id": 800,
-                "role": "supporting",
-                "name": "Akaishi, Osamu",
-                "image_url": "https://cdn.myanimelist.net/images/characters/11/81004.jpg?s=abab95de23257aca6c98ebc86c014937",
-                "slug": "akaishi-osamu"
-            },
-            {
-                "id": 801,
-                "role": "supporting",
-                "name": "Asami, Kikuji",
-                "image_url": "https://cdn.myanimelist.net/images/characters/5/65349.jpg?s=1fa5ed5cd1a897b6244bc6ac326c7e9b",
-                "slug": "asami-kikuji"
-            },
-            {
-                "id": 802,
-                "role": "supporting",
-                "name": "Asami, Mizuki",
-                "image_url": "https://cdn.myanimelist.net/images/characters/5/53674.jpg?s=28863994806469798ee03769f5d8998a",
-                "slug": "asami-mizuki"
-            },
-            {
-                "id": 803,
-                "role": "supporting",
-                "name": "Asami, Tokie",
-                "image_url": "https://cdn.myanimelist.net/images/characters/8/65350.jpg?s=569b430329e9e5f5f00c6712fb82bc56",
-                "slug": "asami-tokie"
-            },
-            {
-                "id": 804,
-                "role": "supporting",
-                "name": "Asami, Isamu",
-                "image_url": "https://cdn.myanimelist.net/images/characters/5/65352.jpg?s=5168423182896aa73180a17d6f1ca0bc",
-                "slug": "asami-isamu"
-            },
-            {
-                "id": 805,
-                "role": "supporting",
-                "name": "Azuma, Junpei",
-                "image_url": "https://cdn.myanimelist.net/images/characters/12/56011.jpg?s=142b6ce452c886476ed8709ea313216e",
-                "slug": "azuma-junpei"
-            },
-            {
-                "id": 806,
-                "role": "supporting",
-                "name": "Azuma, Yuuhei",
-                "image_url": "https://cdn.myanimelist.net/images/characters/13/80997.jpg?s=5ed0ad463618c0c2892ba24994827a08",
-                "slug": "azuma-yuuhei"
-            },
-            {
-                "id": 807,
-                "role": "supporting",
-                "name": "Daimon, Shuugo",
-                "image_url": "https://cdn.myanimelist.net/images/characters/11/51791.jpg?s=5628053c692d92acca82720797244d82",
-                "slug": "daimon-shuugo"
-            },
-            {
-                "id": 808,
-                "role": "supporting",
-                "name": "Ehara",
-                "image_url": "https://cdn.myanimelist.net/images/characters/15/55393.jpg?s=3709f62fcf3588b85af7a632150fbdc0",
-                "slug": "ehara"
-            },
-            {
-                "id": 809,
-                "role": "supporting",
-                "name": "Fukuda, Hiromi",
-                "image_url": "https://cdn.myanimelist.net/images/characters/14/298020.jpg?s=b96e30300d8237a6c9474434b85eb1d0",
-                "slug": "fukuda-hiromi"
-            },
-            {
-                "id": 810,
-                "role": "supporting",
-                "name": "Hama",
-                "image_url": "https://cdn.myanimelist.net/images/characters/16/55394.jpg?s=5c66a765a7959f19eb67b1713409f35f",
-                "slug": "hama"
-            },
-            {
-                "id": 811,
-                "role": "supporting",
-                "name": "Ishiguro, Minoru",
-                "image_url": "https://cdn.myanimelist.net/images/characters/14/53860.jpg?s=75ca9e7285fd1738dcd5f34c13cbd619",
-                "slug": "ishiguro-minoru"
-            },
-            {
-                "id": 812,
-                "role": "supporting",
-                "name": "Itoyama, Tooru",
-                "image_url": "https://cdn.myanimelist.net/images/characters/12/55398.jpg?s=f244f098ebd21520049dd11b93ced0f5",
-                "slug": "itoyama-tooru"
-            },
-            {
-                "id": 813,
-                "role": "supporting",
-                "name": "Iwai, Tetsu",
-                "image_url": "https://cdn.myanimelist.net/images/characters/8/53330.jpg?s=ebe10db0d1e0d9881a4a1f34a528d1bc",
-                "slug": "iwai-tetsu"
-            }
-        ],
-        "videos": [
-            {
-                "id": 16,
-                "title": "PV",
-                "url": "https://www.youtube.com/watch?v=AvbFFP5qAok",
-                "thumbnail": "Không xác định"
-            }
-        ],
-        "recommendations": [
-            {
-                "id": 2483,
-                "title": "Liar Game - The Final Stage [live Action]",
-                "slug": "liar-game-the-final-stage-live-action",
-                "description": "Bộ phim được làm dựa trên manga cùng tên của tác giả Kaitani Shinobu,và là phần tiếp theo và cuối cùng của drama (gồm 2 season) đã được phát sóng trước đó trên Fuji TV.Nao Kanzaki là một cô gái vô cùng ngây thơ và nhẹ dạ cả tin.Vô tình cô vướng vào một trò chơi mang tên Liar Game,mà ở đó,những người thắng cuộc sẽ được mang về nhà những số tiền khổng lồ còn kẻ thua thì cũng phải gánh những món nợ cũng lớn không kém.Nhờ sự giúp đỡ Shinichi Akiyama,một thiên tài lừa đảo,Nao đã vượt qua vòng bán kết và quyết định dừng cuộc chơi.Tuy nhiên,ban tổ chức cuộc thi lại thông báo có một thí sinh rời khỏi cuộc chơi và Nao tiếp tục bước vào vòng chung kết cùng Akiyama.Tại đây họ phải đối đầu với 11 người chơi khác,đầy mưu mô và tham vọng.Và cuối cùng ai sẽ là người chiến thắng và giành được số tiền thưởng 5 tỷ yên !?",
-                "link": "/thong-tin/liar-game-the-final-stage-live-action-2483",
-                "poster": "https://i.imgur.com/8nCKV5r.jpg",
-                "type": "Special",
-                "year": ""
-            },
-            {
-                "id": 2869,
-                "title": "Choujigen Game Neptune: The Animation OVA",
-                "slug": "choujigen-game-neptune-the-animation-ova",
-                "description": " Choujigen Game Neptune The Animation OVA",
-                "link": "/thong-tin/choujigen-game-neptune-the-animation-ova-2869",
-                "poster": "https://i.imgur.com/6vTA0mu.jpg",
-                "type": "Special",
-                "year": ""
-            },
-            {
-                "id": 1936,
-                "title": "Macross: Flash Back 2012",
-                "slug": "macross-flash-back-2012",
-                "description": "Tên: Macross: Flash Back 2012Định dạng: Music VideoNăm sản xuất: 1987Giới thiệuMacross: Flash Back 2012 được phát hành 5 năm sau khi phiên bản truyền hình kết thúc và xem như phần cuối cùng trong câu chuyện đầu tiên của Macross với các nhân vật Minmay, Hikaru và Misa. Đây là một music video dài tập hợp các bài hát trong TV series và movie với footage phần lớn rút ra từ movie. Đặc biệt, cuối video này là epilogue của Macross với hình ảnh SDF-2 khởi hành với hạm trưởng là Misa cùng Hikaru và Minmay, mở ra một thời kỳ mới về chinh phục vũ trụ của con người.Các bài hát được sử dụngTenshi no Enogu (Màu vẽ thiên thần)Ai wa Nagareru (Tình yêu cứ trôi đi)Shao Pai Long (Tiểu Bạch Long)0-G LoveSunset BeachCinderellaSilver Moon, Red MoonAi.Oboete Imasu ka (Anh có nhớ tình yêu?)Runner",
-                "link": "/thong-tin/macross-flash-back-2012-1936",
-                "poster": "https://1.bp.blogspot.com/-Oqjm5TGzUOc/U-LNdMowt_I/AAAAAAAAAwM/KQ7-H2Zsf_o/s1600/Macross+Flash+Back+2012.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 8016,
-                "title": "Pyramid Game",
-                "slug": "pyramid-game",
-                "description": "Mỗi chiều thứ năm, mỗi tháng một lần, các sinh viên tại Love High đã bỏ phiếu bầu trong một cuộc thăm dò phổ biến. Kết quả? Một hệ thống xếp hạng tàn bạo xác định toàn bộ hệ thống phân cấp xã hội của trường. Sau khi bắt đầu ở phía dưới, sinh viên chuyển nhượng mới Suji có thể lên đường đến đỉnh của kim tự tháp không? Hay cô ấy sẽ lật đổ trò chơi hoàn toàn? (Nguồn: Webtoon Entertainment)",
-                "link": "/thong-tin/pyramid-game-8016",
-                "poster": "https://cdn.myanimelist.net/images/anime/1883/150557l.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 5049,
-                "title": "Macross II: Lovers Again",
-                "slug": "macross-ii-lovers-again",
-                "description": "Năm 2089, 89 năm kể từ chiến tranh vũ trụ thứ nhất, đã thay đổi cuộc sống của hai chủng tộc con người và Zentradi. Cả hai chủng tộc hiện đang chung sống hòa bình trên Trái Đất thì bỗng nhiên một chủng tộc mới xuất hiện trên hệ Mặt Trời tên là Marduk. Giữa chiến trường của Lực lương không gian Liên Hợp Quốc với hạm đội Marduk, phóng viên tập sự Hibiki đã phát hiện ra Ishtar, một Emulator làm tăng khả năng chiến đấu của Marduk bằng cách hát. Hibiki đưa Ishtar về Trái Đất nhằm dạy cho cô về những giá trị cuộc sống và văn hóa. Cùng với phi công Valkyrie chủ lực Silvie Gena, Hibiki và Ishtar phải tìm ra cách để cứu Trái đất khỏi sự hủy diệt hoàn toàn dưới bàn tay của kẻ đứng đầu Marduk là Ingues.",
-                "link": "/thong-tin/macross-ii-lovers-again-5049",
-                "poster": "https://i.imgur.com/mj9sU33.png",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 6055,
-                "title": "Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta..",
-                "slug": "otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta",
-                "description": "Katarina Claes, tám tuổi, là con gái duy nhất của một công tước, sống cuộc sống bình yên và không có sự cố cho đến khi cô đập đầu vào một tảng đá ... và sau đó nhớ rằng cô thực sự không phải là con gái của công tước. Cô từng là một otaku chết trên đường đến trường sau khi dành tối hôm trước để chơi Fortune Lover, trò chơi otome yêu thích của cô. Sau khi nhận thấy môi trường xung quanh hiện tại của mình có vẻ quen thuộc đến kỳ lạ, cô bị sốc khi phát hiện ra rằng mình đã được tái sinh vào thế giới của Fortune Lover với tư cách là nhân vật phản diện. Nhân vật phản diện trong trò chơi thường xuyên chết hoặc bị lưu đày, vì vậy Katarina quyết định sử dụng kiến ​​thức của mình về trò chơi và các tuyến đường của nó để tránh mọi tình huống xấu. Nhưng nó thậm chí có thể cho nhân vật phản diện đạt được một kết thúc tốt đẹp? [Viết bởi MAL Rewrite]",
-                "link": "/thong-tin/otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta-6055",
-                "poster": "http://i.imgur.com/U0tysKt.jpg",
-                "type": "Special",
-                "year": ""
-            },
-            {
-                "id": 4345,
-                "title": "New Game!",
-                "slug": "new-game",
-                "description": "Aoba Suzukaze – nhân vật chính, sau khi tốt nghiệp cấp 3, cô xin vào một công ti làm game. Điều ngạc nhiên là người đã từng làm ra một game mà Aoba yêu thích nhất từ thuở cấp 2 lại là cấp trên của mình trong công ti, và thế là câu chuyện về một cô gái siêng năng làm việc với những khao khát của mình được bắt đầu.",
-                "link": "/thong-tin/new-game-4345",
-                "poster": "https://i.imgur.com/5gsiezb.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 8062,
-                "title": "Game Center Shoujo to Ibunka Kouryuu",
-                "slug": "game-center-shoujo-to-ibunka-kouryuu",
-                "description": "Renji Kusakabe, một nhân viên arcade, một ngày nọ, nhận thấy một cô gái nước ngoài nhỏ đang vật lộn để giành được một món đồ chơi nhồi bông có tên là \"Manly Koala\" từ một trò chơi cần cẩu. Ba giờ sau, sau khi kết thúc ca làm việc của mình, Renji thấy cô gái vẫn ở trong trò chơi, nhưng đồ chơi vẫn không bị lay chuyển. Cảm thấy tiếc cho cô, anh quyết định giúp đỡ. Anh ta chèn một đồng xu 100 yen và, với một lần thử khéo léo, chiến thắng đồ chơi, sau đó anh ta đưa tay cho cô gái. Giật mình trước cử chỉ bất ngờ này, cô gái nhìn Renji với sự nghi ngờ. Bối rối, Renji vội vàng nói với cô rằng đó là một món quà ngày lễ tình nhân. Anh ta ít biết, ở quê nhà nước Anh, Ngày lễ tình nhân theo truyền thống khi đàn ông tặng quà cho phụ nữ cùng với một lời thú nhận tình yêu. (Nguồn: Tin tức MAL)",
-                "link": "/thong-tin/game-center-shoujo-to-ibunka-kouryuu-8062",
-                "poster": "https://cdn.myanimelist.net/images/anime/1943/149719l.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 6663,
-                "title": "Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta... OVA",
-                "slug": "otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta-ova",
-                "description": "OVA sẽ kể những câu chuyện thời thơ ấu của các nhân vật chính, phỏng theo tập đầu tiên của light novel gốc của Satoru Yamaguchi. Đi kèm với tập phiên bản giới hạn thứ bảy của manga. (Nguồn: MAL News)",
-                "link": "/thong-tin/otome-game-no-hametsu-flag-shika-nai-akuyaku-reijou-ni-tensei-shiteshimatta-ova-6663",
-                "poster": "http://i.imgur.com/hJvXsT7.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 4320,
-                "title": "Macross Plus Movie Edition",
-                "slug": "macross-plus-movie-edition",
-                "description": "Movie tổng hợp lại nội dung của 4 tập OVA, có đổi khác một chút trong thứ tự tình tiết",
-                "link": "/thong-tin/macross-plus-movie-edition-4320",
-                "poster": "https://i.imgur.com/4yQiq5q.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 4983,
-                "title": "Tomodachi Game - Trò chơi Tình bạn [Live Action]",
-                "slug": "tomodachi-game-tro-choi-tinh-ban-live-action",
-                "description": "\r\nTựa Anh: Friends Games\r\nRomaji: Tomodachi Gemu\r\nTựa Nhật: トモダチゲーム\r\nTựa Việt: Trò chơi Tình bạn\r\nĐạo diễn:\r\nBiên kịch: Mikoto Yamaguchi (manga), Yuki Sato(manga)\r\nĐài: TVK\r\nSố tập: 4\r\nThời gian chiếu:Từ 06/04 đến 27/04/2017\r\nLịch chiếu:Thứ Năm, từ 23:00 đến 23:30\r\nNgôn Ngữ: tiếng Nhật\r\nQuốc Gia: Nhật Bản\r\n\r\nTản mạn\r\nKhi Katakiri Yuichi (Ryo Yoshizawa) còn nhỏ, mẹ cậu đã dạy rằng bạn bè quan trọng hơn tiền bạc. Tới giờ, đã là một học sinh trung học, Yuichi luôn ưu tiên bạn bè hơn chuyện tiền nong. Một ngày, Yuichi và những người bạn của cậu bị kéo vào một “Trò chơi Tình bạn” với một món tiền lớn mang nặng trên vai…\r\nGhi chú\r\n\r\nDựa trên bộ truyện tranh cùng tên “Tomodachi Game” được sáng tác bởi Yamaguchi Mikoto và minh họa bởi Sato Yuki (xuất bản lần đầu tháng Một, 2014 trên tạp chí nguyệt san Nhật Bản Bessatsu Shonen)\r\nTựa đề liên quan:\r\n\r\nFriends Games | Tomodachi Gemu (TVK / 2017)\r\nFriends Games | Tomodachi Gemu (2017)\r\n\r\n\r\n\r\nDiễn viên\r\n\r\n\r\n\r\n \r\n \r\n \r\n \r\n \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nRyo Yoshizawa\r\nRio Uchida\r\nYuki Yamada\r\nShimon Okura\r\nNagi Nemoto\r\n\r\n\r\nYuichi Katakiri\r\nShiho Sawaragi\r\nTenji Mikasa\r\nMakoto Shibe\r\nYutori Kokorogi\r\n\r\n\r\n\r\n\r\n\r\n\r\n \r\n \r\n \r\n \r\n \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nSilk Road\r\nSeishuu Uragami\r\nAmatsuki\r\nYuuka Ueno\r\nYuki Kubota\r\n\r\n\r\nHyakutaro Onigawara\r\nKei Shinomiya\r\nManabu-kun\r\nMaria Minase\r\nRen Tojo\r\n\r\n\r\n\r\nCác diễn viên khác:\r\n\r\nTakuma Zaiki\r\nDaisuke Uematsu\r\nHirohiko Machiyama\r\n\r\n+ Các trang online có bếch hàng cũng nhớ ghi credit cho mình, không yêu cầu gì hơn + FPT Play, Zing TV thì next luôn giùm, xin cám ơn\r\n⊗ Vietsub by Fly-Fansub Subteam:\r\nTranslator: Ruan Yuu\r\nTypesetter: Fly\r\nEditor: Fly\r\nEncoder: Fly\r\nUploader: Fly\r\nBộ phim được dịch từ phụ đề tiếng Anh của Thần Tượng Vĩnh Cửu",
-                "link": "/thong-tin/tomodachi-game-tro-choi-tinh-ban-live-action-4983",
-                "poster": "https://i.imgur.com/dyZ2O0p.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 4914,
-                "title": "Gamers!",
-                "slug": "gamers",
-                "description": "Đây là một câu chuyện xoay quanh một số sinh viên nhất định và một sở thích. Amano Keita là nhân vật chính cô đơn của chúng tôi, người có niềm đam mê chơi game và là bạn với Uehara Tasuku, người bí mật là một gamer đồng nghiệp và là người tin rằng cuộc sống của anh ấy là hoàn hảo. Chúng tôi cũng có Karen Tendou, chủ tịch câu lạc bộ trò chơi video và Chiaki Hoshinomori, người liên tục cãi nhau với Keita. Đây là một câu chuyện chứa đựng một chuỗi những cảnh hài hước không ngừng nghỉ và những hiểu lầm. Bộ phim hài lãng mạn hỗn loạn của chúng tôi đã bắt đầu!",
-                "link": "/thong-tin/gamers-4914",
-                "poster": "https://i.imgur.com/gbJSXsQ.png",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 1992,
-                "title": "Macross Plus",
-                "slug": "macross-plus",
-                "description": "Đối với fan của Series Macross thì không còn gì lạ và sẽ biết chuyện gì xảy ra từ năm A.D. 2009 của series cho đến mốc thời điểm của Macross Plus.Năm A.D. 2040, Tại hành tinh thuộc địa Eden, U.N.Spacy đang tiến hành chương trình thử nghiệm thế hệ valkyrie mớiĐể chống lại các cuộc tấn công của các chủng tộc Alien khác trong vũ trụ. Ismua Dyson là phi công thử nghiệm mới của dự án.Anh phát hiện ra người bạn cũ của mình, Guld, công là phi công thử nghiệm của dự án cạnh tranh với dự án của mình.Sự xuất hiện của Myung, bạn gái cũ làm xích mích giữa 2 người bạn cũ càng thêm căng thẳng.Do Macross Plus được sản xuất năm 1995 nên khung hình tỷ lệ 4:3 nên chỉ có phim dạng 640x480",
-                "link": "/thong-tin/macross-plus-1992",
-                "poster": "https://i.imgur.com/UXDwbMQ.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 5996,
-                "title": "Yatogame-chan Kansatsu Nikki 2nd Season",
-                "slug": "yatogame-chan-kansatsu-nikki-2nd-season",
-                "description": "Mùa thứ hai của  Yatogame-chan Kansatsu Nikki .",
-                "link": "/thong-tin/yatogame-chan-kansatsu-nikki-2nd-season-5996",
-                "poster": "http://i.imgur.com/68K0703.jpg",
-                "type": "Unknown",
-                "year": ""
-            },
-            {
-                "id": 6724,
-                "title": "Tomodachi Game",
-                "slug": "tomodachi-game",
-                "description": "Yuuichi Katagiri đã phải gánh vác những khó khăn tài chính cả một đời nhưng rồi cũng tìm thấy lối sống tích cực nhờ vào những người bạn thân thiết của mình. Để giữ lời hứa, Yuuichi tiết kiệm đủ tiền để cùng họ tham gia chuyến đi dã ngoại. Nhưng khi số tiền quỹ mất tích một cách bí ẩn, sự nghi ngờ rơi vào hai người bạn của Yuuichi: Shiho Sawaragi và Makoto Shibe – những người chịu trách nhiệm thu và giữ tiền. Dẫu vô tội, song, Shiho và Makoto phải chịu trách nhiệm về việc đánh mất số tiền khi không còn ai khác ra mặt.\r\nVài ngày sau, Yuuichi và những người bạn nhận được những lá thư bí ẩn lừa mỗi người họ cùng gặp nhau. Khi đến nơi, họ bị phục kích và đánh bất tỉnh. Họ tỉnh dậy trong một căn phòng bí ẩn trước sự chứng kiến của \"Manabu-kun\" – nhân vật trong một chương trình dành cho trẻ em vốn đã bị ngưng phát sóng do nội dung độc hại và gây tranh cãi. Cậu ta thông báo cho cả nhóm rằng một trong số họ đã gián tiếp tập hợp cả nhóm lại với nhau để giải quyết một khoản nợ lớn. Họ phải chơi \"trò chơi tình bạn\": một loạt các trò chơi kiểm tra sức mạnh cũng như niềm tin mà họ dành cho nhau. Tuy nhiên, dần dần niềm tin ấy bị lung lay, bởi ngày càng có quá nhiều bí mật và phản bội bại lộ. Yuuichi lúc này phải tìm ra “người bạn” mà cậu có thể tin tưởng và sau đó vạch trần danh tính của kẻ phản bội.\r\n\r\n[Aoi - Yurei]\r\n \r\nCác bạn hãy truy cập vào fanpage của tụi mình: https://www.facebook.com/YureiFansub/ để thưởng thức các tập mới và nhiều bộ phim khác.\r\n",
-                "link": "/thong-tin/tomodachi-game-6724",
-                "poster": "http://i.imgur.com/TyENifE.jpg",
-                "type": "Special",
-                "year": ""
-            },
-            {
-                "id": 6795,
-                "title": "Ore wo Suki nano wa Omae dake ka yo: Oretachi no Game Set",
-                "slug": "ore-wo-suki-nano-wa-omae-dake-ka-yo-oretachi-no-game-set",
-                "description": "Tập phim hoạt hình gốc sẽ đóng vai trò là chương cuối cùng của loạt phim truyền hình, tập trung vào sự cạnh tranh giữa \"nhân vật nền\" Amatsuyu Kisaragi (Jouro) và Yasuo Hazuki (Hose), \"nhân vật chính\". (Nguồn: Tin tức MAL)",
-                "link": "/thong-tin/ore-wo-suki-nano-wa-omae-dake-ka-yo-oretachi-no-game-set-6795",
-                "poster": "http://i.imgur.com/DlO2bxC.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 3244,
-                "title": "Cross Ange: Rondo of Angel and Dragon",
-                "slug": "cross-ange-rondo-of-angel-and-dragon",
-                "description": "Cross Ange: Tenshi to Ryuu no Rondo\r\n\r\nNguồn : http://nyaa-fansub.net/cross-ange-tenshi-to-ryuu-no-rondo/cross-ange-ep-20/",
-                "link": "/thong-tin/cross-ange-rondo-of-angel-and-dragon-3244",
-                "poster": "https://i.imgur.com/BcYGeoY.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 2481,
-                "title": "Liar Game Season 1 [live Action]",
-                "slug": "liar-game-season-1-live-action",
-                "description": "Bộ phim dựa theo tác phẩm manga cùng tên, Toda Erika diễn vai một nữ sinh trung thực, Kanzaki Nao, một ngày nọ nhận được 100 triệu yên, cùng với tấm thiệp cho biết cô được chọn vào trò chơi \"Trò chơi Dối trá\". Chủ đề chính của trò chơi là lừa gạt người chơi khác để lấy 100 triệu yên. Sau cùng người thắng sẽ được số tiền đó còn người thua thì mang nợ....",
-                "link": "/thong-tin/liar-game-season-1-live-action-2481",
-                "poster": "https://i.imgur.com/Xq9uue6.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 7464,
-                "title": "Kami wa Game ni Ueteiru.",
-                "slug": "kami-wa-game-ni-ueteiru",
-                "description": "Những vị thần tối cao có quá nhiều thời gian rảnh rỗi đã tạo ra những trò chơi trí tuệ đỉnh cao \"Trò chơi của các vị thần\". Cựu Nữ thần Leche thức dậy sau một giấc ngủ dài và tuyên bố với thế giới: \"Hãy đưa ra người giỏi nhất trong các trò chơi ở thời đại này!\" Fay được đại diện nhân loại đề cử là \"tân binh xuất sắc nhất những năm gần đây\". \"Trò chơi của các vị thần\" sắp bắt đầu giữa hai người có thể hơi khó khăn, vì trong suốt lịch sử loài người vẫn chưa có kẻ chiến thắng, bởi vì các vị thần rất thất thường, rất vô lý và đôi khi hoàn toàn không thể hiểu nổi. Tuy nhiên, với tính chất của trò chơi, sẽ thật lãng phí nếu không có thời gian vui vẻ và chơi bằng cả trái tim! Những trận chiến cân não cuối cùng của một chàng trai game thủ thiên tài, một cựu Nữ thần và những người bạn bắt đầu! (Nguồn: Tin tức MAL)",
-                "link": "/thong-tin/kami-wa-game-ni-ueteiru-7464",
-                "poster": "https://cdn.myanimelist.net/images/anime/1578/141782l.jpg",
-                "type": "Special",
-                "year": ""
-            },
-            {
-                "id": 5006,
-                "title": "New Game!!",
-                "slug": "new-game-1",
-                "description": "Mùa thứ hai của  Trò chơi Mới .",
-                "link": "/thong-tin/new-game-1-5006",
-                "poster": "https://i.imgur.com/D4uYjvo.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 6749,
-                "title": "Yatogame-chan Kansatsu Nikki 4th Season",
-                "slug": "yatogame-chan-kansatsu-nikki-4th-season",
-                "description": "Fourth season of Yatogame-chan Kansatsu Nikki.",
-                "link": "/thong-tin/yatogame-chan-kansatsu-nikki-4th-season-6749",
-                "poster": "http://i.imgur.com/NJsSrTg.jpg",
-                "type": "Special",
-                "year": ""
-            },
-            {
-                "id": 4579,
-                "title": "Joker Game: Kuroneko Yoru no Bouken",
-                "slug": "joker-game-kuroneko-yoru-no-bouken",
-                "description": "Đặc biệt kèm với đĩa Blu-ray  Joker game . Câu chuyện về chú mèo hoang được các zai nuôi chung.",
-                "link": "/thong-tin/joker-game-kuroneko-yoru-no-bouken-4579",
-                "poster": "https://i.imgur.com/viUPL1H.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 5105,
-                "title": "Ousama Game The Animation",
-                "slug": "ousama-game-the-animation",
-                "description": "Nobuaki Kanazawa, người đã chuyển sang một trường trung học xa xôi, sợ hãi thân mật với bạn học mới vì những sự kiện đã xảy ra từ trường học trước đây. Điều này khiến anh ta phải ngậm miệng lại. Tuy nhiên, anh ấy bắt đầu mở ra trong buổi tiếp tân lớp của lễ hội thể thao. Anh ấy và tất cả bạn cùng lớp đã nhận được một email từ \"Ousama\". Lúc đầu, bạn cùng lớp của cậu ấy đã không lấy những gì họ đã nói thật nghiêm túc, nghĩ đó chỉ là một trò đùa thôi, nhưng Nobuaki, người duy nhất hiểu rõ ý nghĩa thực sự của nó, chống lại trò chơi \"chết\" sắp bắt đầu & hellip; br br < >\r\n\r\nCác quy tắc của Trò chơi Ousama như sau: \r\n1. Tất cả thành viên lớp phải tham gia. \r\n2. Lệnh được gửi bởi Ousama qua email phải được tuân theo trong vòng 24 giờ. \r\n3. Một hình phạt sẽ được trao cho những người không tuân theo lệnh. \r\n4. Thoát khỏi Ousama Game nửa chừng bị cấm. \r\n\r\n(Nguồn: MAL News) ",
-                "link": "/thong-tin/ousama-game-the-animation-5105",
-                "poster": "https://i.imgur.com/JYanoM2.jpg",
-                "type": "TV",
-                "year": ""
-            },
-            {
-                "id": 1393,
-                "title": "Bus Gamer",
-                "slug": "bus-gamer",
-                "description": "Khi 3 kẻ hoàn toàn xa lạ với nhau, Mishiba Toki, Nakajou Nobuto và Saitou Kazu được một tổ chức chọn để tham gia vào Bus Game, dưới hình thức là một dạng võ đài đánh nhau ngầm giữa 2 hay nhiều cá nhân ẩn chứa nhiều điều bí ẩn, họ đã quyết định chọn tên cho team của mình là “AAA” (tức là 3 chữ  anonymous – nghĩa là kẻ không có tên).Team của họ gồm 3 kẻ khác nhau hoàn toàn từ môi trường sống cho đến tính cách của mỗi người, ban đầu Toki và Nakajou không đồng ý lập thành team với 2 người còn lại, nhưng do 1 số lý do (nói luôn ở đây là do mì ramen), họ đã quyết định lập team với nhau, điều kiện để team được lập ra là các thành viên không xen vào chuyện riêng của các cá nhân khác, và cho đến khi kiếm được đủ số tiền cho mỗi cá nhân, tuyệt đối không được để thua.Điểm chung duy nhất của cả 3 là có cùng hoàn cảnh phải kiếm cho bản thân 1 số tiền rất lớn (trong anime nêu là 1 tỷ). Vì vậy, để có thể kiếm được tiền nhanh chóng, họ buộc phải đặt cược mạng sống của mình vào trò chơi…",
-                "link": "/thong-tin/bus-gamer-1393",
-                "poster": "https://i.imgur.com/yDECaxQ.jpg",
-                "type": "Unknown",
-                "year": ""
-            }
-        ],
-        "images": {
-            "poster": [
+    "query": "one piece",
+    "results": [
+        {
+            "id": 7974,
+            "link": "/thong-tin/koisuru-one-piece-7974",
+            "title": "Koisuru One Piece",
+            "titles": [
                 {
-                    "id": 14956,
-                    "url": "https://cdn.myanimelist.net/images/anime/5/21337.jpg",
-                    "type": "poster"
+                    "language": "Synonyms",
+                    "title": "Loving One Piece"
                 },
                 {
-                    "id": 14957,
-                    "url": "https://cdn.myanimelist.net/images/anime/6/22103.jpg",
-                    "type": "poster"
+                    "language": "Synonyms",
+                    "title": "One Piece in Love"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "恋するワンピース"
                 }
-            ]
+            ],
+            "description": "Tiền đề của spinoff manga gag này là về ba học sinh trung học: một học sinh nam trẻ, bạn gái của anh ấy và một bánh xe thứ ba là một người hâm mộ một mảnh. Tên của họ tương tự như cướp biển Mũ rơm và nhóm tạo thành một câu lạc bộ fan hâm mộ dành riêng cho một mảnh.\n\n(Nguồn: Wiki một mảnh)",
+            "genres": [
+                "Comedy",
+                "Romance"
+            ],
+            "image": "https://cdn.myanimelist.net/images/anime/1304/148725l.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "koisuru-one-piece",
+            "episodes": null,
+            "status": "Ongoing"
         },
-        "malScore": 0,
-        "genres": [
-            {
-                "id": 6,
-                "name": "Comedy",
-                "link": "/the-loai/comedy"
-            },
-            {
-                "id": 7,
-                "name": "Drama",
-                "link": "/the-loai/drama"
-            },
-            {
-                "id": 13,
-                "name": "Romance",
-                "link": "/the-loai/romance"
-            },
-            {
-                "id": 16,
-                "name": "Sports",
-                "link": "/the-loai/sports"
-            },
-            {
-                "id": 26,
-                "name": "Combat Sports",
-                "link": "/the-loai/combat-sports"
-            },
-            {
-                "id": 30,
-                "name": "Educational",
-                "link": "/the-loai/educational"
-            },
-            {
-                "id": 60,
-                "name": "School",
-                "link": "/the-loai/school"
-            },
-            {
-                "id": 66,
-                "name": "Team Sports",
-                "link": "/the-loai/team-sports"
-            },
-            {
-                "id": 78,
-                "name": "Shounen",
-                "link": "/the-loai/shounen"
-            }
-        ],
-        "studios": [
-            {
-                "id": 0,
-                "titles": "Unknown",
-                "slug": "unknown"
-            }
-        ],
-        "producers": [
-            {
-                "id": 14,
-                "titles": {
-                    "en": "TV Tokyo"
+        {
+            "id": 7785,
+            "link": "/thong-tin/one-piece-3d-gekisou-trap-coaster-7785",
+            "title": "One Piece 3D: Gekisou! Trap Coaster",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "ONE PIECE 3D 激走! トラップコースター"
                 },
-                "slug": "tv-tokyo"
-            },
-            {
-                "id": 55,
-                "titles": {
-                    "en": "Shogakukan-Shueisha Productions"
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece 3D: Racing! Trap Coaster"
+                }
+            ],
+            "description": "Toei Animation đã phát hành một anime ngắn 3D mới tại các sự kiện bắt đầu từ ngày 1 tháng 12 năm 2011. Phim ngắn này dài khoảng 12 phút và được chiếu tại các rạp 3D lập thể tại công viên giải trí Lagunasia của tỉnh Aichi, công viên giải trí Huis Ten Bosch của tỉnh Nagasaki, Tháp Yokohama Landmark của tỉnh Kanagawa, và Hội trường NTT CRED của tỉnh Hiroshima. (Nguồn: ANN)",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Fantasy"
+            ],
+            "image": "https://cdn.myanimelist.net/images/anime/4/33839l.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-3d-gekisou-trap-coaster",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 7784,
+            "link": "/thong-tin/one-piece-nham-ban-vua-hai-tac-bong-chay-7784",
+            "title": "One Piece: Nhắm Bắn! Vua Hải Tặc Bóng Chày",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Mezase! Kaizoku Yakyuu Ou"
                 },
-                "slug": "shogakukan-shueisha-productions"
-            },
-            {
-                "id": 185,
-                "titles": {
-                    "en": "Half H.P Studio"
+                {
+                    "language": "Synonyms",
+                    "title": "ワンピース めざせ！海賊野球王"
                 },
-                "slug": "half-hp-studio"
-            },
-            {
-                "id": 104,
-                "titles": {
-                    "en": "SynergySP"
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Take Aim! The Pirate Baseball King"
+                }
+            ],
+            "description": "\"One Piece: Take Aim! The Pirate Baseball King\" là một đoạn phim ngắn (OVA) thuộc loạt anime \"One Piece\". Trong đoạn phim này, băng Mũ Rơm của Luffy tham gia một trận đấu bóng chày với băng hải tặc Arlong, dưới sự bình luận của Buggy và Bon Clay. Đoạn phim có thời lượng khoảng 5 phút và 32 giây. One Piece Wiki Đây là một tập đặc biệt và chỉ có một tập duy nhất.",
+            "genres": [
+                "Comedy",
+                "Fantasy",
+                "Sports"
+            ],
+            "image": "https://i.imgur.com/F5A5Mru.jpeg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-nham-ban-vua-hai-tac-bong-chay",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 7783,
+            "link": "/thong-tin/one-piece-gyojin-tou-hen-7783",
+            "title": "One Piece: Gyojin Tou-hen",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "OP"
                 },
-                "slug": "synergysp"
-            }
-        ],
-        "watchUrl": "http://localhost:8000/anime/cross-game-1002",
-        "shareCount": 0
-    }
+                {
+                    "language": "Synonyms",
+                    "title": "SPECIAL EDITED VERSION『ONE PIECE』魚人島編"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Log: Fish-Man Island Saga"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Hải Trình Đảo Người Cá"
+                }
+            ],
+            "description": "Đây là phiên bản đặc biệt được biên tập lại của arc Đảo Người Cá (Fish-Man Island) từ bộ truyện One Piece. Nó được làm mới với chất lượng hình ảnh hiện đại hơn so với phiên bản gốc.\r\nArc này quan trọng vì nó giới thiệu nhiều yếu tố về:\r\n\r\nNgười cá và lịch sử của họ\r\nVấn đề phân biệt chủng tộc trong thế giới One Piece\r\nCác thông tin về Ancient Weapon ( Vũ khí cổ đại)\r\n",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Fantasy"
+            ],
+            "image": "https://cdn.myanimelist.net/images/anime/1928/146063l.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-gyojin-tou-hen",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 7768,
+            "link": "/thong-tin/one-piece-fan-letter-7768",
+            "title": "One Piece Fan Letter",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "ONE PIECE FAN LETTER"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "Lá thư của người hâm mộ One Piece"
+                }
+            ],
+            "description": "**One Piece Fan Letter** là một tập phim đặc biệt được sản xuất để kỷ niệm 25 năm ra mắt anime One Piece. Thay vì tập trung vào cốt truyện chính tuyến, bộ phim này mang đến một góc nhìn mới lạ và sâu sắc hơn về thế giới One Piece, đặc biệt là cuộc chiến thượng đỉnh tại Marineford.\r\n**Điểm nổi bật của One Piece Fan Letter:**\r\n* **Tiết lộ những góc khuất:** Bộ phim mang đến cái nhìn chân thực và đầy cảm xúc về cuộc chiến Marineford, tập trung vào những nhân vật phụ và những câu chuyện nhỏ bên lề mà chúng ta chưa từng biết đến.* **Góc nhìn đa chiều:** Thay vì chỉ theo một nhân vật chính, One Piece Fan Letter cho phép người xem đồng cảm với nhiều nhân vật khác nhau, từ các hải quân bình thường cho đến những người dân vô tội.* **Tình cảm sâu sắc:** Bộ phim không chỉ là những trận chiến hoành tráng mà còn là những câu chuyện về tình bạn, tình đồng đội, sự hy sinh và lòng dũng cảm.* **Đánh giá cao:** One Piece Fan Letter nhận được đánh giá rất cao từ phía khán giả với số điểm 9.8 trên IMDb, chứng tỏ sức hút và chất lượng của bộ phim.\r\n**Tại sao nên xem One Piece Fan Letter:**\r\n* **Đối với fan One Piece:** Đây là một món quà tuyệt vời để kỷ niệm 25 năm đồng hành cùng bộ truyện. Bộ phim sẽ giúp bạn hiểu sâu hơn về thế giới One Piece và các nhân vật mà bạn yêu thích.* **Đối với những người mới bắt đầu:** One Piece Fan Letter là một điểm khởi đầu tuyệt vời để khám phá thế giới One Piece. Bộ phim sẽ giúp bạn hiểu được sức hấp dẫn của bộ truyện và muốn tìm hiểu thêm.* **Đối với những ai yêu thích anime:** Đây là một tác phẩm anime chất lượng cao với cốt truyện xúc động và hình ảnh đẹp mắt.\r\n**Tổng kết:**\r\nOne Piece Fan Letter là một bộ phim đặc biệt không thể bỏ qua đối với bất kỳ ai yêu thích One Piece. Bộ phim không chỉ là một món quà dành cho fan mà còn là một tác phẩm nghệ thuật đáng để thưởng thức.",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Fantasy"
+            ],
+            "image": "https://cdn.myanimelist.net/images/anime/1455/146229l.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-fan-letter",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 7294,
+            "link": "/thong-tin/vua-hai-tac-nguoi-dong-7294",
+            "title": "Vua Hải Tặc (Người Đóng)",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Live Action"
+                }
+            ],
+            "description": "One Piece Live Action (2023) Full HD Vietsub Miễn Phí Online, Xem Phim One Piece Live Action Vietsub Thuyết Minh Full HDFull Movie Watch High Quality. Highly recommend!Tải xuống HD Xem phim One Piece Live Action online miễn phí chất lượng cao với phụ đề tiếng việt",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy"
+            ],
+            "image": "http://i.imgur.com/LPRs6bF.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "vua-hai-tac-nguoi-dong",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 7286,
+            "link": "/thong-tin/one-piece-film-red-7286",
+            "title": "One Piece Film: Red",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Movie 15"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "ONE PIECE FILM RED"
+                }
+            ],
+            "description": "Khi còn nhỏ, Uta—cựu nhạc sĩ của băng hải tặc Tóc Đỏ và là bạn thời thơ ấu của Monkey D. Luffy—đã hứa rằng cô sẽ xây dựng một kỷ nguyên tự do mới bằng cách biểu diễn âm nhạc vui tươi cho thế giới. Luffy và băng Mũ Rơm đến buổi hòa nhạc trực tiếp đầu tiên của Uta, nơi nhiều người hâm mộ đã tụ tập để thưởng thức giọng hát tuyệt vời của diva. Do chấn thương thời thơ ấu, Uta mang trong mình lòng căm thù hải tặc; cuộc hội ngộ vui vẻ của cô với Luffy bị cắt đứt khi cô biết rằng anh đã trở thành một. Việc Luffy từ chối thay đổi cách thức của mình dẫn đến việc Uta giải phóng sức mạnh của cô ấy lên băng Mũ Rơm. Phi hành đoàn sớm biết rằng tâm trí của họ đã bị mắc kẹt trong thế giới giấc mơ của Uta kể từ khi bắt đầu buổi hòa nhạc, trong khi cơ thể vô thức của họ vẫn ngủ trong thế giới thực. Thời gian không còn nhiều, nhóm Mũ Rơm phải tìm cách thoát khỏi cơn ác mộng hoặc bị mắc kẹt trong giấc mơ của Uta mãi mãi. [Viết bởi MAL Rewrite]",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Award Winning",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "http://i.imgur.com/6HPRkQ8.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-film-red",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 6149,
+            "link": "/thong-tin/vua-hai-tac-6149",
+            "title": "Vua Hải Tặc",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "Đảo Hải Tặc"
+                }
+            ],
+            "description": "Gol D. Roger được mệnh danh là \"Vua hải tặc\", kẻ mạnh nhất và khét tiếng nhất đã chèo thuyền Grand Line. Việc bắt giữ và xử tử Roger của Chính phủ Thế giới đã mang lại một sự thay đổi trên toàn thế giới. Những lời cuối cùng trước khi chết cho thấy sự tồn tại của kho báu vĩ đại nhất thế giới, One Piece. Chính sự mặc khải này đã mang đến Thời đại Cướp biển vĩ đại, những người đàn ông mơ ước tìm thấy One Piece & mdash; hứa hẹn sẽ có vô số sự giàu có và danh tiếng & mdash; và hoàn toàn có thể là đỉnh cao của vinh quang và danh hiệu Vua hải tặc. Enter Monkey D. Luffy, một cậu bé 17 tuổi bất chấp định nghĩa tiêu chuẩn của bạn về một tên cướp biển. Thay vì tính cách phổ biến của một tên cướp biển độc ác, cứng rắn, không răng cưa để vui chơi, lý do trở thành cướp biển của Luffy là một trong những thắc mắc thuần túy: ý nghĩ về một cuộc phiêu lưu thú vị đưa anh ta đến với mọi người và cuối cùng, kho báu được hứa hẹn . Theo bước chân của người anh hùng thời thơ ấu của mình, Luffy và phi hành đoàn của mình du hành qua Grand Line, trải qua những cuộc phiêu lưu điên rồ, khám phá những bí ẩn đen tối và chiến đấu với những kẻ thù mạnh mẽ, tất cả để đạt được sự khao khát nhất trong tất cả các vận may & mdash; One Piece. [Viết bởi MAL Rewrite]",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "https://i.imgur.com/upKkQl6.png",
+            "sub": false,
+            "dub": false,
+            "type": "ona",
+            "slug": "vua-hai-tac",
+            "episodes": null,
+            "status": "Ongoing"
+        },
+        {
+            "id": 6017,
+            "link": "/thong-tin/one-piece-movie-14-stampede-6017",
+            "title": "One Piece Movie 14: Stampede",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "ONE PIECE STAMPEDE"
+                }
+            ],
+            "description": "One Piece Movie 14",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "http://i.imgur.com/2f8eUEO.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-movie-14-stampede",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 5492,
+            "link": "/thong-tin/one-piece-tv-special-phan-ve-dao-tren-troi-skypiea-5492",
+            "title": "One Piece TV Special: Phần Về Đảo Trên Trời Skypiea",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece TV Special: Episode Of Skypiea"
+                }
+            ],
+            "description": "Bản remake lại nội dung cuộc phiêu lưu ở đảo trên trời của băng Mũ Rơm.",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "https://i.imgur.com/Ay8DKWn.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-tv-special-phan-ve-dao-tren-troi-skypiea",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 5485,
+            "link": "/thong-tin/one-piece-adventure-of-nebulandia-cuoc-phieu-luu-den-vung-dat-nebulandia-5485",
+            "title": "One Piece: Adventure of Nebulandia - Cuộc Phiêu Lưu Đến Vùng Đất Nebulandia",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Special"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece TV Special: Adventure Of Nebulandia"
+                }
+            ],
+            "description": "Điều đặc biệt này sẽ khiến Mũ Rơm chiến đấu với Foxy một lần nữa trong Thế giới Mới trên Nebulandia, một hòn đảo vô hiệu hóa sức mạnh của Trái ác quỷ.",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "https://i.imgur.com/AO6hZfd.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-adventure-of-nebulandia-cuoc-phieu-luu-den-vung-dat-nebulandia",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 5456,
+            "link": "/thong-tin/one-piece-episode-of-sorajima-5456",
+            "title": "One Piece: Episode of Sorajima",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Episode of Sorajima"
+                }
+            ],
+            "description": "Đặc biệt sẽ là người đầu tiên trong series \"Episode of\" cover lại vòng cung Skypeia, và sẽ giới thiệu một nhân vật không xuất hiện trong bản gốc Skypeia arc từ anime. (Nguồn: ANN)",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "https://i.imgur.com/qsLU7t2.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-episode-of-sorajima",
+            "episodes": null,
+            "status": "Ongoing"
+        },
+        {
+            "id": 5087,
+            "link": "/thong-tin/one-piece-phan-ve-bien-dong-5087",
+            "title": "One Piece: Phần Về Biển Đông",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Episode of East Blue - Luffy and His Four Friends' Great Adventure"
+                }
+            ],
+            "description": "Kể về hành trình đáng nhớ của Luffy với 4 người đồng đội đầu tiên, Zoro, Usopp, Sanji và Nami.",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "https://i.imgur.com/zckDVBn.png",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-phan-ve-bien-dong",
+            "episodes": null,
+            "status": "Ongoing"
+        },
+        {
+            "id": 4416,
+            "link": "/thong-tin/one-piece-film-gold-4416",
+            "title": "One Piece Film: Gold",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Film: Gold"
+                }
+            ],
+            "description": "One Piece Film Gold 2016: Lần này băng hải tặc Mũ Rơm sẽ đối đầu với băng hải tặc Tesoro - thuyền trưởng Gild Tesoro. Biệt danh của hắn là Vua Sòng Bạc (Casino King) và là chủ của chiếc thuyền vàng Gran Tesoro. Tài sản của hắn chiếm 20% số lượng tài sản trên khắp thế giới. Quyền năng về tài sản tiền bạc của hắn đã khiến Chính Phủ Thế Giới đôi khi phải nhân nhượng, thậm chí là buộc phải nghe theo lệnh hắn. Những thành viên trong băng hải tặc của tên Gildo Tesoro gồm có: Baccarat, Dice, Mr.Tanaka và Carina.",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "http://i.imgur.com/qxi61Xf.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-film-gold",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 4386,
+            "link": "/thong-tin/one-piece-heart-of-gold-4386",
+            "title": "One Piece: Heart of Gold",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Trái Tim Vàng"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Film Gold"
+                }
+            ],
+            "description": "Phim One Piece: Trái Tim Vàng - One Piece: Heart Of Gold 2016: Tập đặc biệt giới thiệu cho One Piece Film Gold chiếu rạp vào ngày 23/07/2016 ở Nhật, Tesoro đang truy tìm một kho báu bí ẩn tên là \"Vàng Nguyên Chất\". Băng Mũ Rơm vô tình gặp được một cô gái biết vị trí cất giấu kho báu bí ẩn đó, nên họ quyết định tiến thẳng đến nơi cất giấu kho báu bí ẩn - hòn đảo huyền thoại Arukemi.",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "https://i.imgur.com/OUp1gfZ.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-heart-of-gold",
+            "episodes": null,
+            "status": "Ongoing"
+        },
+        {
+            "id": 3890,
+            "link": "/thong-tin/one-piece-special-9-episode-of-sabo-3890",
+            "title": "One Piece Special 9 : Episode of Sabo",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "3 Kyoudai no Kizuna Kiseki no Saikai to Uketsugareru Ishi"
+                }
+            ],
+            "description": "\"Phần về Sabo: Lời hứa của 3 anh em Cuộc hội ngộ diệu kỳ và kế thừa ý chí.\"",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "https://i.imgur.com/N5UYoAN.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-special-9-episode-of-sabo",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 3464,
+            "link": "/thong-tin/one-piece-3d-straw-hat-chase-3464",
+            "title": "One Piece 3D: Straw Hat Chase",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Movie 11"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece 3D: Straw Hat Chase"
+                }
+            ],
+            "description": "One Piece Movie 11 | One Piece 3D: Straw Hat Chase",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "http://i.imgur.com/976ksXk.png",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-3d-straw-hat-chase",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 3462,
+            "link": "/thong-tin/one-piece-z-3462",
+            "title": "One Piece: Z",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Movie 12"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Film: Z"
+                }
+            ],
+            "description": "Quân át chủ bài của Hải quân, 'Viên đá Dyan' - được so sánh ngang hàng với Vũ khí cổ đại, đột nhiên bị đánh cắp! Và người đàn ông có sức mạnh kinh hoàng, cựu Đô Đốc/Thượng Tướng Hải Quân 'Z' sẽ là đối thủ của băng Mũ Rơm lần này! Tổng bộ Hải Quân tiến tới việc đối phó với âm mưu đe dọa làm lung lay các trụ cột của New World. Ở nơi khác, Kuzan (Aokiji) trợ giúp cho băng Mũ Rơm. Cuối cùng, Luffy và đồng đội tiến lên chống lại Z cùng sức mạnh kinh hoàng của hắn.",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "http://i.imgur.com/JAHuA1F.jpg",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-z",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 3461,
+            "link": "/thong-tin/one-piece-strong-world-3461",
+            "title": "One Piece: Strong World",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Movie 10"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Film: Strong World"
+                }
+            ],
+            "description": "One Piece Movie 10 | One Piece Film: Strong World",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "http://i.imgur.com/FztzFFC.png",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-strong-world",
+            "episodes": null,
+            "status": "Completed"
+        },
+        {
+            "id": 3460,
+            "link": "/thong-tin/one-piece-episode-of-chopper-plus-bloom-in-winter-miracle-sakura-3460",
+            "title": "One Piece: Episode of Chopper Plus: Bloom in Winter, Miracle Sakura",
+            "titles": [
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece Movie 9"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "One Piece: Episode of Chopper Plus: Bloom in Winter"
+                },
+                {
+                    "language": "Synonyms",
+                    "title": "Miracle Sakura"
+                }
+            ],
+            "description": "One Piece Movie 9 | One Piece: Episode of Chopper Plus: Bloom in Winter, Miracle Sakura",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy"
+            ],
+            "image": "http://i.imgur.com/Vvv2YWj.png",
+            "sub": false,
+            "dub": false,
+            "type": "tv",
+            "slug": "one-piece-episode-of-chopper-plus-bloom-in-winter-miracle-sakura",
+            "episodes": null,
+            "status": "Completed"
+        }
+    ],
+    "count": 40,
+    "current_page": 1,
+    "total_pages": 2,
+    "has_more": true
 }

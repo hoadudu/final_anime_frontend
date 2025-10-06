@@ -293,7 +293,9 @@ export default {
     recentReviews: 'Đánh Giá Gần Đây',
     latestNews: 'Tin Tức Mới Nhất',
     comingSoon: 'Sắp ra mắt...',
-    imagesGallery: 'Thư Viện Hình Ảnh'
+    imagesGallery: 'Thư Viện Hình Ảnh',
+    genres: 'Thể loại',
+    description: 'Mô tả'
   },
 
   // Watch Page
@@ -308,6 +310,7 @@ export default {
     quality: 'Chất lượng',
     servers: 'Máy chủ',
     noStream: 'Không có nguồn phát',
+    noStreamDescription: 'Hiện tại không có nguồn phát nào cho tập phim này. Vui lòng thử các tập khác hoặc kiểm tra lại sau.',
     expand: 'Mở rộng',
     collapse: 'Thu gọn',
     cinemaMode: 'Chế độ rạp chiếu phim',
@@ -328,7 +331,39 @@ export default {
     defaultEpisodeDescription: 'Xem {episodeTitle} của {animeTitle} với chất lượng cao và nhiều máy chủ.',
     nowWatching: 'Bạn đang xem',
     episode: 'Tập',
-    tryOtherServers: 'Nếu máy chủ hiện tại không hoạt động, hãy thử các máy chủ khác bên cạnh.'
+    tryOtherServers: 'Nếu máy chủ hiện tại không hoạt động, hãy thử các máy chủ khác bên cạnh.',
+
+    // Episode List specific
+    noEpisodes: 'Không tìm thấy tập phim',
+    selectEpisodeGroup: 'Chọn nhóm tập phim',
+    episodeList: 'Danh sách tập phim',
+
+    // Vote/Rating specific
+    rateQuestion: 'Bạn nghĩ gì về anime này?',
+    voteNow: 'Bình chọn ngay',
+    boring: 'Nhàm chán',
+    great: 'Tuyệt vời',
+    amazing: 'Xuất sắc',
+
+    // Additional watch page keys
+    currentEpisode: 'Tập hiện tại',
+    animeInfo: 'Thông tin',
+    save: 'Lưu',
+    saved: 'Đã lưu'
+  },
+
+  // Search Page
+  search: {
+    enterKeyword: 'Nhập từ khóa để bắt đầu tìm kiếm anime',
+    startSearching: 'Gõ từ khóa vào ô tìm kiếm phía trên',
+    resultsFor: 'Kết quả tìm kiếm cho',
+    totalFound: 'Tổng cộng {total} anime được tìm thấy',
+    errorOccurred: 'Có lỗi xảy ra',
+    errorMessage: 'Không thể tải kết quả tìm kiếm. Vui lòng thử lại.',
+    noResults: 'Không tìm thấy kết quả',
+    tryDifferentKeyword: 'Hãy thử sử dụng từ khóa khác hoặc kiểm tra chính tả',
+    viewDetails: 'Xem Chi Tiết',
+    showing: 'Hiển thị {from}–{to} trong {total} kết quả'
   }
 
 }

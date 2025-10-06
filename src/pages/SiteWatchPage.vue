@@ -33,7 +33,7 @@
         <div class="row q-col-gutter-md q-mt-sm watch-content">
           <!-- Left: Episode List (col-2 on desktop, col-4 on tablet, full on mobile) -->
           <div
-            class="col-12 col-md-4 col-lg-2 episode-list-column episode-list-wrapper"
+            class="col-12 col-md-4 col-lg-3 episode-list-column episode-list-wrapper"
             :class="{ 'cinema-dimmable': isCinemaMode }"
           >
             <EpisodeList
@@ -41,6 +41,7 @@
               :active-episode-id="episode?.id || null"
               :slug="slug"
               :last-watched-id="lastWatchedEpisodeId"
+              :watched-episode-ids="watchedEpisodeIds"
             />
           </div>
 
@@ -84,26 +85,126 @@
           <!-- Right: Anime Info (hidden when expanded) -->
           <div
             v-if="!isExpanded"
-            class="col-12 col-lg-3 anime-info-column"
+            class="col-12 col-md-12 col-lg-2 anime-info-column"
             :class="{ 'cinema-dimmable': isCinemaMode }"
           >
-            <q-card flat bordered v-if="episode?.anime" class="anime-info-card">
-              <q-img
-                :src="episode.anime.thumbnail || episode.anime.poster || '/favicon.ico'"
-                :ratio="3 / 4"
-                fit="cover"
-              >
-                <div class="absolute-bottom text-subtitle2 text-center">
-                  {{ episode.anime.title }}
+            <q-card flat bordered v-if="episode?.anime" class="anime-info-card compact-design">
+              <!-- Compact Header with Small Poster -->
+              <div class="anime-header">
+                <div class="anime-poster-small">
+                  <q-img
+                    :src="episode.anime.thumbnail || episode.anime.poster || '/favicon.ico'"
+                    :ratio="3 / 4"
+                    fit="cover"
+                    class="small-poster"
+                  />
                 </div>
-              </q-img>
-              <q-card-section>
-                <div class="text-caption text-grey">
-                  {{ episode.title || 'Episode ' + (episode.number || '') }}
+                <div class="anime-header-info">
+                  <div class="anime-title-compact">
+                    {{ episode.anime.title }}
+                  </div>
+                  <div class="anime-meta">
+                    <q-badge
+                      v-if="episode.anime.status"
+                      :color="episode.anime.status === 'Ongoing' ? 'positive' : 'info'"
+                      :label="episode.anime.status"
+                      size="xs"
+                    />
+                    <span v-if="episode.anime.type" class="anime-type-compact">
+                      {{ episode.anime.type }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Compact Details -->
+              <q-card-section class="anime-details-compact">
+                <!-- Current Episode Info -->
+                <div class="current-episode-compact">
+                  <q-icon name="play_circle" size="14px" class="q-mr-xs" color="primary" />
+                  <span class="text-caption text-grey-6"
+                    >{{ $t('watch.currentEpisode', 'Current Episode') }}:</span
+                  >
+                  <span class="text-body2 text-weight-medium q-ml-xs">
+                    {{ episode.title || 'Episode ' + (episode.number || '') }}
+                  </span>
+                </div>
+
+                <!-- Genres Compact -->
+                <div
+                  class="genres-compact q-mt-sm"
+                  v-if="episode.anime.genres && episode.anime.genres.length"
+                >
+                  <div class="text-caption text-grey-6 q-mb-xs">
+                    <q-icon name="category" size="12px" class="q-mr-xs" />
+                    {{ $t('animePage.genres', 'Genres') }}
+                  </div>
+                  <div class="genres-container-compact">
+                    <q-chip
+                      v-for="genre in episode.anime.genres.slice(0, 3)"
+                      :key="genre.id"
+                      size="xs"
+                      color="primary"
+                      text-color="white"
+                      class="genre-chip-compact"
+                      clickable
+                      @click="$router.push(genre.link)"
+                    >
+                      {{ genre.name }}
+                    </q-chip>
+                    <q-chip
+                      v-if="episode.anime.genres.length > 3"
+                      size="xs"
+                      outline
+                      color="grey-6"
+                      class="genre-chip-compact"
+                    >
+                      +{{ episode.anime.genres.length - 3 }}
+                    </q-chip>
+                  </div>
+                </div>
+
+                <!-- Description Compact -->
+                <div class="description-compact q-mt-sm" v-if="episode.anime.description">
+                  <div class="text-caption text-grey-6 q-mb-xs">
+                    <q-icon name="description" size="12px" class="q-mr-xs" />
+                    {{ $t('animePage.description', 'Description') }}
+                  </div>
+                  <div class="text-body2 anime-description-compact">
+                    {{ episode.anime.description }}
+                  </div>
+                </div>
+
+                <!-- Compact Action Buttons -->
+                <div class="action-buttons-compact q-mt-md">
+                  <q-btn
+                    flat
+                    dense
+                    color="primary"
+                    icon="info"
+                    :label="$t('watch.animeInfo', 'Info')"
+                    size="sm"
+                    class="compact-btn q-mr-xs"
+                    @click="$router.push(episode.anime.link)"
+                  />
+                  <q-btn
+                    flat
+                    dense
+                    :color="isInWatchlist ? 'positive' : 'grey-6'"
+                    :icon="isInWatchlist ? 'bookmark' : 'bookmark_border'"
+                    :label="isInWatchlist ? $t('watch.saved', 'Saved') : $t('watch.save', 'Save')"
+                    size="sm"
+                    class="compact-btn"
+                    @click="toggleWatchlist"
+                  />
                 </div>
               </q-card-section>
             </q-card>
-            <TopRight />
+
+            <!-- Top Right Component -->
+            <div class="q-mt-md">
+              <TopRight />
+            </div>
           </div>
         </div>
 
@@ -187,7 +288,11 @@ const postId = computed(() => {
 
 // Convert to string values for API calls
 const episodeIdString = computed(() => String(episodeId.value || ''))
-const postIdString = computed(() => String(postId.value || ''))
+const postIdString = computed(() => {
+  const pid = postId.value
+  // Only return string if postId is valid, otherwise return null to disable query
+  return pid ? String(pid) : null
+})
 
 const {
   data: singleEpisodeData,
@@ -201,7 +306,11 @@ const {
 } = useWatchPageDataListEpisodes(postIdString)
 
 const episode = computed(() => singleEpisodeData?.value || null)
-const episodes = computed(() => listEpisodesData?.value || [])
+const episodes = computed(() => {
+  const data = listEpisodesData?.value
+  // API returns { groups: [...] } structure, pass it through to EpisodeList
+  return data || { groups: [] }
+})
 
 const isLoading = computed(() => isLoadingEpisode.value || isLoadingList.value)
 const hasError = computed(() => !!errorEpisode?.value || !!errorList?.value)
@@ -217,6 +326,7 @@ const autoNext = ref(false)
 const autoSkipIntro = ref(false)
 const isInWatchlist = ref(false)
 const lastWatchedEpisodeId = ref(null)
+const watchedEpisodeIds = ref([])
 const watchProgress = ref({})
 const progressLoaded = ref(false)
 
@@ -243,6 +353,17 @@ onMounted(() => {
   }
 })
 
+// Load watched episode IDs when progressKey or watchProgress changes
+watch(
+  () => ({ key: progressKey.value, progress: watchProgress.value, loaded: progressLoaded.value }),
+  ({ key, progress, loaded }) => {
+    if (!loaded || !key) return
+    const entry = progress[key]
+    watchedEpisodeIds.value = entry?.watchedEpisodeIds || []
+  },
+  { immediate: true },
+)
+
 watch(
   () => ({
     key: progressKey.value,
@@ -263,6 +384,15 @@ watch(
       entry.currentEpisodeId = episodeId
       entry.currentEpisodeNumber =
         episode.value?.number || episode.value?.sort_number || entry.currentEpisodeNumber || null
+      entry.currentEpisodeSort = episode.value?.sort_number || entry.currentEpisodeSort || null
+    }
+
+    // Track all watched episode IDs (giống visited links)
+    if (!entry.watchedEpisodeIds) {
+      entry.watchedEpisodeIds = []
+    }
+    if (!entry.watchedEpisodeIds.includes(episodeId)) {
+      entry.watchedEpisodeIds.push(episodeId)
     }
 
     lastWatchedEpisodeId.value = entry.lastEpisodeId || null
@@ -456,8 +586,8 @@ useMeta(() => metaData.value)
 .watch-page {
   min-height: 60vh;
   transition: background-color 0.3s ease;
-  background: radial-gradient(circle at top, #1b1f3a 0%, #0f1223 60%, #060713 100%);
-  color: #e4e8ff;
+  background: radial-gradient(circle at top, #1a1a1a 0%, #141414 60%, #0a0a0a 100%);
+  color: #e8e8e8;
 }
 
 /* Cinema Mode */
@@ -472,9 +602,9 @@ useMeta(() => metaData.value)
 }
 
 .page-container {
-  background: rgba(12, 14, 28, 0.7);
+  background: rgba(18, 18, 18, 0.5);
   border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(3, 5, 15, 0.8);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
 }
 
 .cinema-overlay {
@@ -544,7 +674,7 @@ useMeta(() => metaData.value)
 }
 
 /* Tablet (768px - 1023px) */
-/* Episode List (33%) | Player (67%) on same row, Anime Info below player full width */
+/* Episode List (33%) | Player (67%) | Anime Info full width below */
 @media (min-width: 768px) and (max-width: 1023px) {
   .watch-content {
     display: flex;
@@ -568,6 +698,8 @@ useMeta(() => metaData.value)
     flex: 0 0 100%;
     max-width: 100%;
     margin-top: 1rem;
+    position: static;
+    z-index: 0;
   }
 }
 
@@ -589,29 +721,35 @@ useMeta(() => metaData.value)
 
   .anime-info-column {
     order: 3;
+    /* Prevent overlapping and ensure proper scroll behavior */
+    position: static;
+    margin-top: 1rem;
+    z-index: 0;
   }
 }
 
 /* Anime info card styling */
 .anime-info-card {
   transition: transform 0.2s;
-  background: linear-gradient(145deg, rgba(36, 41, 68, 0.9), rgba(23, 25, 44, 0.95));
-  border: 1px solid rgba(125, 133, 190, 0.3);
+  background: linear-gradient(145deg, rgba(22, 22, 22, 0.95), rgba(18, 18, 18, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  position: relative;
 }
 
 .anime-info-card:hover {
   transform: translateY(-2px);
 }
 
-/* Episode list wrapper - match height with player column */
+/* Episode list wrapper - base styles */
 .episode-list-wrapper {
-  max-height: 800px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: linear-gradient(160deg, rgba(28, 32, 58, 0.9), rgba(20, 23, 45, 0.95));
-  border: 1px solid rgba(120, 130, 200, 0.25);
+  background: linear-gradient(160deg, rgba(20, 20, 20, 0.95), rgba(18, 18, 18, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   margin-top: 15px;
+  position: relative;
+  overflow-x: hidden;
+  z-index: 100;
 }
 
 /* Custom scrollbar for episode list */
@@ -639,20 +777,210 @@ useMeta(() => metaData.value)
   scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
 }
 
-/* Match episode list height with player on desktop */
-@media (min-width: 1024px) {
+/* Episode list responsive styles */
+@media (min-width: 768px) {
   .episode-list-wrapper {
-    position: sticky;
-    top: 20px;
-    align-self: flex-start;
+    max-height: 800px;
+    overflow-y: auto;
+  }
+
+  .episode-list-column {
+    position: relative;
+    z-index: 100;
+    isolation: isolate;
+    background: transparent;
   }
 }
 
-/* On mobile, remove height restriction */
 @media (max-width: 767px) {
   .episode-list-wrapper {
     max-height: none;
     overflow: visible;
   }
+
+  /* Disable transforms on mobile */
+  .episode-list-wrapper *,
+  .episode-list-wrapper *:hover {
+    transform: none !important;
+  }
+
+  .episode-list-column {
+    position: relative;
+    z-index: 100;
+    isolation: isolate;
+    background: transparent;
+  }
+
+  .anime-info-column {
+    z-index: 1 !important;
+  }
+}
+
+/* Prevent anime info from being sticky on small screens */
+@media (max-width: 1023px) {
+  .anime-info-card {
+    position: static;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .anime-info-column {
+    position: static !important;
+    transform: none !important;
+  }
+
+  /* Disable all transforms and stacking contexts in anime info */
+  .anime-info-column *,
+  .anime-info-column *:hover {
+    transform: none !important;
+  }
+
+  /* Add containment to prevent layout issues */
+  .anime-info-card {
+    contain: layout style;
+  }
+}
+
+/* Compact Design */
+.compact-design {
+  border-radius: 12px;
+}
+
+/* Compact Header with Small Poster */
+.anime-header {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.anime-poster-small {
+  flex-shrink: 0;
+  width: 60px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.small-poster {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.small-poster:hover {
+  transform: scale(1.1);
+}
+
+.anime-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.anime-title-compact {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #e8e8e8;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.anime-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.anime-type-compact {
+  font-size: 11px;
+  color: rgba(232, 232, 232, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Compact Details */
+.anime-details-compact {
+  padding: 12px;
+}
+
+.current-episode-compact {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #888;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Compact Genres */
+.genres-compact .text-caption {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+}
+
+.genres-container-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.genre-chip-compact {
+  font-size: 10px;
+  height: 20px;
+  transition: transform 0.2s;
+}
+
+.genre-chip-compact:hover {
+  transform: scale(1.05);
+}
+
+/* Compact Description */
+.description-compact .text-caption {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+}
+
+.anime-description-compact {
+  line-height: 1.4;
+  color: rgba(232, 232, 232, 0.9);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+/* Compact Action Buttons */
+.action-buttons-compact {
+  display: flex;
+  gap: 8px;
+}
+
+.compact-btn {
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-size: 11px;
+  flex: 1;
+  min-width: 0;
+}
+
+.compact-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
 }
 </style>

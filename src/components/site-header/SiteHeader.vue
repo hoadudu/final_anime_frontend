@@ -1,67 +1,117 @@
 <template>
-    <q-header elevated class="bg-transparent text-grey-8 q-py-xs" height-hint="68">
+  <q-header elevated class="bg-transparent text-grey-8 q-py-xs" height-hint="68">
+    <q-toolbar class="YL__toolbar-blur">
+      <q-btn
+        flat
+        dense
+        round
+        @click="toggleLeftDrawer"
+        :aria-label="t('header.menuButton')"
+        :icon="drawerStore.leftDrawerOpen ? 'close' : 'menu'"
+      />
 
-        <q-toolbar class="YL__toolbar-blur">
+      <q-btn flat no-caps no-wrap class="q-ml-xs" v-if="$q.screen.gt.xs">
+        <q-icon :name="fabYoutube" color="red" size="28px" />
+        <q-toolbar-title shrink class="text-weight-bold"> YouTube </q-toolbar-title>
+      </q-btn>
 
-            <q-btn flat dense round @click="toggleLeftDrawer" :aria-label="t('header.menuButton')"
-                :icon="drawerStore.leftDrawerOpen ? 'close' : 'menu'" />
+      <q-space />
 
-            <q-btn flat no-caps no-wrap class="q-ml-xs" v-if="$q.screen.gt.xs">
-                <q-icon :name="fabYoutube" color="red" size="28px" />
-                <q-toolbar-title shrink class="text-weight-bold">
-                    YouTube
-                </q-toolbar-title>
-            </q-btn>
+      <div class="YL__toolbar-input-container row no-wrap">
+        <q-input
+          dense
+          outlined
+          square
+          v-model="search"
+          :placeholder="t('header.searchPlaceholder')"
+          class="bg-white col"
+          @keyup.enter="handleSearch"
+        >
+          <template v-slot:append v-if="search">
+            <q-icon name="close" @click="search = ''" class="cursor-pointer" />
+          </template>
+        </q-input>
+        <q-btn
+          class="YL__toolbar-input-btn"
+          color="grey-3"
+          text-color="grey-8"
+          icon="search"
+          unelevated
+          @click="handleSearch"
+          :disable="!search"
+        />
+      </div>
 
-            <q-space />
+      <q-space />
 
-            <div class="YL__toolbar-input-container row no-wrap">
-                <q-input dense outlined square v-model="search" :placeholder="t('header.searchPlaceholder')"
-                    class="bg-white col" />
-                <q-btn class="YL__toolbar-input-btn" color="grey-3" text-color="grey-8" icon="search" unelevated />
-            </div>
-
-            <q-space />
-
-            <div class="q-gutter-sm row items-center no-wrap">
-                <q-btn round dense flat color="grey-8" icon="video_call" v-if="$q.screen.gt.sm">
-                    <q-tooltip>{{ t('header.createVideo') }}</q-tooltip>
-                </q-btn>
-                <q-btn round dense flat color="grey-8" icon="apps" v-if="$q.screen.gt.sm">
-                    <q-tooltip>{{ t('header.apps') }}</q-tooltip>
-                </q-btn>
-                <q-btn round dense flat color="grey-8" icon="message" v-if="$q.screen.gt.sm">
-                    <q-tooltip>{{ t('header.messages') }}</q-tooltip>
-                </q-btn>
-                <q-btn round dense flat color="grey-8" icon="notifications">
-                    <q-badge color="red" text-color="white" floating>
-                        2
-                    </q-badge>
-                    <q-tooltip>{{ t('header.notifications') }}</q-tooltip>
-                </q-btn>
-                <q-btn round flat>
-                    <q-avatar size="26px">
-                        <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-                    </q-avatar>
-                    <q-tooltip>{{ t('header.account') }}</q-tooltip>
-                </q-btn>
-            </div>
-        </q-toolbar>
-    </q-header>
-
+      <div class="q-gutter-sm row items-center no-wrap">
+        <q-btn round dense flat color="grey-8" icon="video_call" v-if="$q.screen.gt.sm">
+          <q-tooltip>{{ t('header.createVideo') }}</q-tooltip>
+        </q-btn>
+        <q-btn round dense flat color="grey-8" icon="apps" v-if="$q.screen.gt.sm">
+          <q-tooltip>{{ t('header.apps') }}</q-tooltip>
+        </q-btn>
+        <q-btn round dense flat color="grey-8" icon="message" v-if="$q.screen.gt.sm">
+          <q-tooltip>{{ t('header.messages') }}</q-tooltip>
+        </q-btn>
+        <q-btn round dense flat color="grey-8" icon="notifications">
+          <q-badge color="red" text-color="white" floating> 2 </q-badge>
+          <q-tooltip>{{ t('header.notifications') }}</q-tooltip>
+        </q-btn>
+        <q-btn round flat>
+          <q-avatar size="26px">
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+          </q-avatar>
+          <q-tooltip>{{ t('header.account') }}</q-tooltip>
+        </q-btn>
+      </div>
+    </q-toolbar>
+  </q-header>
 </template>
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import { fabYoutube } from '@quasar/extras/fontawesome-v6'
 import { useDrawerStore } from 'src/stores/site-drawer'
 
 const { t } = useI18n()
+const router = useRouter()
 const drawerStore = useDrawerStore()
 const search = ref('')
 
 function toggleLeftDrawer() {
-    drawerStore.toggleLeftDrawer()
+  drawerStore.toggleLeftDrawer()
+}
+
+/**
+ * Xử lý tìm kiếm anime
+ * Navigate đến trang search với keyword query parameter
+ */
+function handleSearch() {
+  const keyword = search.value.trim()
+
+  if (!keyword) {
+    return
+  }
+
+  // Navigate đến trang tìm kiếm với keyword
+  router
+    .push({
+      name: 'site-search',
+      query: {
+        keyword: keyword,
+        page: 1,
+      },
+    })
+    .then(() => {
+      // Clear search input sau khi navigate thành công (optional)
+      // search.value = ''
+    })
+    .catch(() => {
+      // Nếu đã ở trang search, router.push sẽ fail, nhưng query vẫn update
+      // Không cần làm gì
+    })
 }
 </script>
 
@@ -85,4 +135,14 @@ function toggleLeftDrawer() {
 
     &:hover
       color: #000
+
+// Search input enhancements
+.q-field__append
+  .q-icon
+    font-size: 18px
+    opacity: 0.6
+    transition: opacity 0.2s ease
+
+    &:hover
+      opacity: 1
 </style>

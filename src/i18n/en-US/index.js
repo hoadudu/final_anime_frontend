@@ -289,7 +289,9 @@ export default {
     recentReviews: 'Recent Reviews',
     latestNews: 'Latest News',
     comingSoon: 'Coming soon...',
-    imagesGallery: 'Images Gallery'
+    imagesGallery: 'Images Gallery',
+    genres: 'Genres',
+    description: 'Description'
   },
 
   // Watch Page
@@ -304,6 +306,7 @@ export default {
     quality: 'Quality',
     servers: 'Servers',
     noStream: 'No stream available',
+    noStreamDescription: 'No streaming sources are currently available for this episode. Please try other episodes or check back later.',
     expand: 'Expand',
     collapse: 'Collapse',
     cinemaMode: 'Cinema Mode',
@@ -324,6 +327,38 @@ export default {
     defaultEpisodeDescription: 'Watch {episodeTitle} of {animeTitle} in high quality with multiple servers.',
     nowWatching: 'You are watching',
     episode: 'Episode',
-    tryOtherServers: 'If current server does not work, please try other servers beside.'
+    tryOtherServers: 'If current server does not work, please try other servers beside.',
+
+    // Episode List specific
+    noEpisodes: 'No episodes found',
+    selectEpisodeGroup: 'Select Episode Group',
+    episodeList: 'Episode List',
+
+    // Vote/Rating specific
+    rateQuestion: 'What do you think about this anime?',
+    voteNow: 'Vote now',
+    boring: 'Boring',
+    great: 'Great',
+    amazing: 'Amazing',
+
+    // Additional watch page keys
+    currentEpisode: 'Current Episode',
+    animeInfo: 'Info',
+    save: 'Save',
+    saved: 'Saved'
+  },
+
+  // Search Page
+  search: {
+    enterKeyword: 'Enter a keyword to start searching for anime',
+    startSearching: 'Type something in the search box above',
+    resultsFor: 'Search results for',
+    totalFound: 'Total {total} anime found',
+    errorOccurred: 'An error occurred',
+    errorMessage: 'Failed to load search results. Please try again.',
+    noResults: 'No results found',
+    tryDifferentKeyword: 'Try using different keywords or check your spelling',
+    viewDetails: 'View Details',
+    showing: 'Showing {from}–{to} of {total} results'
   }
 }

@@ -6,9 +6,16 @@
         <div class="row items-center justify-between no-wrap">
           <h3 class="text-h6 text-weight-bold q-my-none title-text">{{ t('topTen.title') }}</h3>
           <q-btn-group class="top-ten-tabs">
-            <q-btn v-for="option in tabOptions" :key="option.value"
-              :class="{ 'active-tab': activeTab === option.value }" :label="option.label" size="sm" no-caps dense
-              @click="onTabChange(option.value)" />
+            <q-btn
+              v-for="option in tabOptions"
+              :key="option.value"
+              :class="{ 'active-tab': activeTab === option.value }"
+              :label="option.label"
+              size="sm"
+              no-caps
+              dense
+              @click="onTabChange(option.value)"
+            />
           </q-btn-group>
         </div>
       </q-card-section>
@@ -29,7 +36,10 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!currentData || currentData.length === 0" class="empty-container text-center q-py-xl">
+      <div
+        v-else-if="!currentData || currentData.length === 0"
+        class="empty-container text-center q-py-xl"
+      >
         <q-icon name="movie" color="grey-6" size="64px" />
         <div class="empty-message q-mt-md text-subtitle2 text-grey-5">{{ t('topTen.noData') }}</div>
       </div>
@@ -37,8 +47,13 @@
       <!-- Content -->
       <q-card-section v-else class="q-pa-none">
         <q-list separator>
-          <q-item v-for="anime in currentData" :key="anime.id" clickable class="top-ten-item"
-            @click.stop.prevent="navigateToAnime(anime)">
+          <q-item
+            v-for="anime in currentData"
+            :key="anime.id"
+            clickable
+            class="top-ten-item"
+            @click.stop.prevent="navigateToAnime(anime)"
+          >
             <!-- Rank Number -->
             <q-item-section avatar class="rank-section">
               <div class="rank-number" :class="getRankClass(anime.rank)">
@@ -48,8 +63,14 @@
 
             <!-- Anime Poster -->
             <q-item-section avatar class="poster-section">
-              <q-img :src="anime.poster" :alt="anime.title" ratio="2/3" class="anime-poster" spinner-color="primary"
-                @error="handleImageError">
+              <q-img
+                :src="anime.poster"
+                :alt="anime.title"
+                ratio="2/3"
+                class="anime-poster"
+                spinner-color="primary"
+                @error="handleImageError"
+              >
                 <template v-slot:error>
                   <div class="absolute-full flex flex-center bg-grey-8">
                     <q-icon name="broken_image" size="24px" color="grey-5" />
@@ -65,21 +86,44 @@
               </q-item-label>
               <q-item-label caption class="anime-meta">
                 <div class="meta-badges">
-                  <q-badge v-if="anime.subCount" color="blue" text-color="white" class="meta-badge" size="xs">
+                  <q-badge
+                    v-if="anime.subCount"
+                    color="blue"
+                    text-color="white"
+                    class="meta-badge"
+                    size="xs"
+                  >
                     <q-icon name="closed_caption" size="10px" class="q-mr-xs" />
                     {{ anime.subCount }}
                   </q-badge>
 
-                  <q-badge v-if="anime.dubCount" color="green" text-color="white" class="meta-badge q-ml-xs" size="xs">
+                  <q-badge
+                    v-if="anime.dubCount"
+                    color="green"
+                    text-color="white"
+                    class="meta-badge q-ml-xs"
+                    size="xs"
+                  >
                     <q-icon name="mic" size="10px" class="q-mr-xs" />
                     {{ anime.dubCount }}
                   </q-badge>
 
-                  <q-badge v-if="anime.totalEpisodes" color="orange" text-color="white" class="meta-badge q-ml-xs"
-                    size="xs">
+                  <q-badge
+                    v-if="anime.totalEpisodes"
+                    color="orange"
+                    text-color="white"
+                    class="meta-badge q-ml-xs"
+                    size="xs"
+                  >
                     {{ anime.totalEpisodes }}
                   </q-badge>
-                  <q-badge v-if="anime.views" color="grey" text-color="white" class="meta-badge q-ml-xs" size="xs">
+                  <q-badge
+                    v-if="anime.views"
+                    color="grey"
+                    text-color="white"
+                    class="meta-badge q-ml-xs"
+                    size="xs"
+                  >
                     <q-icon name="visibility" size="10px" class="q-mr-xs" />
                     {{ anime.views }}
                   </q-badge>
@@ -123,7 +167,7 @@ const tabOptions = computed(() => [
   { label: t('topTen.week'), value: 'week' },
   { label: t('topTen.month'), value: 'month' },
   { label: t('topTen.year'), value: 'year' },
-  { label: t('topTen.all'), value: 'all' },
+  // { label: t('topTen.all'), value: 'all' },
 ])
 
 // Methods
@@ -144,7 +188,7 @@ const navigateToAnime = (anime) => {
     // console.log('Router base:', router.options.history.base)
     // const resolved = router.resolve(anime.link)
     // console.log('Resolved route:', resolved)
-    router.push(anime.link).catch(err => {
+    router.push(anime.link).catch((err) => {
       console.error('Router push error:', err)
     })
   }

@@ -3,33 +3,25 @@
     <!-- Rating -->
     <div class="vote-header">
       <div class="vote-score">⭐ 9.4</div>
-      <q-btn glossy color="secondary" no-caps label="Vote now" class="vote-action" />
+      <q-btn glossy color="secondary" no-caps :label="$t('watch.voteNow')" class="vote-action" />
     </div>
 
     <!-- Question -->
     <div class="vote-question">
-      {{ $t('watch.rateQuestion') || 'What do you think about this anime?' }}
+      {{ $t('watch.rateQuestion') }}
     </div>
 
     <!-- Options -->
-    <div class="row justify-around q-mt-md">
-      <q-btn
-        v-for="opt in options"
-        :key="opt.label"
-        outline
-        rounded
-        glossy
-        no-caps
-        :label="opt.label"
-        :icon="opt.icon"
-        class="vote-btn"
-        @click="vote(opt.label)"
-      />
+    <div class="vote-options-container">
+      <div v-for="opt in options" :key="opt.text" class="vote-option" @click="vote(opt.text)">
+        <div class="vote-emoji">{{ opt.emoji }}</div>
+        <div class="vote-text">{{ $t(opt.text) }}</div>
+      </div>
     </div>
 
     <!-- Comments -->
     <div class="comment-banner">
-      <q-icon name="chat_bubble" class="banner-icon" />
+      <span class="banner-emoji">💬</span>
       <span>{{ $t('watch.comments') || 'Comments' }}</span>
       <q-space />
       <img src="https://i.imgur.com/5z4d1zU.png" alt="luffy" height="46" />
@@ -39,9 +31,9 @@
 
 <script setup>
 const options = [
-  { label: 'Boring', icon: 'sentiment_dissatisfied' },
-  { label: 'Great', icon: 'sentiment_satisfied' },
-  { label: 'Amazing', icon: 'sentiment_very_satisfied' },
+  { emoji: '😫', text: 'watch.boring' },
+  { emoji: '😃', text: 'watch.great' },
+  { emoji: '😍', text: 'watch.amazing' },
 ]
 
 const vote = (choice) => {
@@ -54,10 +46,10 @@ const vote = (choice) => {
   width: 100%;
   max-width: 320px;
   border-radius: 16px;
-  background: linear-gradient(160deg, rgba(28, 29, 55, 0.95), rgba(12, 13, 28, 0.95));
-  color: #f1f3ff;
-  border: 1px solid rgba(126, 134, 214, 0.35);
-  box-shadow: 0 12px 35px rgba(6, 8, 18, 0.45);
+  background: linear-gradient(160deg, rgba(20, 20, 20, 0.95), rgba(16, 16, 16, 0.98));
+  color: #e8e8e8;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
   margin: 16px auto;
   padding: 16px 18px 22px;
 }
@@ -83,39 +75,101 @@ const vote = (choice) => {
   text-align: center;
   font-size: 1rem;
   font-weight: 600;
-  color: #d7dcff;
+  color: #e0e0e0;
 }
 
-.vote-btn {
-  width: 95px;
-  justify-content: center;
+.vote-options-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: nowrap;
+}
+
+.vote-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+.vote-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.vote-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.vote-text {
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #cad2ff;
-  border-color: rgba(142, 151, 235, 0.6);
-}
-
-.vote-btn:hover {
-  box-shadow: 0 0 12px rgba(136, 171, 255, 0.5);
+  color: #d0d0d0;
 }
 
 .comment-banner {
   margin-top: 22px;
   padding: 10px 14px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(56, 60, 102, 0.9), rgba(33, 36, 65, 0.95));
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(22, 22, 22, 0.95));
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #f5f7ff;
+  color: #f0f0f0;
 }
 
-.banner-icon {
-  color: #82b1ff;
+.banner-emoji {
+  font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
   .vote-card {
     max-width: 100%;
+  }
+
+  .vote-options-container {
+    gap: 4px;
+  }
+
+  .vote-option {
+    padding: 8px 4px;
+  }
+
+  .vote-emoji {
+    font-size: 1.5rem;
+  }
+
+  .vote-text {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .vote-options-container {
+    gap: 2px;
+  }
+
+  .vote-option {
+    padding: 6px 2px;
+  }
+
+  .vote-emoji {
+    font-size: 1.3rem;
+  }
+
+  .vote-text {
+    font-size: 0.7rem;
   }
 }
 </style>

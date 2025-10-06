@@ -1,6 +1,6 @@
 <template>
   <q-card flat bordered class="player-controls q-mt-sm">
-    <q-card-section class="q-pa-sm">
+    <q-card-section class="q-py-md q-px-md">
       <div class="row items-center q-col-gutter-sm">
         <!-- Left: Quick Navigation -->
         <div class="col-12 col-md-auto">
@@ -14,7 +14,7 @@
               class="neon-btn"
               @click="$emit('go-prev')"
             >
-              <q-tooltip>{{ $t('watch.prevEpisode') || 'Previous Episode' }}</q-tooltip>
+              <q-tooltip>{{ $t('watch.prevEpisode') }}</q-tooltip>
             </q-btn>
             <q-btn
               dense
@@ -25,7 +25,7 @@
               class="neon-btn"
               @click="$emit('go-next')"
             >
-              <q-tooltip>{{ $t('watch.nextEpisode') || 'Next Episode' }}</q-tooltip>
+              <q-tooltip>{{ $t('watch.nextEpisode') }}</q-tooltip>
             </q-btn>
           </div>
         </div>
@@ -40,9 +40,7 @@
               class="icon-pulse gt-md"
               @click="$emit('toggle-expand')"
             >
-              <q-tooltip>{{
-                isExpanded ? $t('watch.collapse') || 'Collapse' : $t('watch.expand') || 'Expand'
-              }}</q-tooltip>
+              <q-tooltip>{{ isExpanded ? $t('watch.collapse') : $t('watch.expand') }}</q-tooltip>
             </q-btn>
             <q-btn
               dense
@@ -52,9 +50,7 @@
               @click="$emit('toggle-cinema')"
             >
               <q-tooltip>{{
-                isCinemaMode
-                  ? $t('watch.exitCinema') || 'Exit Cinema Mode'
-                  : $t('watch.cinemaMode') || 'Cinema Mode'
+                isCinemaMode ? $t('watch.exitCinema') : $t('watch.cinemaMode')
               }}</q-tooltip>
             </q-btn>
 
@@ -68,7 +64,7 @@
               class="icon-pulse"
               @click="$emit('toggle-auto-play')"
             >
-              <q-tooltip>{{ $t('watch.autoPlay') || 'Auto Play' }}</q-tooltip>
+              <q-tooltip>{{ $t('watch.autoPlay') }}</q-tooltip>
             </q-btn>
             <q-btn
               dense
@@ -78,7 +74,7 @@
               class="icon-pulse"
               @click="$emit('toggle-auto-next')"
             >
-              <q-tooltip>{{ $t('watch.autoNext') || 'Auto Next Episode' }}</q-tooltip>
+              <q-tooltip>{{ $t('watch.autoNext') }}</q-tooltip>
             </q-btn>
             <q-btn
               dense
@@ -88,7 +84,7 @@
               class="icon-pulse"
               @click="$emit('toggle-auto-skip-intro')"
             >
-              <q-tooltip>{{ $t('watch.autoSkipIntro') || 'Auto Skip Intro' }}</q-tooltip>
+              <q-tooltip>{{ $t('watch.autoSkipIntro') }}</q-tooltip>
             </q-btn>
           </div>
         </div>
@@ -105,9 +101,7 @@
               @click="$emit('toggle-watchlist')"
             >
               <q-tooltip>{{
-                isInWatchlist
-                  ? $t('watch.removeFromWatchlist') || 'Remove from Watchlist'
-                  : $t('watch.addToWatchlist') || 'Add to Watchlist'
+                isInWatchlist ? $t('watch.removeFromWatchlist') : $t('watch.addToWatchlist')
               }}</q-tooltip>
             </q-btn>
           </div>
@@ -143,27 +137,33 @@ defineEmits([
 
 <style scoped>
 .player-controls {
-  background: linear-gradient(135deg, rgba(33, 38, 68, 0.95), rgba(21, 23, 42, 0.95));
-  border: 1px solid rgba(141, 151, 255, 0.25);
-  color: #dfe3ff;
-  box-shadow: 0 12px 30px rgba(15, 17, 35, 0.35);
+  background: linear-gradient(135deg, rgba(24, 24, 24, 0.95), rgba(18, 18, 18, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e0e0e0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .neon-btn {
-  border-color: rgba(142, 151, 235, 0.6);
-  color: #cfd6ff;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #e0e0e0;
 }
 
 .neon-btn:hover {
-  box-shadow: 0 0 12px rgba(136, 171, 255, 0.6);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
 }
 
 .icon-pulse {
-  color: #b3baff;
+  color: #b0b0b0;
 }
 
 .icon-pulse:hover {
   color: #ffffff;
+}
+
+@media (max-width: 1023px) {
+  .player-controls :deep(.q-card__section) {
+    padding: 12px !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -173,7 +173,7 @@ defineEmits([
 }
 
 .player-controls :deep(.q-btn--flat) {
-  color: #c5cbff;
+  color: #c0c0c0;
 }
 
 .player-controls :deep(.q-btn--flat:hover) {
@@ -181,6 +181,6 @@ defineEmits([
 }
 
 .player-controls :deep(.q-btn--outline.q-btn--standard) {
-  background: rgba(89, 101, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
 }
 </style>
