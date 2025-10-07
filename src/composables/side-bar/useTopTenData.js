@@ -2,15 +2,14 @@
 import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
-import { getLangQuery } from 'src/utils/lang'
-
-const langQuery = getLangQuery()
+import { buildUrlWithParams } from 'src/utils/lang'
 
 export function useTopTenData() {
     return useQuery({
-        queryKey: ['sidebar-top-ten', langQuery],
+        queryKey: ['sidebar-top-ten'],
         queryFn: async () => {
-            const response = await api.get(`${API_BASE_URL}/sidebar/top-anime${langQuery}`)
+            const url = buildUrlWithParams(`${API_BASE_URL}/sidebar/top-anime`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ

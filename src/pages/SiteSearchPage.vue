@@ -1,6 +1,6 @@
 <template>
-  <q-page class="search-page">
-    <div class="page-container q-mx-auto q-px-lg" style="max-width: 1920px; width: 100%">
+  <q-page :class="[pagePadding, 'search-page']">
+    <div class="page-container q-mx-auto" style="max-width: 1920px; width: 100%">
       <!-- ========== BREADCRUMB NAVIGATION ========== -->
       <div class="breadcrumb-container q-mt-md q-mb-sm">
         <q-breadcrumbs class="breadcrumb-nav" active-color="primary">
@@ -205,12 +205,21 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useMeta, useQuasar } from 'quasar'
 import { useSearchPageData } from 'src/composables/search-page/useSearchPageData.js'
 import MovieCard from 'src/components/MovieCard.vue'
 import TopTen from 'src/components/side-bar/TopTen.vue'
+
+const $q = useQuasar()
+
+const pagePadding = computed(() => {
+  if ($q.screen.lt.sm) return 'q-px-sm'
+  if ($q.screen.lt.md) return 'q-px-md'
+  return 'q-px-lg'
+})
 
 // ========== COMPOSABLES ==========
 const route = useRoute()
@@ -229,6 +238,76 @@ const {
   isError,
   refetch,
 } = useSearchPageData(currentKeyword, currentPage)
+
+// ========== SEO META TAGS ==========
+const metaTitle = computed(() => {
+  if (currentKeyword.value) {
+    return `${t('search.resultsFor')} "${currentKeyword.value}" - ${t('common.siteName')}`
+  }
+  return `${t('common.search')} - ${t('common.siteName')}`
+})
+
+const metaDescription = computed(() => {
+  if (currentKeyword.value) {
+    const resultCount = searchData.value?.count || 0
+    if (resultCount > 0) {
+      return `${t('search.foundResults', { count: resultCount, keyword: currentKeyword.value })}. ${t('search.discoverAnimeMatching')} "${currentKeyword.value}".`
+    } else {
+      return `${t('search.noResultsFor')} "${currentKeyword.value}". ${t('search.tryDifferentKeywordOrCheck')}.`
+    }
+  }
+  return t('search.searchAnimeDescription')
+})
+
+const metaKeywords = computed(() => {
+  if (currentKeyword.value) {
+    return `${currentKeyword.value}, anime, ${t('common.siteName')}, ${t('search.searchAnime')}, ${t('search.animeSearch')}`
+  }
+  return `anime, ${t('common.siteName')}, ${t('search.searchAnime')}, ${t('search.animeSearch')}`
+})
+
+// Set meta tags using useMeta
+useMeta(() => ({
+  title: metaTitle.value,
+  meta: {
+    description: {
+      name: 'description',
+      content: metaDescription.value,
+    },
+    keywords: {
+      name: 'keywords',
+      content: metaKeywords.value,
+    },
+    'og:title': {
+      property: 'og:title',
+      content: metaTitle.value,
+    },
+    'og:description': {
+      property: 'og:description',
+      content: metaDescription.value,
+    },
+    'og:type': {
+      property: 'og:type',
+      content: 'website',
+    },
+    'og:url': {
+      property: 'og:url',
+      content: window.location.href,
+    },
+    'twitter:card': {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    'twitter:title': {
+      name: 'twitter:title',
+      content: metaTitle.value,
+    },
+    'twitter:description': {
+      name: 'twitter:description',
+      content: metaDescription.value,
+    },
+  },
+}))
 
 // ========== LIFECYCLE & WATCHERS ==========
 onMounted(() => {

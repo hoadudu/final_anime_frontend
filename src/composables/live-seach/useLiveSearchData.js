@@ -2,9 +2,7 @@ import { ref, watch, computed } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
-import { getLangQuery } from 'src/utils/lang'
-
-const langQuery = getLangQuery().replace('?lang=', '&lang=')
+import { buildUrlWithParams } from 'src/utils/lang'
 
 /**
  * Hook để fetch dữ liệu live search anime với debouncing
@@ -35,17 +33,18 @@ export function useLiveSearchData(keyword, delay = 500) {
 
   // Query với TanStack Query
   return useQuery({
-    queryKey: computed(() => ['live-search', debouncedKeyword.value, langQuery]),
+    queryKey: computed(() => ['live-search', debouncedKeyword.value]),
     queryFn: async () => {
       if (!debouncedKeyword.value) {
         return null
       }
 
-      const response = await api.get(
-        `${API_BASE_URL}/search/live/?keyword=${encodeURIComponent(
-          debouncedKeyword.value
-        )}${langQuery}`
-      )
+      // Build URL an toàn với params
+      const url = buildUrlWithParams(`${API_BASE_URL}/search/live/`, {
+        keyword: debouncedKeyword.value
+      })
+
+      const response = await api.get(url)
       return response.data
     },
     enabled: computed(() => !!debouncedKeyword.value && debouncedKeyword.value.length > 0),

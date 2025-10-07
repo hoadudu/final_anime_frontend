@@ -3,6 +3,9 @@
 export default {
   // Common UI elements and actions
   common: {
+    // Site information
+    siteName: 'AnimeHub',
+
     // Basic actions
     loading: 'Loading...',
     loadMore: 'Load More',
@@ -56,6 +59,7 @@ export default {
     logout: 'Logout',
     login: 'Login',
     signUp: 'Sign Up',
+    reset: 'Reset',
   },
 
   // Header component
@@ -74,6 +78,7 @@ export default {
     genre: 'Genre',
     language: 'Language',
     moreFromYoutube: 'More from Youtube',
+    filter: 'Filter',
   },
 
   // Top Ten sidebar component
@@ -102,6 +107,35 @@ export default {
     selectedGenres: 'Selected genres',
     loadingGenres: 'Loading genres...',
     anime: 'anime',
+
+    // Genre page specific
+    selectGenre: 'Select Genre',
+    selectGenreDescription: 'Choose a genre to view anime belonging to that category',
+    totalFound: 'Found {total} anime in total',
+    errorOccurred: 'An error occurred',
+    errorMessage: 'Unable to load anime list. Please try again.',
+    noResults: 'No results found',
+    tryDifferentGenre: 'Try selecting a different genre',
+    viewDetails: 'View Details',
+    showing: 'Showing {from}–{to} of {total} results',
+
+    // SEO and meta descriptions
+    discoverAnimeByGenre: 'Discover the rich world of anime with thousands of anime across various genres',
+    exploreAnimeIn: 'Explore anime in',
+    discoverBestAnime: 'Discover the best anime in',
+    withRatingsAndDetails: 'with ratings and details',
+    watchAnime: 'Watch anime',
+    animeGenres: 'Anime genres',
+    pickYourFavorite: 'Pick your favorite genres',
+
+    // Sorting options
+    sortBy: 'Sort by',
+    sortLatest: 'Latest',
+    sortOldest: 'Oldest',
+    sortTitle: 'Title A-Z',
+    sortRating: 'Highest rated',
+    sortViews: 'Most viewed',
+    sortToggle: 'Toggle sort',
   },
 
   // Movie/Anime tooltip
@@ -359,6 +393,53 @@ export default {
     noResults: 'No results found',
     tryDifferentKeyword: 'Try using different keywords or check your spelling',
     viewDetails: 'View Details',
-    showing: 'Showing {from}–{to} of {total} results'
+    showing: 'Showing {from}–{to} of {total} results',
+
+    // SEO and meta descriptions
+    foundResults: 'Found {count} results for "{keyword}"',
+    noResultsFor: 'No results found for keyword',
+    tryDifferentKeywordOrCheck: 'Try different keywords or check your spelling',
+    searchAnimeDescription: 'Search and discover thousands of anime across various genres',
+    discoverAnimeMatching: 'Discover anime that match your interests'
+  },
+
+  // Filter Page
+  filter: {
+    filterAnime: 'Filter Anime',
+    filterResults: 'Filter Results',
+    filter: 'Filter',
+    foundResults: 'Found {count} results',
+    type: 'Type',
+    status: 'Status',
+    season: 'Season',
+    year: 'Year',
+    genres: 'Genres',
+    sort: 'Sort',
+    sortBy: 'Sort by',
+    noFiltersApplied: 'No filters applied',
+    clearAllFilters: 'Clear all filters',
+    allTypes: 'All types',
+    allStatuses: 'All statuses',
+    airing: 'Airing',
+    completed: 'Completed',
+    customYear: 'Custom year',
+    upcoming: 'Upcoming',
+    sortLatest: 'Latest',
+    sortOldest: 'Oldest',
+    sortTitle: 'Title A-Z',
+    sortRating: 'Highest rated',
+    sortViews: 'Most viewed',
+    totalFound: 'Total {total} anime found',
+    errorOccurred: 'An error occurred',
+    errorMessage: 'Failed to load filter results. Please try again.',
+    noResults: 'No results found',
+    tryDifferentFilters: 'Try applying different filters',
+    viewDetails: 'View details',
+    showing: 'Showing {from}–{to} of {total} results',
+    selected: 'selected',
+    forType: 'for type',
+    withStatus: 'with status',
+    fromYear: 'from year',
+    filterAnimeDescription: 'Filter and discover anime based on various criteria'
   }
 }

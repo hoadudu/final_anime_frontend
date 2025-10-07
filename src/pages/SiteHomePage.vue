@@ -1,6 +1,6 @@
 <template>
-  <q-page class="q-px-lg flex-center">
-    <div class="q-mx-auto q-px-lg" style="max-width: 1920px; width: 100%;">
+  <q-page :class="[pagePadding, 'flex-center']">
+    <div class="q-mx-auto" style="max-width: 1920px; width: 100%">
       <SiteHeroSection />
       <SiteTrendingCarousel />
       <SiteAnimeFeatured />
@@ -18,7 +18,6 @@
       </div>
     </div>
   </q-page>
-
 </template>
 
 <script setup>
@@ -28,4 +27,13 @@ import SiteAnimeFeatured from 'src/components/home-page/site-anime-featured/Site
 import SiteLatestEpisode from 'src/components/home-page/site-latest-episode-posts/SiteLatestEpisodePosts.vue'
 import TopTen from 'src/components/side-bar/TopTen.vue'
 
+import { computed } from 'vue'
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
+
+const pagePadding = computed(() => {
+  if ($q.screen.lt.sm) return 'q-px-sm'
+  if ($q.screen.lt.md) return 'q-px-md'
+  return 'q-px-lg'
+})
 </script>

@@ -3,18 +3,15 @@ import { useQuery } from '@tanstack/vue-query'
 import { unref } from 'vue'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
-import { getLangQuery } from 'src/utils/lang'
-
-const langQuery = getLangQuery();
+import { buildUrlWithParams } from 'src/utils/lang'
 
 export function useAnimeInfoPageData(animeId) {
   return useQuery({
-    queryKey: ['anime-info', animeId, langQuery],
+    queryKey: ['anime-info', animeId],
     queryFn: async () => {
       const id = unref(animeId) // Unwrap ref/computed
-      // console.log('Fetching anime info for ID:', id) // Debug log
-      const response = await api.get(`${API_BASE_URL}/anime/info/${id}${langQuery}`)
-      // console.log('API Response:', response.data) // Debug response
+      const url = buildUrlWithParams(`${API_BASE_URL}/anime/info/${id}`)
+      const response = await api.get(url)
       // Return the data object from response
       return response.data.data || response.data
     },
@@ -32,10 +29,11 @@ export const useAnimeInfoData = useAnimeInfoPageData
 
 export function useAnimeRecommendationsData(animeId) {
   return useQuery({
-    queryKey: ['anime-recommendations', animeId, langQuery],
+    queryKey: ['anime-recommendations', animeId],
     queryFn: async () => {
       const id = unref(animeId)
-      const response = await api.get(`${API_BASE_URL}/anime/info/${id}/recommendations${langQuery}`)
+      const url = buildUrlWithParams(`${API_BASE_URL}/anime/info/${id}/recommendations`)
+      const response = await api.get(url)
       return response.data
     },
     staleTime: 1000 * 60 * 60, // 1 giờ
@@ -46,10 +44,11 @@ export function useAnimeRecommendationsData(animeId) {
 
 export function useAnimeCharactersData(animeId) {
   return useQuery({
-    queryKey: ['anime-characters', animeId, langQuery],
+    queryKey: ['anime-characters', animeId],
     queryFn: async () => {
       const id = unref(animeId)
-      const response = await api.get(`${API_BASE_URL}/anime-info/${id}/characters${langQuery}`)
+      const url = buildUrlWithParams(`${API_BASE_URL}/anime-info/${id}/characters`)
+      const response = await api.get(url)
       return response.data
     },
     staleTime: 1000 * 60 * 60, // 1 giờ

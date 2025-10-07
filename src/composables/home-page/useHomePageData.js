@@ -2,15 +2,14 @@
 import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
-import { getLangQuery } from 'src/utils/lang'
-
-const langQuery = getLangQuery()
+import { buildUrlWithParams } from 'src/utils/lang'
 
 export function useHomePageHeroSectionData() {
     return useQuery({
-        queryKey: ['home-page-hero-section', langQuery],
+        queryKey: ['home-page-hero-section'],
         queryFn: async () => {
-            const response = await api.get(`${API_BASE_URL}/home-page/hero-section${langQuery}`)
+            const url = buildUrlWithParams(`${API_BASE_URL}/home-page/hero-section`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ
@@ -20,9 +19,10 @@ export function useHomePageHeroSectionData() {
 
 export function useHomePageTrendingCarouselData() {
     return useQuery({
-        queryKey: ['home-page-trending-carousel', langQuery],
+        queryKey: ['home-page-trending-carousel'],
         queryFn: async () => {
-            const response = await api.get(`${API_BASE_URL}/home-page/trending-carousel${langQuery}`)
+            const url = buildUrlWithParams(`${API_BASE_URL}/home-page/trending-carousel`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ
@@ -32,9 +32,10 @@ export function useHomePageTrendingCarouselData() {
 
 export function useHomePageAnimeFeaturedTopAiringData() {
     return useQuery({
-        queryKey: ['home-page-top-airing', langQuery],
+        queryKey: ['home-page-top-airing'],
         queryFn: async () => {
-            const response = await api.get(API_BASE_URL + '/home-page/top-airing' + langQuery)
+            const url = buildUrlWithParams(`${API_BASE_URL}/home-page/top-airing`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ
@@ -44,9 +45,10 @@ export function useHomePageAnimeFeaturedTopAiringData() {
 
 export function useHomePageAnimeFeaturedMostPopularData() {
     return useQuery({
-        queryKey: ['home-page-most-popular', langQuery],
+        queryKey: ['home-page-most-popular'],
         queryFn: async () => {
-            const response = await api.get(API_BASE_URL + '/home-page/most-popular' + langQuery)
+            const url = buildUrlWithParams(`${API_BASE_URL}/home-page/most-popular`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ
@@ -56,9 +58,10 @@ export function useHomePageAnimeFeaturedMostPopularData() {
 
 export function useHomePageAnimeFeaturedMostLikedData() {
     return useQuery({
-        queryKey: ['home-page-most-liked', langQuery],
+        queryKey: ['home-page-most-liked'],
         queryFn: async () => {
-            const response = await api.get(API_BASE_URL + '/home-page/most-liked' + langQuery)
+            const url = buildUrlWithParams(`${API_BASE_URL}/home-page/most-liked`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ
@@ -68,9 +71,10 @@ export function useHomePageAnimeFeaturedMostLikedData() {
 
 export function useHomePageAnimeFeaturedLatestCompletedData() {
     return useQuery({
-        queryKey: ['home-page-latest-completed', langQuery],
+        queryKey: ['home-page-latest-completed'],
         queryFn: async () => {
-            const response = await api.get(API_BASE_URL + '/home-page/latest-completed' + langQuery)
+            const url = buildUrlWithParams(`${API_BASE_URL}/home-page/latest-completed`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ
@@ -80,9 +84,10 @@ export function useHomePageAnimeFeaturedLatestCompletedData() {
 
 export function useHomePageLastestEpisodePostsData() {
     return useQuery({
-        queryKey: ['home-page-latest-episode-posts', langQuery],
+        queryKey: ['home-page-latest-episode-posts'],
         queryFn: async () => {
-            const response = await api.get(API_BASE_URL + '/home-page/latest-episode-posts' + langQuery)
+            const url = buildUrlWithParams(`${API_BASE_URL}/home-page/latest-episode-posts`)
+            const response = await api.get(url)
             return response.data
         },
         staleTime: 1000 * 60 * 60, // 1 giờ

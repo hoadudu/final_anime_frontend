@@ -3,16 +3,15 @@ import { useQuery } from '@tanstack/vue-query'
 import { unref } from 'vue'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
-import { getLangQuery } from 'src/utils/lang'
-
-const langQuery = getLangQuery()
+import { buildUrlWithParams } from 'src/utils/lang'
 
 export function useWatchPageDataSingleEpisode(episodeId) {
   return useQuery({
-    queryKey: ['watch-page-single-episode', episodeId, langQuery],
+    queryKey: ['watch-page-single-episode', episodeId],
     queryFn: async () => {
       const id = unref(episodeId)
-      const response = await api.get(`${API_BASE_URL}/anime/watch/episode/${id}${langQuery}`)
+      const url = buildUrlWithParams(`${API_BASE_URL}/anime/watch/episode/${id}`)
+      const response = await api.get(url)
       return response.data
     },
     staleTime: 1000 * 60 * 60, // 1 giờ
@@ -26,13 +25,14 @@ export function useWatchPageDataSingleEpisode(episodeId) {
 
 export function useWatchPageDataListEpisodes(postId) {
   return useQuery({
-    queryKey: ['watch-page-list-episodes', postId, langQuery],
+    queryKey: ['watch-page-list-episodes', postId],
     queryFn: async () => {
       const id = unref(postId)
       if (!id) {
         return { groups: [] }
       }
-      const response = await api.get(`${API_BASE_URL}/anime/${id}/episodes${langQuery}`)
+      const url = buildUrlWithParams(`${API_BASE_URL}/anime/${id}/episodes`)
+      const response = await api.get(url)
       return response.data
     },
     staleTime: 1000 * 60 * 60, // 1 giờ

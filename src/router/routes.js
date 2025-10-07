@@ -39,6 +39,12 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', name: 'site-search', component: () => import('src/pages/SiteSearchPage.vue') }],
   },
+  {
+    path: '/filter',
+    name: 'filter',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', name: 'site-filter', component: () => import('src/pages/SiteAnimeFilter.vue') }],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

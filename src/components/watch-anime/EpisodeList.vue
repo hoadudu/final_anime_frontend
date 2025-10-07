@@ -620,8 +620,12 @@ function getEpisodeClass(ep) {
 /* Responsive */
 @media (max-width: 1200px) {
   .episode-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+  }
+
+  .episode-item {
+    font-size: 0.85rem;
   }
 }
 
@@ -695,8 +699,12 @@ function getEpisodeClass(ep) {
   }
 
   .episode-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+  }
+
+  .episode-item {
+    font-size: 0.85rem;
   }
 }
 
@@ -730,12 +738,12 @@ function getEpisodeClass(ep) {
   }
 
   .episode-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
   }
 
   .episode-item {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
   }
 
   .group-info {

@@ -1,6 +1,6 @@
 <template>
-  <q-page class="anime-page">
-    <div class="page-container q-mx-auto q-px-lg" style="max-width: 1920px; width: 100%">
+  <q-page :class="[pagePadding, 'anime-page']">
+    <div class="q-mx-auto" style="max-width: 1920px; width: 100%">
       <!-- Loading state -->
       <div v-if="isLoading" class="full-height flex flex-center column">
         <q-spinner size="50px" color="primary" />
@@ -24,7 +24,7 @@
         </div>
 
         <!-- Additional Content with Sidebar Layout -->
-        <div class="additional-content q-mt-xl" v-if="animeInfo">
+        <div class="q-mt-xl" v-if="animeInfo">
           <div class="row q-col-gutter-lg">
             <!-- Extended Content Area -->
             <div class="col-12 col-lg-9">
@@ -79,22 +79,32 @@
 </template>
 
 <script setup>
-
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
-import { computed, watchEffect } from 'vue'
-import { useMeta } from 'quasar'
-import { useAnimeInfoPageData, useAnimeRecommendationsData } from 'src/composables/anime-info-page/useAnimeInfoPageData'
+import { computed } from 'vue'
+import { useMeta, useQuasar } from 'quasar'
+import {
+  useAnimeInfoPageData,
+  useAnimeRecommendationsData,
+} from 'src/composables/anime-info-page/useAnimeInfoPageData'
 import AnimeInfo from 'src/components/anime-info-page/AnimeInfo.vue'
 import TopTen from 'src/components/side-bar/TopTen.vue'
 import RecommendationAnimes from 'src/components/anime-info-page/components/RecommendationAnimes.vue'
 import { APP_NAME } from 'src/config/api.js'
 
+const $q = useQuasar()
 
+const pagePadding = computed(() => {
+  if ($q.screen.lt.sm) return 'q-px-sm'
+  if ($q.screen.lt.md) return 'q-px-md'
+  return 'q-px-lg'
+})
 
-
+// Composables and reactive data
 const { t } = useI18n()
 const route = useRoute()
+
+// Computed properties for route data
 const slugWithId = computed(() => route.params.slugWithId)
 const animeId = computed(() => {
   const slugWithId = route.params.slugWithId
@@ -103,8 +113,13 @@ const animeId = computed(() => {
 })
 
 // Top-down data fetching
-const { data: animeInfoData, isLoading: isLoadingAnimeInfo, error: animeInfoError } = useAnimeInfoPageData(animeId)
-const { data: recommendationsData, isLoading: isLoadingRecommendations } = useAnimeRecommendationsData(animeId)
+const {
+  data: animeInfoData,
+  isLoading: isLoadingAnimeInfo,
+  error: animeInfoError,
+} = useAnimeInfoPageData(animeId)
+const { data: recommendationsData, isLoading: isLoadingRecommendations } =
+  useAnimeRecommendationsData(animeId)
 
 // Provide data to child components
 const animeInfo = computed(() => {
@@ -121,11 +136,7 @@ const recommendations = computed(() => {
 
 // Handle loading states
 const isLoading = computed(() => isLoadingAnimeInfo && !animeInfo.value) // Only block on anime info initial load
-// const hasError = computed(() => animeInfoError)
 const hasError = computed(() => !!animeInfoError.value)
-
-
-
 
 // Computed properties for dynamic meta data
 const pageTitle = computed(() => {
@@ -136,7 +147,8 @@ const pageTitle = computed(() => {
 })
 
 const pageDescription = computed(() => {
-  if (!animeInfo.value) return t('animePage.defaultDescription', 'Watch anime online with high quality')
+  if (!animeInfo.value)
+    return t('animePage.defaultDescription', 'Watch anime online with high quality')
 
   const anime = animeInfo.value
   let description = anime.description || anime.synopsis || ''
@@ -148,7 +160,10 @@ const pageDescription = computed(() => {
 
   // Add genre information if available
   if (anime.genres && anime.genres.length > 0) {
-    const genres = anime.genres.slice(0, 3).map(g => g.name).join(', ')
+    const genres = anime.genres
+      .slice(0, 3)
+      .map((g) => g.name)
+      .join(', ')
     description = `${description} Genres: ${genres}.`
   }
 
@@ -163,7 +178,7 @@ const pageKeywords = computed(() => {
 
   // Add genres as keywords
   if (anime.genres) {
-    keywords.push(...anime.genres.map(g => g.name.toLowerCase()))
+    keywords.push(...anime.genres.map((g) => g.name.toLowerCase()))
   }
 
   // Add type and status
@@ -178,71 +193,71 @@ const ogImage = computed(() => {
   return animeInfo.value?.poster || animeInfo.value?.cover || '/favicon.ico'
 })
 
-// Setup dynamic page meta information
-const metaData = computed(() => ({
+// Setup dynamic page meta information using useMeta directly
+useMeta(() => ({
   title: pageTitle.value,
-  titleTemplate: title => `${title} - ${process.env.APP_NAME || APP_NAME}`,
+  titleTemplate: (title) => `${title} - ${process.env.APP_NAME || APP_NAME}`,
 
   meta: {
     description: {
       name: 'description',
-      content: pageDescription.value
+      content: pageDescription.value,
     },
     keywords: {
       name: 'keywords',
-      content: pageKeywords.value
+      content: pageKeywords.value,
     },
     equiv: {
       'http-equiv': 'Content-Type',
-      content: 'text/html; charset=UTF-8'
+      content: 'text/html; charset=UTF-8',
     },
 
     // Open Graph meta tags
     ogTitle: {
       property: 'og:title',
-      content: pageTitle.value
+      content: pageTitle.value,
     },
     ogDescription: {
       property: 'og:description',
-      content: pageDescription.value
+      content: pageDescription.value,
     },
     ogImage: {
       property: 'og:image',
-      content: ogImage.value
+      content: ogImage.value,
     },
     ogType: {
       property: 'og:type',
-      content: 'video.tv_show'
+      content: 'video.tv_show',
     },
     ogUrl: {
       property: 'og:url',
-      content: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath
+      content: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath,
     },
 
     // Twitter Card meta tags
     twitterCard: {
       name: 'twitter:card',
-      content: 'summary_large_image'
+      content: 'summary_large_image',
     },
     twitterTitle: {
       name: 'twitter:title',
-      content: pageTitle.value
+      content: pageTitle.value,
     },
     twitterDescription: {
       name: 'twitter:description',
-      content: pageDescription.value
+      content: pageDescription.value,
     },
     twitterImage: {
       name: 'twitter:image',
-      content: ogImage.value
-    }
+      content: ogImage.value,
+    },
   },
 
   link: {
     canonical: {
       rel: 'canonical',
-      href: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath
-    }
+      href: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath,
+    },
   },
 
   script: {
@@ -253,44 +268,42 @@ const metaData = computed(() => ({
 
         const anime = animeInfo.value
         const structuredData = {
-          "@context": "https://schema.org",
-          "@type": "TVSeries",
-          "name": anime.title,
-          "description": anime.description || anime.synopsis || '',
-          "image": anime.poster || anime.cover,
-          "datePublished": anime.aired?.from,
-          "genre": anime.genres?.map(g => g.name) || [],
-          "numberOfEpisodes": anime.episodes?.total || 0,
-          "contentRating": anime.rating || 'Not Rated',
-          "aggregateRating": anime.malScore ? {
-            "@type": "AggregateRating",
-            "ratingValue": anime.malScore,
-            "ratingCount": 1
-          } : undefined,
-          "productionCompany": anime.studios?.map(s => ({
-            "@type": "Organization",
-            "name": s.titles || s.name
-          })) || [],
-          "url": process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath
+          '@context': 'https://schema.org',
+          '@type': 'TVSeries',
+          name: anime.title,
+          description: anime.description || anime.synopsis || '',
+          image: anime.poster || anime.cover,
+          datePublished: anime.aired?.from,
+          genre: anime.genres?.map((g) => g.name) || [],
+          numberOfEpisodes: anime.episodes?.total || 0,
+          contentRating: anime.rating || 'Not Rated',
+          aggregateRating: anime.malScore
+            ? {
+                '@type': 'AggregateRating',
+                ratingValue: anime.malScore,
+                ratingCount: 1,
+              }
+            : undefined,
+          productionCompany:
+            anime.studios?.map((s) => ({
+              '@type': 'Organization',
+              name: s.titles || s.name,
+            })) || [],
+          url: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath,
         }
 
         return JSON.stringify(structuredData)
-      }).value
-    }
+      }).value,
+    },
   },
 
   htmlAttr: {
-    lang: 'en'
+    lang: 'en',
   },
 
   bodyAttr: {
     itemscope: '',
-    itemtype: 'https://schema.org/WebPage'
-  }
+    itemtype: 'https://schema.org/WebPage',
+  },
 }))
-
-// Apply meta data reactively
-watchEffect(() => {
-  useMeta(metaData.value)
-})
 </script>

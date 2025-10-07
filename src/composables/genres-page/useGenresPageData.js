@@ -2,10 +2,8 @@
 import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
-import { getLangQuery } from 'src/utils/lang'
+import { buildUrlWithParams } from 'src/utils/lang'
 import { computed } from 'vue'
-
-const langQuery = getLangQuery();
 
 /**
  * Hook để fetch dữ liệu anime theo thể loại
@@ -16,20 +14,25 @@ const langQuery = getLangQuery();
  */
 export function useGenresPageData(genreSlug, page, sort) {
   return useQuery({
-    queryKey: computed(() => ['genres-page', genreSlug.value, page.value, sort.value, langQuery]),
+    queryKey: computed(() => ['genres-page', genreSlug.value, page.value, sort.value]),
     queryFn: async () => {
       // Không fetch nếu không có genreSlug
       if (!genreSlug.value) {
         return null
       }
 
-      // Tạo URL với các tham số
-      let url = `${API_BASE_URL}/genres/${genreSlug.value}/anime${langQuery}&page=${page.value}`
+      // Tạo params object
+      const params = {
+        page: page.value
+      }
 
       // Thêm tham số sort nếu có và khác mặc định
       if (sort.value && sort.value !== 'latest') {
-        url += `&sort=${sort.value}`
+        params.sort = sort.value
       }
+
+      // Build URL an toàn với params
+      const url = buildUrlWithParams(`${API_BASE_URL}/genres/${genreSlug.value}/anime`, params)
 
       const response = await api.get(url)
 

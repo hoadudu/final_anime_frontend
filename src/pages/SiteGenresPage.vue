@@ -235,9 +235,10 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useMeta } from 'quasar'
 import { useGenresPageData } from 'src/composables/genres-page/useGenresPageData.js'
 import MovieCard from 'src/components/MovieCard.vue'
 import TopTen from 'src/components/side-bar/TopTen.vue'
@@ -270,6 +271,74 @@ const {
   isError,
   refetch,
 } = useGenresPageData(currentGenreSlug, currentPage, currentSort)
+
+// ========== SEO META TAGS ==========
+const metaTitle = computed(() => {
+  if (currentGenreName.value) {
+    return `${currentGenreName.value} - ${t('common.siteName')}`
+  }
+  return `${t('genres.genre')} - ${t('common.siteName')}`
+})
+
+const metaDescription = computed(() => {
+  if (genresData.value?.genre?.description) {
+    return genresData.value.genre.description.slice(0, 160) + '...'
+  }
+  if (currentGenreName.value) {
+    return `${t('genres.exploreAnimeIn')} ${currentGenreName.value}. ${t('genres.discoverBestAnime')} ${currentGenreName.value} ${t('genres.withRatingsAndDetails')}.`
+  }
+  return t('genres.discoverAnimeByGenre')
+})
+
+const metaKeywords = computed(() => {
+  if (currentGenreName.value) {
+    return `${currentGenreName.value}, anime, ${t('common.siteName')}, ${t('genres.watchAnime')}, ${t('genres.animeGenres')}`
+  }
+  return `anime, ${t('common.siteName')}, ${t('genres.watchAnime')}, ${t('genres.animeGenres')}`
+})
+
+// Set meta tags using useMeta
+useMeta(() => ({
+  title: metaTitle.value,
+  meta: {
+    description: {
+      name: 'description',
+      content: metaDescription.value,
+    },
+    keywords: {
+      name: 'keywords',
+      content: metaKeywords.value,
+    },
+    'og:title': {
+      property: 'og:title',
+      content: metaTitle.value,
+    },
+    'og:description': {
+      property: 'og:description',
+      content: metaDescription.value,
+    },
+    'og:type': {
+      property: 'og:type',
+      content: 'website',
+    },
+    'og:url': {
+      property: 'og:url',
+      content: window.location.href,
+    },
+    'twitter:card': {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    'twitter:title': {
+      name: 'twitter:title',
+      content: metaTitle.value,
+    },
+    'twitter:description': {
+      name: 'twitter:description',
+      content: metaDescription.value,
+    },
+  },
+}))
 
 // ========== LIFECYCLE & WATCHERS ==========
 onMounted(() => {

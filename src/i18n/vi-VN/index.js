@@ -3,6 +3,9 @@
 export default {
   // Common UI elements and actions
   common: {
+    // Site information
+    siteName: 'AnimeHub',
+
     // Basic actions
     loading: 'Đang tải...',
     loadMore: 'Tải thêm',
@@ -56,6 +59,7 @@ export default {
     logout: 'Đăng xuất',
     login: 'Đăng nhập',
     signUp: 'Đăng ký',
+    reset: 'Làm mới',
   },
 
   // Header component
@@ -74,6 +78,7 @@ export default {
     genre: 'Thể loại',
     language: 'Ngôn ngữ',
     moreFromYoutube: 'Thêm từ Youtube',
+    filter: 'Lọc',
   },
 
   // Top Ten sidebar component
@@ -113,6 +118,15 @@ export default {
     tryDifferentGenre: 'Hãy thử chọn thể loại khác',
     viewDetails: 'Xem Chi Tiết',
     showing: 'Hiển thị {from}–{to} trong {total} kết quả',
+
+    // SEO and meta descriptions
+    discoverAnimeByGenre: 'Khám phá thế giới anime phong phú với hàng nghìn bộ anime thuộc nhiều thể loại khác nhau',
+    exploreAnimeIn: 'Khám phá anime trong thể loại',
+    discoverBestAnime: 'Khám phá những bộ anime hay nhất trong thể loại',
+    withRatingsAndDetails: 'với đánh giá và thông tin chi tiết',
+    watchAnime: 'Xem anime',
+    animeGenres: 'Thể loại anime',
+    pickYourFavorite: 'Chọn thể loại yêu thích của bạn',
 
     // Sorting options
     sortBy: 'Sắp xếp theo',
@@ -383,7 +397,53 @@ export default {
     noResults: 'Không tìm thấy kết quả',
     tryDifferentKeyword: 'Hãy thử sử dụng từ khóa khác hoặc kiểm tra chính tả',
     viewDetails: 'Xem Chi Tiết',
-    showing: 'Hiển thị {from}–{to} trong {total} kết quả'
-  }
+    showing: 'Hiển thị {from}–{to} trong {total} kết quả',
 
+    // SEO and meta descriptions
+    foundResults: 'Tìm thấy {count} kết quả cho từ khóa "{keyword}"',
+    noResultsFor: 'Không tìm thấy kết quả nào cho từ khóa',
+    tryDifferentKeywordOrCheck: 'Hãy thử từ khóa khác hoặc kiểm tra chính tả',
+    searchAnimeDescription: 'Tìm kiếm và khám phá hàng nghìn bộ anime với nhiều thể loại phong phú',
+    discoverAnimeMatching: 'Khám phá những bộ anime phù hợp với sở thích của bạn'
+  },
+
+  // Filter Page
+  filter: {
+    filterAnime: 'Lọc Anime',
+    filterResults: 'Kết quả lọc',
+    filter: 'Lọc',
+    foundResults: 'Tìm thấy {count} kết quả',
+    type: 'Loại',
+    status: 'Trạng thái',
+    season: 'Mùa',
+    year: 'Năm',
+    genres: 'Thể loại',
+    sort: 'Sắp xếp',
+    sortBy: 'Sắp xếp theo',
+    customYear: 'Năm tùy chỉnh',
+    noFiltersApplied: 'Chưa áp dụng bộ lọc nào',
+    clearAllFilters: 'Xóa tất cả bộ lọc',
+    allTypes: 'Tất cả loại',
+    allStatuses: 'Tất cả trạng thái',
+    airing: 'Đang phát sóng',
+    completed: 'Đã hoàn thành',
+    upcoming: 'Sắp ra mắt',
+    sortLatest: 'Mới nhất',
+    sortOldest: 'Cũ nhất',
+    sortTitle: 'Tên A-Z',
+    sortRating: 'Đánh giá cao nhất',
+    sortViews: 'Lượt xem nhiều nhất',
+    totalFound: 'Tổng cộng {total} anime được tìm thấy',
+    errorOccurred: 'Có lỗi xảy ra',
+    errorMessage: 'Không thể tải kết quả lọc. Vui lòng thử lại.',
+    noResults: 'Không tìm thấy kết quả',
+    tryDifferentFilters: 'Hãy thử áp dụng bộ lọc khác',
+    viewDetails: 'Xem chi tiết',
+    showing: 'Hiển thị {from}–{to} trong {total} kết quả',
+    selected: 'đã chọn',
+    forType: 'cho loại',
+    withStatus: 'với trạng thái',
+    fromYear: 'từ năm',
+    filterAnimeDescription: 'Lọc và khám phá anime theo nhiều tiêu chí khác nhau'
+  }
 }

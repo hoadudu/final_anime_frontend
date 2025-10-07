@@ -1,12 +1,12 @@
 <template>
-  <q-page class="watch-page" :class="{ 'cinema-mode': isCinemaMode }">
+  <q-page :class="[pagePadding, 'flex-center', { 'cinema-mode': isCinemaMode }]">
     <!-- Cinema mode overlay -->
     <div v-if="isCinemaMode" class="cinema-overlay"></div>
 
     <div
-      class="page-container q-mx-auto q-px-lg"
+      class="page-container q-mx-auto"
       :class="{ 'cinema-content': isCinemaMode }"
-      :style="isCinemaMode ? 'max-width: 100%; width: 100%' : 'max-width: 1600px; width: 100%'"
+      :style="isCinemaMode ? 'max-width: 100%; width: 100%' : 'max-width: 1920px; width: 100%'"
     >
       <div v-if="isLoading" class="full-height flex flex-center column">
         <q-spinner size="50px" color="primary" />
@@ -255,13 +255,20 @@
 import { computed, ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useMeta, Notify } from 'quasar'
+import { useMeta, Notify, useQuasar } from 'quasar'
 import TopTen from 'src/components/side-bar/TopTen.vue'
 import TopRight from 'src/components/watch-anime/TopRight.vue'
 import {
   useWatchPageDataSingleEpisode,
   useWatchPageDataListEpisodes,
 } from 'src/composables/watch-anime/useWatchPageData'
+const $q = useQuasar()
+
+const pagePadding = computed(() => {
+  if ($q.screen.lt.sm) return 'q-px-sm'
+  if ($q.screen.lt.md) return 'q-px-md'
+  return 'q-px-lg'
+})
 
 // Lazy local components (will create shortly in components/watch-anime)
 import BreadcrumbNavigation from 'src/components/watch-anime/BreadcrumbNavigation.vue'

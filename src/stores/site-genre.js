@@ -12,11 +12,11 @@ export const useGenreStore = defineStore('genre', () => {
   async function fetchGenres() {
     isLoading.value = true
     error.value = null
-    
+
     const langQuery = getLangQuery()
-    
+
     try {
-      const response = await axios.get(`${API_BASE_URL}/genres${langQuery}`)
+      const response = await axios.get(`${API_BASE_URL}/genres/${langQuery}`)
       genres.value = response.data
     } catch (err) {
       console.error('Error fetching genres:', err)
@@ -37,11 +37,21 @@ export const useGenreStore = defineStore('genre', () => {
 
   function searchGenres(query) {
     if (!query.trim()) return genres.value
-    
+
     const searchTerm = query.toLowerCase().trim()
-    return genres.value.filter(genre => 
+    return genres.value.filter(genre =>
       genre.name.toLowerCase().includes(searchTerm)
     )
+  }
+
+  function getGenresByPostCount(minCount = 0) {
+    return genres.value.filter(genre => genre.posts_count >= minCount)
+  }
+
+  function getTopGenres(limit = 10) {
+    return genres.value
+      .sort((a, b) => b.posts_count - a.posts_count)
+      .slice(0, limit)
   }
 
   return {
@@ -49,11 +59,13 @@ export const useGenreStore = defineStore('genre', () => {
     genres,
     isLoading,
     error,
-    
+
     // Actions
     fetchGenres,
     getGenreById,
     getGenresByCategory,
-    searchGenres
+    searchGenres,
+    getGenresByPostCount,
+    getTopGenres
   }
 })

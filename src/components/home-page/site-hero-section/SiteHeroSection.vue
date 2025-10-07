@@ -334,6 +334,31 @@ onBeforeUnmount(() => {
   backdrop-filter: blur(10px);
 }
 
+// Carousel responsive heights - sắp xếp từ LỚN đến NHỎ để đúng specificity
+.q-carousel {
+  height: 650px; // Desktop default (> 1200px)
+
+  // Desktop nhỏ (1024px - 1199px)
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    height: 600px !important;
+  }
+
+  // Tablet (768px - 1023px)
+  @media (min-width: 768px) and (max-width: 1023px) {
+    height: 550px !important;
+  }
+
+  // Mobile lớn (480px - 767px)
+  @media (min-width: 480px) and (max-width: 767px) {
+    height: 500px !important;
+  }
+
+  // Mobile nhỏ (< 480px)
+  @media (max-width: 479px) {
+    height: 400px !important;
+  }
+}
+
 // Responsive adjustments
 @media (max-width: 768px) {
   .hero-content {
@@ -347,6 +372,50 @@ onBeforeUnmount(() => {
   .hero-actions {
     .q-btn {
       min-width: 120px;
+    }
+  }
+
+  // Điều chỉnh thêm cho mobile
+  .hero-description {
+    max-width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .hero-meta {
+    font-size: 1rem;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .genres {
+    flex-wrap: wrap;
+    gap: 4px;
+
+    .q-chip {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+    }
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 8px;
+
+    .q-btn {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+
+  // Điều chỉnh carousel indicators cho mobile
+  .carousel-indicators {
+    .active-indicator,
+    .inactive-indicator {
+      .indicator-content {
+        width: 40px;
+        height: 3px;
+      }
     }
   }
 }

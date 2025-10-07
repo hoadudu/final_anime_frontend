@@ -2,10 +2,8 @@
 import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
-import { getLangQuery } from 'src/utils/lang'
+import { buildUrlWithParams } from 'src/utils/lang'
 import { computed } from 'vue'
-
-const langQuery = getLangQuery().replace('?lang=', '&lang=')
 
 /**
  * Hook để fetch dữ liệu tìm kiếm anime
@@ -15,16 +13,20 @@ const langQuery = getLangQuery().replace('?lang=', '&lang=')
  */
 export function useSearchPageData(keyword, page) {
   return useQuery({
-    queryKey: computed(() => ['search-page', keyword.value, page.value, langQuery]),
+    queryKey: computed(() => ['search-page', keyword.value, page.value]),
     queryFn: async () => {
       // Không fetch nếu không có keyword
       if (!keyword.value) {
         return null
       }
 
-      const response = await api.get(
-        `${API_BASE_URL}/search/full/?keyword=${keyword.value}&page=${page.value}${langQuery}`,
-      )
+      // Build URL an toàn với params
+      const url = buildUrlWithParams(`${API_BASE_URL}/search/full/`, {
+        keyword: keyword.value,
+        page: page.value
+      })
+
+      const response = await api.get(url)
       return response.data
     },
     enabled: computed(() => !!keyword.value), // Chỉ fetch khi có keyword
