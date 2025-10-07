@@ -59,12 +59,32 @@
           <q-badge color="red" text-color="white" floating> 2 </q-badge>
           <q-tooltip>{{ t('header.notifications') }}</q-tooltip>
         </q-btn>
-        <q-btn round flat>
-          <q-avatar size="26px">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-          </q-avatar>
-          <q-tooltip>{{ t('header.account') }}</q-tooltip>
-        </q-btn>
+        <template v-if="isAuthenticated">
+          <q-btn round flat>
+            <q-avatar size="26px">
+              <img :src="user?.avatarUrl || 'https://cdn.quasar.dev/img/boy-avatar.png'" />
+            </q-avatar>
+            <q-menu anchor="bottom right" self="top right">
+              <q-list style="min-width: 160px">
+                <q-item clickable v-ripple @click="goProfile">
+                  <q-item-section avatar><q-icon name="person" /></q-item-section>
+                  <q-item-section>{{ t('common.profile') }}</q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item clickable v-ripple @click="handleLogout">
+                  <q-item-section avatar><q-icon name="logout" /></q-item-section>
+                  <q-item-section>{{ t('common.logout') }}</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+            <q-tooltip>{{ t('header.account') }}</q-tooltip>
+          </q-btn>
+        </template>
+        <template v-else>
+          <q-btn round dense flat color="primary" icon="login" @click="$emit('open-auth')">
+            <q-tooltip>{{ t('common.login') }}</q-tooltip>
+          </q-btn>
+        </template>
       </div>
     </q-toolbar>
 
@@ -85,6 +105,7 @@ import { useRouter } from 'vue-router'
 import { fabYoutube } from '@quasar/extras/fontawesome-v6'
 import { useDrawerStore } from 'src/stores/site-drawer'
 import { useLiveSearchData } from 'src/composables/live-seach/useLiveSearchData'
+import { useAuth } from 'src/composables/auth/useAuth'
 import LiveSearch from 'src/components/LiveSeach.vue'
 
 const { t } = useI18n()
@@ -95,6 +116,12 @@ const showLiveSearch = ref(false)
 
 // Fetch live search data - composable sẽ tự xử lý debouncing
 const { data: liveSearchData, isLoading: isSearching } = useLiveSearchData(search)
+// Auth state
+const { isAuthenticated, user, logout, loadProfile, hydrate } = useAuth()
+hydrate()
+if (isAuthenticated.value && !user.value) {
+  loadProfile().catch(() => {})
+}
 
 // Extract results from API response
 const liveSearchResults = computed(() => {
@@ -127,6 +154,15 @@ function closeLiveSearch() {
 function handleAnimeClick(anime) {
   // Optional: you can track analytics here
   console.log('Anime clicked:', anime.title)
+}
+
+async function handleLogout() {
+  await logout()
+}
+
+function goProfile() {
+  // Replace with actual profile route when available
+  router.push({ name: 'home' }).catch(() => {})
 }
 
 /**

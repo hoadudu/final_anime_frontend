@@ -441,5 +441,24 @@ export default {
     withStatus: 'with status',
     fromYear: 'from year',
     filterAnimeDescription: 'Filter and discover anime based on various criteria'
+  },
+
+  // Auth dialog/modal
+  auth: {
+    login: 'Login',
+    register: 'Sign Up',
+    loginTab: 'Login',
+    registerTab: 'Register',
+    email: 'Email',
+    password: 'Password',
+    name: 'Name',
+    rememberMe: 'Remember me',
+    toRegister: "Don't have an account? Register",
+    toLogin: 'Already have an account? Login',
+    noAccountYet: "Don't have an account?",
+    haveAccount: 'Already have an account?',
+    // Notifications
+    loginSuccess: 'Welcome back! Logged in successfully',
+    registerSuccess: 'Account created successfully. Please login.',
   }
 }

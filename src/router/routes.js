@@ -40,6 +40,19 @@ const routes = [
     children: [{ path: '', name: 'site-search', component: () => import('src/pages/SiteSearchPage.vue') }],
   },
   {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'site-profile',
+        component: () => import('src/pages/SiteProfilePage.vue'),
+        meta: { requiresAuth: true },
+      },
+    ],
+  },
+  {
     path: '/filter',
     name: 'filter',
     component: () => import('layouts/MainLayout.vue'),

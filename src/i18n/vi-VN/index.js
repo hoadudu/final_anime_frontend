@@ -445,5 +445,24 @@ export default {
     withStatus: 'với trạng thái',
     fromYear: 'từ năm',
     filterAnimeDescription: 'Lọc và khám phá anime theo nhiều tiêu chí khác nhau'
+  },
+
+  // Auth dialog/modal
+  auth: {
+    login: 'Đăng nhập',
+    register: 'Đăng ký',
+    loginTab: 'Đăng nhập',
+    registerTab: 'Đăng ký',
+    email: 'Email',
+    password: 'Mật khẩu',
+    name: 'Tên hiển thị',
+    rememberMe: 'Ghi nhớ đăng nhập',
+    toRegister: 'Chưa có tài khoản? Đăng ký',
+    toLogin: 'Đã có tài khoản? Đăng nhập',
+    noAccountYet: 'Chưa có tài khoản?',
+    haveAccount: 'Đã có tài khoản?',
+    // Notifications
+    loginSuccess: 'Chào mừng trở lại! Đăng nhập thành công',
+    registerSuccess: 'Tạo tài khoản thành công. Vui lòng đăng nhập.',
   }
 }
