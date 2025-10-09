@@ -31,13 +31,27 @@ function openAuth() {
   showAuth.value = true
 }
 
-function onAuthSuccess() {
-  // nếu có redirect trên query, điều hướng sau khi đăng nhập/đăng ký thành công
-  const redirect = route.query.redirect
-  if (redirect && typeof redirect === 'string') {
-    router.replace({ path: redirect, query: {} }).catch(() => {})
+function onAuthSuccess(payload) {
+  const type = payload?.type // 'login', 'register', or 'forgot'
+
+  // Chỉ reload page khi login hoặc register thành công
+  // KHÔNG reload khi forgot password (để giữ countdown)
+  if (type === 'login' || type === 'register') {
+    // nếu có redirect trên query, điều hướng sau khi đăng nhập/đăng ký thành công
+    const redirect = route.query.redirect
+    if (redirect && typeof redirect === 'string') {
+      router.replace({ path: redirect, query: {} }).catch(() => {})
+    }
+    $q.notify({ type: 'positive', message: 'Logged in successfully' })
+
+    // 🅰️ AUTHENTICATION WORKFLOW: No need to reload - auth store is already updated
+    // The auth state is managed by the auth store and will be reactive across all components
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ Auth success - no reload needed, auth state is reactive')
+    }
   }
-  $q.notify({ type: 'positive', message: 'Logged in successfully' })
+
+  // Với forgot password, không làm gì cả (giữ dialog mở và countdown chạy)
 }
 
 watch(

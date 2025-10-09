@@ -1,231 +1,326 @@
-// Token storage helpers
+/**
+ * Token Storage Implementation
+ * Based on DEVICE_BASED_REFRESH_TOKEN.md
+ *
+ * Strategy:
+ * - Access Token: Stored in sessionStorage (cleared on tab close)
+ * - Refresh Token: Stored in localStorage (persistent)
+ * - User: Stored in sessionStorage (cleared on tab close)
+ * - Device Info: Stored in localStorage (persistent)
+ */
 
-const ACCESS_TOKEN_KEY = 'fa_access_token'
-const ACCESS_TOKEN_EXPIRES_AT_KEY = 'fa_access_token_expires_at'
-const ACCESS_TOKEN_STORAGE_KEY = 'fa_access_token_storage' // 'local' | 'session'
+const STORAGE_KEYS = {
+  ACCESS_TOKEN: 'access_token',
+  REFRESH_TOKEN: 'refresh_token',
+  TOKEN_EXPIRES_AT: 'token_expires_at',
+  USER: 'user',
+  DEVICE_NAME: 'device_name',
+}
 
-function getStorage() {
+/**
+ * Token Storage Service
+ * Handles all token and user data storage operations
+ */
+class TokenStorage {
+  // ============ ACCESS TOKEN (sessionStorage) ============
+
+  /**
+   * Set access token with expiration time
+   * @param {string} token - JWT access token
+   * @param {number} expiresIn - Expiration time in seconds
+   */
+  setAccessToken(token, expiresIn = 900) {
     try {
-        const pref = localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)
-        if (pref === 'session') return sessionStorage
+      sessionStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token)
 
-        // If preference is 'local' or not set, prefer localStorage
-        // but handle cases where localStorage might be disabled
-        try {
-            // Test if localStorage is actually writable
-            const testKey = '__test__'
-            localStorage.setItem(testKey, 'test')
-            localStorage.removeItem(testKey)
-            return localStorage
-        } catch {
-            // localStorage is not available, fallback to sessionStorage
-            return sessionStorage
-        }
-    } catch {
-        // If even reading preference fails, fallback to sessionStorage
-        return sessionStorage
+      // Calculate expiration timestamp
+      const expiresAt = Date.now() + (expiresIn * 1000)
+      sessionStorage.setItem(STORAGE_KEYS.TOKEN_EXPIRES_AT, expiresAt.toString())
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('💾 Access token stored (expires in', expiresIn, 'seconds)')
+      }
+    } catch (error) {
+      console.error('Failed to store access token:', error)
     }
-}
+  }
 
-export function getAccessToken() {
+  /**
+   * Get access token
+   * @returns {string|null}
+   */
+  getAccessToken() {
     try {
-        const storage = getStorage()
-        let token = null
-
-        // Try preferred storage first
-        try {
-            token = storage.getItem(ACCESS_TOKEN_KEY)
-        } catch {
-            // If preferred storage fails, try the other one
-            if (storage === localStorage) {
-                token = sessionStorage.getItem(ACCESS_TOKEN_KEY)
-            } else {
-                token = localStorage.getItem(ACCESS_TOKEN_KEY)
-            }
-        }
-
-        // Final fallback - check both storages
-        if (!token) {
-            token = localStorage.getItem(ACCESS_TOKEN_KEY) || sessionStorage.getItem(ACCESS_TOKEN_KEY)
-        }
-
-        // Debug logging (only in development)
-        if (process.env.NODE_ENV === 'development' && token) {
-            console.log('🔑 getAccessToken from:', storage === localStorage ? 'localStorage' : 'sessionStorage', '(preferred)')
-        }
-
-        return token
-    } catch {
-        return null
+      return sessionStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)
+    } catch (error) {
+      console.error('Failed to get access token:', error)
+      return null
     }
-}
+  }
 
-export function setAccessToken(token, expiresInSeconds, persist = true) {
+  /**
+   * Clear access token
+   */
+  clearAccessToken() {
     try {
-        if (!token) {
-            clearAccessToken()
-            return
-        }
+      sessionStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN)
+      sessionStorage.removeItem(STORAGE_KEYS.TOKEN_EXPIRES_AT)
 
-        // Debug logging (only in development)
-        if (process.env.NODE_ENV === 'development') {
-            console.log('💾 setAccessToken called:', {
-                persist,
-                requestedStorage: persist ? 'localStorage' : 'sessionStorage',
-                tokenLength: token.length
-            })
-        }
-
-        let storage = persist ? localStorage : sessionStorage
-
-        // If persist is true but localStorage is not available, fallback to sessionStorage
-        if (persist) {
-            try {
-                const testKey = '__test__'
-                localStorage.setItem(testKey, 'test')
-                localStorage.removeItem(testKey)
-            } catch {
-                // localStorage not available, use sessionStorage instead
-                storage = sessionStorage
-                if (process.env.NODE_ENV === 'development') {
-                    console.log('💾 localStorage not available, falling back to sessionStorage')
-                }
-            }
-        }
-        try {
-            // write preference (may fail in private mode)
-            try {
-                // Update preference to reflect actual storage being used
-                localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, storage === localStorage ? 'local' : 'session')
-            } catch (e) {
-                void e
-                // ignore preference write failure
-            }
-
-            storage.setItem(ACCESS_TOKEN_KEY, token)
-            if (typeof expiresInSeconds === 'number' && expiresInSeconds > 0) {
-                const expiresAt = Date.now() + expiresInSeconds * 1000
-                storage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, String(expiresAt))
-            }
-
-            // keep only one storage to avoid ambiguity
-            if (storage === localStorage) {
-                sessionStorage.removeItem(ACCESS_TOKEN_KEY)
-                sessionStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-            } else {
-                localStorage.removeItem(ACCESS_TOKEN_KEY)
-                localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-            }
-
-            if (process.env.NODE_ENV === 'development') {
-                console.log('💾 Token stored in:', storage === localStorage ? 'localStorage' : 'sessionStorage')
-            }
-        } catch (e) {
-            void e
-            // Fallback to the other storage (private mode/quota errors)
-            const fallbackStorage = storage === localStorage ? sessionStorage : localStorage
-            try {
-                // Update preference to reflect fallback storage
-                try {
-                    localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, fallbackStorage === localStorage ? 'local' : 'session')
-                } catch (e3) {
-                    void e3
-                    // ignore preference write failure
-                }
-
-                fallbackStorage.setItem(ACCESS_TOKEN_KEY, token)
-                if (typeof expiresInSeconds === 'number' && expiresInSeconds > 0) {
-                    const expiresAt = Date.now() + expiresInSeconds * 1000
-                    fallbackStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, String(expiresAt))
-                }
-
-                // Clear the original storage to avoid ambiguity
-                storage.removeItem(ACCESS_TOKEN_KEY)
-                storage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-
-                if (process.env.NODE_ENV === 'development') {
-                    console.log('💾 Fallback to', fallbackStorage === localStorage ? 'localStorage' : 'sessionStorage', 'due to storage failure')
-                }
-            } catch (e2) {
-                void e2
-                // ignore if fallback storage also fails
-            }
-        }
-    } catch (e) {
-        void e
-        // ignore
+      if (process.env.NODE_ENV === 'development') {
+        console.log('🗑️ Access token cleared')
+      }
+    } catch (error) {
+      console.error('Failed to clear access token:', error)
     }
-}
+  }
 
-export function clearAccessToken() {
+  // ============ REFRESH TOKEN (localStorage) ============
+
+  /**
+   * Set refresh token with expiration date
+   * @param {string} token - Refresh token
+   * @param {string} refreshExpiresAt - ISO date string
+   */
+  setRefreshToken(token, refreshExpiresAt = null) {
     try {
-        // Clear from localStorage
-        localStorage.removeItem(ACCESS_TOKEN_KEY)
-        localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-        localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY) // Clear storage preference too
+      if (!token) return
 
-        // Clear from sessionStorage
-        sessionStorage.removeItem(ACCESS_TOKEN_KEY)
-        sessionStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
+      localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, token)
 
-        if (process.env.NODE_ENV === 'development') {
-            console.log('🗑️ All tokens cleared from storage')
-        }
-    } catch (e) {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('⚠️ Error clearing tokens:', e.message)
-        }
-        // ignore - might be in private mode
+      if (process.env.NODE_ENV === 'development') {
+        console.log('💾 Refresh token stored', refreshExpiresAt ? `(expires: ${refreshExpiresAt})` : '')
+      }
+    } catch (error) {
+      console.error('Failed to store refresh token:', error)
     }
-}
+  }
 
-export function getTokenExpiresAt() {
+  /**
+   * Get refresh token
+   * @returns {string|null}
+   */
+  getRefreshToken() {
     try {
-        const storage = getStorage()
-        let expiresAt = null
-
-        // Try preferred storage first
-        try {
-            expiresAt = storage.getItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-        } catch {
-            // If preferred storage fails, try the other one
-            if (storage === localStorage) {
-                expiresAt = sessionStorage.getItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-            } else {
-                expiresAt = localStorage.getItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-            }
-        }
-
-        // Final fallback - check both storages
-        if (!expiresAt) {
-            expiresAt = localStorage.getItem(ACCESS_TOKEN_EXPIRES_AT_KEY) || sessionStorage.getItem(ACCESS_TOKEN_EXPIRES_AT_KEY)
-        }
-
-        return expiresAt ? parseInt(expiresAt, 10) : null
-    } catch (e) {
-        void e
-        return null
+      return localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)
+    } catch (error) {
+      console.error('Failed to get refresh token:', error)
+      return null
     }
+  }
+
+  /**
+   * Clear refresh token
+   */
+  clearRefreshToken() {
+    try {
+      localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN)
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('🗑️ Refresh token cleared')
+      }
+    } catch (error) {
+      console.error('Failed to clear refresh token:', error)
+    }
+  }
+
+  // ============ USER DATA (sessionStorage) ============
+
+  /**
+   * Set user data
+   * @param {Object} user - User object
+   */
+  setUser(user) {
+    try {
+      if (!user) return
+
+      sessionStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user))
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('💾 User data stored:', user.email || user.name)
+      }
+    } catch (error) {
+      console.error('Failed to store user data:', error)
+    }
+  }
+
+  /**
+   * Get user data
+   * @returns {Object|null}
+   */
+  getUser() {
+    try {
+      const userJson = sessionStorage.getItem(STORAGE_KEYS.USER)
+      return userJson ? JSON.parse(userJson) : null
+    } catch (error) {
+      console.error('Failed to get user data:', error)
+      return null
+    }
+  }
+
+  /**
+   * Clear user data
+   */
+  clearUser() {
+    try {
+      sessionStorage.removeItem(STORAGE_KEYS.USER)
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('🗑️ User data cleared')
+      }
+    } catch (error) {
+      console.error('Failed to clear user data:', error)
+    }
+  }
+
+  // ============ DEVICE INFO (localStorage) ============
+
+  /**
+   * Set device name
+   * @param {string} deviceName
+   */
+  setDeviceName(deviceName) {
+    try {
+      if (!deviceName) return
+
+      localStorage.setItem(STORAGE_KEYS.DEVICE_NAME, deviceName)
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('💾 Device name stored:', deviceName)
+      }
+    } catch (error) {
+      console.error('Failed to store device name:', error)
+    }
+  }
+
+  /**
+   * Get device name
+   * @returns {string|null}
+   */
+  getDeviceName() {
+    try {
+      return localStorage.getItem(STORAGE_KEYS.DEVICE_NAME)
+    } catch (error) {
+      console.error('Failed to get device name:', error)
+      return null
+    }
+  }
+
+  /**
+   * Clear device name
+   */
+  clearDeviceName() {
+    try {
+      localStorage.removeItem(STORAGE_KEYS.DEVICE_NAME)
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('🗑️ Device name cleared')
+      }
+    } catch (error) {
+      console.error('Failed to clear device name:', error)
+    }
+  }
+
+  // ============ TOKEN VALIDATION ============
+
+  /**
+   * Get token expiration timestamp
+   * @returns {number|null}
+   */
+  getTokenExpiresAt() {
+    try {
+      const expiresAt = sessionStorage.getItem(STORAGE_KEYS.TOKEN_EXPIRES_AT)
+      return expiresAt ? parseInt(expiresAt, 10) : null
+    } catch (error) {
+      console.error('Failed to get token expiration:', error)
+      return null
+    }
+  }
+
+  /**
+   * Check if token is expired
+   * @param {number} bufferMs - Buffer time in milliseconds before actual expiration
+   * @returns {boolean}
+   */
+  isTokenExpired(bufferMs = 60000) { // 60 seconds buffer by default
+    try {
+      const expiresAt = this.getTokenExpiresAt()
+
+      if (!expiresAt) return true
+
+      const now = Date.now()
+      const isExpired = now >= (expiresAt - bufferMs)
+
+      if (process.env.NODE_ENV === 'development' && isExpired) {
+        console.log('⏰ Token expired or expiring soon')
+      }
+
+      return isExpired
+    } catch (error) {
+      console.error('Failed to check token expiration:', error)
+      return true
+    }
+  }
+
+  /**
+   * Check if we have a valid (non-expired) access token
+   * @returns {boolean}
+   */
+  hasValidToken() {
+    const token = this.getAccessToken()
+
+    if (!token) return false
+
+    return !this.isTokenExpired()
+  }
+
+  /**
+   * Check if user is authenticated (has user data and either valid token or refresh token)
+   * @returns {boolean}
+   */
+  isAuthenticated() {
+    const user = this.getUser()
+    const hasValidToken = this.hasValidToken()
+    const hasRefreshToken = !!this.getRefreshToken()
+
+    return !!user && (hasValidToken || hasRefreshToken)
+  }
+
+  // ============ CLEANUP ============
+
+  /**
+   * Clear all authentication data
+   */
+  clearAll() {
+    this.clearAccessToken()
+    this.clearRefreshToken()
+    this.clearUser()
+    this.clearDeviceName()
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🗑️ All auth data cleared')
+    }
+  }
+
+  /**
+   * Get current auth state (for debugging)
+   * @returns {Object}
+   */
+  getAuthState() {
+    return {
+      hasAccessToken: !!this.getAccessToken(),
+      hasRefreshToken: !!this.getRefreshToken(),
+      hasUser: !!this.getUser(),
+      hasValidToken: this.hasValidToken(),
+      isAuthenticated: this.isAuthenticated(),
+      tokenExpiresAt: this.getTokenExpiresAt(),
+      user: this.getUser(),
+      deviceName: this.getDeviceName(),
+    }
+  }
 }
 
-export function getAuthHeader() {
-    const token = getAccessToken()
-    return token ? { Authorization: `Bearer ${token}` } : {}
-}
+// Export singleton instance
+export const tokenStorage = new TokenStorage()
 
-export function isTokenExpired(bufferMs = 0) {
-    const expiresAt = getTokenExpiresAt()
-    if (!expiresAt) return false
-    return Date.now() + bufferMs >= expiresAt
-}
-
-export const tokenStorage = {
-    getAccessToken,
-    setAccessToken,
-    clearAccessToken,
-    getTokenExpiresAt,
-    getAuthHeader,
-    isTokenExpired,
-}
-
-
+// Export class for testing
+export { TokenStorage }

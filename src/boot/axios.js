@@ -1,100 +1,175 @@
 import { defineBoot } from '#q-app/wrappers'
 import axios from 'axios'
 import { useAuthStore } from 'src/stores/auth'
+import { tokenStorage } from 'src/utils/auth'
+import { API_BASE_URL } from 'src/config/api'
 
-// Be careful when using SSR for cross-request state pollution
-// due to creating a Singleton instance here;
-// If any client changes this (global) instance, it might be a
-// good idea to move this instance creation inside of the
-// "export default () => {}" function below (which runs individually
-// for each client)
-const api = axios.create({ baseURL: 'http://localhost:8000/api' })
+/**
+ * Axios Configuration
+ *
+ * Features:
+ * - Automatic access token injection
+ * - Auto-refresh on 401 errors
+ * - Concurrent request handling during refresh
+ * - Proper error handling
+ */
 
-let isRefreshing = false
-let refreshSubscribers = []
-
-function onRefreshed(newToken) {
-  refreshSubscribers.forEach((cb) => cb(newToken))
-  refreshSubscribers = []
-}
-
-api.interceptors.request.use((config) => {
-  try {
-    const auth = useAuthStore()
-    if (auth.accessToken) {
-      config.headers = config.headers || {}
-      config.headers.Authorization = `Bearer ${auth.accessToken}`
-    }
-  } catch (e) {
-    void e
-  }
-  return config
+// Create axios instance
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
 })
 
+// Track if we're currently refreshing
+let isRefreshing = false
+let failedQueue = []
+
+/**
+ * Process queued requests after token refresh
+ */
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error)
+    } else {
+      prom.resolve(token)
+    }
+  })
+
+  failedQueue = []
+}
+
+// ============ REQUEST INTERCEPTOR ============
+api.interceptors.request.use(
+  (config) => {
+    // Add access token to all requests
+    const accessToken = tokenStorage.getAccessToken()
+
+    if (accessToken) {
+      config.headers = config.headers || {}
+      config.headers.Authorization = `Bearer ${accessToken}`
+    }
+
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+// ============ RESPONSE INTERCEPTOR ============
 api.interceptors.response.use(
-  (res) => res,
+  (response) => {
+    // Success response, pass through
+    return response
+  },
   async (error) => {
     const originalRequest = error.config
 
-    // Handle 401 errors for token refresh
-    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/auth/refresh') {
-      originalRequest._retry = true
+    // Check if this is a 401 error and we haven't retried yet
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      // Skip refresh for auth endpoints
+      const skipRefreshEndpoints = ['/auth/login', '/auth/register', '/auth/refresh-token', '/auth/logout']
+      const shouldSkipRefresh = skipRefreshEndpoints.some((endpoint) => originalRequest.url?.includes(endpoint))
 
-      // Debug logging (only in development)
-      if (process.env.NODE_ENV === 'development') {
-        console.log('🔄 Token expired, attempting refresh...', originalRequest.url)
+      if (shouldSkipRefresh) {
+        return Promise.reject(error)
       }
 
-      const auth = useAuthStore()
+      // Check if we have a refresh token
+      const refreshToken = tokenStorage.getRefreshToken()
 
-      // Prevent multiple simultaneous refresh attempts
-      if (!isRefreshing) {
-        isRefreshing = true
-        try {
-          const { accessToken } = await auth.refreshToken()
-
-          if (process.env.NODE_ENV === 'development') {
-            console.log('✅ Token refreshed successfully')
-          }
-
-          onRefreshed(accessToken)
-        } catch (e) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('❌ Refresh token failed, logging out')
-          }
-
-          await auth.logout()
-          return Promise.reject(e)
-        } finally {
-          isRefreshing = false
+      if (!refreshToken) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('🚫 No refresh token, logging out')
         }
+
+        // No refresh token, clear auth and reject
+        const authStore = useAuthStore()
+        authStore.clearAuth()
+
+        return Promise.reject(error)
       }
 
-      // Queue this request to retry once refresh completes
-      return new Promise((resolve) => {
-        refreshSubscribers.push((newToken) => {
-          originalRequest.headers = originalRequest.headers || {}
-          originalRequest.headers.Authorization = `Bearer ${newToken}`
+      // If already refreshing, queue this request
+      if (isRefreshing) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('⏳ Queuing request while refreshing:', originalRequest.url)
+        }
 
-          if (process.env.NODE_ENV === 'development') {
-            console.log('🔄 Retrying original request with new token')
-          }
-
-          resolve(api(originalRequest))
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
         })
-      })
+          .then((token) => {
+            originalRequest.headers['Authorization'] = 'Bearer ' + token
+            return api(originalRequest)
+          })
+          .catch((err) => {
+            return Promise.reject(err)
+          })
+      }
+
+      // Mark as retrying
+      originalRequest._retry = true
+      isRefreshing = true
+
+      // Attempt to refresh token
+      const authStore = useAuthStore()
+
+      try {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('🔄 401 detected, refreshing token...')
+        }
+
+        const result = await authStore.refreshToken()
+
+        if (!result.accessToken) {
+          throw new Error('No access token after refresh')
+        }
+
+        // Update queued requests with new token
+        processQueue(null, result.accessToken)
+
+        // Retry original request with new token
+        originalRequest.headers['Authorization'] = 'Bearer ' + result.accessToken
+
+        if (process.env.NODE_ENV === 'development') {
+          console.log('✅ Retrying request with new token:', originalRequest.url)
+        }
+
+        return api(originalRequest)
+      } catch (refreshError) {
+        if (process.env.NODE_ENV === 'development') {
+          console.error('❌ Token refresh failed, logging out')
+        }
+
+        // Refresh failed, reject queued requests and clear auth
+        processQueue(refreshError, null)
+        authStore.clearAuth()
+
+        return Promise.reject(refreshError)
+      } finally {
+        isRefreshing = false
+      }
     }
 
-    // Handle other errors (400, 422, etc.) - pass through for component handling
-    // These will be caught by the component's try/catch blocks
+    // Handle rate limiting
+    if (error.response?.status === 429) {
+      const retryAfter = error.response.data?.retry_after || 60
 
-    // Debug logging for non-401 errors (only in development)
-    if (process.env.NODE_ENV === 'development' && error.response?.status !== 401) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`⚠️ Rate limited. Retry after ${retryAfter}s`)
+      }
+
+      error.message = `Too many requests. Please try again in ${retryAfter} seconds.`
+    }
+
+    // Log errors in development
+    if (process.env.NODE_ENV === 'development' && error.response) {
       console.log('🚨 API Error:', {
-        status: error.response?.status,
-        url: error.config?.url,
-        method: error.config?.method,
-        data: error.response?.data
+        status: error.response.status,
+        endpoint: `${error.config.method?.toUpperCase()} ${error.config.url}`,
+        data: error.response.data,
       })
     }
 
@@ -102,23 +177,57 @@ api.interceptors.response.use(
   }
 )
 
-export default defineBoot(({ app }) => {
-  // for use inside Vue files (Options API) through this.$axios and this.$api
-
+// ============ BOOT FUNCTION ============
+export default defineBoot(async ({ app }) => {
+  // Make axios available globally
   app.config.globalProperties.$axios = axios
-  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
-  //       so you won't necessarily have to import axios in each vue file
-
   app.config.globalProperties.$api = api
-  // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
-  //       so you can easily perform requests against your app's API
 
-  // Hydrate auth state early so initial requests include Authorization header
-  try {
-    const auth = useAuthStore()
-    auth.hydrateFromStorage()
-  } catch (e) {
-    void e
+  // Initialize auth store
+  const authStore = useAuthStore()
+  authStore.init()
+
+  // Check if we need to refresh token on app startup
+  const hasRefreshToken = !!tokenStorage.getRefreshToken()
+  const hasAccessToken = !!tokenStorage.getAccessToken()
+
+  if (hasRefreshToken && !hasAccessToken) {
+    // Have refresh token but no access token
+    // This happens after tab close/reopen (sessionStorage cleared but localStorage persists)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔄 Refresh token found, getting new access token...')
+    }
+
+    try {
+      await authStore.refreshToken()
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('✅ Access token refreshed on startup')
+
+        // Check if user data was included in refresh response
+        if (authStore.user) {
+          console.log('✅ User data restored from refresh response')
+        } else {
+          console.log('⚠️ No user data in refresh response, loading profile...')
+        }
+      }
+
+      // Fallback: If user data is still not available, load profile
+      // This should rarely happen since API returns user in refresh response
+      if (!authStore.user) {
+        await authStore.loadProfile()
+      }
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('⚠️ Failed to refresh token on startup:', error.message)
+      }
+      // If refresh fails, clear auth (logout)
+      authStore.clearAuth()
+    }
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🚀 Axios and Auth initialized', tokenStorage.getAuthState())
   }
 })
 

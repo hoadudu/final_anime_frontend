@@ -189,7 +189,12 @@ watch(
         : []
 
       jwInstance.value = window.jwplayer(containerId).setup({
-        file: jwPlayerUrl(stream.url),
+        sources: [
+          {
+            type: 'hls',
+            file: jwPlayerUrl(stream.url),
+          },
+        ],
         width: '100%',
         height: '100%',
         controls: true,
@@ -235,6 +240,8 @@ async function ensureJWScript() {
 }
 
 function jwPlayerUrl(url) {
+  console.log('jwPlayerUrl', url)
+
   return url
 }
 

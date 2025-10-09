@@ -4,14 +4,14 @@ import { storeToRefs } from 'pinia'
 
 export function useAuth() {
   const auth = useAuthStore()
-  const { isAuthenticated, user, isLoading } = storeToRefs(auth)
+  const { isAuthenticated, hasValidToken, user, isLoading } = storeToRefs(auth)
 
   async function login({ email, password, remember }) {
     return auth.login({ email, password, remember })
   }
 
-  async function register({ email, password, name, password_confirmation }) {
-    return auth.register({ email, password, name, password_confirmation })
+  async function register(payload) {
+    return auth.register(payload)
   }
 
   async function logout() {
@@ -26,13 +26,18 @@ export function useAuth() {
     return auth.refreshToken()
   }
 
-  function hydrate() {
-    auth.hydrateFromStorage()
+  async function forgotPassword(payload) {
+    return auth.forgotPassword(payload)
+  }
+
+  async function resetPassword(payload) {
+    return auth.resetPassword(payload)
   }
 
   return {
     // state
     isAuthenticated,
+    hasValidToken,
     user,
     isLoading,
     // actions
@@ -41,7 +46,8 @@ export function useAuth() {
     logout,
     loadProfile,
     refreshToken,
-    hydrate,
+    forgotPassword,
+    resetPassword,
   }
 }
 

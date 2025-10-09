@@ -58,6 +58,18 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', name: 'site-filter', component: () => import('src/pages/SiteAnimeFilter.vue') }],
   },
+  {
+    path: '/reset-password',
+    name: 'reset-password',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: ':encodedData',
+        name: 'site-reset-password',
+        component: () => import('src/pages/SiteResetPasswordPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

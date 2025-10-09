@@ -59,10 +59,12 @@
           <q-badge color="red" text-color="white" floating> 2 </q-badge>
           <q-tooltip>{{ t('header.notifications') }}</q-tooltip>
         </q-btn>
-        <template v-if="isAuthenticated">
+        <template v-if="authState.isInitialized && authState.hasValidToken">
           <q-btn round flat>
             <q-avatar size="26px">
-              <img :src="user?.avatarUrl || 'https://cdn.quasar.dev/img/boy-avatar.png'" />
+              <img
+                :src="authState.user?.avatarUrl || 'https://cdn.quasar.dev/img/boy-avatar.png'"
+              />
             </q-avatar>
             <q-menu anchor="bottom right" self="top right">
               <q-list style="min-width: 160px">
@@ -80,9 +82,17 @@
             <q-tooltip>{{ t('header.account') }}</q-tooltip>
           </q-btn>
         </template>
-        <template v-else>
+        <template v-else-if="authState.isInitialized">
           <q-btn round dense flat color="primary" icon="login" @click="$emit('open-auth')">
             <q-tooltip>{{ t('common.login') }}</q-tooltip>
+          </q-btn>
+        </template>
+        <template v-else>
+          <!-- Loading state while auth is being initialized -->
+          <q-btn round dense flat disabled>
+            <q-avatar size="26px" color="grey-4">
+              <q-icon name="hourglass_empty" size="16px" />
+            </q-avatar>
           </q-btn>
         </template>
       </div>
@@ -90,9 +100,9 @@
 
     <!-- Live Search Results -->
     <LiveSearch
-      :is-open="showLiveSearch && search.length > 0"
+      :is-open="showLiveSearch"
       :results="liveSearchResults"
-      :is-loading="isSearching"
+      :is-loading="false"
       @close="closeLiveSearch"
       @anime-click="handleAnimeClick"
     />
@@ -102,31 +112,42 @@
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { fabYoutube } from '@quasar/extras/fontawesome-v6'
 import { useDrawerStore } from 'src/stores/site-drawer'
-import { useLiveSearchData } from 'src/composables/live-seach/useLiveSearchData'
 import { useAuth } from 'src/composables/auth/useAuth'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from 'src/stores/auth'
 import LiveSearch from 'src/components/LiveSeach.vue'
 
 const { t } = useI18n()
 const router = useRouter()
+const $q = useQuasar()
 const drawerStore = useDrawerStore()
+const authStore = useAuthStore()
 const search = ref('')
+
+// Auth state - use storeToRefs for proper reactivity
+const { isAuthenticated, user } = storeToRefs(authStore)
+
+// Auth actions
+const { logout: logoutAction } = useAuth()
+
+// Auth state for template
+const authState = computed(() => {
+  return {
+    isInitialized: true,
+    hasValidToken: isAuthenticated.value,
+    user: user.value,
+  }
+})
+
+// Live search state
 const showLiveSearch = ref(false)
 
-// Fetch live search data - composable sẽ tự xử lý debouncing
-const { data: liveSearchData, isLoading: isSearching } = useLiveSearchData(search)
-// Auth state
-const { isAuthenticated, user, logout, loadProfile, hydrate } = useAuth()
-hydrate()
-if (isAuthenticated.value && !user.value) {
-  loadProfile().catch(() => {})
-}
-
-// Extract results from API response
+// Extract results from API response (keeping for compatibility)
 const liveSearchResults = computed(() => {
-  if (!liveSearchData.value) return []
-  return liveSearchData.value.results || liveSearchData.value.data || liveSearchData.value || []
+  return []
 })
 
 function toggleLeftDrawer() {
@@ -157,7 +178,32 @@ function handleAnimeClick(anime) {
 }
 
 async function handleLogout() {
-  await logout()
+  try {
+    await logoutAction()
+
+    // Show success notification
+    $q.notify({
+      type: 'positive',
+      message: t('auth.logoutSuccess'),
+      timeout: 5000,
+      position: 'top',
+    })
+
+    // Redirect to home if needed
+    if (router.currentRoute.value.meta?.requiresAuth) {
+      router.push({ name: 'home' })
+    }
+  } catch (error) {
+    console.error('Logout error:', error)
+
+    // Even if logout API fails, user is logged out locally
+    $q.notify({
+      type: 'warning',
+      message: t('auth.logoutWarning'),
+      timeout: 5000,
+      position: 'top',
+    })
+  }
 }
 
 function goProfile() {

@@ -12,7 +12,7 @@ export default defineConfig((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios', 'vue-query'],
+    boot: ['i18n', 'axios', 'vue-query', 'recaptcha'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -92,6 +92,15 @@ export default defineConfig((ctx) => {
     devServer: {
       // https: true,
       open: true, // opens browser window automatically
+      host: '0.0.0.0',
+      port: 9000, // hoặc port bạn đang dùng
+      clientPort: 443, // hoặc port bạn đang dùng
+      allowedHosts: ['dev.animevui.com'],
+      hmr: {
+        protocol: 'wss',
+        host: 'dev.animevui.com',
+        clientPort: 443,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework

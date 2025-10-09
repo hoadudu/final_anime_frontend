@@ -48,6 +48,7 @@ export default {
 
     // Status messages
     success: 'Action was successful',
+    refresh: 'Refresh',
     failed: 'Action failed',
     error: 'An error occurred',
 
@@ -449,6 +450,7 @@ export default {
     register: 'Sign Up',
     loginTab: 'Login',
     registerTab: 'Register',
+    forgotPasswordTab: 'Forgot Password',
     email: 'Email',
     password: 'Password',
     name: 'Name',
@@ -457,8 +459,48 @@ export default {
     toLogin: 'Already have an account? Login',
     noAccountYet: "Don't have an account?",
     haveAccount: 'Already have an account?',
+    rememberPassword: 'Remember your password?',
+    forgotPasswordDescription: 'Enter your email address and we will send you a link to reset your password.',
+    sendResetLink: 'Send Reset Link',
+    resetLinkSent: 'Password reset link sent! Please check your email.',
+    // Reset password page
+    resetPasswordTitle: 'Reset Password',
+    resetPasswordDescription: 'Enter your new password below.',
+    newPassword: 'New Password',
+    resetPassword: 'Reset Password',
+    passwordResetSuccess: 'Password reset successfully! You can now login with your new password.',
+    invalidResetLink: 'Invalid or expired reset link.',
+    backToLogin: 'Back to Login',
+    passwordRequired: 'Password is required',
+    passwordMinLength: 'Password must be at least 8 characters',
+    passwordStrength: 'Password must contain uppercase, lowercase, and number',
     // Notifications
     loginSuccess: 'Welcome back! Logged in successfully',
     registerSuccess: 'Account created successfully. Please login.',
+    logoutSuccess: 'Logged out successfully. See you again!',
+    logoutWarning: 'Logged out from this device',
+  },
+
+  // Device Management
+  deviceManagement: {
+    title: 'Active Devices',
+    subtitle: 'Manage devices where you are logged in',
+    currentDevice: 'Current Device',
+    ipAddress: 'IP Address',
+    lastUsed: 'Last Used',
+    createdAt: 'Created',
+    revokeDevice: 'Revoke this device',
+    revokeAllOthers: 'Sign out all other devices',
+    noDevices: 'No active devices',
+    tokenStats: 'Token Statistics',
+    activeDevices: 'Active',
+    expiredTokens: 'Expired',
+    revokedTokens: 'Revoked',
+    confirmRevokeTitle: 'Revoke Device',
+    confirmRevokeMessage: 'Are you sure you want to revoke access from "{device}"?',
+    confirmRevokeAllTitle: 'Revoke All Other Devices',
+    confirmRevokeAllMessage: 'Are you sure you want to sign out from {count} other device(s)? This action cannot be undone.',
+    deviceRevoked: 'Device revoked successfully',
+    devicesRevoked: '{count} device(s) revoked successfully',
   }
 }

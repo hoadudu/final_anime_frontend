@@ -1,9 +1,9 @@
 <template>
   <q-dialog
     :model-value="modelValue"
-    @update:model-value="emit('update:modelValue', $event)"
-    persistent
-    maximized="false"
+    @update:model-value="$emit('update:modelValue', $event)"
+    :persistent="true"
+    :maximized="false"
   >
     <q-card class="q-pa-md" style="min-width: 360px; max-width: 420px">
       <q-card-section class="row items-center q-pb-none">
@@ -17,6 +17,7 @@
       <q-tabs v-model="activeTab" class="text-primary q-mt-sm" dense align="justify">
         <q-tab name="login" :label="t('auth.loginTab')" icon="login" />
         <q-tab name="register" :label="t('auth.registerTab')" icon="person_add" />
+        <q-tab name="forgot" :label="t('auth.forgotPasswordTab')" icon="help" />
       </q-tabs>
 
       <q-separator />
@@ -58,15 +59,6 @@
                 />
               </template>
             </q-input>
-            <div class="row items-center q-col-gutter-sm">
-              <div class="col-12">
-                <q-toggle
-                  v-model="loginForm.remember"
-                  color="primary"
-                  :label="t('auth.rememberMe')"
-                />
-              </div>
-            </div>
             <q-btn type="submit" color="primary" class="full-width" :loading="isLoading">{{
               t('auth.login')
             }}</q-btn>
@@ -159,12 +151,70 @@
             }}</q-btn>
           </q-form>
         </q-tab-panel>
+
+        <q-tab-panel name="forgot">
+          <q-form @submit.prevent="onSubmitForgotPassword" class="q-gutter-md">
+            <div class="text-body2 q-mb-md">
+              {{ t('auth.forgotPasswordDescription') }}
+            </div>
+
+            <!-- Success message with countdown -->
+            <q-banner
+              v-if="forgotPasswordMessage"
+              class="bg-positive text-white q-mb-md"
+              rounded
+              dense
+            >
+              <template v-slot:avatar>
+                <q-icon name="check_circle" color="white" />
+              </template>
+              <div class="text-body2">
+                {{ forgotPasswordMessage }}
+              </div>
+              <div v-if="forgotPasswordCountdown > 0" class="text-caption q-mt-sm">
+                Có thể gửi lại sau {{ forgotPasswordCountdown }} giây...
+              </div>
+            </q-banner>
+
+            <q-input
+              v-model="forgotPasswordForm.email"
+              type="email"
+              :label="t('auth.email')"
+              outlined
+              dense
+              autocomplete="email"
+              :rules="[
+                (val) => (val && val.length > 0) || 'Email không được để trống',
+                (val) => /.+@.+\..+/.test(val) || 'Email không hợp lệ',
+              ]"
+              required
+              :disable="forgotPasswordCountdown > 0"
+            />
+            <q-btn
+              type="submit"
+              color="primary"
+              class="full-width"
+              :loading="isLoading"
+              :disable="forgotPasswordCountdown > 0"
+            >
+              <template v-if="forgotPasswordCountdown > 0">
+                Gửi lại sau {{ forgotPasswordCountdown }}s
+              </template>
+              <template v-else>
+                {{ t('auth.sendResetLink') }}
+              </template>
+            </q-btn>
+          </q-form>
+        </q-tab-panel>
       </q-tab-panels>
 
       <q-card-actions align="between" class="q-pt-none">
         <div class="text-caption text-grey-7">{{ helperText }}</div>
-        <q-btn flat color="primary" @click="toggleTab">
+        <q-btn flat color="primary" @click="toggleTab" v-if="activeTab !== 'forgot'">
           {{ activeTab === 'login' ? t('auth.toRegister') : t('auth.toLogin') }}
+        </q-btn>
+        <q-btn flat color="primary" @click="activeTab = 'login'" v-if="activeTab === 'forgot'">
+          {{ t('auth.backToLogin') }}
         </q-btn>
       </q-card-actions>
     </q-card>
@@ -176,6 +226,7 @@ import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from 'src/composables/auth/useAuth'
 import { useQuasar } from 'quasar'
+import { useReCaptcha } from 'vue-recaptcha-v3'
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
@@ -183,28 +234,50 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue', 'success'])
 
+// Use props directly for v-model compatibility
+
 const { t } = useI18n()
 const $q = useQuasar()
-const { login, register, isLoading } = useAuth()
+const { login, register, forgotPassword, isLoading } = useAuth()
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
 
 const activeTab = ref(props.defaultTab)
 const showPassword = ref(false)
 
-const loginForm = ref({ email: '', password: '', remember: true })
+const loginForm = ref({ email: '', password: '' })
 const registerForm = ref({ name: '', email: '', password: '', passwordConfirmation: '' })
+const forgotPasswordForm = ref({ email: '' })
 
-const helperText = computed(() =>
-  activeTab.value === 'login' ? t('auth.noAccountYet') : t('auth.haveAccount'),
-)
+// Forgot password countdown
+const forgotPasswordCountdown = ref(0)
+const forgotPasswordMessage = ref('')
 
+const helperText = computed(() => {
+  switch (activeTab.value) {
+    case 'login':
+      return t('auth.noAccountYet')
+    case 'register':
+      return t('auth.haveAccount')
+    case 'forgot':
+      return t('auth.rememberPassword')
+    default:
+      return ''
+  }
+})
+
+// Watch for dialog state changes to reset forms when dialog opens
 watch(
   () => props.modelValue,
   (v) => {
-    if (!v) return
-    // reset forms when dialog opens
-    loginForm.value = { email: '', password: '', remember: true }
-    registerForm.value = { name: '', email: '', password: '', passwordConfirmation: '' }
-    showPassword.value = false
+    if (v) {
+      // reset forms when dialog opens
+      loginForm.value = { email: '', password: '' }
+      registerForm.value = { name: '', email: '', password: '', passwordConfirmation: '' }
+      forgotPasswordForm.value = { email: '' }
+      showPassword.value = false
+      forgotPasswordCountdown.value = 0
+      forgotPasswordMessage.value = ''
+    }
   },
 )
 
@@ -225,20 +298,35 @@ function close() {
 }
 
 function toggleTab() {
-  activeTab.value = activeTab.value === 'login' ? 'register' : 'login'
+  if (activeTab.value === 'login') {
+    activeTab.value = 'register'
+  } else if (activeTab.value === 'register') {
+    activeTab.value = 'login'
+  } else if (activeTab.value === 'forgot') {
+    activeTab.value = 'login'
+  }
 }
 
 async function onSubmitLogin() {
   try {
-    const payload = { ...loginForm.value }
+    const payload = {
+      email: loginForm.value.email,
+      password: loginForm.value.password,
+    }
 
-    // Debug logging để kiểm tra remember value (chỉ trong development)
     if (process.env.NODE_ENV === 'development') {
-      console.log('🚀 Login payload before submit:', payload)
+      console.log('🚀 Login attempt:', { email: payload.email })
     }
 
     const res = await login(payload)
-    $q.notify({ type: 'positive', message: t('auth.loginSuccess') })
+
+    $q.notify({
+      type: 'positive',
+      message: t('auth.loginSuccess'),
+      timeout: 5000,
+      position: 'top',
+    })
+
     emit('success', { type: 'login', response: res })
     close()
   } catch (e) {
@@ -330,7 +418,7 @@ async function onSubmitLogin() {
       console.log('📢 Final error message:', message)
     }
 
-    $q.notify({ type: 'negative', message })
+    $q.notify({ type: 'negative', message, timeout: 5000, position: 'top' })
   }
 }
 
@@ -338,21 +426,46 @@ async function onSubmitRegister() {
   try {
     // Validate password confirmation before submitting
     if (registerForm.value.password !== registerForm.value.passwordConfirmation) {
-      $q.notify({ type: 'negative', message: 'Mật khẩu xác nhận không khớp' })
+      $q.notify({
+        type: 'negative',
+        message: 'Mật khẩu xác nhận không khớp',
+        timeout: 5000,
+        position: 'top',
+      })
       return
     }
+
+    // Get reCAPTCHA token
+    await recaptchaLoaded()
+    const recaptchaToken = await executeRecaptcha('register')
 
     const payload = {
       name: registerForm.value.name,
       email: registerForm.value.email,
       password: registerForm.value.password,
       password_confirmation: registerForm.value.passwordConfirmation,
+      recaptcha_token: recaptchaToken,
+    }
+
+    // Debug logging (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔐 Register payload:', {
+        ...payload,
+        password: '***',
+        password_confirmation: '***',
+        recaptcha_token: recaptchaToken ? recaptchaToken.substring(0, 20) + '...' : 'MISSING!',
+      })
     }
 
     const res = await register(payload)
     // Sau khi đăng ký thành công có thể tự động chuyển sang login
     activeTab.value = 'login'
-    $q.notify({ type: 'positive', message: t('auth.registerSuccess') })
+    $q.notify({
+      type: 'positive',
+      message: t('auth.registerSuccess'),
+      timeout: 5000,
+      position: 'top',
+    })
     emit('success', { type: 'register', response: res })
   } catch (e) {
     let message = t('errors.dataLoadError')
@@ -455,7 +568,79 @@ async function onSubmitRegister() {
       console.log('📢 Final error message:', message)
     }
 
-    $q.notify({ type: 'negative', message })
+    $q.notify({ type: 'negative', message, timeout: 5000, position: 'top' })
+  }
+}
+
+async function onSubmitForgotPassword() {
+  try {
+    // Get reCAPTCHA token
+    await recaptchaLoaded()
+    const recaptchaToken = await executeRecaptcha('forgot_password')
+
+    const payload = {
+      email: forgotPasswordForm.value.email,
+      recaptcha_token: recaptchaToken,
+    }
+
+    // Debug logging để kiểm tra payload (chỉ trong development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔑 Forgot password payload:', payload)
+    }
+
+    const res = await forgotPassword(payload)
+
+    // Get message from backend response
+    const responseData = res?.data || res
+    const backendMessage = responseData?.message || t('auth.resetLinkSent')
+
+    // Show success message
+    forgotPasswordMessage.value = backendMessage
+    $q.notify({ type: 'positive', message: backendMessage, timeout: 5000, position: 'top' })
+
+    // Start 5 second countdown
+    forgotPasswordCountdown.value = 15
+    const countdownInterval = setInterval(() => {
+      forgotPasswordCountdown.value--
+      if (forgotPasswordCountdown.value <= 0) {
+        clearInterval(countdownInterval)
+      }
+    }, 1000)
+
+    emit('success', { type: 'forgot', response: res })
+
+    // Don't close dialog immediately, let user see the message
+    // close()
+  } catch (e) {
+    const errorData = e?.response?.data?.error
+    let message = t('errors.dataLoadError')
+
+    if (errorData) {
+      // Map backend error codes to user-friendly messages
+      switch (errorData.code) {
+        case 'INVALID_EMAIL':
+          message = 'Định dạng email không hợp lệ'
+          break
+        case 'USER_NOT_FOUND':
+          message = 'Không tìm thấy tài khoản với email này'
+          break
+        case 'TOO_MANY_ATTEMPTS':
+        case 'RATE_LIMIT_EXCEEDED':
+          message = 'Quá nhiều yêu cầu. Vui lòng thử lại sau'
+          break
+        default:
+          // Use backend message if available, otherwise fallback
+          message = errorData.message || t('errors.dataLoadError')
+      }
+    }
+
+    // Debug logging (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🚨 Forgot password error:', e?.response?.data)
+      console.log('📢 Final error message:', message)
+    }
+
+    $q.notify({ type: 'negative', message, timeout: 5000, position: 'top' })
   }
 }
 </script>
