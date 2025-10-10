@@ -138,6 +138,80 @@ export default {
     sortToggle: 'Bật/tắt sắp xếp',
   },
 
+  // Company page (Studios, Producers, Licensors)
+  company: {
+    company: 'Công ty',
+    selectCompany: 'Chọn công ty',
+    selectCompanyDescription: 'Chọn công ty để xem anime do họ sản xuất',
+    totalFound: 'Tìm thấy tổng cộng {total} anime',
+    errorOccurred: 'Đã xảy ra lỗi',
+    errorMessage: 'Không thể tải danh sách anime. Vui lòng thử lại.',
+    noResults: 'Không tìm thấy kết quả',
+    noResultsMessage: 'Không tìm thấy anime nào từ công ty này',
+    viewDetails: 'Xem chi tiết',
+    showing: 'Hiển thị {from}–{to} trong tổng số {total} kết quả',
+
+    // SEO and meta descriptions
+    discoverAnimeByCompany: 'Khám phá anime từ các studio, nhà sản xuất và nhà phân phối khác nhau',
+    exploreAnimeFrom: 'Khám phá anime từ',
+    discoverBestAnime: 'Khám phá anime hay nhất từ',
+    withRatingsAndDetails: 'với đánh giá và chi tiết',
+    watchAnime: 'Xem anime',
+    animeCompanies: 'Công ty anime',
+
+    // Sorting options
+    sortBy: 'Sắp xếp theo',
+    sortLatest: 'Mới nhất',
+    sortOldest: 'Cũ nhất',
+    sortTitle: 'Tên A-Z',
+    sortRating: 'Đánh giá cao nhất',
+    sortViews: 'Lượt xem nhiều nhất',
+  },
+
+  // Profile page
+  profile: {
+    // Header
+    joinedAt: 'Tham gia',
+    totalAnime: 'Tổng Anime',
+    avgScore: 'Điểm TB',
+    notLoggedIn: 'Chưa đăng nhập',
+    pleaseLogin: 'Vui lòng đăng nhập để xem hồ sơ',
+
+    // Status tabs
+    watching: 'Đang xem',
+    completed: 'Hoàn thành',
+    onHold: 'Tạm dừng',
+    dropped: 'Đã bỏ',
+    planToWatch: 'Dự định xem',
+    customLists: 'Danh sách tùy chỉnh',
+
+    // Filter bar
+    searchAnime: 'Tìm anime...',
+    sortBy: 'Sắp xếp theo',
+    showing: 'Hiển thị',
+    anime: 'anime',
+
+    // Sort options
+    sortUpdatedDesc: 'Cập nhật gần đây',
+    sortUpdatedAsc: 'Cập nhật cũ nhất',
+    sortTitleAsc: 'Tên (A-Z)',
+    sortTitleDesc: 'Tên (Z-A)',
+    sortScoreDesc: 'Điểm (Cao đến thấp)',
+    sortScoreAsc: 'Điểm (Thấp đến cao)',
+
+    // Anime card
+    episodes: 'tập',
+    updated: 'Cập nhật',
+
+    // Empty states
+    noAnime: 'Không tìm thấy anime',
+    noAnimeMessage: 'Bạn chưa có anime nào trong danh sách {status}',
+
+    // Error states
+    errorLoadingProfile: 'Không thể tải thông tin hồ sơ',
+    errorLoadingList: 'Không thể tải danh sách anime',
+  },
+
   // Movie/Anime tooltip
   tooltip: {
     releaseDate: 'Ngày phát hành',
@@ -312,7 +386,8 @@ export default {
     relatedSeries: 'Series Liên Quan',
     relatedSeriesDescription: 'Các series anime thuộc cùng franchise hoặc vũ trụ câu chuyện',
     viewDetails: 'Xem Chi Tiết',
-    watchOrder: 'Thứ Tự Xem'
+    watchOrder: 'Thứ Tự Xem',
+    studiosProducersLicensors: 'Studios, Producers & Licensors',
   },
 
   // Anime Page specific
@@ -420,9 +495,12 @@ export default {
     genres: 'Thể loại',
     sort: 'Sắp xếp',
     sortBy: 'Sắp xếp theo',
+    sortDefault: 'Mặc định',
     customYear: 'Năm tùy chỉnh',
     noFiltersApplied: 'Chưa áp dụng bộ lọc nào',
     clearAllFilters: 'Xóa tất cả bộ lọc',
+    resetAll: 'Đặt lại tất cả',
+    maxGenresReached: 'Chỉ được chọn tối đa 3 thể loại',
     allTypes: 'Tất cả loại',
     allStatuses: 'Tất cả trạng thái',
     airing: 'Đang phát sóng',

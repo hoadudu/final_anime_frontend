@@ -42,46 +42,72 @@
 
       <!-- Genre tabs with Emoji -->
       <q-card-section class="tabs-section q-pt-none q-pb-sm">
-        <q-tabs
-          v-model="activeTab"
-          dense
-          class="genre-tabs"
-          active-color="purple-4"
-          indicator-color="purple-4"
-          align="left"
-          no-caps
-        >
-          <q-tab name="all" class="tab-item">
-            <div class="tab-content">
-              <span class="tab-emoji">🌟</span>
-              <span>{{ t('common.all') }}</span>
-            </div>
-          </q-tab>
-          <q-tab name="genres" class="tab-item">
-            <div class="tab-content">
-              <span class="tab-emoji">🎬</span>
-              <span>{{ t('genres.genres') }}</span>
-            </div>
-          </q-tab>
-          <q-tab name="explicit" class="tab-item">
-            <div class="tab-content">
-              <span class="tab-emoji">🔞</span>
-              <span>{{ t('genres.explicit') }}</span>
-            </div>
-          </q-tab>
-          <q-tab name="themes" class="tab-item">
-            <div class="tab-content">
-              <span class="tab-emoji">🎨</span>
-              <span>{{ t('genres.themes') }}</span>
-            </div>
-          </q-tab>
-          <q-tab name="demographics" class="tab-item">
-            <div class="tab-content">
-              <span class="tab-emoji">👥</span>
-              <span>{{ t('genres.demographics') }}</span>
-            </div>
-          </q-tab>
-        </q-tabs>
+        <div class="tabs-wrapper">
+          <!-- Left arrow button (mobile only) -->
+          <q-btn
+            v-show="canScrollLeft"
+            flat
+            round
+            dense
+            icon="chevron_left"
+            class="tab-scroll-btn tab-scroll-left"
+            @click="scrollTabsLeft"
+          />
+
+          <q-tabs
+            ref="tabsRef"
+            v-model="activeTab"
+            dense
+            class="genre-tabs"
+            active-color="purple-4"
+            indicator-color="purple-4"
+            align="left"
+            no-caps
+            @update:model-value="updateScrollButtons"
+          >
+            <q-tab name="all" class="tab-item">
+              <div class="tab-content">
+                <span class="tab-emoji">🌟</span>
+                <span>{{ t('common.all') }}</span>
+              </div>
+            </q-tab>
+            <q-tab name="genres" class="tab-item">
+              <div class="tab-content">
+                <span class="tab-emoji">🎬</span>
+                <span>{{ t('genres.genres') }}</span>
+              </div>
+            </q-tab>
+            <q-tab name="explicit" class="tab-item">
+              <div class="tab-content">
+                <span class="tab-emoji">🔞</span>
+                <span>{{ t('genres.explicit') }}</span>
+              </div>
+            </q-tab>
+            <q-tab name="themes" class="tab-item">
+              <div class="tab-content">
+                <span class="tab-emoji">🎨</span>
+                <span>{{ t('genres.themes') }}</span>
+              </div>
+            </q-tab>
+            <q-tab name="demographics" class="tab-item">
+              <div class="tab-content">
+                <span class="tab-emoji">👥</span>
+                <span>{{ t('genres.demographics') }}</span>
+              </div>
+            </q-tab>
+          </q-tabs>
+
+          <!-- Right arrow button (mobile only) -->
+          <q-btn
+            v-show="canScrollRight"
+            flat
+            round
+            dense
+            icon="chevron_right"
+            class="tab-scroll-btn tab-scroll-right"
+            @click="scrollTabsRight"
+          />
+        </div>
       </q-card-section>
 
       <!-- Loading state -->
@@ -145,38 +171,6 @@
       </q-card-section>
 
       <!-- Selected genres summary -->
-      <q-card-section
-        v-if="selectedGenres.length > 0 || isAtMaxLimit"
-        class="selected-section q-pt-sm"
-      >
-        <div class="selected-header text-subtitle1 text-weight-bold q-mb-sm">
-          <span class="selected-emoji">✅</span>
-          {{ t('genres.selectedGenres') }}
-          <q-badge :color="isAtMaxLimit ? 'red' : 'purple-4'" class="q-ml-sm">
-            {{ selectedGenres.length }}/{{ MAX_GENRES }}
-          </q-badge>
-        </div>
-
-        <!-- Thông báo giới hạn -->
-        <div v-if="isAtMaxLimit" class="limit-warning text-caption text-red q-mb-md">
-          <q-icon name="warning" class="q-mr-xs" />
-          Đã đạt giới hạn tối đa {{ MAX_GENRES }} thể loại. Bỏ chọn bớt để chọn thể loại khác.
-        </div>
-        <div class="selected-chips row q-gutter-sm">
-          <q-chip
-            v-for="genreId in selectedGenres"
-            :key="genreId"
-            removable
-            class="selected-chip"
-            text-color="white"
-            icon="label"
-            @remove="removeGenre(genreId)"
-          >
-            <span class="chip-emoji">{{ getGenreEmoji(getGenreSlug(genreId)) }}</span>
-            {{ getGenreName(genreId) }}
-          </q-chip>
-        </div>
-      </q-card-section>
 
       <!-- Footer actions -->
       <q-card-actions class="footer-actions q-pa-md" align="right">
@@ -230,6 +224,9 @@ const searchQuery = ref('')
 const activeTab = ref('all')
 const selectedGenres = ref([])
 const MAX_GENRES = 3 // Giới hạn tối đa thể loại được chọn
+const tabsRef = ref(null)
+const canScrollLeft = ref(false)
+const canScrollRight = ref(true)
 
 // Genre emoji mapping
 const genreEmojiMap = {
@@ -340,7 +337,7 @@ const filteredGenres = computed(() => {
 })
 
 // Computed để kiểm tra trạng thái
-const isAtMaxLimit = computed(() => selectedGenres.value.length >= MAX_GENRES)
+// const isAtMaxLimit = computed(() => selectedGenres.value.length >= MAX_GENRES)
 
 // Methods
 const closeModal = () => {
@@ -377,25 +374,57 @@ const toggleGenre = (genre) => {
   // Nếu bỏ chọn hết, không cần scroll
 }
 
-const removeGenre = (genreId) => {
-  const index = selectedGenres.value.indexOf(genreId)
-  if (index > -1) {
-    selectedGenres.value.splice(index, 1)
-  }
-}
+// const removeGenre = (genreId) => {
+//   const index = selectedGenres.value.indexOf(genreId)
+//   if (index > -1) {
+//     selectedGenres.value.splice(index, 1)
+//   }
+// }
 
-const getGenreName = (genreId) => {
-  const genre = genreStore.genres.find((g) => g.id === genreId)
-  return genre ? genre.name : ''
-}
+// const getGenreName = (genreId) => {
+//   const genre = genreStore.genres.find((g) => g.id === genreId)
+//   return genre ? genre.name : ''
+// }
 
-const getGenreSlug = (genreId) => {
-  const genre = genreStore.genres.find((g) => g.id === genreId)
-  return genre ? genre.slug : ''
-}
+// const getGenreSlug = (genreId) => {
+//   const genre = genreStore.genres.find((g) => g.id === genreId)
+//   return genre ? genre.slug : ''
+// }
 
 const getGenreEmoji = (slug) => {
   return genreEmojiMap[slug] || '🎬'
+}
+
+// Tabs scroll methods
+const updateScrollButtons = () => {
+  nextTick(() => {
+    if (!tabsRef.value) return
+
+    const tabsElement = tabsRef.value.$el.querySelector('.q-tabs__content')
+    if (!tabsElement) return
+
+    canScrollLeft.value = tabsElement.scrollLeft > 0
+    canScrollRight.value =
+      tabsElement.scrollLeft < tabsElement.scrollWidth - tabsElement.clientWidth - 10
+  })
+}
+
+const scrollTabsLeft = () => {
+  if (!tabsRef.value) return
+  const tabsElement = tabsRef.value.$el.querySelector('.q-tabs__content')
+  if (tabsElement) {
+    tabsElement.scrollBy({ left: -150, behavior: 'smooth' })
+    setTimeout(updateScrollButtons, 300)
+  }
+}
+
+const scrollTabsRight = () => {
+  if (!tabsRef.value) return
+  const tabsElement = tabsRef.value.$el.querySelector('.q-tabs__content')
+  if (tabsElement) {
+    tabsElement.scrollBy({ left: 150, behavior: 'smooth' })
+    setTimeout(updateScrollButtons, 300)
+  }
 }
 
 const scrollToFooterActions = () => {
@@ -461,6 +490,10 @@ watch(
       if (genreStore.genres.length === 0) {
         genreStore.fetchGenres()
       }
+      // Update scroll buttons after opening
+      nextTick(() => {
+        updateScrollButtons()
+      })
     }
   },
 )
@@ -470,6 +503,17 @@ onMounted(() => {
   if (genreStore.genres.length === 0) {
     genreStore.fetchGenres()
   }
+
+  // Setup tabs scroll listener
+  nextTick(() => {
+    if (tabsRef.value) {
+      const tabsElement = tabsRef.value.$el.querySelector('.q-tabs__content')
+      if (tabsElement) {
+        tabsElement.addEventListener('scroll', updateScrollButtons)
+        updateScrollButtons()
+      }
+    }
+  })
 })
 </script>
 
@@ -583,11 +627,39 @@ $gradient-end: #8b5cf6;
   margin-top: 12px;
 }
 
+.tabs-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-scroll-btn {
+  display: none; // Ẩn mặc định trên desktop
+  flex-shrink: 0;
+  color: $purple-accent;
+  background: $dark-card-elevated;
+  border: 1px solid $dark-border;
+  transition: all 0.3s ease;
+  z-index: 10;
+
+  &:hover {
+    background: rgba(167, 139, 250, 0.1);
+    border-color: $purple-accent;
+  }
+
+  @media (max-width: 768px) {
+    display: flex; // Hiển thị trên mobile
+  }
+}
+
 .genre-tabs {
+  flex: 1;
   background: $dark-card-elevated;
   border-radius: 12px;
   padding: 4px;
   border: 1px solid $dark-border;
+  overflow: hidden; // Ẩn scrollbar
 
   :deep(.q-tab) {
     color: rgba(255, 255, 255, 0.6);
@@ -609,6 +681,14 @@ $gradient-end: #8b5cf6;
 
   :deep(.q-tabs__content) {
     gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE and Edge
+
+    &::-webkit-scrollbar {
+      display: none; // Chrome, Safari, Opera
+    }
   }
 }
 
@@ -822,12 +902,23 @@ $gradient-end: #8b5cf6;
 }
 
 // ========== Footer Actions ==========
+// .footer-actions {
+//   background: $dark-card-elevated;
+//   border-top: 1px solid $dark-border;
+//   padding: 20px 24px;
+//   gap: 12px;
+//   scroll-margin-top: 20px; // Để có khoảng cách khi scroll tới
+// }
+
 .footer-actions {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom, 0);
+  left: 0;
+  right: 0;
   background: $dark-card-elevated;
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
   border-top: 1px solid $dark-border;
-  padding: 20px 24px;
-  gap: 12px;
-  scroll-margin-top: 20px; // Để có khoảng cách khi scroll tới
+  z-index: 2000; // đảm bảo cao hơn nội dung
 }
 
 .action-btn {

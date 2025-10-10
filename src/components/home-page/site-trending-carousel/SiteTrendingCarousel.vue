@@ -250,10 +250,27 @@ function handleItemClick(item) {
 }
 
 .trending-title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  color: #0c5281;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-left: 1rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(180deg, #ff5722, #ff8a65);
+    border-radius: 2px;
+  }
 }
 
 .loading-state,
@@ -411,6 +428,11 @@ function handleItemClick(item) {
 }
 
 @media (max-width: 768px) {
+  .trending-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
   .trending-container {
     margin: 0 -20px;
     padding: 0 20px;
@@ -443,8 +465,14 @@ function handleItemClick(item) {
 
 @media (max-width: 480px) {
   .trending-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    padding-left: 0.75rem;
+
+    &::before {
+      width: 3px;
+      height: 18px;
+    }
   }
 
   .trending-item {

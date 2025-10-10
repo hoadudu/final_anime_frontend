@@ -139,8 +139,10 @@ api.interceptors.response.use(
 
         return api(originalRequest)
       } catch (refreshError) {
+
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Token refresh failed, logging out')
+          console.log(refreshError)
         }
 
         // Refresh failed, reject queued requests and clear auth
@@ -190,6 +192,7 @@ export default defineBoot(async ({ app }) => {
   // Check if we need to refresh token on app startup
   const hasRefreshToken = !!tokenStorage.getRefreshToken()
   const hasAccessToken = !!tokenStorage.getAccessToken()
+  const hasUser = !!tokenStorage.getUser()
 
   if (hasRefreshToken && !hasAccessToken) {
     // Have refresh token but no access token
@@ -215,7 +218,18 @@ export default defineBoot(async ({ app }) => {
       // Fallback: If user data is still not available, load profile
       // This should rarely happen since API returns user in refresh response
       if (!authStore.user) {
-        await authStore.loadProfile()
+        try {
+          await authStore.loadProfile()
+          if (process.env.NODE_ENV === 'development') {
+            console.log('✅ User profile loaded successfully')
+          }
+        } catch (profileError) {
+          if (process.env.NODE_ENV === 'development') {
+            console.error('❌ Failed to load profile:', profileError.message)
+          }
+          // If profile load fails, clear auth
+          authStore.clearAuth()
+        }
       }
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
@@ -223,6 +237,34 @@ export default defineBoot(async ({ app }) => {
       }
       // If refresh fails, clear auth (logout)
       authStore.clearAuth()
+    }
+  } else if (hasRefreshToken && hasAccessToken && !hasUser) {
+    // Have both tokens but no user data in sessionStorage
+    // This can happen if sessionStorage was cleared but tokens remain
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔄 Tokens found but no user data, loading profile...')
+    }
+
+    try {
+      await authStore.loadProfile()
+      if (process.env.NODE_ENV === 'development') {
+        console.log('✅ User profile loaded successfully')
+      }
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('⚠️ Failed to load profile on startup:', error.message)
+      }
+      // If profile load fails, try to refresh token
+      try {
+        await authStore.refreshToken()
+        if (!authStore.user) {
+          await authStore.loadProfile()
+        }
+      } catch (refreshError) {
+        // If all fails, clear auth
+        console.log(refreshError)
+        authStore.clearAuth()
+      }
     }
   }
 

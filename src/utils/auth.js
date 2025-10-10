@@ -275,6 +275,9 @@ class TokenStorage {
 
   /**
    * Check if user is authenticated (has user data and either valid token or refresh token)
+   * Note: When app starts after tab close, sessionStorage is cleared but localStorage persists.
+   * In this case, we have refresh token but no user data yet. The app will load user data
+   * during boot process or auth guard.
    * @returns {boolean}
    */
   isAuthenticated() {
@@ -282,7 +285,23 @@ class TokenStorage {
     const hasValidToken = this.hasValidToken()
     const hasRefreshToken = !!this.getRefreshToken()
 
-    return !!user && (hasValidToken || hasRefreshToken)
+    // Case 1: Have user data and valid token
+    if (user && hasValidToken) {
+      return true
+    }
+
+    // Case 2: Have user data and refresh token (valid token expired)
+    if (user && hasRefreshToken) {
+      return true
+    }
+
+    // Case 3: Have refresh token but no user data yet (e.g., after tab close/reopen)
+    // Consider authenticated since we can refresh and get user data
+    if (hasRefreshToken && !user) {
+      return true
+    }
+
+    return false
   }
 
   // ============ CLEANUP ============

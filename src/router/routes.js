@@ -70,6 +70,12 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/company/:slug/:id',
+    name: 'company',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', name: 'site-company', component: () => import('src/pages/SiteStudiosProducersLicensorsPage.vue') }],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

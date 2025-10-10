@@ -139,6 +139,80 @@ export default {
     sortToggle: 'Toggle sort',
   },
 
+  // Company page (Studios, Producers, Licensors)
+  company: {
+    company: 'Company',
+    selectCompany: 'Select Company',
+    selectCompanyDescription: 'Choose a company to view anime produced by them',
+    totalFound: 'Found {total} anime in total',
+    errorOccurred: 'An error occurred',
+    errorMessage: 'Unable to load anime list. Please try again.',
+    noResults: 'No results found',
+    noResultsMessage: 'No anime found from this company',
+    viewDetails: 'View Details',
+    showing: 'Showing {from}–{to} of {total} results',
+
+    // SEO and meta descriptions
+    discoverAnimeByCompany: 'Discover anime from various studios, producers and licensors',
+    exploreAnimeFrom: 'Explore anime from',
+    discoverBestAnime: 'Discover the best anime from',
+    withRatingsAndDetails: 'with ratings and details',
+    watchAnime: 'Watch anime',
+    animeCompanies: 'Anime companies',
+
+    // Sorting options
+    sortBy: 'Sort by',
+    sortLatest: 'Latest',
+    sortOldest: 'Oldest',
+    sortTitle: 'Title A-Z',
+    sortRating: 'Highest rated',
+    sortViews: 'Most viewed',
+  },
+
+  // Profile page
+  profile: {
+    // Header
+    joinedAt: 'Joined',
+    totalAnime: 'Total Anime',
+    avgScore: 'Avg Score',
+    notLoggedIn: 'Not Logged In',
+    pleaseLogin: 'Please login to view your profile',
+
+    // Status tabs
+    watching: 'Watching',
+    completed: 'Completed',
+    onHold: 'On Hold',
+    dropped: 'Dropped',
+    planToWatch: 'Plan to Watch',
+    customLists: 'Custom Lists',
+
+    // Filter bar
+    searchAnime: 'Search anime...',
+    sortBy: 'Sort by',
+    showing: 'Showing',
+    anime: 'anime',
+
+    // Sort options
+    sortUpdatedDesc: 'Recently Updated',
+    sortUpdatedAsc: 'Oldest Updated',
+    sortTitleAsc: 'Title (A-Z)',
+    sortTitleDesc: 'Title (Z-A)',
+    sortScoreDesc: 'Score (High to Low)',
+    sortScoreAsc: 'Score (Low to High)',
+
+    // Anime card
+    episodes: 'episodes',
+    updated: 'Updated',
+
+    // Empty states
+    noAnime: 'No anime found',
+    noAnimeMessage: 'You have no anime in {status} list',
+
+    // Error states
+    errorLoadingProfile: 'Failed to load profile',
+    errorLoadingList: 'Failed to load anime list',
+  },
+
   // Movie/Anime tooltip
   tooltip: {
     releaseDate: 'Release Date',
@@ -309,7 +383,8 @@ export default {
     relatedSeries: 'Related Series',
     relatedSeriesDescription: 'Anime series that belong to the same franchise or story universe',
     viewDetails: 'View Details',
-    watchOrder: 'Watch Order'
+    watchOrder: 'Watch Order',
+    studiosProducersLicensors: 'Studios, Producers & Licensors',
   },
 
   // Anime Page specific
@@ -417,8 +492,11 @@ export default {
     genres: 'Genres',
     sort: 'Sort',
     sortBy: 'Sort by',
+    sortDefault: 'Default',
     noFiltersApplied: 'No filters applied',
     clearAllFilters: 'Clear all filters',
+    resetAll: 'Reset All',
+    maxGenresReached: 'Maximum 3 genres allowed',
     allTypes: 'All types',
     allStatuses: 'All statuses',
     airing: 'Airing',

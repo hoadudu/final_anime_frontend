@@ -27,7 +27,7 @@
 
         <!-- Filter Summary -->
         <div class="filter-summary text-body1 text-grey-6">
-          <FilterSummary :active-filters="activeFilters" />
+          <FilterSummary :active-filters="activeFilters" @filter-change="handleFilterChange" />
         </div>
 
         <!-- Tổng số kết quả -->
@@ -131,6 +131,7 @@
           option-value="id"
           option-label="name"
           class="genres-dropdown"
+          @update:model-value="handleGenreChange"
         >
           <template v-slot:selected>
             <div v-if="activeFilters.genres.length === 0" class="text-grey-10 text-weight-bold">
@@ -154,7 +155,41 @@
               </q-chip>
             </div>
           </template>
+          <template v-slot:after-options>
+            <div
+              v-if="activeFilters.genres.length >= 3"
+              class="text-center q-pa-sm text-warning text-caption"
+            >
+              {{ t('filter.maxGenresReached') }}
+            </div>
+          </template>
+          <template v-slot:option="scope">
+            <q-item
+              v-bind="scope.itemProps"
+              :disable="
+                activeFilters.genres.length >= 3 && !activeFilters.genres.includes(scope.opt.id)
+              "
+            >
+              <q-item-section>
+                <q-item-label>{{ scope.opt.name }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
         </q-select>
+
+        <!-- Reset Button -->
+        <div class="filter-group reset-filter-btn">
+          <q-btn
+            color="negative"
+            icon="refresh"
+            :label="t('filter.resetAll')"
+            @click="resetAllFilters"
+            outline
+            rounded
+            class="reset-button"
+            :disable="!hasActiveFilters"
+          />
+        </div>
 
         <!-- Mobile Filter Button -->
         <div class="filter-group mobile-filter-btn">
@@ -369,7 +404,7 @@ const activeFilters = ref({
   season: null,
   year: null,
   genres: [],
-  sort: 'latest',
+  sort: null,
 })
 
 // ========== FILTER OPTIONS FOR DESKTOP UI ==========
@@ -408,6 +443,7 @@ const yearOptions = [
 ]
 
 const sortOptions = [
+  { label: t('filter.sortDefault'), value: null },
   { label: t('filter.sortLatest'), value: 'latest' },
   { label: t('filter.sortOldest'), value: 'oldest' },
   { label: t('filter.sortTitle'), value: 'title' },
@@ -418,6 +454,18 @@ const sortOptions = [
 // ========== COMPUTED PROPERTIES ==========
 const genreOptions = computed(() => genreStore.genres)
 const genresLoading = computed(() => genreStore.isLoading)
+
+// Kiểm tra có filter nào đang active không
+const hasActiveFilters = computed(() => {
+  return (
+    activeFilters.value.type !== null ||
+    activeFilters.value.status !== null ||
+    activeFilters.value.season !== null ||
+    activeFilters.value.year !== null ||
+    activeFilters.value.genres.length > 0 ||
+    activeFilters.value.sort !== null
+  )
+})
 
 // ========== FETCH DATA WITH useAnimeFilterPageData ==========
 const {
@@ -466,7 +514,7 @@ const parseFiltersFromURL = () => {
     season: query.season || null,
     year: query.year || null,
     genres: query.genres ? query.genres.split(',').map((id) => parseInt(id)) : [],
-    sort: query.sort || 'latest',
+    sort: query.sort || null,
   }
 
   currentPage.value = parseInt(query.page || '1', 10)
@@ -504,6 +552,33 @@ const handleFilterChange = (newFilters) => {
 }
 
 /**
+ * Xử lý thay đổi genres với giới hạn tối đa 3
+ */
+const handleGenreChange = (selectedGenres) => {
+  // Giới hạn tối đa 3 thể loại
+  if (selectedGenres.length <= 3) {
+    handleFilterChange({ genres: selectedGenres })
+  }
+}
+
+/**
+ * Reset tất cả filters về mặc định
+ */
+const resetAllFilters = () => {
+  activeFilters.value = {
+    type: null,
+    status: null,
+    season: null,
+    year: null,
+    genres: [],
+    sort: null,
+  }
+  currentPage.value = 1
+  updateURL()
+  scrollToTop()
+}
+
+/**
  * Cập nhật URL với các filter hiện tại
  */
 const updateURL = () => {
@@ -514,8 +589,7 @@ const updateURL = () => {
   if (activeFilters.value.season) query.season = activeFilters.value.season
   if (activeFilters.value.year) query.year = activeFilters.value.year
   if (activeFilters.value.genres.length > 0) query.genres = activeFilters.value.genres.join(',')
-  if (activeFilters.value.sort && activeFilters.value.sort !== 'latest')
-    query.sort = activeFilters.value.sort
+  if (activeFilters.value.sort) query.sort = activeFilters.value.sort
   if (currentPage.value > 1) query.page = currentPage.value
 
   router.push({
@@ -950,6 +1024,23 @@ useMeta(() => ({
       display: none;
       min-width: auto;
     }
+
+    .reset-button {
+      min-width: 140px;
+      font-weight: 600;
+      border-width: 2px;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 107, 107, 0.1);
+        border-color: #ff6b6b;
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
   }
 
   @media (max-width: 767px) {
@@ -982,6 +1073,10 @@ useMeta(() => ({
       .mobile-filter-button {
         display: block;
       }
+    }
+
+    .reset-filter-btn {
+      display: none;
     }
   }
 }

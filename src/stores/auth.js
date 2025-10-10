@@ -24,9 +24,21 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     /**
      * Check if user is authenticated
+     * Returns true if we have user data OR if we have refresh token (user data can be loaded)
      */
     isAuthenticated: (state) => {
-      return !!state.user && tokenStorage.isAuthenticated()
+      // If we have user in state and valid authentication, return true
+      if (state.user && tokenStorage.isAuthenticated()) {
+        return true
+      }
+
+      // If we have refresh token but no user in state yet (e.g., after tab reopen)
+      // We can still be authenticated as the app will load user data
+      if (!state.user && tokenStorage.getRefreshToken()) {
+        return true
+      }
+
+      return false
     },
 
     /**
@@ -243,10 +255,14 @@ export const useAuthStore = defineStore('auth', {
         if (user) {
           this.user = user
           tokenStorage.setUser(user)
-        }
 
-        if (process.env.NODE_ENV === 'development') {
-          console.log('✅ Token refreshed successfully')
+          if (process.env.NODE_ENV === 'development') {
+            console.log('✅ Token refreshed successfully with user data')
+          }
+        } else {
+          if (process.env.NODE_ENV === 'development') {
+            console.log('⚠️ Token refreshed but no user data in response')
+          }
         }
 
         return { success: true, accessToken }

@@ -52,9 +52,45 @@
                   <q-chip color="blue-grey-6" text-color="white" size="sm" v-if="animeInfo.type">
                     {{ animeInfo.type }}
                   </q-chip>
-                  <q-chip color="purple-6" text-color="white" size="sm" v-if="animeInfo.episodes">
-                    {{ animeInfo.episodes }} EP
-                  </q-chip>
+                  <!-- Episode chips giống như desktop -->
+                  <div class="mobile-episode-chips">
+                    <q-chip
+                      color="purple-6"
+                      text-color="white"
+                      size="sm"
+                      icon="schedule"
+                      v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.total"
+                    >
+                      {{ animeInfo.episodes.total }} Episodes
+                    </q-chip>
+                    <q-chip
+                      color="blue-6"
+                      text-color="white"
+                      size="sm"
+                      icon="subtitles"
+                      v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.sub"
+                    >
+                      {{ animeInfo.episodes.sub }} Sub
+                    </q-chip>
+                    <q-chip
+                      color="orange-6"
+                      text-color="white"
+                      size="sm"
+                      icon="volume_up"
+                      v-if="typeof animeInfo.episodes === 'object' && animeInfo.episodes.dub"
+                    >
+                      {{ animeInfo.episodes.dub }} Dub
+                    </q-chip>
+                    <q-chip
+                      color="purple-6"
+                      text-color="white"
+                      size="sm"
+                      icon="schedule"
+                      v-if="typeof animeInfo.episodes === 'number'"
+                    >
+                      {{ animeInfo.episodes }} Episodes
+                    </q-chip>
+                  </div>
                 </div>
                 <div
                   class="mobile-badges q-mb-sm"
@@ -74,7 +110,7 @@
                 </div>
 
                 <!-- Quick stats in 2x2 grid -->
-                <div class="mobile-quick-stats">
+                <!-- <div class="mobile-quick-stats">
                   <div class="mobile-stat">
                     <div class="stat-value">{{ animeInfo.score || 'N/A' }}</div>
                     <div class="stat-label">Score</div>
@@ -95,7 +131,7 @@
                     </div>
                     <div class="stat-label">Views</div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -149,7 +185,7 @@
         <!-- Desktop/Tablet layout (existing) -->
         <div class="desktop-layout">
           <div class="row q-col-gutter-lg">
-            <!-- Anime Poster Card -->
+            <!-- Anime Poster Card 1-->
             <div class="col-12 col-sm-4 col-md-3">
               <q-card class="poster-card shadow-8">
                 <div class="poster-wrapper">
@@ -270,7 +306,7 @@
                   </div>
 
                   <!-- Quick Stats Row -->
-                  <div class="stats-row q-mb-lg">
+                  <!-- <div class="stats-row q-mb-lg">
                     <div class="row q-col-gutter-md">
                       <div class="col-6 col-sm-3">
                         <div class="stat-card">
@@ -305,7 +341,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
                   <!-- Action Buttons -->
                   <div class="action-buttons q-mb-lg">
@@ -453,6 +489,9 @@ const colors = computed(() => [
 const getColorForGenre = (index) => {
   return colors.value[index % colors.value.length]
 }
+//const getColorForStudioProducers = (index) => {
+//return colors.value[(index % colors.value.length) + 7]
+//}
 
 // const progressKey = computed(() => {
 //   const info = safeAnimeInfo.value
@@ -574,11 +613,11 @@ const getStatusColor = (status) => {
   return 'grey'
 }
 
-const formatNumber = (num) => {
-  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M'
-  if (num >= 1000) return (num / 1000).toFixed(1) + 'K'
-  return num.toString()
-}
+// const formatNumber = (num) => {
+//   if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M'
+//   if (num >= 1000) return (num / 1000).toFixed(1) + 'K'
+//   return num.toString()
+// }
 
 // Navigation methods
 const navigateToWatch = () => {
@@ -645,3 +684,39 @@ const onImageError = (event) => {
   console.log('Failed to load image:', event.target.src)
 }
 </script>
+
+<style lang="scss" scoped>
+.mobile-episode-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  .q-chip {
+    font-size: 11px;
+    padding: 2px 8px;
+
+    .q-icon {
+      font-size: 14px;
+      margin-right: 2px;
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .mobile-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .mobile-watch-btn,
+  .watch-btn {
+    font-size: 12px; // keep label compact on ultra-small screens
+  }
+
+  .mobile-watch-btn .q-btn__content,
+  .watch-btn .q-btn__content {
+    white-space: nowrap; // prevent label from wrapping
+  }
+}
+</style>

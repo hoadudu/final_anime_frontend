@@ -16,6 +16,7 @@
     "server": "json-server --watch mock-api/db.json --port 3000"
   },
   "dependencies": {
+    "@quasar/cli": "^2.5.0",
     "@quasar/extras": "^1.16.4",
     "@tanstack/query-persist-client-core": "^5.90.2",
     "@tanstack/query-sync-storage-persister": "^5.90.2",

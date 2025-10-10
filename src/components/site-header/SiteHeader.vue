@@ -10,9 +10,16 @@
         :icon="drawerStore.leftDrawerOpen ? 'close' : 'menu'"
       />
 
-      <q-btn flat no-caps no-wrap class="q-ml-xs" v-if="$q.screen.gt.xs">
+      <q-btn
+        flat
+        no-caps
+        no-wrap
+        class="q-ml-xs"
+        v-if="$q.screen.gt.xs"
+        @click="router.push('/home')"
+      >
         <q-icon :name="fabYoutube" color="red" size="28px" />
-        <q-toolbar-title shrink class="text-weight-bold"> YouTube </q-toolbar-title>
+        <q-toolbar-title shrink class="text-weight-bold"> Anime47 </q-toolbar-title>
       </q-btn>
 
       <q-space />
@@ -46,7 +53,7 @@
       <q-space />
 
       <div class="q-gutter-sm row items-center no-wrap">
-        <q-btn round dense flat color="grey-8" icon="video_call" v-if="$q.screen.gt.sm">
+        <!-- <q-btn round dense flat color="grey-8" icon="video_call" v-if="$q.screen.gt.sm">
           <q-tooltip>{{ t('header.createVideo') }}</q-tooltip>
         </q-btn>
         <q-btn round dense flat color="grey-8" icon="apps" v-if="$q.screen.gt.sm">
@@ -58,7 +65,7 @@
         <q-btn round dense flat color="grey-8" icon="notifications">
           <q-badge color="red" text-color="white" floating> 2 </q-badge>
           <q-tooltip>{{ t('header.notifications') }}</q-tooltip>
-        </q-btn>
+        </q-btn> -->
         <template v-if="authState.isInitialized && authState.hasValidToken">
           <q-btn round flat>
             <q-avatar size="26px">
@@ -179,36 +186,49 @@ function handleAnimeClick(anime) {
 
 async function handleLogout() {
   try {
+    // Check if on protected route before logout
+    const needsRedirect = router.currentRoute.value.meta?.requiresAuth
+
+    // Redirect FIRST to avoid component trying to load data after auth cleared
+    if (needsRedirect) {
+      await router.push({ name: 'site-home' })
+    }
+
+    // Then perform logout
     await logoutAction()
 
     // Show success notification
     $q.notify({
       type: 'positive',
       message: t('auth.logoutSuccess'),
-      timeout: 5000,
+      timeout: 2000,
       position: 'top',
     })
-
-    // Redirect to home if needed
-    if (router.currentRoute.value.meta?.requiresAuth) {
-      router.push({ name: 'home' })
-    }
   } catch (error) {
     console.error('Logout error:', error)
 
     // Even if logout API fails, user is logged out locally
+    // Make sure we're on a safe page
+    if (router.currentRoute.value.meta?.requiresAuth) {
+      await router.push({ name: 'site-home' })
+    }
+
     $q.notify({
       type: 'warning',
       message: t('auth.logoutWarning'),
-      timeout: 5000,
+      timeout: 3000,
       position: 'top',
     })
   }
 }
 
 function goProfile() {
-  // Replace with actual profile route when available
-  router.push({ name: 'home' }).catch(() => {})
+  // Check if already on profile page
+  if (router.currentRoute.value.name === 'site-profile') {
+    return
+  }
+
+  router.push({ name: 'site-profile' }).catch(() => {})
 }
 
 /**

@@ -82,7 +82,7 @@
                     <q-chip
                       :color="getPositionColor(post.position)"
                       text-color="white"
-                      size="sm"
+                      size="xl"
                       dense
                       class="position-badge"
                     >
@@ -93,7 +93,7 @@
                     <q-chip
                       :color="getTypeColor(post.type)"
                       text-color="white"
-                      size="sm"
+                      size="md"
                       dense
                       class="type-badge"
                     >
@@ -272,121 +272,134 @@ const sortedAnimeGroups = computed(() => {
 
 <style lang="scss" scoped>
 .anime-groups-container {
-  margin: 20px 0;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
 }
 
 .anime-groups-card {
-  border-radius: 12px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 16px;
   overflow: hidden;
 }
 
 .groups-header {
-  background: linear-gradient(135deg, #1e1f25 0%, #2a2c34 100%);
-  border-bottom: 1px solid #2f323a;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .groups-title {
-  color: #90caf9;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1.4;
 }
 
 .groups-subtitle {
   font-size: 0.875rem;
-  color: #b0bec5;
+  margin-top: 4px;
+}
+
+.groups-content {
+  padding: 24px;
 }
 
 .anime-group {
-  &:not(:last-child) {
-    border-bottom: 2px solid #2f323a;
-    padding-bottom: 24px;
+  margin-bottom: 48px;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
 .group-header {
-  padding: 0 4px;
+  margin-bottom: 24px;
 }
 
 .group-name {
-  color: #e0e0e0;
+  color: #ffffff;
+  font-size: 1.25rem;
+  line-height: 1.4;
 }
 
 .group-description {
   font-size: 0.875rem;
-  color: #b0bec5;
+  margin-top: 4px;
 }
 
+// Posts Grid Layout - Responsive 8 columns to 2 columns
 .posts-grid {
-  .posts-flex-container {
-    display: flex;
-    flex-wrap: wrap;
+  width: 100%;
+}
+
+.posts-flex-container {
+  display: grid;
+  gap: 16px;
+
+  // Desktop: 8 columns max
+  @media (min-width: 1920px) {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  // Large desktop: 6 columns
+  @media (min-width: 1600px) and (max-width: 1919px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  // Medium desktop: 5 columns
+  @media (min-width: 1400px) and (max-width: 1599px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  // Desktop: 4 columns
+  @media (min-width: 1024px) and (max-width: 1399px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  // Tablet landscape: 3 columns
+  @media (min-width: 768px) and (max-width: 1023px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // Tablet portrait: 2 columns
+  @media (min-width: 480px) and (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Mobile: 2 columns
+  @media (max-width: 479px) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    justify-content: center;
-    /* Căn giữa khi ít items */
-
-    /* Căn trái khi có nhiều items (3+ items) */
-    &.justify-start {
-      justify-content: flex-start;
-    }
-
-    /* Căn giữa đẹp hơn khi có 1-2 items */
-    &.justify-center {
-      justify-content: center;
-    }
   }
 }
 
+// Post item với tỷ lệ 3:4
 .post-item {
-  flex: 1 1 calc(50% - 6px);
-  /* Tối thiểu 2 cột, trừ gap */
-  min-width: 140px;
-  max-width: 200px;
-
-  /* Tối ưu cho single item */
-  &.single-item {
-    flex: 0 0 auto;
-    max-width: 280px;
-    min-width: 220px;
-
-    .grid-card {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
-      }
-    }
-  }
-
-  /* Tối ưu cho 2 items */
-  &.two-items {
-    flex: 0 0 auto;
-    max-width: 240px;
-    min-width: 180px;
-
-    .grid-card {
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-
-      &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-      }
-    }
-  }
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  position: relative;
 }
 
+// Card Styles - absolute fill parent
 .grid-card {
-  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, #2a2a3e 0%, #1f1f2e 100%);
+  border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
-  position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
-  background-color: #2b2d35;
+  border: 2px solid transparent;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border-color: rgba(var(--q-primary-rgb), 0.5);
 
     .poster-overlay {
       opacity: 1;
@@ -394,315 +407,252 @@ const sortedAnimeGroups = computed(() => {
   }
 
   &.current-anime {
-    border: 1px solid rgba(25, 118, 210, 0.5);
-    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.14) inset;
+    border-color: var(--q-primary);
+    box-shadow: 0 0 20px rgba(var(--q-primary-rgb), 0.3);
   }
 }
 
-.card-header {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  right: 4px;
-  z-index: 3;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.position-badge {
-  backdrop-filter: blur(6px);
-  background: rgba(0, 0, 0, 0.55) !important;
-  font-size: 0.68rem;
-  min-height: 16px;
-}
-
-.type-badge {
-  backdrop-filter: blur(6px);
-  font-size: 0.68rem;
-  min-height: 16px;
-}
-
+// Poster container - chiếm 55% chiều cao của card
 .poster-container {
   position: relative;
+  width: 100%;
+  height: 55%;
+  background: #1a1a2e;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
+// FIX: Override Quasar's absolute positioning
 .poster-image {
+  display: block;
   width: 100%;
-  aspect-ratio: 3/4;
-  border-radius: 8px 8px 0 0;
+  height: 100%;
+  position: relative !important;
+
+  :deep(.q-img__container) {
+    position: relative !important;
+    width: 100%;
+    height: 100%;
+  }
+
+  :deep(.q-img__image) {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center; // Hiển thị phần trên của ảnh
+  }
+
+  :deep(.q-img__content) {
+    position: absolute !important;
+  }
 }
 
-.poster-overlay {
+// Card header - absolute so với poster-container
+.card-header {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+
+  .q-chip {
+    pointer-events: auto;
+  }
+}
+
+.position-badge,
+.type-badge {
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+// Overlay - sẽ nằm trong q-img__content
+.poster-overlay {
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-  border-radius: 8px 8px 0 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
 }
 
 .play-button {
-  transform: scale(0.72);
-  transition: transform 0.25s ease;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
 
-  &:hover {
-    transform: scale(0.78);
+  .grid-card:hover & {
+    transform: scale(1);
   }
 }
 
+// Current indicator - absolute so với poster-container
 .current-indicator {
   position: absolute;
-  bottom: 4px;
-  left: 4px;
-  background: rgba(144, 202, 249, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 2px 6px;
-  border-radius: 8px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  padding: 6px 10px;
   display: flex;
   align-items: center;
-  font-size: 0.7rem;
+  z-index: 11;
 }
 
+// Card content - chiếm phần còn lại
 .card-content {
-  flex-grow: 1;
-  padding: 12px 8px;
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #2a2a3e 0%, #1f1f2e 100%);
+  overflow: hidden;
+  min-height: 0;
 }
 
 .post-title {
-  color: #e0e0e0;
-  line-height: 1.25;
-  font-size: 0.82rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  font-weight: 600;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .post-note {
+  font-size: 0.75rem;
   line-height: 1.3;
-  font-size: 0.72rem;
+  color: #b0b0b0;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #b0bec5;
+  margin-bottom: 8px;
 }
 
 .watch-order-info {
   margin-top: auto;
-
-  .q-linear-progress {
-    height: 3px;
-  }
-
-  .text-caption {
-    font-size: 0.65rem;
-  }
+  padding-top: 6px;
 }
 
+// Card actions - compact
 .card-actions {
-  padding: 6px 8px 8px;
-  margin-top: auto;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
 }
 
-.card-actions .q-btn {
-  font-size: 0.7rem;
-  min-height: 24px;
-}
-
-// Responsive Design với Flexbox
-@media (max-width: 599px) {
+// Mobile optimizations
+@media (max-width: 479px) {
   .anime-groups-container {
-    margin: 16px 0;
+    padding: 12px;
   }
 
-  .groups-header {
+  .groups-content {
     padding: 16px;
   }
 
-  .groups-title {
-    font-size: 1.2rem;
-  }
-
   .anime-group {
-    margin-bottom: 24px !important;
-
-    &:not(:last-child) {
-      padding-bottom: 16px;
-    }
+    margin-bottom: 32px;
   }
 
-  .posts-flex-container {
-    gap: 8px;
-
-    &.justify-center {
-      justify-content: center;
-    }
+  .group-name {
+    font-size: 1.1rem;
   }
 
-  .post-item {
-    flex: 1 1 calc(50% - 4px);
-    /* 2 cột trên mobile */
-    min-width: 150px;
-    max-width: 170px;
-
-    &.single-item {
-      flex: 0 0 auto;
-      max-width: 200px;
-      min-width: 160px;
-    }
-
-    &.two-items {
-      flex: 0 0 auto;
-      max-width: 180px;
-      min-width: 160px;
-    }
-  }
-
-  .card-content {
-    padding: 8px 6px;
+  .poster-container {
+    height: 60%; // Tăng tỷ lệ ảnh trên mobile
   }
 
   .post-title {
     font-size: 0.8rem;
+    -webkit-line-clamp: 2;
   }
 
   .post-note {
     font-size: 0.7rem;
+    -webkit-line-clamp: 1;
   }
-}
 
-@media (min-width: 600px) and (max-width: 959px) {
-  .post-item {
-    flex: 1 1 calc(33.333% - 8px);
-    /* 3 cột trên tablet nhỏ */
-    min-width: 140px;
-    max-width: 180px;
+  .card-header {
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    gap: 4px;
+  }
 
-    &.single-item {
-      flex: 0 0 auto;
-      max-width: 300px;
-      min-width: 240px;
+  .position-badge,
+  .type-badge {
+    font-size: 0.65rem;
+    height: 18px;
+    padding: 0 6px;
+  }
+
+  .card-content {
+    padding: 10px;
+  }
+
+  .card-actions {
+    padding: 6px 10px;
+
+    .q-btn {
+      font-size: 0.7rem;
+      padding: 4px 8px;
     }
-
-    &.two-items {
-      flex: 0 0 auto;
-      max-width: 240px;
-      min-width: 200px;
-    }
-  }
-}
-
-@media (min-width: 960px) and (max-width: 1279px) {
-  .post-item {
-    flex: 1 1 calc(25% - 9px);
-    /* 4 cột trên tablet lớn */
-    min-width: 150px;
-    max-width: 190px;
-
-    &.single-item {
-      flex: 0 0 auto;
-      max-width: 350px;
-      min-width: 280px;
-    }
-
-    &.two-items {
-      flex: 0 0 auto;
-      max-width: 280px;
-      min-width: 220px;
-    }
-  }
-}
-
-@media (min-width: 1280px) and (max-width: 1599px) {
-  .post-item {
-    flex: 1 1 calc(20% - 9.6px);
-    /* 5 cột trên desktop nhỏ */
-    min-width: 160px;
-    max-width: 200px;
-  }
-}
-
-@media (min-width: 1600px) and (max-width: 1919px) {
-  .post-item {
-    flex: 1 1 calc(16.666% - 10px);
-    /* 6 cột trên desktop trung */
-    min-width: 170px;
-    max-width: 210px;
-  }
-}
-
-@media (min-width: 1920px) and (max-width: 2399px) {
-  .post-item {
-    flex: 1 1 calc(14.286% - 10.3px);
-    /* 7 cột trên desktop lớn */
-    min-width: 180px;
-    max-width: 220px;
-  }
-}
-
-@media (min-width: 2400px) {
-  .post-item {
-    flex: 1 1 calc(12.5% - 10.5px);
-    /* 8 cột trên ultra wide */
-    min-width: 190px;
-    max-width: 240px;
-  }
-}
-
-// Dark mode support
-.body--dark {
-  .groups-header {
-    background: linear-gradient(135deg, #263238 0%, #37474f 100%);
-    border-bottom-color: #424242;
-  }
-
-  .groups-title {
-    color: #64b5f6;
-  }
-
-  .group-header {
-    background-color: transparent;
-  }
-
-  .group-name {
-    color: #e0e0e0;
-  }
-
-  .anime-group {
-    &:not(:last-child) {
-      border-bottom-color: #424242;
-    }
-  }
-
-  .grid-card {
-    background-color: #424242;
-
-    &.current-anime {
-      border-color: #64b5f6;
-      box-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
-    }
-  }
-
-  .post-title {
-    color: #e0e0e0;
   }
 
   .current-indicator {
-    background: rgba(100, 181, 246, 0.9);
+    padding: 4px 8px;
+
+    .q-icon {
+      font-size: 14px;
+    }
+
+    .text-caption {
+      font-size: 0.65rem;
+    }
+  }
+}
+
+// Tablet optimizations
+@media (min-width: 480px) and (max-width: 1023px) {
+  .groups-content {
+    padding: 20px;
+  }
+
+  .poster-container {
+    height: 58%;
+  }
+
+  .post-title {
+    font-size: 0.85rem;
+  }
+
+  .post-note {
+    font-size: 0.75rem;
+  }
+}
+
+// Desktop optimizations
+@media (min-width: 1024px) {
+  .poster-container {
+    height: 55%;
   }
 }
 </style>

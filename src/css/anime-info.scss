@@ -242,7 +242,8 @@
           padding: 1rem 0;
 
           .mobile-watch-btn {
-            flex: 2; // Watch button takes more space
+            flex: 2;
+            min-width: 0; /* ✨ Bắt buộc để ellipsis hoạt động trong flex item */
             height: 44px;
             font-weight: bold;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -253,6 +254,25 @@
             flex: 1;
             height: 44px;
           }
+        }
+        .mobile-watch-btn .q-btn__content {
+          display: flex;
+          align-items: center;
+          flex-wrap: nowrap;
+          overflow: hidden;
+        }
+
+        .mobile-watch-btn .q-btn__label {
+          flex: 1;
+          min-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .mobile-watch-btn .q-icon {
+          flex-shrink: 0;
+          margin-right: 4px;
         }
       }
 
@@ -367,7 +387,7 @@
 
     .title-section {
       .anime-title {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #ee801f 0%, #df0cf0 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -809,4 +829,158 @@
 
 .slide-in-right {
   animation: slideInRight 0.6s ease-out;
+}
+
+// Studios & Producers styling (using same styling as genres-card)
+.genres-card {
+  .studios-section,
+  .producers-section,
+  .licensors-section {
+    .studios-list,
+    .producers-list,
+    .licensors-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      .genre-chip {
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+
+  .text-subtitle2 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: $primary;
+  }
+
+  // Dark mode styles for studios/producers/licensors sections
+  .body--dark & {
+    .studios-section {
+      .text-subtitle2 {
+        color: #ff9800; // Orange for studios in dark mode
+      }
+    }
+
+    .producers-section {
+      .text-subtitle2 {
+        color: #4caf50; // Green for producers in dark mode
+      }
+    }
+
+    .licensors-section {
+      .text-subtitle2 {
+        color: #9c27b0; // Purple for licensors in dark mode
+      }
+    }
+
+    .genre-chip:hover {
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Genres card styling for dark mode support
+.genres-card {
+  // Light mode styles
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+
+  .text-h6 {
+    color: #333333;
+  }
+  .text-color-white {
+    color: #ffffff;
+  }
+
+  .text-caption.text-orange {
+    background: rgba(255, 165, 0, 0.1);
+    padding: 8px;
+    border-radius: 4px;
+    border-left: 3px solid #ff9800;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  // No data message styling
+  .genres-card .text-center {
+    .q-icon {
+      opacity: 0.5;
+    }
+
+    .text-grey-6 {
+      font-style: italic;
+    }
+  }
+
+  .genre-chip {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    color: #ffffff;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // Dark mode styles
+  .body--dark & {
+    background: #1e1e1e;
+    border: 1px solid #333333;
+
+    .text-h6 {
+      color: #ffffff;
+    }
+
+    .genre-chip {
+      background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+
+      &:hover {
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  // Special styling for studios, producers and licensors sections
+  .studios-section .genre-chip {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: #ffffff;
+  }
+
+  .producers-section .genre-chip {
+    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    color: #ffffff;
+  }
+
+  .licensors-section .genre-chip {
+    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+    color: #ffffff;
+  }
+
+  // Dark mode special styling for studios, producers and licensors
+  .body--dark & {
+    .studios-section .genre-chip {
+      background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+      color: #000000;
+    }
+
+    .producers-section .genre-chip {
+      background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+      color: #ffffff;
+    }
+
+    .licensors-section .genre-chip {
+      background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+      color: #ffffff;
+    }
+  }
 }

@@ -3,13 +3,14 @@
     <q-carousel
       v-model="slide"
       animated
+      navigation-position="right"
       :navigation="false"
       infinite
-      arrows
+      :arrows="false"
       transition-prev="slide-right"
       transition-next="slide-left"
       height="650px"
-      class="bg-black"
+      class="bg-black hero-carousel"
       @mouseenter="pauseAutoplay"
       @mouseleave="resumeAutoplay"
     >
@@ -90,23 +91,27 @@
 
             <!-- Description -->
             <div
-              class="hero-description text-white text-subtitle1 q-mb-xl"
+              class="hero-description hide-on-mobile text-white text-subtitle1 q-mb-xl"
               v-html="getCleanDescription(movie.description)"
             ></div>
 
             <!-- Characters -->
-            <div v-if="movie.character" class="characters text-grey-4 text-caption q-mb-md">
+            <div
+              v-if="movie.character"
+              class="characters hide-on-mobile text-grey-4 text-caption q-mb-md"
+            >
               <strong>{{ t('hero.castLabel') }}</strong> {{ movie.character }}
             </div>
             <!-- Action buttons -->
             <div class="hero-actions q-gutter-md">
               <q-btn
-                color="red"
+                outline
+                text-color="white"
                 :label="t('hero.watchNow')"
                 push
                 icon="play_arrow"
                 size="lg"
-                class="text-weight-bold"
+                class="text-weight-bold watch-now-btn"
                 @click="watchMovie(movie)"
               />
               <!-- <q-btn flat round color="white" icon="info" size="lg" @click="showInfo(movie)">
@@ -117,22 +122,25 @@
         </div>
       </q-carousel-slide>
 
-      <!-- Custom navigation controls -->
+      <!-- Custom navigation controls with thumbnails - Vertical -->
       <template v-slot:control>
-        <q-carousel-control position="bottom-right" :offset="[18, 18]">
-          <div class="carousel-indicators row q-gutter-xs">
-            <q-btn
-              v-for="(movie, index) in featuredMovies"
-              :key="index"
-              flat
-              dense
-              :class="slide === index ? 'active-indicator' : 'inactive-indicator'"
-              @click="slide = index"
+        <q-carousel-control position="right" :offset="[24, 0]" class="thumbnail-navigation">
+          <div class="carousel-thumbnails column q-gutter-sm">
+            <div
+              v-for="item in visibleThumbnails"
+              :key="item.index"
+              class="thumbnail-item"
+              :class="{ 'active-thumbnail': slide === item.index }"
+              @click="slide = item.index"
             >
-              <div class="indicator-content">
-                <div class="indicator-progress" :style="getProgressStyle(index)"></div>
+              <div class="thumbnail-wrapper">
+                <img :src="item.movie.poster" :alt="item.movie.title" class="thumbnail-image" />
+                <div class="thumbnail-overlay">
+                  <div class="thumbnail-progress" :style="getProgressStyle(item.index)"></div>
+                </div>
+                <div v-if="slide === item.index" class="active-border"></div>
               </div>
-            </q-btn>
+            </div>
           </div>
         </q-carousel-control>
       </template>
@@ -160,7 +168,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useHomePageHeroSectionData } from 'src/composables/home-page/useHomePageData'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
@@ -176,6 +184,25 @@ const slide = ref(0)
 const autoplay = ref(true)
 let timer = null
 const router = useRouter()
+
+// Computed property to show only visible thumbnails (current + next 3)
+const visibleThumbnails = computed(() => {
+  if (!featuredMovies.value || featuredMovies.value.length === 0) return []
+
+  const maxVisible = 4 // Hiển thị tối đa 4 thumbnails
+  const total = featuredMovies.value.length
+  const result = []
+
+  for (let i = 0; i < maxVisible && i < total; i++) {
+    const index = (slide.value + i) % total
+    result.push({
+      index: index,
+      movie: featuredMovies.value[index],
+    })
+  }
+
+  return result
+})
 const setupAutoplay = () => {
   if (timer) clearInterval(timer)
 
@@ -297,34 +324,118 @@ onBeforeUnmount(() => {
   .q-btn {
     min-width: 140px;
   }
-}
 
-.carousel-indicators {
-  .active-indicator {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
+  .watch-now-btn {
+    border-color: rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.3s ease;
 
-    .indicator-content {
-      width: 60px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 2px;
-      overflow: hidden;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 1) !important;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3) !important;
+      transform: translateY(-2px);
+    }
 
-      .indicator-progress {
-        height: 100%;
-        background: #ff5722;
-        border-radius: 2px;
-      }
+    &:active {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4) !important;
+      transform: translateY(0);
     }
   }
+}
 
-  .inactive-indicator {
-    .indicator-content {
-      width: 60px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 2px;
+// Ẩn mũi tên carousel
+.hero-carousel {
+  :deep(.q-carousel__arrow) {
+    display: none !important;
+  }
+}
+
+// Thumbnail navigation styles - Vertical layout
+.thumbnail-navigation {
+  z-index: 10 !important; // Đảm bảo nổi trên overlay
+  height: 100%;
+  display: flex;
+  align-items: center; // Căn giữa theo chiều dọc
+
+  .carousel-thumbnails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .thumbnail-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      transform: translateX(-4px); // Dịch sang trái khi hover
+    }
+
+    .thumbnail-wrapper {
+      position: relative;
+      width: 50px; // Giảm từ 80px xuống 50px
+      height: 75px; // Giảm từ 120px xuống 75px
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+
+      .thumbnail-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .thumbnail-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+
+        .thumbnail-progress {
+          height: 100%;
+          background: linear-gradient(90deg, #ff5722, #ff8a65);
+          transition: width 6s linear;
+          box-shadow: 0 0 8px rgba(255, 87, 34, 0.8);
+        }
+      }
+
+      .active-border {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid #ff5722; // Giảm border từ 3px xuống 2px cho thumbnail nhỏ
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(255, 87, 34, 0.7);
+        pointer-events: none;
+      }
+    }
+
+    &.active-thumbnail {
+      .thumbnail-wrapper {
+        transform: scale(1.15); // Tăng scale lên để nổi bật hơn
+        box-shadow: 0 4px 16px rgba(255, 87, 34, 0.5);
+      }
+    }
+
+    &:not(.active-thumbnail) {
+      .thumbnail-wrapper {
+        opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
   }
 }
@@ -345,22 +456,32 @@ onBeforeUnmount(() => {
 
   // Tablet (768px - 1023px)
   @media (min-width: 768px) and (max-width: 1023px) {
-    height: 550px !important;
+    height: 500px !important;
   }
 
   // Mobile lớn (480px - 767px)
   @media (min-width: 480px) and (max-width: 767px) {
-    height: 500px !important;
+    height: 400px !important;
   }
 
   // Mobile nhỏ (< 480px)
   @media (max-width: 479px) {
-    height: 400px !important;
+    height: 300px !important;
   }
 }
 
 // Responsive adjustments
 @media (max-width: 768px) {
+  // Ẩn Description và Characters trên màn hình nhỏ
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  // Ẩn thumbnail navigation trên mobile
+  .thumbnail-navigation {
+    display: none !important;
+  }
+
   .hero-content {
     padding: 1rem !important;
   }
@@ -403,18 +524,17 @@ onBeforeUnmount(() => {
     gap: 8px;
 
     .q-btn {
-      width: 100%;
+      width: 80%;
       min-width: unset;
     }
-  }
 
-  // Điều chỉnh carousel indicators cho mobile
-  .carousel-indicators {
-    .active-indicator,
-    .inactive-indicator {
-      .indicator-content {
-        width: 40px;
-        height: 3px;
+    .watch-now-btn {
+      &:hover {
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
   }
