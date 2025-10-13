@@ -73,13 +73,10 @@
               />
             </div>
 
-            <div class="q-mt-md">
-              <EpisodeNavigation
-                :prev="episode?.prev_episode || null"
-                :next="episode?.next_episode || null"
-                :slug="slug"
-              />
-            </div>
+            <!-- <div class="q-mt-md">
+              <EpisodeNavigation :prev="episode?.prev_episode || null" :next="episode?.next_episode || null"
+                :slug="slug" />
+            </div> -->
           </div>
 
           <!-- Right: Anime Info (hidden when expanded) -->
@@ -203,7 +200,7 @@
 
             <!-- Top Right Component -->
             <div class="q-mt-md">
-              <TopRight />
+              <TopRight :post-id="postIdString" @reaction-changed="onReactionChanged" />
             </div>
           </div>
         </div>
@@ -258,6 +255,8 @@ import { useI18n } from 'vue-i18n'
 import { useMeta, Notify, useQuasar } from 'quasar'
 import TopTen from 'src/components/side-bar/TopTen.vue'
 import TopRight from 'src/components/watch-anime/TopRight.vue'
+import { api } from 'boot/axios'
+import { useAutoWatchStatus } from 'src/composables/crud/useAutoWatchStatus'
 import {
   useWatchPageDataSingleEpisode,
   useWatchPageDataListEpisodes,
@@ -275,12 +274,13 @@ import BreadcrumbNavigation from 'src/components/watch-anime/BreadcrumbNavigatio
 import WatchPlayer from 'src/components/watch-anime/WatchPlayer.vue'
 // import PlayerControls from 'src/components/watch-anime/PlayerControls.vue'
 import EpisodeList from 'src/components/watch-anime/EpisodeList.vue'
-import EpisodeNavigation from 'src/components/watch-anime/EpisodeNavigation.vue'
+// import EpisodeNavigation from 'src/components/watch-anime/EpisodeNavigation.vue'
+import { useAuth } from 'src/composables/auth/useAuth'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-
+const { user } = useAuth()
 const slug = computed(() => route.params.slug)
 const episodeNumber = computed(() => route.params.number)
 const episodeId = computed(() => route.params.id)
@@ -345,6 +345,12 @@ const progressKey = computed(() => {
   if (slug.value) return `slug-${slug.value}`
   return null
 })
+
+// Create computed ref for anime ID to track watch status
+const animeId = computed(() => episode.value?.anime?.id)
+
+// Initialize auto watch status composable at top level
+const { syncStatus } = useAutoWatchStatus(api, animeId, user)
 
 onMounted(() => {
   if (!process.env.CLIENT) return
@@ -415,6 +421,18 @@ watch(
   },
   { immediate: true },
 )
+// Auto-sync watch status when anime changes
+let lastAnimeId = null
+
+watch(
+  () => episode.value?.anime?.id,
+  (newAnimeId) => {
+    if (newAnimeId && newAnimeId !== lastAnimeId) {
+      syncStatus('continue', { silent: true })
+      lastAnimeId = newAnimeId
+    }
+  },
+)
 
 // Navigation functions
 function goToPrev() {
@@ -432,16 +450,56 @@ function goToNext() {
 }
 
 function toggleWatchlist() {
+  // Check if user is logged in
+  if (!user.value?.id) {
+    Notify.create({
+      message: t('animeInfo.pleaseLoginFirst', 'Please login first'),
+      color: 'warning',
+      position: 'top',
+      timeout: 2000,
+    })
+    return
+  }
+
+  // Check if anime ID is available
+  if (!animeId.value) {
+    Notify.create({
+      message: t('watch.animeNotAvailable', 'Anime information not available'),
+      color: 'warning',
+      position: 'top',
+      timeout: 2000,
+    })
+    return
+  }
+
+  // Store previous state for rollback if needed
+  const previousState = isInWatchlist.value
+
+  // Toggle state optimistically
   isInWatchlist.value = !isInWatchlist.value
-  // TODO: Implement actual API call to save/remove from watchlist
-  Notify.create({
-    message: isInWatchlist.value
-      ? t('watch.addedToWatchlist', 'Added to watchlist')
-      : t('watch.removedFromWatchlist', 'Removed from watchlist'),
-    color: isInWatchlist.value ? 'positive' : 'info',
-    position: 'top',
-    timeout: 2000,
-  })
+
+  // Determine status based on watchlist state
+  // Bật (add to watchlist) → watching
+  // Tắt (remove from watchlist) → continue
+  const status = isInWatchlist.value ? 'watching' : 'continue'
+
+  // Sync with API using useAutoWatchStatus
+  try {
+    syncStatus(status, { silent: true })
+  } catch (err) {
+    // Rollback on error
+    isInWatchlist.value = previousState
+    console.error('Failed to toggle watchlist:', err)
+  }
+}
+
+// Handle reaction change events from PostReactions component
+function onReactionChanged(data) {
+  console.log('Reaction changed in watch page:', data)
+  // You can add additional logic here, such as:
+  // - Analytics tracking
+  // - Updating other UI elements
+  // - Showing custom notifications
 }
 
 // Meta
@@ -598,14 +656,15 @@ useMeta(() => metaData.value)
 }
 
 /* Cinema Mode */
-.watch-page.cinema-mode {
-  background-color: #000;
+.q-page.cinema-mode {
+  background-color: #000 !important;
   position: relative;
 }
 
-.watch-page.cinema-mode .page-container {
+.cinema-mode .page-container {
   padding-left: 0 !important;
   padding-right: 0 !important;
+  background: rgba(0, 0, 0, 0.7) !important;
 }
 
 .page-container {
@@ -620,37 +679,61 @@ useMeta(() => metaData.value)
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
-  z-index: 1000;
+  background: rgba(0, 0, 0, 0.96);
+  z-index: 6000;
   pointer-events: none;
+  backdrop-filter: blur(3px);
+  animation: fadeInOverlay 0.4s ease-in-out;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(3px);
+  }
 }
 
 .cinema-content {
   position: relative;
-  z-index: 1001;
+  z-index: 6001;
 }
 
 .cinema-player-highlight {
   position: relative;
-  z-index: 1002;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  z-index: 6002;
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.9),
+    0 0 80px rgba(0, 0, 0, 0.7);
+  transition: all 0.4s ease;
 }
 
-.cinema-player-highlight :deep(.watch-player),
-.cinema-player-highlight :deep(.watch-player iframe) {
+.cinema-player-highlight :deep(.watch-player) {
   border-radius: 12px;
   overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.cinema-player-highlight :deep(.watch-player iframe),
+.cinema-player-highlight :deep(.jw-player-container) {
+  transition: all 0.3s ease;
 }
 
 .cinema-dimmable {
   transition:
-    opacity 0.3s ease,
-    filter 0.3s ease;
+    opacity 0.4s ease,
+    filter 0.4s ease,
+    transform 0.3s ease;
 }
 
-.watch-page.cinema-mode .cinema-dimmable {
-  opacity: 0.2;
-  filter: blur(1px);
+.q-page.cinema-mode .cinema-dimmable {
+  opacity: 0.05;
+  filter: blur(3px) brightness(0.2);
+  pointer-events: none;
+  user-select: none;
 }
 
 /* 3-column layout - Desktop (>= 1024px) */

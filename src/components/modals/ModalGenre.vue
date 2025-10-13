@@ -499,10 +499,8 @@ watch(
 )
 
 onMounted(() => {
-  // Load genres on component mount
-  if (genreStore.genres.length === 0) {
-    genreStore.fetchGenres()
-  }
+  // Load genres on component mount - cache will prevent duplicate API calls
+  genreStore.fetchGenres()
 
   // Setup tabs scroll listener
   nextTick(() => {

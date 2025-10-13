@@ -131,6 +131,11 @@
             @update:model-value="handleStatusChange"
           >
             <q-tab
+              name="continue"
+              :label="`${t('profile.continue')} (${profileData.stats?.continue || 0})`"
+              icon="play_arrow"
+            />
+            <q-tab
               name="watching"
               :label="`${t('profile.watching')} (${profileData.stats?.watching || 0})`"
               icon="play_circle"
@@ -286,30 +291,40 @@
             >
               <!-- Poster -->
               <div class="anime-poster-container">
-                <q-img
+                <img
                   :src="anime.poster"
                   :alt="anime.title"
-                  ratio="3/4"
-                  fit="cover"
+                  class="anime-poster-img"
                   loading="lazy"
-                >
-                  <template v-slot:error>
-                    <div class="absolute-full flex flex-center bg-grey-8">
-                      <q-icon name="broken_image" size="48px" color="grey-5" />
-                    </div>
-                  </template>
+                  @error="handleImageError(anime)"
+                />
 
-                  <!-- Score Badge -->
-                  <div v-if="anime.score" class="score-badge">
-                    <q-icon name="star" size="14px" class="q-mr-xs" />
-                    {{ anime.score }}
-                  </div>
+                <!-- Error -->
+                <div v-if="anime.imageError" class="absolute-full flex flex-center bg-grey-8">
+                  <q-icon name="broken_image" size="48px" color="grey-5" />
+                </div>
 
-                  <!-- Play Overlay -->
-                  <div class="play-overlay">
-                    <q-btn round color="primary" icon="play_arrow" size="md" />
-                  </div>
-                </q-img>
+                <!-- Score Badge -->
+                <div v-if="anime.score" class="score-badge">
+                  <q-icon name="star" size="14px" class="q-mr-xs" />
+                  {{ anime.score }}
+                </div>
+
+                <!-- Delete Button -->
+                <div class="delete-button">
+                  <q-btn
+                    round
+                    color="negative"
+                    icon="delete"
+                    size="sm"
+                    @click.stop="confirmDeleteAnime(anime)"
+                  />
+                </div>
+
+                <!-- Play Overlay -->
+                <div class="play-overlay">
+                  <q-btn round color="primary" icon="play_arrow" size="md" />
+                </div>
               </div>
 
               <!-- Info -->
@@ -344,22 +359,24 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useQuasar, date } from 'quasar'
+import { api } from 'boot/axios'
 import { useAuth } from 'src/composables/auth/useAuth'
 import {
   useProfileData,
   useProfileAnimeList,
   useProfileCustomLists,
 } from 'src/composables/profile-page/useProfilePageData.js'
-import { date } from 'quasar'
 
 // ========== COMPOSABLES ==========
 const router = useRouter()
 const { t } = useI18n()
 const { user } = useAuth()
+const $q = useQuasar()
 
 // ========== REACTIVE DATA ==========
 const currentUserId = ref(null)
-const currentStatus = ref('watching')
+const currentStatus = ref('continue')
 const searchQuery = ref('')
 const sortBy = ref('updated_desc')
 const customLists = ref([])
@@ -492,6 +509,7 @@ const navigateToAnime = (anime) => {
 
 const getStatusLabel = (status) => {
   const labels = {
+    continue: t('profile.continue'),
     watching: t('profile.watching'),
     completed: t('profile.completed'),
     on_hold: t('profile.onHold'),
@@ -506,6 +524,72 @@ const handleLoginRedirect = () => {
     name: 'site-home',
     query: { login: '1' },
   })
+}
+
+const handleImageError = (anime) => {
+  anime.imageError = true
+}
+
+const confirmDeleteAnime = (anime) => {
+  $q.dialog({
+    title: t('profile.confirmDelete'),
+    message: t('profile.confirmDeleteMessage', { title: anime.title }),
+    cancel: {
+      label: t('common.cancel'),
+      flat: true,
+      color: 'grey-7',
+    },
+    ok: {
+      label: t('profile.deleteButton'),
+      color: 'negative',
+      flat: true,
+    },
+    persistent: false,
+  }).onOk(() => {
+    deleteAnime(anime)
+  })
+}
+
+const deleteAnime = async (anime) => {
+  const loading = $q.notify({
+    type: 'ongoing',
+    message: t('profile.deletingAnime'),
+    position: 'top',
+  })
+
+  try {
+    const payload = {
+      post_id: anime.anime_id,
+      status: currentStatus.value,
+      access_token: user.value.access_token,
+    }
+
+    await api.delete('/profile/delete-anime', { data: payload })
+
+    // ✅ Tắt loading khi thành công
+    loading()
+
+    $q.notify({
+      type: 'positive',
+      message: t('profile.deleteSuccess'),
+      position: 'top',
+      timeout: 2000,
+    })
+
+    refetchList()
+  } catch (error) {
+    console.error('Error deleting anime:', error)
+
+    // ✅ Tắt loading khi lỗi
+    loading()
+
+    $q.notify({
+      type: 'negative',
+      message: error.response?.data?.message || t('profile.deleteError'),
+      position: 'top',
+      timeout: 3000,
+    })
+  }
 }
 </script>
 
@@ -645,12 +729,23 @@ const handleLoginRedirect = () => {
     .play-overlay {
       opacity: 1;
     }
+
+    .delete-button {
+      opacity: 1;
+    }
   }
 }
 
 .anime-poster-container {
   position: relative;
   overflow: hidden;
+  aspect-ratio: 3 / 4;
+
+  .anime-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   .score-badge {
     position: absolute;
@@ -665,6 +760,15 @@ const handleLoginRedirect = () => {
     display: flex;
     align-items: center;
     z-index: 2;
+  }
+
+  .delete-button {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   .play-overlay {

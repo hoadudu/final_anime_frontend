@@ -428,7 +428,10 @@
 import { computed, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { api } from 'boot/axios'
+import { useAuth } from 'src/composables/auth/useAuth'
 import { linkWatch, resolveWatchProgressEntry } from 'src/utils/helper'
+import { useAutoWatchStatus } from 'src/composables/crud/useAutoWatchStatus'
 // import removed as we now receive the data as a prop
 import BreadcrumbNavigation from './components/BreadcrumbNavigation.vue'
 import AnimeTabbedContent from './components/AnimeTabbedContent.vue'
@@ -460,6 +463,7 @@ const emit = defineEmits(['animeInfoLoaded'])
 // const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const { user } = useAuth()
 
 const colors = computed(() => [
   'blue-4',
@@ -656,9 +660,18 @@ const navigateToGenre = (genreLink) => {
 }
 
 // Action methods
-const addToWatchList = (listType) => {
-  // Implement watch list logic
-  console.log(`Adding to watch list: ${listType}`)
+// Create a computed ref for anime ID to pass to useAutoWatchStatus
+const animeId = computed(() => safeAnimeInfo.value?.id)
+
+// Initialize auto watch status composable
+const { syncStatus } = useAutoWatchStatus(api, animeId, user)
+
+const addToWatchList = async (listType) => {
+  // Convert status format (e.g., 'on-hold' -> 'on_hold')
+  const statusValue = listType.replace(/-/g, '_')
+
+  // Call syncStatus with silent: false to show notifications
+  syncStatus(statusValue, { silent: false })
 }
 
 const shareOn = (platform) => {

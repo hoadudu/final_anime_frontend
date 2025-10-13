@@ -6,9 +6,10 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: #121212; // Dark background color
   
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   // max-width: 1920px;
   // justify-content: center;
-  
 }

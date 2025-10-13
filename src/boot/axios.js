@@ -77,9 +77,9 @@ api.interceptors.response.use(
       }
 
       // Check if we have a refresh token
-      const refreshToken = tokenStorage.getRefreshToken()
+      const hasValidRefreshToken = tokenStorage.hasValidRefreshToken()
 
-      if (!refreshToken) {
+      if (!hasValidRefreshToken) {
         if (process.env.NODE_ENV === 'development') {
           console.log('🚫 No refresh token, logging out')
         }
@@ -191,10 +191,18 @@ export default defineBoot(async ({ app }) => {
 
   // Check if we need to refresh token on app startup
   const hasRefreshToken = !!tokenStorage.getRefreshToken()
+  const hasValidRefreshToken = tokenStorage.hasValidRefreshToken()
   const hasAccessToken = !!tokenStorage.getAccessToken()
   const hasUser = !!tokenStorage.getUser()
 
-  if (hasRefreshToken && !hasAccessToken) {
+  if (!hasValidRefreshToken && hasRefreshToken) {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('⚠️ Refresh token expired, clearing from storage')
+    }
+    tokenStorage.clearRefreshToken()
+  }
+
+  if (hasValidRefreshToken && !hasAccessToken) {
     // Have refresh token but no access token
     // This happens after tab close/reopen (sessionStorage cleared but localStorage persists)
     if (process.env.NODE_ENV === 'development') {
@@ -238,7 +246,7 @@ export default defineBoot(async ({ app }) => {
       // If refresh fails, clear auth (logout)
       authStore.clearAuth()
     }
-  } else if (hasRefreshToken && hasAccessToken && !hasUser) {
+  } else if (hasValidRefreshToken && hasAccessToken && !hasUser) {
     // Have both tokens but no user data in sessionStorage
     // This can happen if sessionStorage was cleared but tokens remain
     if (process.env.NODE_ENV === 'development') {

@@ -13,6 +13,7 @@ const STORAGE_KEYS = {
   ACCESS_TOKEN: 'access_token',
   REFRESH_TOKEN: 'refresh_token',
   TOKEN_EXPIRES_AT: 'token_expires_at',
+  REFRESH_TOKEN_EXPIRES_AT: 'refresh_token_expires_at',
   USER: 'user',
   DEVICE_NAME: 'device_name',
 }
@@ -81,17 +82,44 @@ class TokenStorage {
    * @param {string} token - Refresh token
    * @param {string} refreshExpiresAt - ISO date string
    */
-  setRefreshToken(token, refreshExpiresAt = null) {
+  setRefreshToken(token, refreshExpiresAt = undefined) {
     try {
       if (!token) return
 
       localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, token)
+
+      if (refreshExpiresAt !== undefined) {
+        this.setRefreshExpiry(refreshExpiresAt)
+      }
 
       if (process.env.NODE_ENV === 'development') {
         console.log('💾 Refresh token stored', refreshExpiresAt ? `(expires: ${refreshExpiresAt})` : '')
       }
     } catch (error) {
       console.error('Failed to store refresh token:', error)
+    }
+  }
+
+  /**
+   * Set refresh token expiration timestamp
+   * @param {string|number|null} refreshExpiresAt - ISO string or epoch/seconds value
+   */
+  setRefreshExpiry(refreshExpiresAt) {
+    try {
+      if (refreshExpiresAt === null) {
+        localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN_EXPIRES_AT)
+        return
+      }
+
+      const expiresAt = this._normalizeExpiry(refreshExpiresAt)
+
+      if (expiresAt) {
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN_EXPIRES_AT, expiresAt.toString())
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN_EXPIRES_AT)
+      }
+    } catch (error) {
+      console.error('Failed to store refresh token expiry:', error)
     }
   }
 
@@ -114,6 +142,7 @@ class TokenStorage {
   clearRefreshToken() {
     try {
       localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN)
+      localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN_EXPIRES_AT)
 
       if (process.env.NODE_ENV === 'development') {
         console.log('🗑️ Refresh token cleared')
@@ -237,6 +266,20 @@ class TokenStorage {
   }
 
   /**
+   * Get refresh token expiration timestamp
+   * @returns {number|null}
+   */
+  getRefreshExpiresAt() {
+    try {
+      const expiresAt = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN_EXPIRES_AT)
+      return expiresAt ? parseInt(expiresAt, 10) : null
+    } catch (error) {
+      console.error('Failed to get refresh token expiration:', error)
+      return null
+    }
+  }
+
+  /**
    * Check if token is expired
    * @param {number} bufferMs - Buffer time in milliseconds before actual expiration
    * @returns {boolean}
@@ -274,6 +317,47 @@ class TokenStorage {
   }
 
   /**
+   * Check if refresh token is expired
+   * @param {number} bufferMs - Buffer time before expiration
+   * @returns {boolean}
+   */
+  isRefreshExpired(bufferMs = 60000) {
+    try {
+      const expiresAt = this.getRefreshExpiresAt()
+
+      if (!expiresAt) {
+        return false
+      }
+
+      const now = Date.now()
+      const isExpired = now >= expiresAt - bufferMs
+
+      if (process.env.NODE_ENV === 'development' && isExpired) {
+        console.log('⏰ Refresh token expired or expiring soon')
+      }
+
+      return isExpired
+    } catch (error) {
+      console.error('Failed to check refresh token expiration:', error)
+      return true
+    }
+  }
+
+  /**
+   * Check if refresh token exists and is not expired
+   * @returns {boolean}
+   */
+  hasValidRefreshToken() {
+    const token = this.getRefreshToken()
+
+    if (!token) {
+      return false
+    }
+
+    return !this.isRefreshExpired()
+  }
+
+  /**
    * Check if user is authenticated (has user data and either valid token or refresh token)
    * Note: When app starts after tab close, sessionStorage is cleared but localStorage persists.
    * In this case, we have refresh token but no user data yet. The app will load user data
@@ -283,7 +367,7 @@ class TokenStorage {
   isAuthenticated() {
     const user = this.getUser()
     const hasValidToken = this.hasValidToken()
-    const hasRefreshToken = !!this.getRefreshToken()
+    const hasRefreshToken = this.hasValidRefreshToken()
 
     // Case 1: Have user data and valid token
     if (user && hasValidToken) {
@@ -328,13 +412,39 @@ class TokenStorage {
     return {
       hasAccessToken: !!this.getAccessToken(),
       hasRefreshToken: !!this.getRefreshToken(),
+      refreshExpiresAt: this.getRefreshExpiresAt(),
       hasUser: !!this.getUser(),
       hasValidToken: this.hasValidToken(),
+      hasValidRefreshToken: this.hasValidRefreshToken(),
       isAuthenticated: this.isAuthenticated(),
       tokenExpiresAt: this.getTokenExpiresAt(),
       user: this.getUser(),
       deviceName: this.getDeviceName(),
     }
+  }
+
+  /**
+   * Normalize expiry formats into timestamp
+   * @param {string|number} value
+   * @returns {number|null}
+   */
+  _normalizeExpiry(value) {
+    if (typeof value === 'number') {
+      if (value > 1e12) {
+        return value
+      }
+
+      return Date.now() + value * 1000
+    }
+
+    if (typeof value === 'string' && value.trim().length > 0) {
+      const parsed = Date.parse(value)
+      if (!Number.isNaN(parsed)) {
+        return parsed
+      }
+    }
+
+    return null
   }
 }
 

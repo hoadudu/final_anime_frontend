@@ -63,7 +63,7 @@
         </div>
 
         <div class="col-12 col-lg-8">
-          <div class="text-caption text-grey-7 q-mb-xs">
+          <div class="text-caption text-bold text-grey-7 q-mb-xs">
             {{ $t('watch.servers') }}
           </div>
           <div class="row q-col-gutter-sm">
@@ -78,7 +78,7 @@
                 <q-icon
                   v-if="option.codeIcon"
                   :name="option.codeIcon"
-                  size="16px"
+                  size="25px"
                   class="q-mr-xs"
                 />
                 <span>{{ option.label }}</span>

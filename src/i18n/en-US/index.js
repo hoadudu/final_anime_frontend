@@ -179,6 +179,7 @@ export default {
     pleaseLogin: 'Please login to view your profile',
 
     // Status tabs
+    continue: 'Continue Watching',
     watching: 'Watching',
     completed: 'Completed',
     onHold: 'On Hold',
@@ -211,6 +212,14 @@ export default {
     // Error states
     errorLoadingProfile: 'Failed to load profile',
     errorLoadingList: 'Failed to load anime list',
+
+    // Delete actions
+    confirmDelete: 'Remove from List',
+    confirmDeleteMessage: 'Are you sure you want to remove "{title}" from your list?',
+    deleteButton: 'Remove',
+    deletingAnime: 'Removing from list...',
+    deleteSuccess: 'Successfully removed from your list',
+    deleteError: 'Failed to remove from list. Please try again.',
   },
 
   // Movie/Anime tooltip
@@ -366,6 +375,12 @@ export default {
     completed: 'Completed',
     shareAnime: 'Share Anime',
     shareToFriends: 'to your friends',
+    noAnimeId: 'Anime ID not found',
+    addingToList: 'Adding to your list...',
+    addedToListSuccess: 'Successfully added to your watch list!',
+    addedToListError: 'Failed to add to watch list. Please try again.',
+    pleaseLoginFirst: 'Please login to add anime to your list',
+    savedOffline: 'Saved temporarily, will sync when online',
     overview: 'Overview',
     animeDetails: 'Anime Details',
     japanese: 'Japanese',
@@ -428,6 +443,7 @@ export default {
     removeFromWatchlist: 'Remove from Watchlist',
     addedToWatchlist: 'Added to watchlist',
     removedFromWatchlist: 'Removed from watchlist',
+    animeNotAvailable: 'Anime information not available',
     comments: 'Comments',
     noComments: 'No comments yet',
     recommended: 'Recommended for You',
@@ -456,6 +472,26 @@ export default {
     animeInfo: 'Info',
     save: 'Save',
     saved: 'Saved'
+  },
+
+  // Post Reactions
+  reactions: {
+    title: 'Reactions',
+    total: 'total',
+    loading: 'Loading reactions...',
+    errorLoading: 'Error loading reactions',
+    errorAddingReaction: 'Error adding reaction',
+    errorRemovingReaction: 'Error removing reaction',
+    reactionAdded: 'Added reaction: {reaction}',
+    reactionRemoved: 'Reaction removed',
+    loginRequired: 'Please login to react',
+    loginToReact: 'Login to react',
+    yourReaction: 'Your reaction',
+
+    // Reaction types
+    boring: 'Boring',
+    awesome: 'Awesome',
+    excellent: 'Excellent'
   },
 
   // Search Page

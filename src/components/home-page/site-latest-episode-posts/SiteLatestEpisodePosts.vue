@@ -138,22 +138,11 @@
         </div>
       </div>
     </div>
-
-    <!-- Refresh Button (Fixed at bottom right) -->
-    <q-btn
-      v-if="!isLoading && animeList && animeList.length > 0"
-      fab
-      color="primary"
-      icon="refresh"
-      class="refresh-fab"
-      @click="refreshLatestAnimePosts"
-      :loading="isRefreshing"
-    />
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useHomePageLastestEpisodePostsData } from 'src/composables/home-page/useHomePageData'
@@ -171,11 +160,11 @@ const {
   refetch,
 } = useHomePageLastestEpisodePostsData()
 
-// Reactive data
-const isRefreshing = ref(false)
-
 // Computed
 const animeList = computed(() => latestEpisodePostsResponse.value?.data || [])
+
+// Auto-refresh interval (15 minutes)
+let refreshInterval = null
 
 // Methods
 const navigateToRecentlyUpdated = () => {
@@ -194,14 +183,10 @@ const navigateToAnime = (animePost) => {
 
 const refreshLatestAnimePosts = async () => {
   try {
-    isRefreshing.value = true
-
     // Refetch data from API
     await refetch()
   } catch (err) {
     console.error('Failed to refresh anime posts:', err)
-  } finally {
-    isRefreshing.value = false
   }
 }
 
@@ -236,6 +221,22 @@ const transformAnimeForTooltip = (animePost) => {
 // Lifecycle
 onMounted(() => {
   // Vue Query sẽ tự động fetch data khi component mount
+
+  // Setup auto-refresh every 15 minutes
+  refreshInterval = setInterval(
+    () => {
+      refreshLatestAnimePosts()
+    },
+    15 * 60 * 1000,
+  ) // 15 minutes = 15 * 60 * 1000 milliseconds
+})
+
+onBeforeUnmount(() => {
+  // Cleanup interval to prevent memory leak
+  if (refreshInterval) {
+    clearInterval(refreshInterval)
+    refreshInterval = null
+  }
 })
 </script>
 
@@ -296,19 +297,6 @@ onMounted(() => {
     .error-message,
     .empty-message {
       color: #ffffff;
-    }
-  }
-
-  // Refresh FAB
-  .refresh-fab {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 1000;
-
-    @media (max-width: 599px) {
-      bottom: 80px; // Tránh bottom navigation
-      right: 16px;
     }
   }
 

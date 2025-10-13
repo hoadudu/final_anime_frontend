@@ -31,8 +31,6 @@
         @mousemove="onDrag"
         @mouseup="endDrag"
         @mouseleave="endDrag"
-        @touchstart="startDragTouch"
-        @touchmove="onDragTouch"
         @touchend="endDrag"
       >
         <q-list class="trending-items" dense>
@@ -81,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHomePageTrendingCarouselData } from 'src/composables/home-page/useHomePageData'
 import MovieTooltip from 'src/components/MovieTooltip.vue'
@@ -108,17 +106,65 @@ const isDragging = ref(false)
 const startX = ref(0)
 const startScrollLeft = ref(0)
 const isClick = ref(true) // Để phân biệt giữa click và drag
+const velocity = ref(0)
+const lastX = ref(0)
+const lastTime = ref(0)
+const momentumRAF = ref(null)
 
 onMounted(() => {
   nextTick(() => {
     updateScrollButtons()
     setupScrollListener()
+    setupPassiveListeners()
   })
 })
 
+onBeforeUnmount(() => {
+  // Cleanup
+  const container = scrollContainer.value
+  if (container) {
+    container.removeEventListener('touchstart', startDragTouch)
+    container.removeEventListener('touchmove', onDragTouch)
+  }
+  window.removeEventListener('resize', throttledUpdateScrollButtons)
+
+  // Cancel any ongoing momentum
+  if (momentumRAF.value) {
+    cancelAnimationFrame(momentumRAF.value)
+  }
+})
+
+// Setup passive listeners for better scroll performance
+function setupPassiveListeners() {
+  const container = scrollContainer.value
+  if (!container) return
+
+  // Remove old listeners
+  container.removeEventListener('touchstart', startDragTouch)
+  container.removeEventListener('touchmove', onDragTouch)
+
+  // Add with passive flag where appropriate
+  container.addEventListener('touchstart', startDragTouch, { passive: true })
+  container.addEventListener('touchmove', onDragTouch, { passive: false }) // Need to prevent default
+}
+
+// Throttle function for better performance
+function throttle(func, limit) {
+  let inThrottle
+  return function (...args) {
+    if (!inThrottle) {
+      func.apply(this, args)
+      inThrottle = true
+      setTimeout(() => (inThrottle = false), limit)
+    }
+  }
+}
+
+const throttledUpdateScrollButtons = throttle(updateScrollButtons, 100)
+
 function setupScrollListener() {
-  window.addEventListener('resize', updateScrollButtons)
-  return () => window.removeEventListener('resize', updateScrollButtons)
+  window.addEventListener('resize', throttledUpdateScrollButtons)
+  return () => window.removeEventListener('resize', throttledUpdateScrollButtons)
 }
 
 function scrollLeft() {
@@ -134,11 +180,17 @@ function scrollRight() {
 }
 
 function updateScrollButtons() {
-  const container = scrollContainer.value
-  if (container) {
-    canScrollLeft.value = container.scrollLeft > 0
-    canScrollRight.value = container.scrollLeft < container.scrollWidth - container.clientWidth - 10
-  }
+  if (!scrollContainer.value) return
+
+  // Use requestAnimationFrame for smoother updates
+  requestAnimationFrame(() => {
+    const container = scrollContainer.value
+    if (container) {
+      canScrollLeft.value = container.scrollLeft > 0
+      canScrollRight.value =
+        container.scrollLeft < container.scrollWidth - container.clientWidth - 10
+    }
+  })
 }
 
 function refreshTrending() {
@@ -194,37 +246,87 @@ function onDrag(e) {
 }
 
 function endDrag() {
+  if (!scrollContainer.value) return
+
   isDragging.value = false
+
   if (scrollContainer.value) {
     scrollContainer.value.style.cursor = 'grab'
     scrollContainer.value.style.removeProperty('user-select')
   }
+
+  // Apply momentum scrolling for touch devices
+  if (Math.abs(velocity.value) > 0.5) {
+    applyMomentum()
+  }
 }
 
-// Thêm các hàm xử lý touch events cho mobile
+function applyMomentum() {
+  if (!scrollContainer.value) return
+
+  const deceleration = 0.95 // Friction factor
+  const minVelocity = 0.1
+
+  function step() {
+    if (Math.abs(velocity.value) < minVelocity) {
+      velocity.value = 0
+      momentumRAF.value = null
+      return
+    }
+
+    velocity.value *= deceleration
+    scrollContainer.value.scrollLeft -= velocity.value * 16 // Approximate 16ms frame time
+
+    momentumRAF.value = requestAnimationFrame(step)
+  }
+
+  step()
+}
+
+// Thêm các hàm xử lý touch events cho mobile (optimized)
 function startDragTouch(e) {
   if (!scrollContainer.value || !e.touches[0]) return
+
+  // Cancel any ongoing momentum
+  if (momentumRAF.value) {
+    cancelAnimationFrame(momentumRAF.value)
+    momentumRAF.value = null
+  }
 
   isDragging.value = true
   isClick.value = true
   startX.value = e.touches[0].pageX
+  lastX.value = e.touches[0].pageX
+  lastTime.value = Date.now()
   startScrollLeft.value = scrollContainer.value.scrollLeft
+  velocity.value = 0
 }
 
 function onDragTouch(e) {
   if (!isDragging.value || !scrollContainer.value || !e.touches[0]) return
 
-  const x = e.touches[0].pageX
-  const distance = x - startX.value
+  const currentX = e.touches[0].pageX
+  const currentTime = Date.now()
+  const distance = currentX - startX.value
+
+  // Calculate velocity for momentum
+  const timeDelta = currentTime - lastTime.value
+  if (timeDelta > 0) {
+    velocity.value = (currentX - lastX.value) / timeDelta
+  }
+
+  lastX.value = currentX
+  lastTime.value = currentTime
 
   // Nếu khoảng cách kéo lớn hơn 5px, xem như là drag không phải click
   if (Math.abs(distance) > 5) {
     isClick.value = false
   }
 
+  // Use transform for smoother scrolling
   scrollContainer.value.scrollLeft = startScrollLeft.value - distance
 
-  // Ngăn chặn scroll trang khi drag carousel
+  // Ngăn chặn scroll trang khi drag carousel (only for horizontal swipe)
   if (Math.abs(distance) > 10) {
     e.preventDefault()
   }
@@ -341,12 +443,17 @@ function handleItemClick(item) {
   scrollbar-width: none;
   -ms-overflow-style: none;
   cursor: grab;
-  /* Thêm cursor grab để hiển thị là có thể kéo */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   scroll-behavior: smooth;
+  /* Performance optimizations */
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  will-change: scroll-position;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .trending-scroll::-webkit-scrollbar {
@@ -364,12 +471,15 @@ function handleItemClick(item) {
   flex-shrink: 0;
   width: 220px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .trending-item:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) translateZ(0);
 }
 
 .item-image {
@@ -379,11 +489,13 @@ function handleItemClick(item) {
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   background: transparent;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .trending-item:hover .item-image {
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(0);
 }
 
 .item-overlay {
@@ -442,16 +554,31 @@ function handleItemClick(item) {
     display: none !important;
   }
 
+  .trending-scroll {
+    scroll-behavior: auto; /* Disable smooth scroll on mobile for better performance */
+  }
+
   .trending-items {
     gap: 0.3rem;
   }
 
   .trending-item {
     width: 160px !important;
+    transition: none; /* Disable transitions on mobile */
+    will-change: auto; /* Remove will-change on mobile */
+  }
+
+  .trending-item:hover {
+    transform: none; /* Disable hover effects on mobile */
   }
 
   .item-image {
-    height: 220px !important;
+    height: 185px !important;
+    transition: none; /* Disable transitions on mobile */
+  }
+
+  .trending-item:hover .item-image {
+    transform: none; /* Disable hover scale on mobile */
   }
 
   .item-number {

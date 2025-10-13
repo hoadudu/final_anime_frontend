@@ -35,9 +35,9 @@ export function createAuthGuard() {
 
     // Case 2: User has refresh token but no valid access token
     // Try to refresh the token
-    const refreshToken = tokenStorage.getRefreshToken()
+    const hasValidRefreshToken = tokenStorage.hasValidRefreshToken()
 
-    if (refreshToken) {
+    if (hasValidRefreshToken) {
       try {
         if (process.env.NODE_ENV === 'development') {
           console.log('🔄 Auth guard: Refreshing token...')

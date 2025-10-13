@@ -178,6 +178,7 @@ export default {
     pleaseLogin: 'Vui lòng đăng nhập để xem hồ sơ',
 
     // Status tabs
+    continue: 'Tiếp tục xem',
     watching: 'Đang xem',
     completed: 'Hoàn thành',
     onHold: 'Tạm dừng',
@@ -210,6 +211,14 @@ export default {
     // Error states
     errorLoadingProfile: 'Không thể tải thông tin hồ sơ',
     errorLoadingList: 'Không thể tải danh sách anime',
+
+    // Delete actions
+    confirmDelete: 'Xóa khỏi danh sách',
+    confirmDeleteMessage: 'Bạn có chắc muốn xóa "{title}" khỏi danh sách?',
+    deleteButton: 'Xóa',
+    deletingAnime: 'Đang xóa khỏi danh sách...',
+    deleteSuccess: 'Đã xóa khỏi danh sách thành công',
+    deleteError: 'Không thể xóa khỏi danh sách. Vui lòng thử lại.',
   },
 
   // Movie/Anime tooltip
@@ -369,6 +378,12 @@ export default {
     completed: 'Hoàn thành',
     shareAnime: 'Chia sẻ Anime',
     shareToFriends: 'cho bạn bè của bạn',
+    noAnimeId: 'Không tìm thấy ID anime',
+    addingToList: 'Đang thêm vào danh sách...',
+    addedToListSuccess: 'Đã thêm vào danh sách xem thành công!',
+    addedToListError: 'Không thể thêm vào danh sách xem. Vui lòng thử lại.',
+    pleaseLoginFirst: 'Vui lòng đăng nhập để thêm anime vào danh sách',
+    savedOffline: 'Đã lưu tạm thời, sẽ đồng bộ khi có mạng',
     overview: 'Tổng quan',
     animeDetails: 'Chi tiết Anime',
     japanese: 'Tiếng Nhật',
@@ -431,6 +446,7 @@ export default {
     removeFromWatchlist: 'Xóa khỏi danh sách xem',
     addedToWatchlist: 'Đã thêm vào danh sách xem',
     removedFromWatchlist: 'Đã xóa khỏi danh sách xem',
+    animeNotAvailable: 'Thông tin anime không khả dụng',
     comments: 'Bình luận',
     noComments: 'Chưa có bình luận nào',
     recommended: 'Đề xuất cho bạn',
@@ -459,6 +475,26 @@ export default {
     animeInfo: 'Thông tin',
     save: 'Lưu',
     saved: 'Đã lưu'
+  },
+
+  // Post Reactions
+  reactions: {
+    title: 'Phản ứng',
+    total: 'tổng',
+    loading: 'Đang tải phản ứng...',
+    errorLoading: 'Lỗi khi tải phản ứng',
+    errorAddingReaction: 'Lỗi khi thêm phản ứng',
+    errorRemovingReaction: 'Lỗi khi xóa phản ứng',
+    reactionAdded: 'Đã thêm phản ứng: {reaction}',
+    reactionRemoved: 'Đã xóa phản ứng',
+    loginRequired: 'Vui lòng đăng nhập để phản ứng',
+    loginToReact: 'Đăng nhập để phản ứng',
+    yourReaction: 'Phản ứng của bạn',
+
+    // Reaction types
+    boring: 'Nhàm Chán',
+    awesome: 'Tuyệt Vời',
+    excellent: 'Xuất Sắc'
   },
 
   // Search Page

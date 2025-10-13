@@ -168,7 +168,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onBeforeUnmount, watch } from 'vue'
 import { useHomePageHeroSectionData } from 'src/composables/home-page/useHomePageData'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
@@ -253,15 +253,17 @@ const watchMovie = (movie) => {
 //     // Show detailed movie information modal
 // }
 
-onMounted(() => {
-  // Fetch data asynchronously but register lifecycle hooks synchronously
-  fetchFeaturedMovies().then(() => {
-    if (featuredMovies.value.length > 0) {
+// Watch for data changes and setup autoplay when ready
+watch(
+  featuredMovies,
+  (newMovies) => {
+    if (newMovies && newMovies.length > 0 && !timer) {
       slide.value = 0
       setupAutoplay()
     }
-  })
-})
+  },
+  { immediate: true },
+)
 
 onBeforeUnmount(() => {
   if (timer) clearInterval(timer)

@@ -1,9 +1,9 @@
 <template>
   <q-card flat bordered class="player-controls q-mt-sm">
     <q-card-section class="q-py-md q-px-md">
-      <div class="row items-center q-col-gutter-sm">
+      <div class="row items-center q-col-gutter-sm no-wrap">
         <!-- Left: Quick Navigation -->
-        <div class="col-12 col-md-auto">
+        <div class="col-auto">
           <div class="row q-gutter-xs no-wrap">
             <q-btn
               dense
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Center: Player Controls -->
-        <div class="col-12 col-md">
+        <div class="col">
           <div class="row items-center q-gutter-xs justify-center">
             <q-btn
               dense
@@ -90,7 +90,7 @@
         </div>
 
         <!-- Right: Watchlist -->
-        <div class="col-12 col-md-auto">
+        <div class="col-auto">
           <div class="row q-gutter-xs no-wrap justify-end">
             <q-btn
               dense
@@ -168,7 +168,25 @@ defineEmits([
 
 @media (max-width: 768px) {
   .player-controls .row {
-    gap: 8px;
+    gap: 4px;
+  }
+
+  .player-controls .q-btn {
+    min-width: auto;
+  }
+
+  .player-controls :deep(.q-card__section) {
+    padding: 8px !important;
+  }
+
+  .player-controls .q-col-gutter-sm {
+    margin-left: -2px;
+    margin-right: -2px;
+  }
+
+  .player-controls .q-col-gutter-sm > * {
+    padding-left: 2px;
+    padding-right: 2px;
   }
 }
 

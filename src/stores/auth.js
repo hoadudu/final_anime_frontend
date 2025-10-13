@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { api } from 'boot/axios'
 import { tokenStorage } from 'src/utils/auth'
+import { authService } from 'src/services/authService'
 
 /**
  * Auth Store
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
 
       // If we have refresh token but no user in state yet (e.g., after tab reopen)
       // We can still be authenticated as the app will load user data
-      if (!state.user && tokenStorage.getRefreshToken()) {
+      if (!state.user && tokenStorage.hasValidRefreshToken()) {
         return true
       }
 
@@ -81,21 +81,39 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    /**
-     * Extract auth payload from API response
-     * Handles different response formats
-     */
-    extractAuthPayload(response) {
-      // Handle envelope format (data.data) or flat format (data)
-      const root = response?.data !== undefined ? response.data : response
+    _applyAuthPayload(payload) {
+      if (!payload) {
+        return
+      }
 
-      return {
-        accessToken: root?.access_token || root?.accessToken || root?.token,
-        refreshToken: root?.refresh_token || root?.refreshToken,
-        expiresIn: root?.expires_in || root?.expiresIn || 900,
-        refreshExpiresAt: root?.refresh_expires_at || root?.refreshExpiresAt,
-        user: root?.user || root?.data?.user,
-        deviceName: root?.device_name || root?.deviceName,
+      const {
+        accessToken,
+        refreshToken,
+        expiresIn,
+        refreshExpiresAt,
+        user,
+        deviceName,
+      } = payload
+
+      if (accessToken) {
+        tokenStorage.setAccessToken(accessToken, expiresIn)
+      }
+
+      if (refreshToken || refreshExpiresAt) {
+        const effectiveRefreshToken = refreshToken || tokenStorage.getRefreshToken()
+
+        if (effectiveRefreshToken) {
+          tokenStorage.setRefreshToken(effectiveRefreshToken, refreshExpiresAt)
+        }
+      }
+
+      if (deviceName) {
+        tokenStorage.setDeviceName(deviceName)
+      }
+
+      if (user) {
+        this.user = user
+        tokenStorage.setUser(user)
       }
     },
 
@@ -111,31 +129,17 @@ export const useAuthStore = defineStore('auth', {
           console.log('🔐 Logging in:', credentials.email)
         }
 
-        const response = await api.post('/auth/login', {
+        const payload = await authService.login({
           email: credentials.email,
           password: credentials.password,
+          remember: credentials.remember,
         })
 
-        const { accessToken, refreshToken, expiresIn, refreshExpiresAt, user, deviceName } =
-          this.extractAuthPayload(response)
-
-        if (!accessToken) {
+        if (!payload?.accessToken) {
           throw new Error('No access token in response')
         }
 
-        // Store tokens
-        tokenStorage.setAccessToken(accessToken, expiresIn)
-        tokenStorage.setRefreshToken(refreshToken, refreshExpiresAt)
-
-        if (deviceName) {
-          tokenStorage.setDeviceName(deviceName)
-        }
-
-        // Store user data
-        if (user) {
-          this.user = user
-          tokenStorage.setUser(user)
-        }
+        this._applyAuthPayload(payload)
 
         if (process.env.NODE_ENV === 'development') {
           console.log('✅ Login successful')
@@ -164,7 +168,7 @@ export const useAuthStore = defineStore('auth', {
           console.log('📝 Registering:', payload.email)
         }
 
-        const response = await api.post('/auth/register', {
+        const response = await authService.register({
           name: payload.name,
           email: payload.email,
           password: payload.password,
@@ -176,7 +180,7 @@ export const useAuthStore = defineStore('auth', {
           console.log('✅ Registration successful')
         }
 
-        return response.data
+        return response
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Registration failed:', error.message)
@@ -229,50 +233,39 @@ export const useAuthStore = defineStore('auth', {
           console.log('🔄 Refreshing access token...')
         }
 
-        const response = await api.post('/auth/refresh-token', {
-          refresh_token: refreshToken,
-        })
+        if (tokenStorage.isRefreshExpired()) {
+          throw new Error('Refresh token expired')
+        }
 
-        const { accessToken, refreshToken: newRefreshToken, expiresIn, refreshExpiresAt, user, deviceName } =
-          this.extractAuthPayload(response)
+        const payload = await authService.refresh(refreshToken)
 
-        if (!accessToken) {
+        if (!payload?.accessToken) {
           throw new Error('No access token in refresh response')
         }
 
-        // Update tokens
-        tokenStorage.setAccessToken(accessToken, expiresIn)
+        this._applyAuthPayload({
+          ...payload,
+          refreshToken: payload.refreshToken || refreshToken,
+        })
 
-        if (newRefreshToken) {
-          tokenStorage.setRefreshToken(newRefreshToken, refreshExpiresAt)
-        }
-
-        if (deviceName) {
-          tokenStorage.setDeviceName(deviceName)
-        }
-
-        // Update user if provided
-        if (user) {
-          this.user = user
-          tokenStorage.setUser(user)
-
-          if (process.env.NODE_ENV === 'development') {
-            console.log('✅ Token refreshed successfully with user data')
-          }
-        } else {
+        if (!payload.user && this.user) {
           if (process.env.NODE_ENV === 'development') {
             console.log('⚠️ Token refreshed but no user data in response')
           }
         }
 
-        return { success: true, accessToken }
+        return { success: true, accessToken: payload.accessToken }
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Token refresh failed:', error.message)
         }
 
         // If refresh fails, logout user
-        if (error.response?.status === 401 || error.message.includes('No refresh token')) {
+        if (
+          error.response?.status === 401 ||
+          error.message.includes('No refresh token') ||
+          error.message.includes('Refresh token expired')
+        ) {
           this.logout(true) // Silent logout (no API call)
         }
 
@@ -286,12 +279,11 @@ export const useAuthStore = defineStore('auth', {
     async loadProfile() {
       try {
         // Check if token needs refresh before making request
-        if (!this.hasValidToken && tokenStorage.getRefreshToken()) {
+        if (!this.hasValidToken && tokenStorage.hasValidRefreshToken()) {
           await this.refreshToken()
         }
 
-        const response = await api.get('/auth/user-profile')
-        const user = response.data?.data || response.data
+        const user = await authService.fetchProfile()
 
         if (user) {
           this.user = user
@@ -325,7 +317,7 @@ export const useAuthStore = defineStore('auth', {
       this.isLoading = true
 
       try {
-        const response = await api.post('/auth/forgot-password', {
+        const response = await authService.forgotPassword({
           email: payload.email,
           recaptcha_token: payload.recaptcha_token,
         })
@@ -334,7 +326,7 @@ export const useAuthStore = defineStore('auth', {
           console.log('✅ Password reset email sent')
         }
 
-        return response.data
+        return response
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Forgot password failed:', error.message)
@@ -353,7 +345,7 @@ export const useAuthStore = defineStore('auth', {
       this.isLoading = true
 
       try {
-        const response = await api.post('/auth/reset-password', {
+        const response = await authService.resetPassword({
           token: payload.token,
           email: payload.email,
           password: payload.password,
@@ -365,7 +357,7 @@ export const useAuthStore = defineStore('auth', {
           console.log('✅ Password reset successful')
         }
 
-        return response.data
+        return response
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Password reset failed:', error.message)
@@ -389,12 +381,14 @@ export const useAuthStore = defineStore('auth', {
             if (process.env.NODE_ENV === 'development') {
               console.log('🚪 Logging out...')
             }
+            let serverLoggedOut = false
 
-            await api.post('/auth/logout', {
-              refresh_token: refreshToken,
-            })
+            if (!tokenStorage.isRefreshExpired()) {
+              await authService.logout(refreshToken)
+              serverLoggedOut = true
+            }
 
-            if (process.env.NODE_ENV === 'development') {
+            if (process.env.NODE_ENV === 'development' && serverLoggedOut) {
               console.log('✅ Server logout successful')
             }
           }
@@ -432,13 +426,13 @@ export const useAuthStore = defineStore('auth', {
      */
     async getDevices() {
       try {
-        const response = await api.get('/auth/devices')
+        const response = await authService.fetchDevices()
 
         if (process.env.NODE_ENV === 'development') {
-          console.log('📱 Devices loaded:', response.data.total_count || 0)
+          console.log('📱 Devices loaded:', response?.total_count || 0)
         }
 
-        return response.data
+        return response
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Failed to load devices:', error.message)
@@ -453,15 +447,13 @@ export const useAuthStore = defineStore('auth', {
      */
     async revokeDevice(deviceFingerprint) {
       try {
-        const response = await api.post('/auth/revoke-device', {
-          device_fingerprint: deviceFingerprint,
-        })
+        const response = await authService.revokeDevice(deviceFingerprint)
 
         if (process.env.NODE_ENV === 'development') {
           console.log('🚫 Device revoked')
         }
 
-        return response.data
+        return response
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Failed to revoke device:', error.message)
@@ -475,13 +467,13 @@ export const useAuthStore = defineStore('auth', {
      */
     async revokeOtherDevices() {
       try {
-        const response = await api.post('/auth/revoke-other-devices')
+        const response = await authService.revokeOtherDevices()
 
         if (process.env.NODE_ENV === 'development') {
-          console.log('🚫 Other devices revoked:', response.data.revoked_count || 0)
+          console.log('🚫 Other devices revoked:', response?.revoked_count || 0)
         }
 
-        return response.data
+        return response
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Failed to revoke other devices:', error.message)
@@ -495,13 +487,13 @@ export const useAuthStore = defineStore('auth', {
      */
     async getTokenStats() {
       try {
-        const response = await api.get('/auth/token-stats')
+        const response = await authService.fetchTokenStats()
 
         if (process.env.NODE_ENV === 'development') {
           console.log('📊 Token stats loaded')
         }
 
-        return response.data
+        return response
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('❌ Failed to get token stats:', error.message)
