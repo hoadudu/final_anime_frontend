@@ -8,13 +8,13 @@
     elevation="150"
   >
     <div class="drawer-header">
-      <q-btn flat round dense icon="close" @click="closeDrawer" class="close-btn" />
+      <q-btn flat round dense icon="fas fa-times" @click="closeDrawer" class="close-btn" />
     </div>
     <q-scroll-area class="fit">
       <q-list padding>
         <q-item v-ripple clickable @click="handleLinkClick()">
           <q-item-section avatar>
-            <q-icon color="grey" name="face" />
+            <q-icon color="grey" name="fas fa-tags" />
           </q-item-section>
           <q-item-section>
             <q-item-label>{{ t('drawer.genre') }}</q-item-label>
@@ -22,7 +22,7 @@
         </q-item>
         <q-item v-ripple clickable @click="handleFilterClick()">
           <q-item-section avatar>
-            <q-icon color="grey" name="filter_list" />
+            <q-icon color="grey" name="fas fa-filter" />
           </q-item-section>
           <q-item-section>
             <q-item-label>{{ t('drawer.filter') }}</q-item-label>
@@ -31,27 +31,52 @@
 
         <q-separator class="q-my-md" />
 
-        <q-item v-for="link in links2" :key="link.text" v-ripple clickable>
+        <q-item
+          v-for="link in links2"
+          :key="link.text"
+          v-ripple
+          clickable
+          class="q-pa-none"
+          :class="{ 'YL__drawer-item--coming-soon': isComingSoon(link) }"
+        >
           <q-item-section avatar>
-            <q-icon color="grey" :name="link.icon" />
+            <q-icon :color="isComingSoon(link) ? 'grey-6' : 'grey'" :name="link.icon" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{ link.text }}</q-item-label>
+            <q-item-label :class="isComingSoon(link) ? 'text-grey-6' : ''">{{
+              link.text
+            }}</q-item-label>
+            <q-item-label v-if="isComingSoon(link)" caption class="text-orange-6 text-weight-bold"
+              >Coming Soon</q-item-label
+            >
           </q-item-section>
         </q-item>
 
         <q-separator class="q-mt-md q-mb-xs" />
 
         <q-item-label header class="text-weight-bold text-uppercase">
-          {{ t('drawer.moreFromYoutube') }}
+          {{ t('drawer.chanel') }}
         </q-item-label>
 
-        <q-item v-for="link in links3" :key="link.text" v-ripple clickable>
+        <q-item
+          v-for="link in links3"
+          :key="link.text"
+          v-ripple
+          clickable
+          @click="openLink(link.url)"
+          class="q-pa-none"
+          :class="{ 'YL__drawer-item--coming-soon': isComingSoon(link) }"
+        >
           <q-item-section avatar>
-            <q-icon color="grey" :name="link.icon" />
+            <q-icon :color="isComingSoon(link) ? 'grey-6' : 'grey'" :name="link.icon" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{ link.text }}</q-item-label>
+            <q-item-label :class="isComingSoon(link) ? 'text-grey-6' : ''">{{
+              link.text
+            }}</q-item-label>
+            <q-item-label v-if="isComingSoon(link)" caption class="text-orange-6 text-weight-bold"
+              >Coming Soon</q-item-label
+            >
           </q-item-section>
         </q-item>
 
@@ -141,6 +166,13 @@ function handleLinkClick() {
   showGenreModal.value = true
 }
 
+function openLink(url) {
+  if (url) {
+    window.open(url, '_blank') // mở trong tab mới nếu có url
+  }
+  // Nếu không có url thì bỏ qua (đang phát triển)
+}
+
 function handleFilterClick() {
   // Desktop: Chuyển đến route /filter
   // Mobile/Tablet: Mở modal filter
@@ -195,6 +227,9 @@ watch(
 const links2 = computed(() => drawerStore.links.links2)
 const links3 = computed(() => drawerStore.links.links3)
 
+// Kiểm tra xem một link có đang trong trạng thái coming soon không (không có url)
+const isComingSoon = (link) => !link.url
+
 const buttons1 = computed(() => drawerStore.buttons.buttons1)
 const buttons2 = computed(() => drawerStore.buttons.buttons2)
 </script>
@@ -237,6 +272,12 @@ const buttons2 = computed(() => drawerStore.buttons.buttons2)
         transform: scale(1.1)
 
 .YL
+  &__drawer-item--coming-soon
+    opacity: 0.6
+    pointer-events: none
+
+    &:hover
+      background: transparent !important
 
   &__drawer-footer-link
     color: inherit

@@ -53,9 +53,19 @@
         >
           <q-card flat bordered class="anime-card">
             <div class="anime-poster-container">
-              <!-- Rating Badge -->
+              <!-- Status Badge (top-left) -->
               <q-badge
-                v-if="animePost.ageRating === '18+'"
+                v-if="animePost.status"
+                :color="getStatusColor(animePost.status)"
+                text-color="white"
+                class="status-badge"
+              >
+                {{ getStatusLabel(animePost.status) }}
+              </q-badge>
+
+              <!-- Rating Badge (top-right) -->
+              <q-badge
+                v-if="animePost.ageRating === '14+'"
                 floating
                 color="red"
                 class="age-rating-badge"
@@ -65,6 +75,21 @@
 
               <!-- Episode Info Badges -->
               <div class="anime-badges">
+                <!-- Latest Episode Badge -->
+                <q-badge
+                  v-if="animePost.episodes || animePost.latestEpisode || animePost.episodeNumber"
+                  color="red"
+                  text-color="white"
+                  class="anime-badge episode-badge"
+                >
+                  <q-icon name="play_circle" size="12px" class="q-mr-xs" />
+                  {{
+                    formatEpisodeNumber(
+                      animePost.episodes || animePost.latestEpisode || animePost.episodeNumber,
+                    )
+                  }}
+                </q-badge>
+
                 <q-badge
                   v-if="animePost.subCount"
                   color="blue"
@@ -168,7 +193,7 @@ let refreshInterval = null
 
 // Methods
 const navigateToRecentlyUpdated = () => {
-  router.push('/recently-updated')
+  router.push('/filter?sort=latest')
 }
 
 const navigateToAnime = (animePost) => {
@@ -198,6 +223,90 @@ const handleImageError = (event) => {
   console.warn('Image failed to load:', event)
 }
 
+const getStatusColor = (status) => {
+  const statusStr = String(status).toLowerCase().trim()
+
+  const statusColors = {
+    ongoing: 'green',
+    airing: 'green',
+    'currently airing': 'green',
+    'đang phát': 'green',
+    completed: 'blue',
+    'hoàn thành': 'blue',
+    finished: 'blue',
+    upcoming: 'orange',
+    'sắp chiếu': 'orange',
+    'not yet aired': 'orange',
+    cancelled: 'red-7',
+    'đã hủy': 'red-7',
+    hiatus: 'purple',
+    'tạm dừng': 'purple',
+  }
+
+  for (const [key, color] of Object.entries(statusColors)) {
+    if (statusStr.includes(key)) {
+      return color
+    }
+  }
+
+  return 'grey-7' // Default color
+}
+
+const getStatusLabel = (status) => {
+  const statusStr = String(status).toLowerCase().trim()
+
+  const statusLabels = {
+    ongoing: t('common.ongoing') || 'Ongoing',
+    airing: t('common.ongoing') || 'Ongoing',
+    'currently airing': t('common.ongoing') || 'Ongoing',
+    'đang phát': 'Đang phát',
+    completed: t('common.completed') || 'Completed',
+    'hoàn thành': 'Hoàn thành',
+    finished: t('common.completed') || 'Completed',
+    upcoming: t('common.upcoming') || 'Upcoming',
+    'sắp chiếu': 'Sắp chiếu',
+    'not yet aired': t('common.upcoming') || 'Upcoming',
+    cancelled: t('common.cancelled') || 'Cancelled',
+    'đã hủy': 'Đã hủy',
+    hiatus: t('common.hiatus') || 'Hiatus',
+    'tạm dừng': 'Tạm dừng',
+  }
+
+  for (const [key, label] of Object.entries(statusLabels)) {
+    if (statusStr.includes(key)) {
+      return label
+    }
+  }
+
+  // Fallback: capitalize first letter
+  return status.charAt(0).toUpperCase() + status.slice(1)
+}
+
+const formatEpisodeNumber = (episode) => {
+  if (!episode) return ''
+
+  const episodeStr = String(episode).toLowerCase().trim()
+
+  // Special episodes (SP, OVA, ONA, Movie, etc.)
+  const specialTypes = ['sp', 'ova', 'ona', 'movie', 'special', 'pv', 'cm']
+
+  for (const type of specialTypes) {
+    if (episodeStr.includes(type)) {
+      return episodeStr.toUpperCase()
+    }
+  }
+
+  // Numeric episode - format as "EP XX"
+  const numMatch = episodeStr.match(/\d+/)
+  if (numMatch) {
+    const num = numMatch[0].padStart(2, '0')
+    return `EP ${num}`
+  }
+
+  // Fallback: return as is but uppercase
+  return episodeStr.toUpperCase()
+}
+
 const transformAnimeForTooltip = (animePost) => {
   return {
     id: animePost.id,
@@ -207,7 +316,9 @@ const transformAnimeForTooltip = (animePost) => {
     altTitle: animePost.altTitle || animePost.alternativeTitle,
     type: animePost.type || 'TV',
     duration: animePost.duration || '24m',
+    ageRating: animePost.ageRating || '14+',
     poster: animePost.poster || animePost.image || animePost.thumbnail,
+    episodes: animePost.episodes || '00',
     description: `${animePost.description}`,
     rating: animePost.rating || animePost.score || '8.5',
     year: animePost.year || animePost.releaseDate || '2024',
@@ -393,6 +504,25 @@ onBeforeUnmount(() => {
           position: relative;
           width: 100%;
 
+          .status-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            z-index: 20;
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(8px);
+            border-radius: 4px;
+            padding: 3px 6px;
+
+            @media (max-width: 599px) {
+              font-size: 0.55rem;
+              padding: 2px 5px;
+            }
+          }
+
           .age-rating-badge {
             position: absolute;
             top: 6px;
@@ -424,6 +554,24 @@ onBeforeUnmount(() => {
                 font-size: 0.55rem;
                 padding: 1px 3px;
               }
+
+              // Special styling for episode badge
+              &.episode-badge {
+                font-weight: 700;
+                background: linear-gradient(135deg, #ff5722, #ff8a65) !important;
+                box-shadow: 0 2px 8px rgba(255, 87, 34, 0.4);
+                animation: pulse 2s ease-in-out infinite;
+              }
+            }
+          }
+
+          @keyframes pulse {
+            0%,
+            100% {
+              box-shadow: 0 2px 8px rgba(255, 87, 34, 0.4);
+            }
+            50% {
+              box-shadow: 0 2px 12px rgba(255, 87, 34, 0.6);
             }
           }
 

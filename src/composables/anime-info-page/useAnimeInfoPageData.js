@@ -4,10 +4,12 @@ import { unref } from 'vue'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
+import { queryKeys } from 'src/utils/queryKeys'
+import { CONTENT_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 export function useAnimeInfoPageData(animeId) {
   return useQuery({
-    queryKey: ['anime-info', animeId],
+    queryKey: queryKeys.anime.info(animeId),
     queryFn: async () => {
       const id = unref(animeId) // Unwrap ref/computed
       const url = buildUrlWithParams(`${API_BASE_URL}/anime/info/${id}`)
@@ -15,12 +17,8 @@ export function useAnimeInfoPageData(animeId) {
       // Return the data object from response
       return response.data.data || response.data
     },
-    staleTime: 1000 * 60 * 30, // 30 phút
-    cacheTime: 1000 * 60 * 60 * 2, // 2 giờ
+    ...CONTENT_QUERY_CONFIG,
     enabled: !!animeId && process.env.CLIENT, // Chỉ chạy khi có animeId và trên client
-    meta: {
-      persist: false, // 🚫 không lưu query này vào localStorage
-    },
   })
 }
 
@@ -29,30 +27,28 @@ export const useAnimeInfoData = useAnimeInfoPageData
 
 export function useAnimeRecommendationsData(animeId) {
   return useQuery({
-    queryKey: ['anime-recommendations', animeId],
+    queryKey: queryKeys.anime.recommendations(animeId),
     queryFn: async () => {
       const id = unref(animeId)
       const url = buildUrlWithParams(`${API_BASE_URL}/anime/info/${id}/recommendations`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 4, // 4 giờ
+    ...CONTENT_QUERY_CONFIG,
     enabled: !!unref(animeId),
   })
 }
 
 export function useAnimeCharactersData(animeId) {
   return useQuery({
-    queryKey: ['anime-characters', animeId],
+    queryKey: queryKeys.anime.characters(animeId),
     queryFn: async () => {
       const id = unref(animeId)
       const url = buildUrlWithParams(`${API_BASE_URL}/anime-info/${id}/characters`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 4, // 4 giờ
+    ...CONTENT_QUERY_CONFIG,
     enabled: !!unref(animeId),
   })
 }

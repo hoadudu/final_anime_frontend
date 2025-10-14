@@ -10,6 +10,8 @@ import {
   REACTION_CONFIG
 } from 'src/services/reactionService'
 import { useAuthStore } from 'src/stores/auth'
+import { queryKeys } from 'src/utils/queryKeys'
+import { USER_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 /**
  * Composable for managing post reactions
@@ -37,11 +39,10 @@ export function usePostReactions(postId) {
     error,
     refetch
   } = useQuery({
-    queryKey: ['post-reactions', postId],
+    queryKey: queryKeys.user.reactions(postId),
     queryFn: () => getPostReactions(getPostId()),
+    ...USER_QUERY_CONFIG,
     enabled: computed(() => !!getPostId()),
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    cacheTime: 1000 * 60 * 30, // 30 minutes
   })
 
   // Current user's reaction
@@ -67,10 +68,10 @@ export function usePostReactions(postId) {
     mutationFn: ({ postId, reaction }) => addReaction(postId, reaction),
     onMutate: async ({ postId, reaction }) => {
       // Cancel any outgoing refetches
-      await queryClient.cancelQueries({ queryKey: ['post-reactions', postId] })
+      await queryClient.cancelQueries({ queryKey: queryKeys.user.reactions(postId) })
 
       // Snapshot the previous value
-      const previousData = queryClient.getQueryData(['post-reactions', postId])
+      const previousData = queryClient.getQueryData(queryKeys.user.reactions(postId))
 
       // Optimistically update to the new value
       if (previousData) {
@@ -91,15 +92,15 @@ export function usePostReactions(postId) {
         newData.total_reactions = (newData.total_reactions || 0) + 1
         newData.my_reaction = reaction
 
-        queryClient.setQueryData(['post-reactions', postId], newData)
+        queryClient.setQueryData(queryKeys.user.reactions(postId), newData)
       }
 
       // Return context with the previous value
       return { previousData }
     },
-    onSuccess: (data) => {
+    onSuccess: (data, { postId }) => {
       // Update with real server data
-      queryClient.setQueryData(['post-reactions', postId], data)
+      queryClient.setQueryData(queryKeys.user.reactions(postId), data)
 
       // Show success message
       const reactionLabel = REACTION_CONFIG[data.my_reaction]?.defaultLabel || data.my_reaction
@@ -113,7 +114,7 @@ export function usePostReactions(postId) {
     onError: (error, variables, context) => {
       // Rollback to the previous value
       if (context?.previousData) {
-        queryClient.setQueryData(['post-reactions', postId], context.previousData)
+        queryClient.setQueryData(queryKeys.user.reactions(postId), context.previousData)
       }
 
       console.error('Error adding reaction:', error)
@@ -123,9 +124,9 @@ export function usePostReactions(postId) {
         position: 'top-right'
       })
     },
-    onSettled: () => {
+    onSettled: (data, error, { postId }) => {
       // Always refetch to ensure we have the latest data
-      queryClient.invalidateQueries({ queryKey: ['post-reactions', postId] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.user.reactions(postId) })
     }
   })
 
@@ -134,10 +135,10 @@ export function usePostReactions(postId) {
     mutationFn: (postId) => removeReaction(postId),
     onMutate: async () => {
       // Cancel any outgoing refetches
-      await queryClient.cancelQueries({ queryKey: ['post-reactions', postId] })
+      await queryClient.cancelQueries({ queryKey: queryKeys.user.reactions(postId) })
 
       // Snapshot the previous value
-      const previousData = queryClient.getQueryData(['post-reactions', postId])
+      const previousData = queryClient.getQueryData(queryKeys.user.reactions(postId))
 
       // Optimistically update to the new value
       if (previousData && previousData.my_reaction) {
@@ -152,16 +153,16 @@ export function usePostReactions(postId) {
         newData.total_reactions = Math.max(0, previousData.total_reactions - 1)
         newData.my_reaction = null
 
-        queryClient.setQueryData(['post-reactions', postId], newData)
+        queryClient.setQueryData(queryKeys.user.reactions(postId), newData)
       }
 
 
       // Return context with the previous value
       return { previousData }
     },
-    onSuccess: (data) => {
+    onSuccess: (data, postId) => {
       // Update with real server data
-      queryClient.setQueryData(['post-reactions', postId], data)
+      queryClient.setQueryData(queryKeys.user.reactions(postId), data)
 
       // Show success message
       $q.notify({
@@ -174,7 +175,7 @@ export function usePostReactions(postId) {
     onError: (error, variables, context) => {
       // Rollback to the previous value
       if (context?.previousData) {
-        queryClient.setQueryData(['post-reactions', postId], context.previousData)
+        queryClient.setQueryData(queryKeys.user.reactions(postId), context.previousData)
       }
 
       console.error('Error removing reaction:', error)
@@ -184,9 +185,9 @@ export function usePostReactions(postId) {
         position: 'top-right'
       })
     },
-    onSettled: () => {
+    onSettled: (data, error, postId) => {
       // Always refetch to ensure we have the latest data
-      queryClient.invalidateQueries({ queryKey: ['post-reactions', postId] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.user.reactions(postId) })
     }
   })
 

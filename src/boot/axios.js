@@ -42,6 +42,21 @@ const processQueue = (error, token = null) => {
 // ============ REQUEST INTERCEPTOR ============
 api.interceptors.request.use(
   (config) => {
+    // Debug logging for profile settings requests
+    if (config.url?.includes('/profile/settings')) {
+      console.log('🔍 Profile settings request:', {
+        method: config.method?.toUpperCase(),
+        url: config.url,
+        data: config.data
+      })
+    }
+
+    // Prevent unnecessary OPTIONS requests
+    if (config.method === 'options' && config.url?.includes('/profile/settings')) {
+      console.warn('🚫 Blocking unnecessary OPTIONS request to:', config.url)
+      return Promise.reject(new Error('Unnecessary OPTIONS request blocked'))
+    }
+
     // Add access token to all requests
     const accessToken = tokenStorage.getAccessToken()
 
@@ -60,6 +75,16 @@ api.interceptors.request.use(
 // ============ RESPONSE INTERCEPTOR ============
 api.interceptors.response.use(
   (response) => {
+    // Debug logging for profile settings responses
+    if (response.config.url?.includes('/profile/settings')) {
+      console.log('✅ Profile settings response:', {
+        method: response.config.method?.toUpperCase(),
+        url: response.config.url,
+        status: response.status,
+        data: response.data
+      })
+    }
+
     // Success response, pass through
     return response
   },

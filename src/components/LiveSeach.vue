@@ -19,7 +19,7 @@
             <!-- Poster -->
             <div class="result-poster">
               <q-img
-                :src="anime.poster || anime.image"
+                :src="anime.image"
                 :alt="anime.title"
                 fit="cover"
                 loading="lazy"
@@ -40,7 +40,7 @@
                 {{ anime.title }}
               </h4>
               <div class="result-meta">
-                <span v-if="anime.year" class="result-year">{{ anime.year }}</span>
+                <span v-if="anime.status" class="result-status">{{ anime.status }}</span>
                 <span v-if="anime.type" class="result-type">{{ anime.type }}</span>
               </div>
             </div>
@@ -293,7 +293,7 @@ const handleAnimeClick = (anime) => {
   }
 }
 
-.result-year {
+.result-status {
   font-weight: 600;
   color: #00d4ff;
 }

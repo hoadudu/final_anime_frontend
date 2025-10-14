@@ -4,6 +4,8 @@ import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
 import { computed } from 'vue'
+import { queryKeys } from 'src/utils/queryKeys'
+import { DYNAMIC_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 /**
  * Hook để fetch dữ liệu anime theo thể loại
@@ -14,7 +16,7 @@ import { computed } from 'vue'
  */
 export function useGenresPageData(genreSlug, page, sort) {
   return useQuery({
-    queryKey: computed(() => ['genres-page', genreSlug.value, page.value, sort.value]),
+    queryKey: computed(() => queryKeys.genre.detail(genreSlug.value)),
     queryFn: async () => {
       // Không fetch nếu không có genreSlug
       if (!genreSlug.value) {
@@ -50,8 +52,7 @@ export function useGenresPageData(genreSlug, page, sort) {
 
       return response.data
     },
+    ...DYNAMIC_QUERY_CONFIG,
     enabled: computed(() => !!genreSlug.value), // Chỉ fetch khi có genreSlug
-    // staleTime: 1000 * 60 * 5, // 5 phút
-    // cacheTime: 1000 * 60 * 30, // 30 phút
   })
 }

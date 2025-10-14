@@ -3,99 +3,89 @@ import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
+import { queryKeys } from 'src/utils/queryKeys'
+import { STATIC_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 export function useHomePageHeroSectionData() {
   return useQuery({
-    queryKey: ['home-page-hero-section'],
+    queryKey: queryKeys.home.heroSection(),
     queryFn: async () => {
       const url = buildUrlWithParams(`${API_BASE_URL}/home-page/hero-section`)
       const response = await api.get(url)
       return response.data
     },
-    retry: 2,
-    retryDelay: 1000,
-    staleTime: 1000 * 60 * 60, // 1 giờ - data được coi là fresh trong 1 giờ
-    gcTime: 1000 * 60 * 60 * 24, // 24 giờ - giữ cache trong bộ nhớ
-    refetchOnMount: false, // Không fetch lại khi component mount nếu data vẫn fresh
-    refetchOnWindowFocus: false, // Không fetch lại khi window focus
-    refetchOnReconnect: false, // Không fetch lại khi reconnect internet
+    ...STATIC_QUERY_CONFIG,
   })
 }
 
 export function useHomePageTrendingCarouselData() {
   return useQuery({
-    queryKey: ['home-page-trending-carousel'],
+    queryKey: queryKeys.home.trending(),
     queryFn: async () => {
       const url = buildUrlWithParams(`${API_BASE_URL}/home-page/trending-carousel`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...STATIC_QUERY_CONFIG,
   })
 }
 
 export function useHomePageAnimeFeaturedTopAiringData() {
   return useQuery({
-    queryKey: ['home-page-top-airing'],
+    queryKey: queryKeys.home.topAiring(),
     queryFn: async () => {
       const url = buildUrlWithParams(`${API_BASE_URL}/home-page/top-airing`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...STATIC_QUERY_CONFIG,
   })
 }
 
 export function useHomePageAnimeFeaturedMostPopularData() {
   return useQuery({
-    queryKey: ['home-page-most-popular'],
+    queryKey: queryKeys.home.mostPopular(),
     queryFn: async () => {
       const url = buildUrlWithParams(`${API_BASE_URL}/home-page/most-popular`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...STATIC_QUERY_CONFIG,
   })
 }
 
 export function useHomePageAnimeFeaturedMostLikedData() {
   return useQuery({
-    queryKey: ['home-page-most-liked'],
+    queryKey: queryKeys.home.mostLiked(),
     queryFn: async () => {
       const url = buildUrlWithParams(`${API_BASE_URL}/home-page/most-liked`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...STATIC_QUERY_CONFIG,
   })
 }
 
 export function useHomePageAnimeFeaturedLatestCompletedData() {
   return useQuery({
-    queryKey: ['home-page-latest-completed'],
+    queryKey: queryKeys.home.latestCompleted(),
     queryFn: async () => {
       const url = buildUrlWithParams(`${API_BASE_URL}/home-page/latest-completed`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...STATIC_QUERY_CONFIG,
   })
 }
 
 export function useHomePageLastestEpisodePostsData() {
   return useQuery({
-    queryKey: ['home-page-latest-episode-posts'],
+    queryKey: queryKeys.home.latestEpisodes(),
     queryFn: async () => {
       const url = buildUrlWithParams(`${API_BASE_URL}/home-page/latest-episode-posts`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...STATIC_QUERY_CONFIG,
   })
 }

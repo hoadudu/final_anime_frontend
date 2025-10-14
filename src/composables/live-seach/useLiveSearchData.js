@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
+import { queryKeys } from 'src/utils/queryKeys'
+import { DYNAMIC_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 /**
  * Hook để fetch dữ liệu live search anime với debouncing
@@ -33,7 +35,7 @@ export function useLiveSearchData(keyword, delay = 500) {
 
   // Query với TanStack Query
   return useQuery({
-    queryKey: computed(() => ['live-search', debouncedKeyword.value]),
+    queryKey: computed(() => queryKeys.search.live(debouncedKeyword.value)),
     queryFn: async () => {
       if (!debouncedKeyword.value) {
         return null
@@ -47,9 +49,8 @@ export function useLiveSearchData(keyword, delay = 500) {
       const response = await api.get(url)
       return response.data
     },
+    ...DYNAMIC_QUERY_CONFIG,
     enabled: computed(() => !!debouncedKeyword.value && debouncedKeyword.value.length > 0),
-    staleTime: 1000 * 60 * 2, // Cache 2 phút
-    retry: 1, // Retry 1 lần nếu failed
-    meta: { persist: false },
+    retry: 1, // Override: Retry ít hơn cho live search
   })
 }

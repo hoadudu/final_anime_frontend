@@ -46,6 +46,13 @@ export default {
     showMore: 'Show More',
     showLess: 'Show Less',
 
+    // Anime status
+    ongoing: 'Ongoing',
+    completed: 'Completed',
+    upcoming: 'Upcoming',
+    cancelled: 'Cancelled',
+    hiatus: 'Hiatus',
+
     // Status messages
     success: 'Action was successful',
     refresh: 'Refresh',
@@ -79,6 +86,7 @@ export default {
     genre: 'Genre',
     language: 'Language',
     moreFromYoutube: 'More from Youtube',
+    chanel: 'Chanels',
     filter: 'Filter',
   },
 
@@ -220,6 +228,41 @@ export default {
     deletingAnime: 'Removing from list...',
     deleteSuccess: 'Successfully removed from your list',
     deleteError: 'Failed to remove from list. Please try again.',
+
+    // Settings
+    settings: 'Settings',
+    selectAvatar: 'Select Avatar',
+    currentAvatar: 'Current Avatar',
+    noAvatarsAvailable: 'No avatars available',
+    selectCategory: 'Select Category',
+    selectCategoryFirst: 'Please select a category first',
+    avatarsFor: 'Avatars for',
+    noAvatarsForTag: 'No avatars available for this category',
+    noCategoriesAvailable: 'No categories available',
+    saveAvatar: 'Save Avatar',
+    avatarUpdated: 'Avatar updated successfully',
+    avatarUpdateError: 'Failed to update avatar',
+    profileInfo: 'Profile Information',
+    username: 'Username',
+    usernameCannotChange: 'Username cannot be changed',
+    email: 'Email',
+    emailCannotChange: 'Email cannot be changed',
+    displayName: 'Display Name',
+    nameRequired: 'Name is required',
+    bio: 'Bio',
+    bioHint: 'Tell us about yourself',
+    updateProfile: 'Update Profile',
+    profileUpdated: 'Profile updated successfully',
+    updateError: 'Failed to update profile',
+    changePassword: 'Change Password',
+    currentPassword: 'Current Password',
+    newPassword: 'New Password',
+    confirmPassword: 'Confirm Password',
+    passwordRequired: 'Password is required',
+    passwordMinLength: 'Password must be at least 6 characters',
+    passwordsDoNotMatch: 'Passwords do not match',
+    passwordChanged: 'Password changed successfully',
+    passwordChangeError: 'Failed to change password',
   },
 
   // Movie/Anime tooltip
@@ -593,6 +636,23 @@ export default {
     registerSuccess: 'Account created successfully. Please login.',
     logoutSuccess: 'Logged out successfully. See you again!',
     logoutWarning: 'Logged out from this device',
+  },
+
+  // Notifications
+  notification: {
+    defaultTitle: 'Notification',
+    defaultMessage: 'You have a new notification',
+    markAsRead: 'Mark as Read',
+    markedAsRead: 'Marked as read',
+    markAsReadError: 'Could not mark as read',
+    justNow: 'Just now',
+    hoursAgo: '{hours} hours ago',
+    daysAgo: '{days} days ago',
+    autoCloseIn: 'Auto-close in {seconds} seconds',
+    generalNotification: 'General Notification',
+    systemMaintenance: 'System Maintenance',
+    newFeature: 'New Feature',
+    importantUpdate: 'Important Update'
   },
 
   // Device Management

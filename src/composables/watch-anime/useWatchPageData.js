@@ -4,28 +4,26 @@ import { unref } from 'vue'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
+import { queryKeys } from 'src/utils/queryKeys'
+import { CONTENT_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 export function useWatchPageDataSingleEpisode(episodeId) {
   return useQuery({
-    queryKey: ['watch-page-single-episode', episodeId],
+    queryKey: queryKeys.watch.episode(episodeId),
     queryFn: async () => {
       const id = unref(episodeId)
       const url = buildUrlWithParams(`${API_BASE_URL}/anime/watch/episode/${id}`)
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...CONTENT_QUERY_CONFIG,
     enabled: !!unref(episodeId),
-    meta: {
-      persist: false, // 🚫 không lưu query này vào localStorage
-    },
   })
 }
 
 export function useWatchPageDataListEpisodes(postId) {
   return useQuery({
-    queryKey: ['watch-page-list-episodes', postId],
+    queryKey: queryKeys.watch.episodeList(postId),
     queryFn: async () => {
       const id = unref(postId)
       if (!id) {
@@ -35,11 +33,7 @@ export function useWatchPageDataListEpisodes(postId) {
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 60, // 1 giờ
-    cacheTime: 1000 * 60 * 60 * 24, // 24 giờ
+    ...CONTENT_QUERY_CONFIG,
     enabled: !!unref(postId),
-    meta: {
-      persist: false, // 🚫 không lưu query này vào localStorage
-    },
   })
 }

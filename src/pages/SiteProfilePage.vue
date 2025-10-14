@@ -39,12 +39,22 @@
             <div class="row q-col-gutter-lg items-start">
               <!-- Avatar -->
               <div class="col-auto">
-                <q-avatar size="120px" class="profile-avatar">
-                  <img
-                    :src="profileData.user?.avatar || 'https://cdn.quasar.dev/img/boy-avatar.png'"
-                    :alt="profileData.user?.name"
+                <div class="avatar-container">
+                  <q-avatar size="120px" class="profile-avatar">
+                    <img
+                      :src="profileData.user?.avatar || 'https://cdn.quasar.dev/img/boy-avatar.png'"
+                      :alt="profileData.user?.name"
+                    />
+                  </q-avatar>
+                  <q-btn
+                    round
+                    color="primary"
+                    icon="edit"
+                    size="sm"
+                    class="avatar-edit-btn"
+                    @click="openAvatarModal"
                   />
-                </q-avatar>
+                </div>
               </div>
 
               <!-- User Info -->
@@ -73,36 +83,6 @@
                     <q-icon name="event" size="16px" class="q-mr-xs" />
                     {{ t('profile.joinedAt') }}: {{ formatDate(profileData.user?.joined_at) }}
                   </div>
-
-                  <!-- Quick Stats -->
-                  <div class="profile-stats row q-col-gutter-md">
-                    <div class="col-auto">
-                      <div class="stat-card">
-                        <div class="stat-value">{{ profileData.stats?.total_anime || 0 }}</div>
-                        <div class="stat-label">{{ t('profile.totalAnime') }}</div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <div class="stat-card">
-                        <div class="stat-value">{{ profileData.stats?.completed || 0 }}</div>
-                        <div class="stat-label">{{ t('profile.completed') }}</div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <div class="stat-card">
-                        <div class="stat-value">{{ profileData.stats?.watching || 0 }}</div>
-                        <div class="stat-label">{{ t('profile.watching') }}</div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <div class="stat-card">
-                        <div class="stat-value">
-                          {{ profileData.stats?.average_score?.toFixed(1) || 'N/A' }}
-                        </div>
-                        <div class="stat-label">{{ t('profile.avgScore') }}</div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -117,6 +97,9 @@
           </q-card-section>
         </q-card>
       </div>
+
+      <!-- ========== PROFILE STATS ========== -->
+      <ProfileStats v-if="currentUserId && profileData" :stats="profileData.stats" />
 
       <!-- ========== STATUS NAVIGATION BAR ========== -->
       <div v-if="currentUserId && profileData" class="status-nav q-mb-lg">
@@ -161,6 +144,9 @@
               icon="bookmark"
             />
 
+            <!-- Settings Tab -->
+            <q-tab name="settings" :label="t('profile.settings')" icon="settings" />
+
             <!-- Custom Lists Dropdown -->
             <q-btn-dropdown
               v-if="customLists && customLists.length > 0"
@@ -191,167 +177,187 @@
 
       <!-- ========== MAIN CONTENT ========== -->
       <div v-if="currentUserId && profileData" class="main-content">
-        <!-- Filter / Sort / Search Bar -->
-        <div class="filter-bar q-mb-md">
-          <q-card flat bordered>
-            <q-card-section class="q-pa-md">
-              <div class="row q-col-gutter-md items-center">
-                <!-- Search -->
-                <div class="col-12 col-sm-6 col-md-4">
-                  <q-input
-                    v-model="searchQuery"
-                    :placeholder="t('profile.searchAnime')"
-                    outlined
-                    dense
-                    clearable
-                  >
-                    <template v-slot:prepend>
-                      <q-icon name="search" />
-                    </template>
-                  </q-input>
-                </div>
-
-                <!-- Sort -->
-                <div class="col-12 col-sm-6 col-md-3">
-                  <q-select
-                    v-model="sortBy"
-                    :options="sortOptions"
-                    :label="t('profile.sortBy')"
-                    outlined
-                    dense
-                    emit-value
-                    map-options
-                  />
-                </div>
-
-                <!-- Stats Info -->
-                <div class="col-12 col-md-5 text-right">
-                  <div class="text-body2 text-grey-7">
-                    {{ t('profile.showing') }}:
-                    <span class="text-weight-bold text-primary">{{
-                      filteredAnimeList.length
-                    }}</span>
-                    {{ t('profile.anime') }}
-                  </div>
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
+        <!-- ========== SETTINGS CONTENT ========== -->
+        <div v-if="currentStatus === 'settings'">
+          <ProfileSettings :profile-data="profileData" />
         </div>
 
-        <!-- ========== ANIME LIST GRID ========== -->
-        <!-- Loading State -->
-        <div v-if="isLoadingList" class="anime-grid">
-          <div v-for="i in 12" :key="i" class="anime-card-skeleton">
-            <q-card flat bordered class="full-height">
-              <q-skeleton height="300px" />
-              <q-card-section>
-                <q-skeleton type="text" width="80%" />
-                <q-skeleton type="text" width="60%" class="q-mt-xs" />
+        <!-- ========== ANIME LIST CONTENT ========== -->
+        <div v-else>
+          <!-- Filter / Sort / Search Bar -->
+          <div class="filter-bar q-mb-md">
+            <q-card flat bordered>
+              <q-card-section class="q-pa-md">
+                <div class="row q-col-gutter-md items-center">
+                  <!-- Search -->
+                  <div class="col-12 col-sm-6 col-md-4">
+                    <q-input
+                      v-model="searchQuery"
+                      :placeholder="t('profile.searchAnime')"
+                      outlined
+                      dense
+                      clearable
+                    >
+                      <template v-slot:prepend>
+                        <q-icon name="search" />
+                      </template>
+                    </q-input>
+                  </div>
+
+                  <!-- Sort -->
+                  <div class="col-12 col-sm-6 col-md-3">
+                    <q-select
+                      v-model="sortBy"
+                      :options="sortOptions"
+                      :label="t('profile.sortBy')"
+                      outlined
+                      dense
+                      emit-value
+                      map-options
+                    />
+                  </div>
+
+                  <!-- Stats Info -->
+                  <div class="col-12 col-md-5 text-right">
+                    <div class="text-body2 text-grey-7">
+                      {{ t('profile.showing') }}:
+                      <span class="text-weight-bold text-primary">{{
+                        filteredAnimeList.length
+                      }}</span>
+                      {{ t('profile.anime') }}
+                    </div>
+                  </div>
+                </div>
               </q-card-section>
             </q-card>
           </div>
-        </div>
 
-        <!-- Error State -->
-        <div v-else-if="isErrorList" class="error-state text-center q-py-xl">
-          <q-icon name="error_outline" size="80px" color="negative" />
-          <h3 class="text-h5 q-mt-md">{{ t('profile.errorLoadingList') }}</h3>
-          <q-btn
-            color="primary"
-            :label="t('common.tryAgain')"
-            icon="refresh"
-            @click="refetchList"
-            class="q-mt-md"
-            unelevated
-            rounded
-          />
-        </div>
+          <!-- ========== ANIME LIST GRID ========== -->
+          <!-- Loading State -->
+          <div v-if="isLoadingList && currentStatus !== 'settings'" class="anime-grid">
+            <div v-for="i in 12" :key="i" class="anime-card-skeleton">
+              <q-card flat bordered class="full-height">
+                <q-skeleton height="300px" />
+                <q-card-section>
+                  <q-skeleton type="text" width="80%" />
+                  <q-skeleton type="text" width="60%" class="q-mt-xs" />
+                </q-card-section>
+              </q-card>
+            </div>
+          </div>
 
-        <!-- Empty State -->
-        <div
-          v-else-if="!animeList || animeList.length === 0"
-          class="empty-state text-center q-py-xl"
-        >
-          <q-icon name="movie" size="80px" color="grey-6" />
-          <h3 class="text-h5 q-mt-md text-grey-7">{{ t('profile.noAnime') }}</h3>
-          <p class="text-body1 text-grey-6 q-mt-sm">
-            {{ t('profile.noAnimeMessage', { status: getStatusLabel(currentStatus) }) }}
-          </p>
-        </div>
+          <!-- Error State -->
+          <div
+            v-else-if="isErrorList && currentStatus !== 'settings'"
+            class="error-state text-center q-py-xl"
+          >
+            <q-icon name="error_outline" size="80px" color="negative" />
+            <h3 class="text-h5 q-mt-md">{{ t('profile.errorLoadingList') }}</h3>
+            <q-btn
+              color="primary"
+              :label="t('common.tryAgain')"
+              icon="refresh"
+              @click="refetchList"
+              class="q-mt-md"
+              unelevated
+              rounded
+            />
+          </div>
 
-        <!-- Anime List -->
-        <div v-else class="anime-grid">
-          <div v-for="anime in filteredAnimeList" :key="anime.anime_id" class="anime-list-card">
-            <q-card
-              flat
-              bordered
-              class="full-height cursor-pointer anime-card"
-              @click="navigateToAnime(anime)"
-            >
-              <!-- Poster -->
-              <div class="anime-poster-container">
-                <img
-                  :src="anime.poster"
-                  :alt="anime.title"
-                  class="anime-poster-img"
-                  loading="lazy"
-                  @error="handleImageError(anime)"
-                />
+          <!-- Empty State -->
+          <div
+            v-else-if="(!animeList || animeList.length === 0) && currentStatus !== 'settings'"
+            class="empty-state text-center q-py-xl"
+          >
+            <q-icon name="movie" size="80px" color="grey-6" />
+            <h3 class="text-h5 q-mt-md text-grey-7">{{ t('profile.noAnime') }}</h3>
+            <p class="text-body1 text-grey-6 q-mt-sm">
+              {{ t('profile.noAnimeMessage', { status: getStatusLabel(currentStatus) }) }}
+            </p>
+          </div>
 
-                <!-- Error -->
-                <div v-if="anime.imageError" class="absolute-full flex flex-center bg-grey-8">
-                  <q-icon name="broken_image" size="48px" color="grey-5" />
-                </div>
-
-                <!-- Score Badge -->
-                <div v-if="anime.score" class="score-badge">
-                  <q-icon name="star" size="14px" class="q-mr-xs" />
-                  {{ anime.score }}
-                </div>
-
-                <!-- Delete Button -->
-                <div class="delete-button">
-                  <q-btn
-                    round
-                    color="negative"
-                    icon="delete"
-                    size="sm"
-                    @click.stop="confirmDeleteAnime(anime)"
+          <!-- Anime List -->
+          <div v-else-if="currentStatus !== 'settings'" class="anime-grid">
+            <div v-for="anime in filteredAnimeList" :key="anime.anime_id" class="anime-list-card">
+              <q-card
+                flat
+                bordered
+                class="full-height cursor-pointer anime-card"
+                @click="navigateToAnime(anime)"
+              >
+                <!-- Poster -->
+                <div class="anime-poster-container">
+                  <img
+                    :src="anime.poster"
+                    :alt="anime.title"
+                    class="anime-poster-img"
+                    loading="lazy"
+                    @error="handleImageError(anime)"
                   />
+
+                  <!-- Error -->
+                  <div v-if="anime.imageError" class="absolute-full flex flex-center bg-grey-8">
+                    <q-icon name="broken_image" size="48px" color="grey-5" />
+                  </div>
+
+                  <!-- Score Badge -->
+                  <div v-if="anime.score" class="score-badge">
+                    <q-icon name="star" size="14px" class="q-mr-xs" />
+                    {{ anime.score }}
+                  </div>
+
+                  <!-- Delete Button -->
+                  <div class="delete-button">
+                    <q-btn
+                      round
+                      color="negative"
+                      icon="delete"
+                      size="sm"
+                      @click.stop="confirmDeleteAnime(anime)"
+                    />
+                  </div>
+
+                  <!-- Play Overlay -->
+                  <div class="play-overlay">
+                    <q-btn round color="primary" icon="play_arrow" size="md" />
+                  </div>
                 </div>
 
-                <!-- Play Overlay -->
-                <div class="play-overlay">
-                  <q-btn round color="primary" icon="play_arrow" size="md" />
-                </div>
-              </div>
+                <!-- Info -->
+                <q-card-section class="anime-info">
+                  <div class="anime-title text-weight-bold">{{ anime.title }}</div>
+                  <div class="anime-meta text-caption text-grey-6 q-mt-xs">
+                    <div>{{ anime.type?.toUpperCase() || 'N/A' }}</div>
+                    <div v-if="anime.episodes">
+                      {{ anime.episodes }} {{ t('profile.episodes') }}
+                    </div>
+                    <div>{{ anime.anime_status }}</div>
+                  </div>
 
-              <!-- Info -->
-              <q-card-section class="anime-info">
-                <div class="anime-title text-weight-bold">{{ anime.title }}</div>
-                <div class="anime-meta text-caption text-grey-6 q-mt-xs">
-                  <div>{{ anime.type?.toUpperCase() || 'N/A' }}</div>
-                  <div v-if="anime.episodes">{{ anime.episodes }} {{ t('profile.episodes') }}</div>
-                  <div>{{ anime.anime_status }}</div>
-                </div>
+                  <!-- Note -->
+                  <div v-if="anime.note" class="anime-note text-caption text-grey-7 q-mt-sm">
+                    <q-icon name="note" size="12px" class="q-mr-xs" />
+                    {{ anime.note }}
+                  </div>
 
-                <!-- Note -->
-                <div v-if="anime.note" class="anime-note text-caption text-grey-7 q-mt-sm">
-                  <q-icon name="note" size="12px" class="q-mr-xs" />
-                  {{ anime.note }}
-                </div>
-
-                <!-- Updated Date -->
-                <div class="text-caption text-grey-6 q-mt-xs">
-                  {{ t('profile.updated') }}: {{ formatDate(anime.updated_at, true) }}
-                </div>
-              </q-card-section>
-            </q-card>
+                  <!-- Updated Date -->
+                  <div class="text-caption text-grey-6 q-mt-xs">
+                    {{ t('profile.updated') }}: {{ formatDate(anime.updated_at, true) }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ========== AVATAR MODAL ========== -->
+    <AvatarModal
+      v-model="showAvatarModal"
+      :current-avatar="profileData?.user?.avatar"
+      @avatar-saved="handleAvatarSaved"
+    />
   </q-page>
 </template>
 
@@ -367,6 +373,9 @@ import {
   useProfileAnimeList,
   useProfileCustomLists,
 } from 'src/composables/profile-page/useProfilePageData.js'
+import ProfileStats from 'src/components/profile-page/ProfileStats.vue'
+import ProfileSettings from 'src/components/profile-page/ProfileSettings.vue'
+import AvatarModal from 'src/components/profile-page/AvatarModal.vue'
 
 // ========== COMPOSABLES ==========
 const router = useRouter()
@@ -380,6 +389,7 @@ const currentStatus = ref('continue')
 const searchQuery = ref('')
 const sortBy = ref('updated_desc')
 const customLists = ref([])
+const showAvatarModal = ref(false)
 
 // ========== SORT OPTIONS ==========
 const sortOptions = [
@@ -491,9 +501,19 @@ const formatDate = (dateString, short = false) => {
 }
 
 const handleStatusChange = (newStatus) => {
+  console.log('Status changed to:', newStatus)
+
   currentStatus.value = newStatus
-  // Reset filters when changing status
-  searchQuery.value = ''
+
+  // Reset filters when changing status (except for settings tab)
+  if (newStatus !== 'settings') {
+    searchQuery.value = ''
+  }
+
+  // Log when switching to settings to confirm no API call is made
+  if (newStatus === 'settings') {
+    console.log('Switched to settings tab - no API call should be made')
+  }
 }
 
 const handleCustomListClick = (list) => {
@@ -591,6 +611,17 @@ const deleteAnime = async (anime) => {
     })
   }
 }
+
+const openAvatarModal = () => {
+  showAvatarModal.value = true
+}
+
+const handleAvatarSaved = (newAvatar) => {
+  // Update the profile data with the new avatar
+  if (profileData.value?.user) {
+    profileData.value.user.avatar = newAvatar
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -613,8 +644,29 @@ const deleteAnime = async (anime) => {
   overflow: hidden;
 }
 
+.avatar-container {
+  position: relative;
+  display: inline-block;
+}
+
 .profile-avatar {
   border: 3px solid rgba(0, 212, 255, 0.3);
+}
+
+.avatar-edit-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);
+  }
 }
 
 .user-name {
@@ -624,29 +676,6 @@ const deleteAnime = async (anime) => {
 .profile-bio {
   color: rgba(255, 255, 255, 0.8);
   max-width: 600px;
-}
-
-.profile-stats {
-  .stat-card {
-    padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    text-align: center;
-
-    .stat-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #00d4ff;
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.6);
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-  }
 }
 
 // ========== STATUS NAVIGATION ==========

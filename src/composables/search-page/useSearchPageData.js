@@ -4,6 +4,8 @@ import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
 import { computed } from 'vue'
+import { queryKeys } from 'src/utils/queryKeys'
+import { DYNAMIC_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 /**
  * Hook để fetch dữ liệu tìm kiếm anime
@@ -13,7 +15,7 @@ import { computed } from 'vue'
  */
 export function useSearchPageData(keyword, page) {
   return useQuery({
-    queryKey: computed(() => ['search-page', keyword.value, page.value]),
+    queryKey: computed(() => queryKeys.search.full(keyword.value, page.value)),
     queryFn: async () => {
       // Không fetch nếu không có keyword
       if (!keyword.value) {
@@ -29,11 +31,7 @@ export function useSearchPageData(keyword, page) {
       const response = await api.get(url)
       return response.data
     },
+    ...DYNAMIC_QUERY_CONFIG,
     enabled: computed(() => !!keyword.value), // Chỉ fetch khi có keyword
-    staleTime: 1000 * 60 * 5, // 5 phút
-    cacheTime: 1000 * 60 * 30, // 30 phút
-    meta: {
-      persist: false, // 🚫 không lưu query này vào localStorage
-    },
   })
 }

@@ -1,55 +1,118 @@
 {
-    "success": true,
-    "message": "Anime list filtered successfully",
-    "data": {
-        "posts": [
+    "links": {
+        "links1": [
             {
-                "id": 8294,
-                "mal_id": 53936,
-                "title": "Sumikko Gurashi Movie 3: Tsugihagi Koujou no Fushigi na Ko",
-                "slug": "sumikko-gurashi-movie-3-tsugihagi-koujou-no-fushigi-na-ko",
-                "type": "movie",
-                "episodes": null,
-                "status": "Completed",
-                "airing": true,
-                "aired_from": null,
-                "aired_to": null,
-                "duration": null,
-                "rating": null,
-                "synopsis": "<p>N\u1ed9i dung c\u1ee7a b\u1ed9 ANIME n\u00e0y n\u00e0y s\u1ebd \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt sau<\/p>",
-                "season": "Unknown",
-                "year": "2023",
-                "poster": "https:\/\/cdn.myanimelist.net\/images\/anime\/1801\/138498l.jpg",
-                "views": 65,
-                "link": "\/thong-tin\/sumikko-gurashi-movie-3-tsugihagi-koujou-no-fushigi-na-ko-8294",
-                "genres": [
-                    {
-                        "id": 6,
-                        "name": "Comedy",
-                        "slug": "comedy",
-                        "type": "genres",
-                        "description": "Anime mang t\u00ednh gi\u1ea3i tr\u00ed v\u1edbi nhi\u1ec1u t\u00ecnh hu\u1ed1ng h\u00e0i h\u01b0\u1edbc v\u00e0 vui nh\u1ed9n"
-                    }
-                ],
-                "themes": [
-                    {
-                        "id": 23,
-                        "name": "Anthropomorphic",
-                        "slug": "anthropomorphic",
-                        "type": "themes"
-                    }
-                ],
-                "studios": [],
-                "producers": []
+                "icon": "fas fa-tags",
+                "text": "Genre",
+                "name": "genre"
+            },
+            {
+                "icon": "fas fa-filter",
+                "text": "Filter",
+                "name": "filter"
+            },
+            {
+                "icon": "fas fa-bell",
+                "text": "Subscriptions",
+                "name": "subscriptions"
             }
         ],
-        "pagination": {
-            "current_page": 1,
-            "last_page": 34,
-            "per_page": 24,
-            "total": 802,
-            "from": 1,
-            "to": 24
-        }
+        "links2": [
+            {
+                "icon": "fas fa-folder",
+                "text": "Library"
+            },
+            {
+                "icon": "fas fa-history",
+                "text": "History"
+            },
+            {
+                "icon": "fas fa-clock",
+                "text": "Watch later"
+            },
+            {
+                "icon": "fas fa-thumbs-up",
+                "text": "Liked videos"
+            }
+        ],
+        "links3": [
+            {
+                "icon": "fab fa-youtube",
+                "text": "YouTube Premium"
+            },
+            {
+                "icon": "fas fa-film",
+                "text": "Movies & Shows"
+            },
+            {
+                "icon": "fas fa-gamepad",
+                "text": "Gaming"
+            },
+            {
+                "icon": "fas fa-tv",
+                "text": "Live"
+            }
+        ],
+        "links4": [
+            {
+                "icon": "fas fa-cog",
+                "text": "Settings",
+                "url": "/settings"
+            },
+            {
+                "icon": "fas fa-flag",
+                "text": "Report history",
+                "url": "/report"
+            },
+            {
+                "icon": "fas fa-question-circle",
+                "text": "Help",
+                "url": "/help"
+            },
+            {
+                "icon": "fas fa-comment",
+                "text": "Send feedback",
+                "url": "/feedback"
+            }
+        ]
+    },
+    "buttons": {
+        "buttons1": [
+            {
+                "text": "About"
+            },
+            {
+                "text": "Press"
+            },
+            {
+                "text": "Copyright"
+            },
+            {
+                "text": "Contact us"
+            },
+            {
+                "text": "Creators"
+            },
+            {
+                "text": "Advertise"
+            },
+            {
+                "text": "Developers"
+            }
+        ],
+        "buttons2": [
+            {
+                "text": "Terms"
+            },
+            {
+                "text": "Privacy"
+            },
+            {
+                "text": "Policy & Safety"
+            },
+            {
+                "text": "Test new features"
+            }
+        ]
     }
 }

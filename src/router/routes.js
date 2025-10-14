@@ -1,9 +1,5 @@
 const routes = [
   {
-    path: '/',
-    redirect: '/home',
-  },
-  {
     path: '/xem/:slug',
     name: 'watch-base',
     component: () => import('layouts/MainLayout.vue'),

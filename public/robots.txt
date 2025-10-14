@@ -1,0 +1,13 @@
+# robots.txt for Anime Website
+
+# Allow all crawlers to access all content
+User-agent: *
+Allow: /
+
+# Optionally disallow specific paths if needed
+# Disallow: /api/
+Disallow: /admin/
+
+# Sitemap (update with your actual sitemap URL)
+# Sitemap: https://yourdomain.com/sitemap.xml
+

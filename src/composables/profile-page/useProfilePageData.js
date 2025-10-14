@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/vue-query'
 import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { computed } from 'vue'
+import { queryKeys } from 'src/utils/queryKeys'
+import { USER_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 /**
  * Hook để fetch thông tin profile của user
@@ -10,20 +12,20 @@ import { computed } from 'vue'
  * @returns {Object} Vue Query result với data, isLoading, error, refetch
  */
 export function useProfileData(userId) {
-    return useQuery({
-        queryKey: computed(() => ['profile', userId.value]),
-        queryFn: async () => {
-            if (!userId.value) {
-                return null
-            }
+  return useQuery({
+    queryKey: computed(() => queryKeys.user.profile(userId.value)),
+    queryFn: async () => {
+      if (!userId.value) {
+        return null
+      }
 
-            const response = await api.get(`${API_BASE_URL}/profile/${userId.value}`)
+      const response = await api.get(`${API_BASE_URL}/profile/${userId.value}`)
 
-            return response.data
-        },
-        enabled: computed(() => !!userId.value),
-        staleTime: 1000 * 60 * 5, // 5 phút
-    })
+      return response.data
+    },
+    ...USER_QUERY_CONFIG,
+    enabled: computed(() => !!userId.value),
+  })
 }
 
 /**
@@ -34,30 +36,35 @@ export function useProfileData(userId) {
  * @returns {Object} Vue Query result với data, isLoading, error, refetch
  */
 export function useProfileAnimeList(userId, status, page = { value: 1 }) {
-    return useQuery({
-        queryKey: computed(() => ['profile-anime-list', userId.value, status.value, page.value]),
-        queryFn: async () => {
-            if (!userId.value || !status.value) {
-                return null
-            }
+  return useQuery({
+    queryKey: computed(() => queryKeys.user.animeList(userId.value, status.value)),
+    queryFn: async () => {
+      if (!userId.value || !status.value) {
+        return null
+      }
 
-            const params = {
-                status: status.value,
-            }
+      // Don't fetch data for settings tab
+      if (status.value === 'settings') {
+        return null
+      }
 
-            if (page.value > 1) {
-                params.page = page.value
-            }
+      const params = {
+        status: status.value,
+      }
 
-            const response = await api.get(`${API_BASE_URL}/profile/${userId.value}/list`, {
-                params,
-            })
+      if (page.value > 1) {
+        params.page = page.value
+      }
 
-            return response.data
-        },
-        enabled: computed(() => !!userId.value && !!status.value),
-        staleTime: 1000 * 60 * 2, // 2 phút
-    })
+      const response = await api.get(`${API_BASE_URL}/profile/${userId.value}/list`, {
+        params,
+      })
+
+      return response.data
+    },
+    ...USER_QUERY_CONFIG,
+    enabled: computed(() => !!userId.value && !!status.value && status.value !== 'settings'),
+  })
 }
 
 /**
@@ -66,19 +73,19 @@ export function useProfileAnimeList(userId, status, page = { value: 1 }) {
  * @returns {Object} Vue Query result với data, isLoading, error, refetch
  */
 export function useProfileCustomLists(userId) {
-    return useQuery({
-        queryKey: computed(() => ['profile-custom-lists', userId.value]),
-        queryFn: async () => {
-            if (!userId.value) {
-                return null
-            }
+  return useQuery({
+    queryKey: computed(() => [...queryKeys.user.profile(userId.value), 'custom-lists']),
+    queryFn: async () => {
+      if (!userId.value) {
+        return null
+      }
 
-            const response = await api.get(`${API_BASE_URL}/profile/${userId.value}/custom_lists`)
+      const response = await api.get(`${API_BASE_URL}/profile/${userId.value}/custom_lists`)
 
-            return response.data
-        },
-        enabled: computed(() => !!userId.value),
-        staleTime: 1000 * 60 * 5, // 5 phút
-    })
+      return response.data
+    },
+    ...USER_QUERY_CONFIG,
+    enabled: computed(() => !!userId.value),
+  })
 }
 

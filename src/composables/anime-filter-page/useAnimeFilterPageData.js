@@ -3,6 +3,8 @@ import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
 import { computed } from 'vue'
+import { queryKeys } from 'src/utils/queryKeys'
+import { DYNAMIC_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 /**
  * Hook lấy danh sách anime có filter
@@ -18,17 +20,16 @@ import { computed } from 'vue'
  */
 export function useAnimeFilterPageData(filters) {
   return useQuery({
-    queryKey: computed(() => [
-      'anime-filter-page',
-      filters.page?.value,
-      filters.sort?.value,
-      filters.type?.value,
-      filters.status?.value,
-      filters.season?.value,
-      filters.year?.value,
-      filters.genres?.value,
-      filters.genreSlug?.value,
-    ]),
+    queryKey: computed(() => queryKeys.anime.filter({
+      page: filters.page?.value,
+      sort: filters.sort?.value,
+      type: filters.type?.value,
+      status: filters.status?.value,
+      season: filters.season?.value,
+      year: filters.year?.value,
+      genres: filters.genres?.value,
+      genreSlug: filters.genreSlug?.value,
+    })),
     queryFn: async () => {
       // Tạo params object
       const params = {}
@@ -57,11 +58,7 @@ export function useAnimeFilterPageData(filters) {
       const response = await api.get(url)
       return response.data
     },
-    staleTime: 1000 * 60 * 30, // 30 phút
-    cacheTime: 1000 * 60 * 60 * 2, // 2 giờ
+    ...DYNAMIC_QUERY_CONFIG,
     enabled: computed(() => !!filters.page?.value),
-    meta: {
-      persist: false, // 🚫 không lưu query này vào localStorage
-    },
   })
 }

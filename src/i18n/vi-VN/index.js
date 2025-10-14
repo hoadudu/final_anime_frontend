@@ -46,6 +46,13 @@ export default {
     showMore: 'Xem thêm',
     showLess: 'Ẩn bớt',
 
+    // Anime status
+    ongoing: 'Đang phát',
+    completed: 'Hoàn thành',
+    upcoming: 'Sắp chiếu',
+    cancelled: 'Đã hủy',
+    hiatus: 'Tạm dừng',
+
     // Status messages
     success: 'Thực hiện thành công',
     failed: 'Thực hiện thất bại',
@@ -78,6 +85,7 @@ export default {
     genre: 'Thể loại',
     language: 'Ngôn ngữ',
     moreFromYoutube: 'Thêm từ Youtube',
+    chanel: 'Kênh',
     filter: 'Lọc',
   },
 
@@ -219,6 +227,41 @@ export default {
     deletingAnime: 'Đang xóa khỏi danh sách...',
     deleteSuccess: 'Đã xóa khỏi danh sách thành công',
     deleteError: 'Không thể xóa khỏi danh sách. Vui lòng thử lại.',
+
+    // Settings
+    settings: 'Cài đặt',
+    selectAvatar: 'Chọn Avatar',
+    currentAvatar: 'Avatar hiện tại',
+    noAvatarsAvailable: 'Không có avatar nào khả dụng',
+    selectCategory: 'Chọn danh mục',
+    selectCategoryFirst: 'Vui lòng chọn danh mục trước',
+    avatarsFor: 'Avatar cho',
+    noAvatarsForTag: 'Không có avatar nào cho danh mục này',
+    noCategoriesAvailable: 'Không có danh mục nào khả dụng',
+    saveAvatar: 'Lưu Avatar',
+    avatarUpdated: 'Cập nhật avatar thành công',
+    avatarUpdateError: 'Không thể cập nhật avatar',
+    profileInfo: 'Thông tin hồ sơ',
+    username: 'Tên đăng nhập',
+    usernameCannotChange: 'Không thể thay đổi tên đăng nhập',
+    email: 'Email',
+    emailCannotChange: 'Không thể thay đổi email',
+    displayName: 'Tên hiển thị',
+    nameRequired: 'Tên là bắt buộc',
+    bio: 'Tiểu sử',
+    bioHint: 'Hãy kể về bản thân bạn',
+    updateProfile: 'Cập nhật hồ sơ',
+    profileUpdated: 'Cập nhật hồ sơ thành công',
+    updateError: 'Không thể cập nhật hồ sơ',
+    changePassword: 'Đổi mật khẩu',
+    currentPassword: 'Mật khẩu hiện tại',
+    newPassword: 'Mật khẩu mới',
+    confirmPassword: 'Xác nhận mật khẩu',
+    passwordRequired: 'Mật khẩu là bắt buộc',
+    passwordMinLength: 'Mật khẩu phải có ít nhất 6 ký tự',
+    passwordsDoNotMatch: 'Mật khẩu không khớp',
+    passwordChanged: 'Đổi mật khẩu thành công',
+    passwordChangeError: 'Không thể đổi mật khẩu',
   },
 
   // Movie/Anime tooltip
@@ -596,6 +639,23 @@ export default {
     registerSuccess: 'Tạo tài khoản thành công. Vui lòng đăng nhập.',
     logoutSuccess: 'Đăng xuất thành công. Hẹn gặp lại!',
     logoutWarning: 'Đã đăng xuất khỏi thiết bị này',
+  },
+
+  // Notifications
+  notification: {
+    defaultTitle: 'Thông báo',
+    defaultMessage: 'Bạn có thông báo mới',
+    markAsRead: 'Đánh dấu đã đọc',
+    markedAsRead: 'Đã đánh dấu đã đọc',
+    markAsReadError: 'Không thể đánh dấu đã đọc',
+    justNow: 'Vừa xong',
+    hoursAgo: '{hours} giờ trước',
+    daysAgo: '{days} ngày trước',
+    autoCloseIn: 'Tự động đóng sau {seconds} giây',
+    generalNotification: 'Thông báo chung',
+    systemMaintenance: 'Bảo trì hệ thống',
+    newFeature: 'Tính năng mới',
+    importantUpdate: 'Cập nhật quan trọng'
   },
 
   // Device Management

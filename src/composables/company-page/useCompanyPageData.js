@@ -4,6 +4,8 @@ import api from 'axios'
 import { API_BASE_URL } from 'src/config/api'
 import { buildUrlWithParams } from 'src/utils/lang'
 import { computed } from 'vue'
+import { queryKeys } from 'src/utils/queryKeys'
+import { DYNAMIC_QUERY_CONFIG } from 'src/utils/queryConfig'
 
 /**
  * Hook để fetch dữ liệu anime theo công ty (studios, producers, licensors)
@@ -15,7 +17,7 @@ import { computed } from 'vue'
  */
 export function useCompanyPageData(companySlug, companyId, page, sort) {
     return useQuery({
-        queryKey: computed(() => ['company-page', companySlug.value, companyId.value, page.value, sort.value]),
+        queryKey: computed(() => queryKeys.company.detail('company', companySlug.value)),
         queryFn: async () => {
             // Không fetch nếu không có companySlug hoặc companyId
             if (!companySlug.value || !companyId.value) {
@@ -51,9 +53,8 @@ export function useCompanyPageData(companySlug, companyId, page, sort) {
 
             return response.data
         },
+        ...DYNAMIC_QUERY_CONFIG,
         enabled: computed(() => !!companySlug.value && !!companyId.value), // Chỉ fetch khi có cả slug và id
-        // staleTime: 1000 * 60 * 5, // 5 phút
-        // cacheTime: 1000 * 60 * 30, // 30 phút
     })
 }
 

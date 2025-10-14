@@ -10,22 +10,42 @@
     </q-page-container>
 
     <AuthDialog v-model="showAuth" @success="onAuthSuccess" />
+
+    <!-- Notification Modal -->
+    <ModalNotify
+      v-if="currentNotification"
+      v-model="showNotificationModal"
+      :notification="currentNotification"
+      @mark-as-read="onMarkAsRead"
+      @close="onNotificationClose"
+    />
   </q-layout>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import SiteHeader from 'src/components/site-header/SiteHeader.vue'
 import SiteDrawer from 'src/components/site-drawer/SiteDrawer.vue'
 import AuthDialog from 'src/components/modals/AuthDialog.vue'
+import ModalNotify from 'src/components/modals/ModalNotify.vue'
 import { useQuasar } from 'quasar'
+import { useNotification } from 'src/composables/useNotification'
 
 const route = useRoute()
 const router = useRouter()
 const $q = useQuasar()
 
 const showAuth = ref(false)
+
+// Notification management
+const {
+  showNotificationModal,
+  currentNotification,
+  markAsRead,
+  checkAndShowLatestNotification,
+  refreshNotifications,
+} = useNotification()
 
 function openAuth() {
   showAuth.value = true
@@ -54,6 +74,20 @@ function onAuthSuccess(payload) {
   // Với forgot password, không làm gì cả (giữ dialog mở và countdown chạy)
 }
 
+// Notification event handlers
+async function onMarkAsRead(notification) {
+  try {
+    await markAsRead(notification)
+  } catch (error) {
+    console.error('Error marking notification as read:', error)
+  }
+}
+
+function onNotificationClose(notification) {
+  // Notification modal is closed
+  console.log('Notification closed:', notification)
+}
+
 watch(
   () => route.query,
   (q) => {
@@ -67,4 +101,15 @@ watch(
   },
   { immediate: true },
 )
+
+// Initialize notifications on app load
+onMounted(() => {
+  // Refresh notifications when the app loads
+  refreshNotifications()
+
+  // Check for unread notifications after a short delay to allow data to load
+  setTimeout(() => {
+    checkAndShowLatestNotification()
+  }, 2000)
+})
 </script>

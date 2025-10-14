@@ -109,23 +109,24 @@
     <LiveSearch
       :is-open="showLiveSearch"
       :results="liveSearchResults"
-      :is-loading="false"
+      :is-loading="isLiveSearchLoading"
       @close="closeLiveSearch"
       @anime-click="handleAnimeClick"
     />
   </q-header>
 </template>
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { fabYoutube } from '@quasar/extras/fontawesome-v6'
+import { storeToRefs } from 'pinia'
+import { useQuasar } from 'quasar'
+import LiveSearch from 'src/components/LiveSeach.vue'
+import { useAuth } from 'src/composables/auth/useAuth'
+import { useLiveSearchData } from 'src/composables/live-seach/useLiveSearchData'
+import { useAuthStore } from 'src/stores/auth'
+import { useDrawerStore } from 'src/stores/site-drawer'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-import { fabYoutube } from '@quasar/extras/fontawesome-v6'
-import { useDrawerStore } from 'src/stores/site-drawer'
-import { useAuth } from 'src/composables/auth/useAuth'
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from 'src/stores/auth'
-import LiveSearch from 'src/components/LiveSeach.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -152,9 +153,20 @@ const authState = computed(() => {
 // Live search state
 const showLiveSearch = ref(false)
 
-// Extract results from API response (keeping for compatibility)
+// Live search data with debouncing
+const {
+  data: liveSearchData,
+  isLoading: isLiveSearchLoading,
+  error: liveSearchError,
+} = useLiveSearchData(search)
+
+// Extract results from API response
 const liveSearchResults = computed(() => {
-  return []
+  if (!liveSearchData.value?.results) {
+    console.log(liveSearchError)
+    return []
+  }
+  return liveSearchData.value.results
 })
 
 function toggleLeftDrawer() {
@@ -168,6 +180,15 @@ function clearSearch() {
   search.value = ''
   showLiveSearch.value = false
 }
+
+// Watch search input to show/hide live search
+watch(search, (newValue) => {
+  if (newValue.trim().length > 0) {
+    showLiveSearch.value = true
+  } else {
+    showLiveSearch.value = false
+  }
+})
 
 /**
  * Close live search overlay
