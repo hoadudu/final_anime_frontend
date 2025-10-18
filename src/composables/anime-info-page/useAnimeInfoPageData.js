@@ -18,7 +18,7 @@ export function useAnimeInfoPageData(animeId) {
       return response.data.data || response.data
     },
     ...CONTENT_QUERY_CONFIG,
-    enabled: !!animeId && process.env.CLIENT, // Chỉ chạy khi có animeId và trên client
+    enabled: !!animeId, // Allow fetching on both client and server
   })
 }
 

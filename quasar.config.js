@@ -95,10 +95,10 @@ export default defineConfig((ctx) => {
       host: '0.0.0.0',
       port: 9000, // hoặc port bạn đang dùng
       clientPort: 443, // hoặc port bạn đang dùng
-      allowedHosts: ['dev.animevui.com'],
+      allowedHosts: ['anime47.love'],
       hmr: {
         protocol: 'wss',
-        host: 'dev.animevui.com',
+        host: 'dev.anime47.love',
         clientPort: 443,
       },
     },

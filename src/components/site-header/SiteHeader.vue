@@ -266,12 +266,12 @@ function handleSearch() {
   // Close live search
   showLiveSearch.value = false
 
-  // Navigate đến trang tìm kiếm với keyword
+  // Navigate đến trang tìm kiếm với keyword (sử dụng parameter 'q' chuẩn)
   router
     .push({
       name: 'site-search',
       query: {
-        keyword: keyword,
+        q: keyword,
         page: 1,
       },
     })

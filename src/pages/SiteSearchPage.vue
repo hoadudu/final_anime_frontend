@@ -4,19 +4,9 @@
       <!-- ========== BREADCRUMB NAVIGATION ========== -->
       <div class="breadcrumb-container q-mt-md q-mb-sm">
         <q-breadcrumbs class="breadcrumb-nav" active-color="primary">
-          <q-breadcrumbs-el
-            icon="home"
-            :label="t('common.home')"
-            :to="{ name: 'site-home' }"
-            class="breadcrumb-item"
-          />
-          <q-breadcrumbs-el
-            icon="search"
-            :label="
-              currentKeyword ? t('common.search') + ': ' + currentKeyword : t('common.search')
-            "
-            class="breadcrumb-current"
-          />
+          <q-breadcrumbs-el icon="home" :label="t('common.home')" :to="{ name: 'site-home' }" class="breadcrumb-item" />
+          <q-breadcrumbs-el icon="search" :label="currentKeyword ? t('common.search') + ': ' + currentKeyword : t('common.search')
+            " class="breadcrumb-current" />
         </q-breadcrumbs>
       </div>
 
@@ -33,8 +23,7 @@
         <div v-else>
           <h1 class="search-title text-h4 text-weight-bold q-mb-sm">
             <q-icon name="search" size="32px" class="q-mr-sm" />
-            {{ t('search.resultsFor') }} "<span class="keyword-highlight">{{ currentKeyword }}</span
-            >"
+            {{ t('search.resultsFor') }} "<span class="keyword-highlight">{{ currentKeyword }}</span>"
           </h1>
 
           <!-- Hiển thị tổng số kết quả -->
@@ -66,22 +55,13 @@
             <q-icon name="error_outline" size="80px" color="negative" />
             <h3 class="text-h5 q-mt-md">{{ t('search.errorOccurred') }}</h3>
             <p class="text-body1 text-grey-6 q-mt-sm">{{ t('search.errorMessage') }}</p>
-            <q-btn
-              color="primary"
-              :label="t('common.tryAgain')"
-              icon="refresh"
-              @click="refetch"
-              class="q-mt-md"
-              unelevated
-              rounded
-            />
+            <q-btn color="primary" :label="t('common.tryAgain')" icon="refresh" @click="refetch" class="q-mt-md"
+              unelevated rounded />
           </div>
 
           <!-- ========== EMPTY RESULTS ========== -->
-          <div
-            v-else-if="searchData && searchData.results && searchData.results.length === 0"
-            class="empty-results text-center q-py-xl"
-          >
+          <div v-else-if="searchData && searchData.results && searchData.results.length === 0"
+            class="empty-results text-center q-py-xl">
             <q-icon name="search_off" size="80px" color="grey-6" />
             <h3 class="text-h5 q-mt-md text-grey-7">{{ t('search.noResults') }}</h3>
             <p class="text-body1 text-grey-6 q-mt-sm">
@@ -92,49 +72,23 @@
           <!-- ========== ANIME RESULTS GRID (Using MovieCard) ========== -->
           <div v-else-if="searchData && searchData.results && searchData.results.length > 0">
             <div class="anime-grid">
-              <MovieCard
-                v-for="anime in searchData.results"
-                :key="anime.id"
-                :anime="anime"
-                :show-age-rating="false"
-                :show-episode-badges="false"
-                :show-status-badge="true"
-                :show-type-badge="false"
-                :show-subtitle="true"
-                :show-genres="true"
-                :max-genres="3"
-                :overlay-text="t('search.viewDetails')"
-                :poster-ratio="'3/4'"
-                @click="navigateToAnime"
-              />
+              <MovieCard v-for="anime in searchData.results" :key="anime.id" :anime="anime" :show-age-rating="false"
+                :show-episode-badges="false" :show-status-badge="true" :show-type-badge="false" :show-subtitle="true"
+                :show-genres="true" :max-genres="3" :overlay-text="t('search.viewDetails')" :poster-ratio="'3/4'"
+                @click="navigateToAnime" />
             </div>
 
             <!-- ========== PAGINATION ========== -->
             <div v-if="searchData.total_pages > 1" class="pagination-container q-mt-xl q-mb-lg">
               <div class="pagination-wrapper">
                 <!-- First Button -->
-                <q-btn
-                  outline
-                  color="primary"
-                  icon="first_page"
-                  :label="t('common.first')"
-                  :disable="currentPage <= 1 || isLoading"
-                  @click="changePage(1)"
-                  class="pagination-btn"
-                  unelevated
-                />
+                <q-btn outline color="primary" icon="first_page" :label="t('common.first')"
+                  :disable="currentPage <= 1 || isLoading" @click="changePage(1)" class="pagination-btn" unelevated />
 
                 <!-- Previous Button -->
-                <q-btn
-                  outline
-                  color="primary"
-                  icon="keyboard_arrow_left"
-                  :label="t('common.previous')"
-                  :disable="currentPage <= 1 || isLoading"
-                  @click="changePage(currentPage - 1)"
-                  class="pagination-btn"
-                  unelevated
-                />
+                <q-btn outline color="primary" icon="keyboard_arrow_left" :label="t('common.previous')"
+                  :disable="currentPage <= 1 || isLoading" @click="changePage(currentPage - 1)" class="pagination-btn"
+                  unelevated />
 
                 <!-- Page Info -->
                 <div class="page-info">
@@ -146,28 +100,14 @@
                 </div>
 
                 <!-- Next Button -->
-                <q-btn
-                  outline
-                  color="primary"
-                  icon-right="keyboard_arrow_right"
-                  :label="t('common.next')"
-                  :disable="!searchData.has_more || isLoading"
-                  @click="changePage(currentPage + 1)"
-                  class="pagination-btn"
-                  unelevated
-                />
+                <q-btn outline color="primary" icon-right="keyboard_arrow_right" :label="t('common.next')"
+                  :disable="!searchData.has_more || isLoading" @click="changePage(currentPage + 1)"
+                  class="pagination-btn" unelevated />
 
                 <!-- Last Button -->
-                <q-btn
-                  outline
-                  color="primary"
-                  icon-right="last_page"
-                  :label="t('common.last')"
-                  :disable="!searchData.has_more || isLoading"
-                  @click="changePage(searchData.total_pages)"
-                  class="pagination-btn"
-                  unelevated
-                />
+                <q-btn outline color="primary" icon-right="last_page" :label="t('common.last')"
+                  :disable="!searchData.has_more || isLoading" @click="changePage(searchData.total_pages)"
+                  class="pagination-btn" unelevated />
               </div>
 
               <!-- Total Results -->
@@ -175,10 +115,10 @@
                 {{
                   searchData && searchData.count > 0
                     ? t('search.showing', {
-                        from: Math.max(1, (currentPage - 1) * (resultsPerPage || 20) + 1),
-                        to: Math.min(currentPage * (resultsPerPage || 20), searchData.count),
-                        total: searchData.count,
-                      })
+                      from: Math.max(1, (currentPage - 1) * (resultsPerPage || 20) + 1),
+                      to: Math.min(currentPage * (resultsPerPage || 20), searchData.count),
+                      total: searchData.count,
+                    })
                     : ''
                 }}
               </div>
@@ -311,14 +251,14 @@ useMeta(() => ({
 
 // ========== LIFECYCLE & WATCHERS ==========
 onMounted(() => {
-  // Lấy keyword từ URL query khi component mount
-  currentKeyword.value = route.query.keyword || ''
+  // Lấy keyword từ URL query khi component mount (sử dụng 'q' parameter chuẩn)
+  currentKeyword.value = route.query.q || ''
   currentPage.value = parseInt(route.query.page || '1', 10)
 })
 
 // Watch route query changes (khi user thay đổi URL)
 watch(
-  () => route.query.keyword,
+  () => route.query.q,
   (newKeyword) => {
     if (newKeyword !== currentKeyword.value) {
       currentKeyword.value = newKeyword || ''
@@ -596,6 +536,7 @@ const scrollToTop = () => {
 
 // ========== RESPONSIVE ADJUSTMENTS ==========
 @media (max-width: 1023px) {
+
   // Mobile & Tablet: Sidebar xuống dưới
   .row {
     flex-direction: column; // Thứ tự: results trước, sidebar sau

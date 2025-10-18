@@ -140,15 +140,35 @@ const hasError = computed(() => !!animeInfoError.value)
 
 // Computed properties for dynamic meta data
 const pageTitle = computed(() => {
-  if (!animeInfo.value) return t('animePage.title', 'Anime Info')
+  if (!animeInfo.value) {
+    // Try to extract anime name from slug as fallback
+    const slug = route.params.slugWithId
+    if (slug) {
+      const nameFromSlug = slug.replace(/-\d+$/, '').replace(/-/g, ' ')
+      if (nameFromSlug) {
+        return nameFromSlug.split(' ').map(word =>
+          word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ')
+      }
+    }
+    return t('animePage.title', 'Anime Info')
+  }
   const anime = animeInfo.value
   const year = anime.year || anime.aired?.from?.split('-')[0] || ''
   return year ? `${anime.title} (${year})` : anime.title
 })
 
 const pageDescription = computed(() => {
-  if (!animeInfo.value)
-    return t('animePage.defaultDescription', 'Watch anime online with high quality')
+  if (!animeInfo.value) {
+    const slug = route.params.slugWithId
+    if (slug) {
+      const nameFromSlug = slug.replace(/-\d+$/, '').replace(/-/g, ' ')
+      if (nameFromSlug) {
+        return `Xem anime ${nameFromSlug} online chất lượng cao với phụ đề tiếng Việt tại AnimeVui`
+      }
+    }
+    return t('animePage.defaultDescription', 'Xem anime online với chất lượng cao')
+  }
 
   const anime = animeInfo.value
   let description = anime.description || anime.synopsis || ''
@@ -171,7 +191,14 @@ const pageDescription = computed(() => {
 })
 
 const pageKeywords = computed(() => {
-  if (!animeInfo.value) return 'anime, manga, watch anime online'
+  if (!animeInfo.value) {
+    const slug = route.params.slugWithId
+    if (slug) {
+      const nameFromSlug = slug.replace(/-\d+$/, '').replace(/-/g, ' ')
+      return `anime, ${nameFromSlug}, watch anime online, anime vietsub, xem phim hoạt hình`
+    }
+    return 'anime, manga, watch anime online, anime vietsub, xem phim hoạt hình'
+  }
 
   const anime = animeInfo.value
   const keywords = ['anime', anime.title]
@@ -264,35 +291,87 @@ useMeta(() => ({
     ldJson: {
       type: 'application/ld+json',
       innerHTML: computed(() => {
-        if (!animeInfo.value) return '{}'
+        const slug = route.params.slugWithId
+        const baseUrl = process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath
 
+        if (!animeInfo.value) {
+          // Fallback structured data từ URL slug
+          const nameFromSlug = slug.replace(/-\d+$/, '').replace(/-/g, ' ')
+            .split(' ').map(word =>
+              word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ')
+
+          const fallbackStructuredData = {
+            '@context': 'https://schema.org',
+            '@type': 'TVSeries',
+            name: nameFromSlug || 'Anime Series',
+            description: `Xem anime ${nameFromSlug} online chất lượng cao với phụ đề tiếng Việt tại AnimeVui. Cập nhật nhanh nhất, nhiều server để lựa chọn.`,
+            url: baseUrl,
+            publisher: {
+              '@type': 'Organization',
+              name: 'AnimeVui',
+              logo: {
+                '@type': 'ImageObject',
+                url: process.env.CLIENT ? `${window.location.origin}/favicon.ico` : '/favicon.ico'
+              }
+            },
+            genre: ['Animation', 'Anime'],
+            inLanguage: 'vi-VN',
+            availableLanguage: ['vi-VN', 'ja-JP'],
+            contentRating: 'General Audiences',
+            dateCreated: new Date().toISOString().split('T')[0]
+          }
+
+          return JSON.stringify(fallbackStructuredData, null, 2)
+        }
+
+        // Full structured data khi có thông tin anime
         const anime = animeInfo.value
-        const structuredData = {
+        const fullStructuredData = {
           '@context': 'https://schema.org',
           '@type': 'TVSeries',
           name: anime.title,
-          description: anime.description || anime.synopsis || '',
-          image: anime.poster || anime.cover,
+          alternateName: anime.title_english || anime.title_japanese || undefined,
+          description: anime.description || anime.synopsis || `Xem anime ${anime.title} online chất lượng cao tại AnimeVui`,
+          image: anime.poster || anime.cover || '/favicon.ico',
           datePublished: anime.aired?.from,
-          genre: anime.genres?.map((g) => g.name) || [],
-          numberOfEpisodes: anime.episodes?.total || 0,
-          contentRating: anime.rating || 'Not Rated',
-          aggregateRating: anime.malScore
-            ? {
-                '@type': 'AggregateRating',
-                ratingValue: anime.malScore,
-                ratingCount: 1,
-              }
-            : undefined,
-          productionCompany:
-            anime.studios?.map((s) => ({
-              '@type': 'Organization',
-              name: s.titles || s.name,
-            })) || [],
-          url: process.env.CLIENT ? `${window.location.origin}${route.fullPath}` : route.fullPath,
+          startDate: anime.aired?.from,
+          endDate: anime.aired?.to,
+          genre: anime.genres?.map((g) => g.name) || ['Animation', 'Anime'],
+          numberOfEpisodes: anime.episodes?.total || anime.episodes || 0,
+          contentRating: anime.rating || 'General Audiences',
+          aggregateRating: anime.malScore ? {
+            '@type': 'AggregateRating',
+            ratingValue: anime.malScore,
+            bestRating: 10,
+            worstRating: 1,
+            ratingCount: anime.scored_by || 1,
+          } : undefined,
+          productionCompany: anime.studios?.map((s) => ({
+            '@type': 'Organization',
+            name: s.titles || s.name,
+          })) || [],
+          creator: anime.producers?.map((p) => ({
+            '@type': 'Organization',
+            name: p.titles || p.name,
+          })) || [],
+          url: baseUrl,
+          publisher: {
+            '@type': 'Organization',
+            name: 'AnimeVui',
+            logo: {
+              '@type': 'ImageObject',
+              url: process.env.CLIENT ? `${window.location.origin}/favicon.ico` : '/favicon.ico'
+            }
+          },
+          inLanguage: 'vi-VN',
+          availableLanguage: ['vi-VN', 'ja-JP'],
+          numberOfSeasons: anime.season ? 1 : undefined,
+          episodeCount: anime.episodes?.total || anime.episodes || 0,
+          status: anime.status || 'Unknown'
         }
 
-        return JSON.stringify(structuredData)
+        return JSON.stringify(fullStructuredData, null, 2)
       }).value,
     },
   },
@@ -306,4 +385,59 @@ useMeta(() => ({
     itemtype: 'https://schema.org/WebPage',
   },
 }))
+</script>
+
+<script>
+import { API_BASE_URL } from 'src/config/api.js'
+import { buildUrlWithParams } from 'src/utils/lang'
+import { queryKeys } from 'src/utils/queryKeys'
+import api from 'axios'
+
+// SSR preFetch function to load anime data on server
+export async function preFetch({ route, ssrContext }) {
+  // Extract anime ID from route parameters
+  const slugWithId = route.params.slugWithId
+  const match = slugWithId?.match(/-(\d+)$/)
+  const animeId = match ? match[1] : null
+
+  if (!animeId) return
+
+  try {
+    // Create axios instance with timeout for SSR
+    const axiosInstance = api.create ? api.create({ timeout: 5000 }) : api
+
+    // Fetch anime info data on server
+    const animeInfoUrl = buildUrlWithParams(`${API_BASE_URL}/anime/info/${animeId}`)
+
+    // Add timeout and error handling
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+
+    try {
+      const animeInfoResponse = await axiosInstance.get(animeInfoUrl, {
+        signal: controller.signal
+      })
+      clearTimeout(timeoutId)
+
+      const animeInfoData = animeInfoResponse.data.data || animeInfoResponse.data
+
+      // Store the data in the query cache for hydration
+      if (ssrContext && ssrContext.state) {
+        if (!ssrContext.state.queryCache) {
+          ssrContext.state.queryCache = {}
+        }
+
+        const queryKey = queryKeys.anime.info(animeId)
+        ssrContext.state.queryCache[JSON.stringify(queryKey)] = animeInfoData
+      }
+    } catch (fetchError) {
+      clearTimeout(timeoutId)
+      console.warn('Failed to fetch anime info during SSR (non-blocking):', fetchError.message)
+    }
+
+  } catch (error) {
+    console.error('SSR preFetch setup error (non-blocking):', error.message)
+    // Don't throw error to allow page to render even if API fails
+  }
+}
 </script>

@@ -30,7 +30,7 @@ const routes = [
     children: [{ path: '', name: 'site-genres', component: () => import('src/pages/SiteGenresPage.vue') }],
   },
   {
-    path: '/search',
+    path: '/tim-kiem',
     name: 'search',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', name: 'site-search', component: () => import('src/pages/SiteSearchPage.vue') }],
